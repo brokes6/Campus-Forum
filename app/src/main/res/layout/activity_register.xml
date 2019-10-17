@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:textSize="30sp"
+        android:text="注册"
+        android:layout_marginTop="45dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginTop="15dp"
+        android:background="#999797"
+        android:layout_width="match_parent"
+        android:layout_height="3dp" />
+        <LinearLayout
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="35dp"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="25sp"
+                    android:text="名称"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:id="@+id/name_denglu"
+                    android:layout_width="200dp"
+                    android:hint="请输入名称"
+                    android:layout_height="wrap_content" />
+        </LinearLayout>
+            <LinearLayout
+                android:layout_marginLeft="80dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="25sp"
+                    android:text="账号"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:id="@+id/username_denglu"
+                    android:layout_width="200dp"
+                    android:hint="请输入（数字和字母）"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginLeft="80dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="25sp"
+                    android:text="密码"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:id="@+id/password_denglu"
+                    android:layout_width="200dp"
+                    android:hint="请输入（数字和字母）"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+    <LinearLayout
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textSize="25sp"
+            android:text="确认密码"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/password_again"
+            android:layout_width="200dp"
+            android:hint="请再输入一遍密码"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+            <LinearLayout
+                android:layout_marginLeft="80dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="25sp"
+                    android:text="邮箱"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:id="@+id/youxiang"
+                    android:layout_width="200dp"
+                    android:hint="请输入邮箱"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                    <Button
+                        android:background="@drawable/bt_shape_yanse"
+                        android:textSize="20sp"
+                        android:text="注册"
+                        android:id="@+id/button_denglu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+            </LinearLayout>
+</LinearLayout>
