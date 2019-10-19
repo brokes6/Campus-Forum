@@ -24,6 +24,8 @@
         <activity android:name=".FintoutPasswordActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".Yemian_text" />
+        <activity android:name=".MyCollection"/>
+        <activity android:name=".history" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

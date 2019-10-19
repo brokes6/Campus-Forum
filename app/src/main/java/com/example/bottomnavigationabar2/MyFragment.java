@@ -8,6 +8,7 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -22,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,6 +60,24 @@ public class MyFragment extends Fragment {
         Bundle bundle = getArguments();
         picture = (ImageView)view.findViewById(R.id.user_head_img);
         TextView Tuichu = (TextView)view.findViewById(R.id.tuichu);
+        LinearLayout history=(LinearLayout)view.findViewById(R.id.history);
+        LinearLayout collection=(LinearLayout)view.findViewById(R.id.Collection);
+
+        history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getContext(),history.class);
+                startActivity(intent);
+            }
+        });
+        collection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getContext(),MyCollection.class);
+                startActivity(intent);
+            }
+        });
+
         Tuichu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

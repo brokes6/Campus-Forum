@@ -9,15 +9,15 @@
     tools:context=".MainActivity">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="180dp"
         android:orientation="horizontal"
-        android:background="#FFF"
-        >
+        android:background="@drawable/teaser_mohu">
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/user_head_img"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_marginLeft="60px"
+            android:layout_marginLeft="170dp"
             android:src="@mipmap/ic_launcher"
             app:civ_border_color="#4CAF50"
             app:civ_border_width="2dp"
@@ -26,17 +26,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="姓名"
+            android:textColor="#fff"
             android:layout_gravity="center_vertical"
-            android:layout_marginBottom="15dp"
-            android:layout_marginLeft="10dp"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="个性签名"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="-28dp"
+            android:layout_marginBottom="-60dp"
+            android:layout_marginLeft="-54dp"
             />
     </LinearLayout>
 
@@ -75,6 +68,7 @@
             android:src="@drawable/san"/>
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/history"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -113,6 +107,7 @@
         android:background="#ccc"
         android:layout_marginLeft="50dp"/>
     <LinearLayout
+        android:id="@+id/Collection"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
