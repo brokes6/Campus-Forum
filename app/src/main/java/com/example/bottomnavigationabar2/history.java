@@ -21,7 +21,6 @@ public class history extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.history1);
-        Log.d(TAG, "111111111111111 7777777777777777777777777777777");
         ActionBar actionBar=getSupportActionBar();
         if (actionBar!=null){
             actionBar.hide();
