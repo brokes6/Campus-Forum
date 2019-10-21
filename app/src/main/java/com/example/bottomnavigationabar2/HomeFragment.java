@@ -29,6 +29,7 @@ import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -231,6 +232,7 @@ public class HomeFragment extends Fragment {
     }
     private void setDefaultFragment() {
         mainTabFragmentAdapter = new MainTabFragmentAdapter(((AppCompatActivity)getActivity()).getSupportFragmentManager(),getActivity());
+        moBanInterface= (MoBanInterface) mainTabFragmentAdapter.getItem(0);
     }
 
     public boolean isFlag() {
@@ -276,8 +278,11 @@ public class HomeFragment extends Fragment {
                 AppBarLayout.LayoutParams mParams = (AppBarLayout.LayoutParams)topLayout.getLayoutParams();
                 mParams.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL| AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
                 topLayout.setLayoutParams(mParams);
+                refreshLayout.setEnableLoadMore(false);
+                refreshLayout.setEnableRefresh(false);
+
             }
-        },300);
+        },10);
     }
     public void initRefreshLayout(){
         refreshLayout = view.findViewById(R.id.refreshLayout);
@@ -287,7 +292,20 @@ public class HomeFragment extends Fragment {
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-
+                Log.i(TAG, "onLoadMore: 下拉刷新");
+                refreshLayout.autoLoadMore();
+                moBanInterface.getPostList();
+                refreshLayout.finishLoadMore();
+            }
+        });
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                Log.i(TAG, "onRefresh: 上拉加载");
+                refreshLayout.autoRefresh();
+                moBanInterface.clearList();
+                moBanInterface.getPostList();
+                refreshLayout.finishRefresh();
             }
         });
     }

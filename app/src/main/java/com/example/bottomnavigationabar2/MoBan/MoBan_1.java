@@ -19,6 +19,7 @@ import com.example.bottomnavigationabar2.Post;
 import com.example.bottomnavigationabar2.R;
 import com.example.bottomnavigationabar2.adapter.NineGridTest2Adapter;
 import com.example.bottomnavigationabar2.model.NineGridTestModel;
+import com.example.util.DateTimeUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -49,8 +50,13 @@ public class MoBan_1 extends Fragment implements MoBanInterface{
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            if(msg.what==0){
-                mAdapter.notifyDataSetChanged();
+            switch (msg.what){
+                case MoBanInterface.NOTIFY:
+                        mAdapter.notifyDataSetChanged();
+                        break;
+                case MoBanInterface.SHOWTOAST:
+                    Toast.makeText(getContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
+
             }
         }
     };
@@ -94,7 +100,6 @@ public class MoBan_1 extends Fragment implements MoBanInterface{
                 e.printStackTrace();
                 Log.d(TAG, "onFailure:失败呃");
             }
-
             @Override
             public void onResponse(Call call, Response response) {
                 try {
@@ -103,8 +108,7 @@ public class MoBan_1 extends Fragment implements MoBanInterface{
                     JSONObject jsonObject = new JSONObject(responseStr);
                     int code=jsonObject.getInt("code");
                     if(code==0){
-                        Looper.prepare();
-                        Toast.makeText(getContext(), "别搞拉，去看看其他的地方把", Toast.LENGTH_SHORT).show();
+                        showToast("别搞拉，去看看其他的地方把");
                         return;
                     }
                     String dataStr = jsonObject.getString("data");
@@ -119,12 +123,12 @@ public class MoBan_1 extends Fragment implements MoBanInterface{
                     }
                         model1.username = post.getUsername();
                         model1.uimg = post.getUimg();
-                        model1.datetime = post.getPcreateTime();
+                        model1.datetime = DateTimeUtil.handlerDateTime(post.getPcreateTime());
                         model1.content = post.getContent();
                         mList.add(model1);
                     }
                     Message message = new Message();
-                    message.what = 0;
+                    message.what = MoBanInterface.NOTIFY;
                     handler.sendMessage(message);
                     page++;
                 }catch(Exception exception){
@@ -143,5 +147,12 @@ public class MoBan_1 extends Fragment implements MoBanInterface{
     @Override
     public RecyclerView getRecycler() {
         return mRecyclerView;
+    }
+
+    public void showToast(String msg){
+        Message message = new Message();
+        message.what=MoBanInterface.SHOWTOAST;
+        message.obj=msg;
+        handler.sendMessage(message);
     }
 }
