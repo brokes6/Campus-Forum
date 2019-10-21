@@ -6,66 +6,29 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#ccc"
-    tools:context=".MainActivity">
+    tools:context=".Personal_information">
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
         android:orientation="horizontal"
-        android:background="@drawable/teaser_mohu">
+        android:layout_width="match_parent"
+        android:background="#FFF"
+        android:layout_height="50dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/user_head_img"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginLeft="170dp"
-            android:src="@mipmap/ic_launcher"
-            app:civ_border_color="#4CAF50"
-            app:civ_border_width="2dp"
-            android:layout_gravity="center_vertical" />
+            android:id="@+id/personal_return"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/sanzuo"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="姓名"
-            android:textColor="#fff"
+            android:text="个人信息"
+            android:textSize="28sp"
             android:layout_gravity="center_vertical"
-            android:layout_marginBottom="-60dp"
-            android:layout_marginLeft="-54dp"
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFF"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp">
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_marginLeft="20dp"
-            android:layout_width="40dp"
-            android:layout_weight="1"
-            android:layout_height="40dp"
-            android:src="@mipmap/ic_launcher"
-            app:civ_border_color="#4CAF50"
-            app:civ_border_width="2dp"
-            android:layout_gravity="center_vertical" />
-        <TextView
-            android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
-            android:layout_weight="30"
-            android:layout_height="50dp"
-            android:text="我的关注"
-            android:textSize="20dp"
-            android:gravity="center_vertical">
-
-        </TextView>
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="40dp"
-            android:layout_weight="1"
-            android:layout_height="40dp"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/san"/>
+            android:layout_marginLeft="105dp"
+            android:textStyle="bold"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/history"
@@ -87,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_weight="30"
             android:layout_height="50dp"
-            android:text="浏览历史"
+            android:text="我的头像"
             android:textSize="20dp"
             android:gravity="center_vertical">
 
@@ -126,7 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_weight="30"
             android:layout_height="50dp"
-            android:text="我的收藏"
+            android:text="我的名字"
             android:textSize="20dp"
             android:gravity="center_vertical">
 
@@ -164,7 +127,7 @@
             android:layout_width="wrap_content"
             android:layout_weight="30"
             android:layout_height="50dp"
-            android:text="我的评论"
+            android:text="我的账号"
             android:textSize="20dp"
             android:gravity="center_vertical">
 
@@ -202,7 +165,7 @@
             android:layout_width="wrap_content"
             android:layout_weight="30"
             android:layout_height="50dp"
-            android:text="关于 我们"
+            android:text="个性签名"
             android:textSize="20dp"
             android:gravity="center_vertical">
 
@@ -240,54 +203,10 @@
             android:layout_width="wrap_content"
             android:layout_weight="30"
             android:layout_height="50dp"
-            android:text="设置"
+            android:text="我不知道"
             android:textSize="20dp"
             android:gravity="center_vertical">
 
         </TextView>
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="40dp"
-            android:layout_weight="1"
-            android:layout_height="40dp"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/san"/>
-
     </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFF"
-        android:layout_marginTop="10dp">
-
-        <TextView
-            android:id="@+id/tuichu"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
-            android:layout_weight="30"
-            android:layout_height="50dp"
-            android:text="注 销"
-            android:textSize="25sp"
-            android:gravity="center_horizontal"
-            android:textColor="#F70000"
-            >
-        </TextView>
-
-    </LinearLayout>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="30dp"
-        android:background="#FFF">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="30dp"
-            android:layout_alignParentBottom="true"/>
-    </RelativeLayout>
 </LinearLayout>
