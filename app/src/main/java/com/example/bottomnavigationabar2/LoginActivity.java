@@ -17,6 +17,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -33,6 +34,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity {
+
         EditText username;
         EditText password;
         String user = null;
@@ -44,6 +46,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        //过度效果
+
+
+
         Button denglu = (Button)findViewById(R.id.denglu);
         intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
@@ -114,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
                     else{
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
-                            overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
+                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                     }
                 }catch (Exception e) {
                     e.printStackTrace();
