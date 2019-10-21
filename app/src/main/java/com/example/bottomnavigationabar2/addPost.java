@@ -63,6 +63,7 @@ import okhttp3.Response;
 public class addPost extends AppCompatActivity implements View.OnClickListener {
     /********************View**********************/
     //图片显示
+            //测试
     private static final String TAG = "MainActivity";
     public static final int CHOOSE_PHOTO = 2;
     public static final int SET_OK = 1;
