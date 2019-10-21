@@ -1,6 +1,7 @@
 package com.example.bottomnavigationabar2;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,7 +10,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -26,7 +27,7 @@ public class MyCollection extends AppCompatActivity {
         }
         smartRefreshLayout= (SmartRefreshLayout) findViewById(R.id.refreshLayout);
         smartRefreshLayout.setEnableRefresh(true);
-        smartRefreshLayout.setEnableLoadmore(false);
+        smartRefreshLayout.setEnableRefresh(false);
         CircleImageView imageView=findViewById(R.id.MyCollection_return);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,11 +43,10 @@ public class MyCollection extends AppCompatActivity {
         smartRefreshLayout.setRefreshFooter(new BallPulseFooter(this).setSpinnerStyle(SpinnerStyle.Scale));
 
         //上拉加载
-        smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+        smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
-                smartRefreshLayout.finishLoadmore(2000);
-
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                smartRefreshLayout.finishLoadMore(2000);
             }
         });
     }
