@@ -222,7 +222,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         BottomSheetBehavior behavior = BottomSheetBehavior.from(parent);
         commentView.measure(0,0);
         behavior.setPeekHeight(commentView.getMeasuredHeight());
-        //commentView.getMeasuredHeight()获得的参数是 632 7777
+        //commentView.getMeasuredHeight()获得的参数是 632
         bt_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
