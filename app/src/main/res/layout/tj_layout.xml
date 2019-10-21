@@ -12,6 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="3dp"
+            android:layout_marginLeft="10dp"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_marginTop="5dp"
@@ -27,7 +28,7 @@
                     android:orientation="horizontal"
                     android:background="@drawable/border_fenlei">
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginLeft="20dp"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@mipmap/ic_launcher"
@@ -51,7 +52,7 @@
                     android:orientation="horizontal"
                     android:background="@drawable/border_fenlei">
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginLeft="20dp"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@mipmap/ic_launcher"
@@ -81,7 +82,7 @@
                     android:orientation="horizontal"
                     android:background="@drawable/border_fenlei">
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginLeft="20dp"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@mipmap/ic_launcher"
@@ -107,7 +108,7 @@
                     android:orientation="horizontal"
                     android:background="@drawable/border_fenlei">
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginLeft="20dp"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@mipmap/ic_launcher"
@@ -137,7 +138,7 @@
                     android:orientation="horizontal"
                     android:background="@drawable/border_fenlei">
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginLeft="20dp"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@mipmap/ic_launcher"
@@ -163,7 +164,7 @@
                     android:orientation="horizontal"
                     android:background="@drawable/border_fenlei">
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginLeft="20dp"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@mipmap/ic_launcher"
@@ -193,7 +194,7 @@
                     android:orientation="horizontal"
                     android:background="@drawable/border_fenlei">
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginLeft="20dp"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@mipmap/ic_launcher"
@@ -219,7 +220,7 @@
                     android:orientation="horizontal"
                     android:background="@drawable/border_fenlei">
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginLeft="20dp"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@mipmap/ic_launcher"
@@ -249,7 +250,7 @@
                     android:orientation="horizontal"
                     android:background="@drawable/border_fenlei">
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginLeft="20dp"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@mipmap/ic_launcher"
@@ -275,7 +276,7 @@
                     android:orientation="horizontal"
                     android:background="@drawable/border_fenlei">
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginLeft="20dp"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@mipmap/ic_launcher"
@@ -305,7 +306,7 @@
                     android:orientation="horizontal"
                     android:background="@drawable/border_fenlei">
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginLeft="20dp"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@mipmap/ic_launcher"
@@ -331,7 +332,7 @@
                     android:orientation="horizontal"
                     android:background="@drawable/border_fenlei">
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginLeft="20dp"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@mipmap/ic_launcher"
@@ -347,7 +348,16 @@
                         android:textSize="16sp">
                     </TextView>
                 </LinearLayout>
+
             </LinearLayout>
+                    <Button
+                        android:id="@+id/Refresh"
+                        android:layout_width="200dp"
+                        android:layout_marginTop="40dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_height="wrap_content"
+                        android:text="点击查看跟多"
+                        android:background="@drawable/border_fenlei"/>
 
 
         </LinearLayout>

@@ -21,27 +21,27 @@ public class DatailsText extends LinearLayout {
     public DatailsText(Context context, AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.activity_details, this);
-        comment = findViewById(R.id.comment);
-        //评论的点击事件
-        comment.setOnClickListener(new View.OnClickListener() {
+        LinearLayout linearLayout = findViewById(R.id.Lin_comment);
+        LinearLayout linearLayout2 = findViewById(R.id.Lin_give_the_thumbs_up);
+        LinearLayout linearLayout3 = findViewById(R.id.Lin_Collection);
+        linearLayout.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), PostDetails.class);
                 getContext().startActivity(intent);
             }
         });
-        give_the_thumbs_up =findViewById(R.id.give_the_thumbs_up);
+
         //点赞的点击事件
-        give_the_thumbs_up.setOnClickListener(new View.OnClickListener() {
+        linearLayout2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), PostDetails.class);
                 getContext().startActivity(intent);
             }
         });
-        collection = findViewById(R.id.Collection);
         //收藏的点击事件
-        collection.setOnClickListener(new View.OnClickListener() {
+        linearLayout3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), PostDetails.class);

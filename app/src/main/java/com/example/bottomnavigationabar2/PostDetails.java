@@ -39,7 +39,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static android.support.constraint.Constraints.TAG;
 
 public class PostDetails extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "MainActivity";
@@ -218,10 +217,12 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         /**
          * 解决bsd显示不全的情况
          */
+        //弹出对话框
         View parent = (View) commentView.getParent();
         BottomSheetBehavior behavior = BottomSheetBehavior.from(parent);
         commentView.measure(0,0);
         behavior.setPeekHeight(commentView.getMeasuredHeight());
+        //commentView.getMeasuredHeight()获得的参数是 632
         bt_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

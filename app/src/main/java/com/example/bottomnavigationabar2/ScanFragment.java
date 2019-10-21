@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,6 +58,13 @@ public class ScanFragment extends Fragment implements View.OnClickListener{
         LayoutInflater inflater1 =getActivity().getLayoutInflater();
         View view1 = inflater1.inflate(R.layout.gz_layout, null);
         View view2 = inflater1.inflate(R.layout.tj_layout, null);
+        Button button1 = view2.findViewById(R.id.Refresh);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(),"准备刷新",Toast.LENGTH_SHORT).show();
+            }
+        });
         LinearLayout test =view2.findViewById(R.id.anniu1);
         test.setOnClickListener(new View.OnClickListener() {
             @Override

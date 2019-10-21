@@ -30,6 +30,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youth.banner.Banner;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import com.bumptech.glide.Glide;
 import com.youth.banner.BannerConfig;
@@ -73,6 +74,8 @@ public class HomeFragment extends Fragment {
     private MoBan_2 moban2;
     private MoBan_3 moban3;
     private String[] tabTxt = {"热门", "最新", "推荐", "关注",};
+    //试试历史
+
     private List<AnchorView> anchorList = new ArrayList<>();
     private boolean isScroll;
     //记录上一次位置，防止在同一内容块里滑动 重复定位到tablayout
@@ -255,6 +258,11 @@ public class HomeFragment extends Fragment {
         initData();
         initView();
         return view;
+        //onCreateView结束
+
+
+
+
     }
     private void initData() {
         imagePath = new ArrayList<>();
