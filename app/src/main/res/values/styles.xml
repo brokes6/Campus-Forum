@@ -19,6 +19,12 @@
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/button_enabled</item>
     </style>
+    //过度效果
+    <style name="BaseAppTheme" parent="Theme.AppCompat.Light">
+        <!-- specify enter and exit transitions -->
+        <item name="android:windowEnterTransition">@transition/activity_fade</item>
+        <item name="android:windowExitTransition">@transition/activity_slide</item>
+    </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

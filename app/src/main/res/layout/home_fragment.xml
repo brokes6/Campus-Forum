@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 最外层是支持嵌套滑动的CoordinatorLayout -->
-<com.scwang.smartrefresh.layout.SmartRefreshLayout android:id="@+id/refreshLayout"
+<com.scwang.smartrefresh.layout.SmartRefreshLayout
+    android:id="@+id/refreshLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-<android.support.design.widget.CoordinatorLayout android:layout_width="match_parent"
+<android.support.design.widget.CoordinatorLayout
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -70,7 +72,7 @@
                                     android:layout_centerInParent="true"
                                     android:layout_marginLeft="10px"
                                     android:src="@mipmap/ic_launcher"
-                                    app:civ_border_color="#4CAF50"
+                                    app:civ_border_color="#D7DAD7"
                                     app:civ_border_width="2dp" />
 
                                 <de.hdodenhof.circleimageview.CircleImageView
@@ -159,7 +161,7 @@
             android:background="#FFFFFF"
             android:visibility="visible"
             app:tabIndicatorColor="@color/colorPrimary"
-            app:tabSelectedTextColor="@color/colorPrimary"
+            app:tabSelectedTextColor="@color/textColor"
             />
         </android.support.design.widget.AppBarLayout>
         <android.support.v4.view.ViewPager

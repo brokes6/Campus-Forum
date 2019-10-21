@@ -67,6 +67,7 @@ public class MyFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(getContext(),history.class);
+                getActivity().overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
                 startActivity(intent);
             }
         });
@@ -74,6 +75,7 @@ public class MyFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(getContext(),MyCollection.class);
+                getActivity().overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
                 startActivity(intent);
             }
         });
