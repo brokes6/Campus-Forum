@@ -2,7 +2,12 @@ package com.example.bottomnavigationabar2.MoBan;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.icu.text.SimpleDateFormat;
+import android.icu.util.Calendar;
+import android.icu.util.GregorianCalendar;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -18,6 +23,7 @@ import android.widget.Toast;
 import com.example.bottomnavigationabar2.Post;
 import com.example.bottomnavigationabar2.R;
 import com.example.bottomnavigationabar2.adapter.NineGridTest2Adapter;
+import com.example.bottomnavigationabar2.bean.User;
 import com.example.bottomnavigationabar2.model.NineGridTestModel;
 /*import com.example.util.DateTimeUtil;*/
 import com.google.gson.Gson;
@@ -25,10 +31,15 @@ import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Random;
+import java.util.UUID;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -39,6 +50,7 @@ import okhttp3.Response;
 import static android.content.Context.MODE_PRIVATE;
 import static android.support.constraint.Constraints.TAG;
 import static android.view.View.MEASURED_SIZE_MASK;
+import static com.example.bottomnavigationabar2.utils.FileCacheUtil.getCache;
 import static com.example.bottomnavigationabar2.utils.FileCacheUtil.setCache;
 
 public class MoBan_1 extends Fragment implements MoBanInterface{
@@ -130,8 +142,34 @@ public class MoBan_1 extends Fragment implements MoBanInterface{
                         mList.add(model1);
                         String User_name= post.getUsername();
                         String Datails = post.getContent();
+                        //存放文章内容
                         setCache(Datails,getContext(),"Text",MODE_PRIVATE);
-                        setCache(Datails,getContext(),"Text",MODE_PRIVATE);
+                        //存放用户名称
+                        setCache(User_name,getContext(),"username",MODE_PRIVATE);
+                        //存放图片
+                        String dir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/ErGaoJi/images/";
+                        String state = Environment.getExternalStorageState();
+                        //如果状态不是mounted，无法读写
+                        if (!state.equals(Environment.MEDIA_MOUNTED)) {
+                            return;
+                        }
+                        //通过时间来命名
+                        Calendar now = new GregorianCalendar();
+                        SimpleDateFormat simpleDate = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault());
+                        String fileName = simpleDate.format(now.getTime());
+                        try {
+                            File file = new File(dir + fileName + ".jpg");
+                            FileOutputStream out = new FileOutputStream(file);
+                            //mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                            out.flush();
+                            out.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+
+
+
                     }
                     Message message = new Message();
                     message.what = MoBanInterface.NOTIFY;
