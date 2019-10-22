@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -19,6 +20,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,25 +42,28 @@ public class LoginActivity extends AppCompatActivity {
         String user = null;
         User userData;
         String pass = null;
-    private IntentFilter intentFilter;
-    private NetworkChangeReceiver networkChangeReceiver;
+        private CheckBox autologin;
+        private CheckBox remembermima;
+        private IntentFilter intentFilter;
+        private NetworkChangeReceiver networkChangeReceiver;
+        private SharedPreferences sp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        //过度效果
-
-
-
-        Button denglu = (Button)findViewById(R.id.denglu);
+        //过度效果(没写)
         intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         networkChangeReceiver = new NetworkChangeReceiver();
         registerReceiver(networkChangeReceiver, intentFilter);
-        ActionBar actionbar = getSupportActionBar();
-        if (actionbar != null) {
-            actionbar.hide();
-        }
+        //获取记住密码，自动登录主键
+        sp = getSharedPreferences("userInfo", 0);
+        autologin = findViewById(R.id.jz_mima);
+        remembermima = findViewById(R.id.zd_denglu);
+        //获取账号 密码 登录按钮
+        username = (EditText)findViewById(R.id.username);
+        password = (EditText)findViewById(R.id.password);
+        Button denglu = (Button)findViewById(R.id.denglu);
         denglu.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -66,6 +71,24 @@ public class LoginActivity extends AppCompatActivity {
                 sendOkHttp();
             }
         });
+        //将账号密码 和sp值存入
+        sp = getSharedPreferences("userInfo", 0);
+        String name=sp.getString("USER_NAME", "");
+        String pass =sp.getString("PASSWORD", "");
+        //获取单选按钮的状态
+        boolean choseRemember =sp.getBoolean("remember", false);
+        boolean choseAutoLogin =sp.getBoolean("autologin", false);
+        //如果上次选了记住密码，那进入登录页面也自动勾选记住密码，并填上用户名和密码
+        if(choseRemember){
+            username.setText(name);
+            password.setText(pass);
+            autologin.setChecked(true);
+        }
+        if(choseAutoLogin){
+            autologin.setChecked(true);
+        }
+
+
 
         TextView textView = (TextView)findViewById(R.id.tex3);
         textView.setOnClickListener(new View.OnClickListener() {
@@ -90,8 +113,10 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
+                    //获取账号   密码
                     username = (EditText)findViewById(R.id.username);
                     password = (EditText)findViewById(R.id.password);
+                    SharedPreferences.Editor editor =sp.edit();
                     user = username.getText().toString();
                     pass = password.getText().toString();
                     if(user.equals("") &&pass.equals("")){
@@ -118,9 +143,24 @@ public class LoginActivity extends AppCompatActivity {
                             startActivity(intent_denglu);
                     }
                     else{
+                            editor.putString("USER_NAME", user);
+                            editor.putString("PASSWORD", pass);
+                            //判断是否记住密码
+                            if(remembermima.isChecked()){
+                                editor.putBoolean("remember", true);
+                            }else{
+                                editor.putBoolean("remember", false);
+                            }
+                            //是否自动登录
+                            if(autologin.isChecked()){
+                                editor.putBoolean("autologin", true);
+                            }else{
+                                editor.putBoolean("autologin", false);
+                            }
+                            editor.commit();
+                            //跳转
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
-                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                     }
                 }catch (Exception e) {
                     e.printStackTrace();

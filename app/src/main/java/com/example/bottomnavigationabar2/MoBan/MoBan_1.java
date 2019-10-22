@@ -19,7 +19,7 @@ import com.example.bottomnavigationabar2.Post;
 import com.example.bottomnavigationabar2.R;
 import com.example.bottomnavigationabar2.adapter.NineGridTest2Adapter;
 import com.example.bottomnavigationabar2.model.NineGridTestModel;
-import com.example.util.DateTimeUtil;
+//import com.example.util.DateTimeUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -123,7 +123,7 @@ public class MoBan_1 extends Fragment implements MoBanInterface{
                     }
                         model1.username = post.getUsername();
                         model1.uimg = post.getUimg();
-                        model1.datetime = DateTimeUtil.handlerDateTime(post.getPcreateTime());
+//                        model1.datetime = DateTimeUtil.handlerDateTime(post.getPcreateTime());
                         model1.content = post.getContent();
                         mList.add(model1);
                     }
