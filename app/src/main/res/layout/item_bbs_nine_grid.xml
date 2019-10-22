@@ -26,7 +26,7 @@
             android:textColor="@android:color/holo_blue_dark" />
         <TextView
             android:id="@+id/tiezi_time"
-            android:layout_marginLeft="249dp"
+            android:layout_marginLeft="220dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="-15dp"

@@ -247,26 +247,12 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
             public void onClick(DialogInterface dialog, int item) {
                 // 这里item是根据选择的方式，
                 if (item == 0) {
-                    Log.i(TAG, "onClick: 相册啊");
-                    Intent intent = new Intent(Intent.ACTION_PICK);
-                    intent.setType("image/*");
-                    //备份
-//                    mPhotoFile = new File(getExternalCacheDir(),"output_image.jpg");
-//                    if( mPhotoFile.exists()){
-//                        mPhotoFile.delete();
-//                    }
-//                    try {
-//                        mPhotoFile.createNewFile();
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-                    if (
-                            ContextCompat.checkSelfPermission(addPost.this,
-                                    Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.
-                                    PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(addPost.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                    if (ContextCompat.checkSelfPermission(addPost.this,Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(addPost.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
                     } else {
-                        openAlbum();
+                        Intent intent = new Intent(Intent.ACTION_PICK);
+                        intent.setType("image/*");
+                        startActivityForResult(intent, 0); // 打开相册
                     }
                 } else {
                     try {
@@ -281,20 +267,14 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
         dlg.show();
     }
 
-    //打开相册功能
-    private void openAlbum() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.setType("image/*");
-        startActivityForResult(intent, 0); // 打开相册
-    }
-
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                           int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case 1:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    openAlbum();
+                    Intent intent = new Intent(Intent.ACTION_PICK);
+                    intent.setType("image/*");
+                    startActivityForResult(intent, 0); // 打开相册
                 } else {
                     Toast.makeText(this, "You denied the permission", Toast.LENGTH_SHORT).show();
                 }
@@ -440,7 +420,9 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
                     builder.append(urls + ",");
                     adapter.getHolder().ivPic.setImageURL(urls);
                     setNum();
-                    fileList.add(new LoadFileVo(urls));
+                    if(adapter.fileList.size()<9){
+                        fileList.add(new LoadFileVo());
+                    }
                 }
             });
         } catch (Exception e) {

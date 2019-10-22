@@ -28,7 +28,7 @@ import static org.greenrobot.eventbus.EventBus.TAG;
  * 时间：2016/5/12
  */
 public class NineGridTestLayout extends NineGridLayout {
-
+    private static final String TAG = "NineGridTestLayout";
     protected static final int MAX_W_H_RATIO = 3;
     private List<String> detailsImgUrls;
     public NineGridTestLayout(Context context) {
@@ -103,4 +103,5 @@ public class NineGridTestLayout extends NineGridLayout {
         intent.putExtra("id",i);   //将当前点击的位置传递过去
         getContext().startActivity(intent);     //启动Activity
     }
+
 }

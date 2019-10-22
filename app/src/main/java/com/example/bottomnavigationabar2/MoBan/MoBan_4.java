@@ -43,7 +43,7 @@ public class MoBan_4 extends Fragment implements MoBanInterface {
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private NineGridTest2Adapter mAdapter;
-    private List<NineGridTestModel> mList = new ArrayList<>();
+    private List<Post> mList = new ArrayList<>();
     private View view;
     private Handler handler=new Handler(){
         @Override
@@ -67,7 +67,6 @@ public class MoBan_4 extends Fragment implements MoBanInterface {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -113,22 +112,37 @@ public class MoBan_4 extends Fragment implements MoBanInterface {
                     Gson gson = new Gson();
                     List<Post> posts = gson.fromJson(dataStr, new TypeToken<List<Post>>() {
                     }.getType());
-                    for (Post post : posts) {
-                        NineGridTestModel model1 = new NineGridTestModel();
-                        String[]imgurls = post.getImgUrl().split(",");
-                        for(String url:imgurls){
-                            model1.urlList.add(url);
-                        }
-                        model1.username = post.getUsername();
-                        model1.uimg = post.getUimg();
-                        model1.datetime = post.getPcreateTime();/*DateTimeUtil.handlerDateTime(post.getPcreateTime());*/
-                        model1.content = post.getContent();
-                        mList.add(model1);
-                    }
+                    mAdapter.setList(posts);
                     Message message = new Message();
                     message.what = MoBanInterface.NOTIFY;
                     handler.sendMessage(message);
                     page++;
+                    //存放文章内容
+/*
+                        setCache(,getContext(),"Text",MODE_PRIVATE);
+                        //存放用户名称
+                        setCache(User_name,getContext(),"username",MODE_PRIVATE);
+                        //存放图片
+                        String dir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/ErGaoJi/images/";
+                        String state = Environment.getExternalStorageState();
+                        //如果状态不是mounted，无法读写
+                        if (!state.equals(Environment.MEDIA_MOUNTED)) {
+                            return;
+                        }
+                        //通过时间来命名
+                        Calendar now = new GregorianCalendar();
+                        SimpleDateFormat simpleDate = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault());
+                        String fileName = simpleDate.format(now.getTime());
+                        try {
+                            File file = new File(dir + fileName + ".jpg");
+                            FileOutputStream out = new FileOutputStream(file);
+                            //mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                            out.flush();
+                            out.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+*/
                 }catch(Exception exception){
                     exception.printStackTrace();
                 }

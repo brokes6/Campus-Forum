@@ -330,12 +330,12 @@ private void showReplyDialog(final int position){
                     /*for(String url:imgurls){
                         model1.urlList.add(url);
                     }*/
-                    model1.username=post.getUsername();
+/*                    model1.username=post.getUsername();
                     model1.uimg=post.getUimg();
                     model1.datetime=post.getPcreateTime();
                     System.out.println("正文内容"+post.getContent());
                     model1.content=post.getContent();
-                    mList.add(model1);
+                    mList.add(model1);*/
                 }
                 page++;
             }

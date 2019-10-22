@@ -10,10 +10,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.bottomnavigationabar2.MyImageView;
+import com.example.bottomnavigationabar2.Post;
 import com.example.bottomnavigationabar2.R;
 import com.example.bottomnavigationabar2.model.NineGridTestModel;
 import com.example.bottomnavigationabar2.view.NineGridTestLayout;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -22,22 +26,28 @@ import java.util.List;
 public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adapter.ViewHolder> {
 
     private Context mContext;
-    private List<NineGridTestModel> mList;
+    private List<Post> mList=new ArrayList<>();
     protected LayoutInflater inflater;
     private static final String TAG = "NineGridTest2Adapter";
-
+    private int postId;
     public NineGridTest2Adapter(Context context) {
         mContext = context;
         inflater = LayoutInflater.from(context);
     }
 
-    public void setList(List<NineGridTestModel> list) {
-        mList = list;
+    public void setList(List<Post> list) {
+        mList.addAll(list);
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View convertView = inflater.inflate(R.layout.item_bbs_nine_grid, parent, false);
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "onClick: 随便响应"+postId);
+            }
+        });
         ViewHolder viewHolder = new ViewHolder(convertView);
         Log.i(TAG, "onCreateViewHolder:111");
         return viewHolder;
@@ -46,13 +56,13 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Log.i(TAG, "onBindViewHolder: 开始创建"+position);
-        holder.content.setText(Html.fromHtml(mList.get(position).content));
-        System.out.println("textView的内容"+holder.content.getText());
-        holder.datetime.setText(mList.get(position).datetime);
-        holder.uimg.setImageURL(mList.get(position).uimg);
-        holder.username.setText(mList.get(position).username);
-        holder.layout.setIsShowAll(mList.get(position).isShowAll);
-        holder.layout.setUrlList(mList.get(position).urlList);
+        holder.content.setText(Html.fromHtml(mList.get(position).getContent()));
+        holder.datetime.setText(mList.get(position).getPcreateTime());
+        holder.uimg.setImageURL(mList.get(position).getUimg());
+        holder.username.setText(mList.get(position).getUsername());
+        holder.layout.setIsShowAll(mList.get(position).isShowAll());
+        holder.layout.setUrlList(Arrays.asList(mList.get(position).getImgUrl().split(",")));
+        postId=mList.get(position).getPid();
     }
 
     @Override
@@ -63,11 +73,8 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
     public class ViewHolder extends RecyclerView.ViewHolder {
         NineGridTestLayout layout;
         TextView username;
-
         MyImageView uimg;
-
         TextView datetime;
-
         TextView content;
         public ViewHolder(View itemView) {
             super(itemView);
@@ -76,14 +83,17 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
             uimg=itemView.findViewById(R.id.tieze_user_img);
             datetime=itemView.findViewById(R.id.tiezi_time);
             content=itemView.findViewById(R.id.tieze_Text);
-
         }
     }
 
-    private int getListSize(List<NineGridTestModel> list) {
+    private int getListSize(List<Post> list) {
         if (list == null || list.size() == 0) {
             return 0;
         }
         return list.size();
+    }
+    public void clear(){
+        mList=null;
+        mList=new ArrayList<>();
     }
 }

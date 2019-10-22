@@ -19,6 +19,15 @@ public class Post {
     private String imgUrl;
     private String uimg;
     private String username;
+    private boolean isShowAll = false;
+
+    public boolean isShowAll() {
+        return isShowAll;
+    }
+
+    public void setShowAll(boolean showAll) {
+        isShowAll = showAll;
+    }
 
     public String getUimg() {
         return uimg;
