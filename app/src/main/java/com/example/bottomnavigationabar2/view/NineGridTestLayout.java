@@ -17,6 +17,7 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.greenrobot.eventbus.EventBus.TAG;
@@ -29,8 +30,7 @@ import static org.greenrobot.eventbus.EventBus.TAG;
 public class NineGridTestLayout extends NineGridLayout {
 
     protected static final int MAX_W_H_RATIO = 3;
-
-
+    private List<String> detailsImgUrls;
     public NineGridTestLayout(Context context) {
         super(context);
     }
@@ -88,12 +88,17 @@ public class NineGridTestLayout extends NineGridLayout {
 
     @Override
     protected void onClickImage(int i, String url, List<String> urlList) {
-        Log.i(TAG, "onClickImage: 你点击的是"+i);
-        for(String str:urlList){
-            Log.i(TAG, "onClickImage: url="+str);
+        if(detailsImgUrls==null){
+            detailsImgUrls=new ArrayList<>();
+            for(String str:urlList){
+                int index=str.lastIndexOf(".");
+                str=str.substring(0,index-5)+str.substring(index);
+                Log.i(TAG, "onClickImage: str="+str);
+                detailsImgUrls.add(str);
+            }
         }
         Toast.makeText(mContext, "点击了图片" + url, Toast.LENGTH_SHORT).show();
-        EventBus.getDefault().postSticky(urlList);
+        EventBus.getDefault().postSticky(detailsImgUrls);
         Intent intent = new Intent(getContext(), ShowImageActivity.class);
         intent.putExtra("id",i);   //将当前点击的位置传递过去
         getContext().startActivity(intent);     //启动Activity
