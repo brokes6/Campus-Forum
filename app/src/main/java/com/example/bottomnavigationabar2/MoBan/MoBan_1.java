@@ -140,6 +140,11 @@ public class MoBan_1 extends Fragment implements MoBanInterface{
                         model1.datetime = post.getPcreateTime();/*DateTimeUtil.handlerDateTime(post.getPcreateTime());*/
                         model1.content = post.getContent();
                         mList.add(model1);
+
+                        /*
+                        *
+                         */
+
                         String User_name= post.getUsername();
                         String Datails = post.getContent();
                         //存放文章内容
@@ -166,10 +171,6 @@ public class MoBan_1 extends Fragment implements MoBanInterface{
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-
-
-
-
                     }
                     Message message = new Message();
                     message.what = MoBanInterface.NOTIFY;

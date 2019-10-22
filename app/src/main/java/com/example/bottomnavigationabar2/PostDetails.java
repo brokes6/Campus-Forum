@@ -28,6 +28,9 @@ import com.example.bottomnavigationabar2.model.NineGridTestModel;
 import com.example.bottomnavigationabar2.view.CommentExpandableListView;
 import com.example.util.JsonTOBeanUtil;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,6 +41,8 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+
+import static android.support.constraint.Constraints.TAG;
 
 
 public class PostDetails extends AppCompatActivity implements View.OnClickListener{
@@ -320,16 +325,25 @@ private void showReplyDialog(final int position){
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                String dataStr = response.body().string();
-                System.out.println("帖子数据"+dataStr);
-                List<Post> posts= (List<Post>) JsonTOBeanUtil.getBean(Post.class,dataStr);
-                System.out.println("帖子列表长度"+posts.size());
+                try {
+                String responseStr = response.body().string();
+                Log.i(TAG, "onResponse:---"+responseStr);
+                JSONObject jsonObject = new JSONObject(responseStr);
+                int code=jsonObject.getInt("code");
+                if(code==0){
+                    Toast.makeText(PostDetails.this,"别搞拉，去看看其他的地方把",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                String dataStr = jsonObject.getString("data");
+                Gson gson = new Gson();
+                List<Post> posts = gson.fromJson(dataStr, new TypeToken<List<Post>>() {
+                }.getType());
                 for(Post post:posts){
                     NineGridTestModel model1 = new NineGridTestModel();
-                    /*String[]imgurls = post.getImgUrl().split(",");*/
-                    /*for(String url:imgurls){
+                    String[]imgurls = post.getImgUrl().split(",");
+                    for(String url:imgurls){
                         model1.urlList.add(url);
-                    }*/
+                    }
                     model1.username=post.getUsername();
                     model1.uimg=post.getUimg();
                     model1.datetime=post.getPcreateTime();
@@ -338,6 +352,9 @@ private void showReplyDialog(final int position){
                     mList.add(model1);
                 }
                 page++;
+                }catch(Exception exception) {
+                    exception.printStackTrace();
+                }
             }
         });
     }
