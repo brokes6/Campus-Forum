@@ -44,4 +44,11 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    // https://mvnrepository.com/artifact/com.nostra13.universalimageloader/universal-image-loader
+    compile group: 'com.nostra13.universalimageloader', name: 'universal-image-loader', version: '1.9.5'
+    compile 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
+    // https://mvnrepository.com/artifact/com.squareup/otto
+    compile 'org.greenrobot:eventbus:3.0.0'
+
+
 }

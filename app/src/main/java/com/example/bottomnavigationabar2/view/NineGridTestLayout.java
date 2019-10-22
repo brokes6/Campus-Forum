@@ -1,18 +1,26 @@
 package com.example.bottomnavigationabar2.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bottomnavigationabar2.MyImageView;
+import com.example.bottomnavigationabar2.activity.ShowImageActivity;
 import com.example.bottomnavigationabar2.utils.ImageLoaderUtil;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
 import java.util.List;
+
+import static org.greenrobot.eventbus.EventBus.TAG;
 
 /**
  * 描述：
@@ -22,8 +30,7 @@ import java.util.List;
 public class NineGridTestLayout extends NineGridLayout {
 
     protected static final int MAX_W_H_RATIO = 3;
-
-
+    private List<String> detailsImgUrls;
     public NineGridTestLayout(Context context) {
         super(context);
     }
@@ -81,6 +88,19 @@ public class NineGridTestLayout extends NineGridLayout {
 
     @Override
     protected void onClickImage(int i, String url, List<String> urlList) {
+        if(detailsImgUrls==null){
+            detailsImgUrls=new ArrayList<>();
+            for(String str:urlList){
+                int index=str.lastIndexOf(".");
+                str=str.substring(0,index-5)+str.substring(index);
+                Log.i(TAG, "onClickImage: str="+str);
+                detailsImgUrls.add(str);
+            }
+        }
         Toast.makeText(mContext, "点击了图片" + url, Toast.LENGTH_SHORT).show();
+        EventBus.getDefault().postSticky(detailsImgUrls);
+        Intent intent = new Intent(getContext(), ShowImageActivity.class);
+        intent.putExtra("id",i);   //将当前点击的位置传递过去
+        getContext().startActivity(intent);     //启动Activity
     }
 }

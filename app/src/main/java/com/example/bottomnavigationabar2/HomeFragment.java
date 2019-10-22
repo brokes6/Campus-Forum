@@ -29,6 +29,7 @@ import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -87,78 +88,57 @@ public class HomeFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.home_fragment, container, false);
-        Bundle bundle = getArguments();
-        SearchView searchView = (SearchView)view.findViewById(R.id.searchView);
-        realTabLayout = view.findViewById(R.id.tablayout_real);
-        container = view.findViewById(R.id.container);
-        topLayout=view.findViewById(R.id.topLayout);
-        setDefaultFragment();
-        //实际的tablayout的点击切换
-        viewPager=view.findViewById(R.id.viewPager);
-        viewPager.setAdapter(mainTabFragmentAdapter);
-        viewPager.setOffscreenPageLimit(mainTabFragmentAdapter.getCount());
-        topLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                topLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                Log.i(TAG, "onGlobalLayout: height="+topLayout.getHeight());
-                topLayoutHeight=topLayout.getHeight();
-            }
-        });
-        /*realTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                Toast.makeText(getContext(),"以点击"+tab.getText().toString(),Toast.LENGTH_SHORT).show();
-                FragmentManager fm = getActivity().getFragmentManager();
-                //开启事务
-                FragmentTransaction transaction = fm.beginTransaction();
-                Log.i(TAG, "onTabSelected: 点击的是"+tab.getText().toString());
-                switch (tab.getText().toString()){
-                    case "热门":
-                        if (moban1 == null) {
-                            moban1=new MoBan_1();
-                            moBanInterface=moban1;
-                        }
-                        transaction.replace(R.id.container,moban1);
-                        break;
-                    case "最新":
-                        if (moban2 == null) {
-                            moban2=new MoBan_2();
-                            moBanInterface=moban2;
-                        }
-                        transaction.replace(R.id.container,moban2);
-                        break;
-                    case "推荐":
-                        if (moban3 == null) {
-                            moban3=new MoBan_3();
-                            moBanInterface=moban3;
-                        }
-                        transaction.replace(R.id.container,moban3);
-                        break;
+        if(view==null) {
+            Log.i(TAG, "onCreateView: 开始创建");
+            view = inflater.inflate(R.layout.home_fragment, container, false);
+            Bundle bundle = getArguments();
+            SearchView searchView = (SearchView) view.findViewById(R.id.searchView);
+            realTabLayout = view.findViewById(R.id.tablayout_real);
+            container = view.findViewById(R.id.container);
+            topLayout = view.findViewById(R.id.topLayout);
+            setDefaultFragment();
+            //实际的tablayout的点击切换
+            viewPager = view.findViewById(R.id.viewPager);
+            viewPager.setAdapter(mainTabFragmentAdapter);
+            viewPager.setOffscreenPageLimit(mainTabFragmentAdapter.getCount());
+            viewPager.setOffscreenPageLimit(1);
+            topLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    topLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    Log.i(TAG, "onGlobalLayout: height=" + topLayout.getHeight());
+                    topLayoutHeight = topLayout.getHeight();
                 }
-                transaction.commit();
+            });
+            realTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    Toast.makeText(getContext(), "以点击" + tab.getText().toString(), Toast.LENGTH_SHORT).show();
+                    Log.i(TAG, "onTabSelected: 点击的是" + tab.getPosition());
+                    viewPager.setCurrentItem(tab.getPosition());
+                    moBanInterface = (MoBanInterface) mainTabFragmentAdapter.fragments.get(tab.getPosition());
+                }
+
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+
+                }
+            });
+            searchView.setQueryHint("请输入搜索内容");
+            searchView.setIconifiedByDefault(false);
+            for (int i = 0; i < tabTxt.length; i++) {
+                realTabLayout.addTab(realTabLayout.newTab().setText(tabTxt[i]));
             }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });*/
-        searchView.setQueryHint("请输入搜索内容");
-        searchView.setIconifiedByDefault(false);
-        for (int i = 0; i < tabTxt.length; i++) {
-            realTabLayout.addTab(realTabLayout.newTab().setText(tabTxt[i]));
+            initData();
+            initView();
+            initRefreshLayout();
+            initAppBarLayout();
         }
-        initData();
-        initView();
-        initRefreshLayout();
-        initAppBarLayout();
         return view;
     }
     private void initData() {
@@ -231,6 +211,8 @@ public class HomeFragment extends Fragment {
     }
     private void setDefaultFragment() {
         mainTabFragmentAdapter = new MainTabFragmentAdapter(((AppCompatActivity)getActivity()).getSupportFragmentManager(),getActivity());
+        moBanInterface= (MoBanInterface) mainTabFragmentAdapter.getItem(0);
+        Log.i(TAG, "setDefaultFragment: 11111111111");
     }
 
     public boolean isFlag() {
@@ -276,8 +258,11 @@ public class HomeFragment extends Fragment {
                 AppBarLayout.LayoutParams mParams = (AppBarLayout.LayoutParams)topLayout.getLayoutParams();
                 mParams.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL| AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
                 topLayout.setLayoutParams(mParams);
+                refreshLayout.setEnableLoadMore(false);
+                refreshLayout.setEnableRefresh(false);
+
             }
-        },300);
+        },10);
     }
     public void initRefreshLayout(){
         refreshLayout = view.findViewById(R.id.refreshLayout);
@@ -287,9 +272,37 @@ public class HomeFragment extends Fragment {
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-
+                Log.i(TAG, "onLoadMore: 下拉刷新");
+                refreshLayout.autoLoadMore();
+                moBanInterface.getPostList();
+                refreshLayout.finishLoadMore();
             }
         });
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                Log.i(TAG, "onRefresh: 上拉加载");
+                refreshLayout.autoRefresh();
+                moBanInterface.clearList();
+                moBanInterface.getPostList();
+                refreshLayout.finishRefresh();
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i(TAG, "onResume: 冲冲冲");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.i(TAG, "onDestroyView: ?????");
+        if(view!=null){
+            ((ViewGroup)view.getParent()).removeView(view);
+        }
     }
 }
 

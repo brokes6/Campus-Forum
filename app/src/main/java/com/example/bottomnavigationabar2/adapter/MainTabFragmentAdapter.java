@@ -4,10 +4,12 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.util.Log;
 
 import com.example.bottomnavigationabar2.MoBan.MoBan_1;
 import com.example.bottomnavigationabar2.MoBan.MoBan_2;
 import com.example.bottomnavigationabar2.MoBan.MoBan_3;
+import com.example.bottomnavigationabar2.MoBan.MoBan_4;
 
 import java.util.ArrayList;
 
@@ -15,11 +17,12 @@ public class MainTabFragmentAdapter extends FragmentStatePagerAdapter {
     public ArrayList<Fragment> fragments;
     public Context mContext;
     private String[] titles;
-
+    private static final String TAG = "MainTabFragmentAdapter";
     public MainTabFragmentAdapter(FragmentManager fm, Context context) {
         super(fm);
         mContext = context;
         initFragments();
+        Log.i(TAG, "MainTabFragmentAdapter: 又要初始化？");
     }
 
     public MainTabFragmentAdapter(FragmentManager fm) {
@@ -48,6 +51,7 @@ public class MainTabFragmentAdapter extends FragmentStatePagerAdapter {
         fragments.add(new MoBan_1());
         fragments.add(new MoBan_2());
         fragments.add(new MoBan_3());
+        fragments.add(new MoBan_4());
     }
 
     @Override
