@@ -36,7 +36,10 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static android.content.Context.MODE_PRIVATE;
 import static android.support.constraint.Constraints.TAG;
+import static android.view.View.MEASURED_SIZE_MASK;
+import static com.example.bottomnavigationabar2.utils.FileCacheUtil.setCache;
 
 public class MoBan_1 extends Fragment implements MoBanInterface{
     private static final String ARG_LIST = "list";
@@ -125,6 +128,10 @@ public class MoBan_1 extends Fragment implements MoBanInterface{
                         model1.datetime = post.getPcreateTime();/*DateTimeUtil.handlerDateTime(post.getPcreateTime());*/
                         model1.content = post.getContent();
                         mList.add(model1);
+                        String User_name= post.getUsername();
+                        String Datails = post.getContent();
+                        setCache(Datails,getContext(),"Text",MODE_PRIVATE);
+                        setCache(Datails,getContext(),"Text",MODE_PRIVATE);
                     }
                     Message message = new Message();
                     message.what = MoBanInterface.NOTIFY;
