@@ -1,18 +1,25 @@
 package com.example.bottomnavigationabar2.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bottomnavigationabar2.MyImageView;
+import com.example.bottomnavigationabar2.activity.ShowImageActivity;
 import com.example.bottomnavigationabar2.utils.ImageLoaderUtil;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
+
+import static org.greenrobot.eventbus.EventBus.TAG;
 
 /**
  * 描述：
@@ -81,6 +88,14 @@ public class NineGridTestLayout extends NineGridLayout {
 
     @Override
     protected void onClickImage(int i, String url, List<String> urlList) {
+        Log.i(TAG, "onClickImage: 你点击的是"+i);
+        for(String str:urlList){
+            Log.i(TAG, "onClickImage: url="+str);
+        }
         Toast.makeText(mContext, "点击了图片" + url, Toast.LENGTH_SHORT).show();
+        EventBus.getDefault().postSticky(urlList);
+        Intent intent = new Intent(getContext(), ShowImageActivity.class);
+        intent.putExtra("id",i);   //将当前点击的位置传递过去
+        getContext().startActivity(intent);     //启动Activity
     }
 }

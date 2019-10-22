@@ -495,7 +495,7 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
         message.what = 1;
         handler.sendMessage(message);
     }
-
+    //暂时有问题 服务器图片长度设置过小 弄大点
     public void netUploadPost() throws FileNotFoundException {//用jsonOject方式转string传递其他参数
         Log.i(TAG, "netUploadPost: " + mEditor.getHtml());
         try {

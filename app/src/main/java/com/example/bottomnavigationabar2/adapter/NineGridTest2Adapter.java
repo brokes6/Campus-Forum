@@ -2,6 +2,7 @@ package com.example.bottomnavigationabar2.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +46,7 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Log.i(TAG, "onBindViewHolder: 开始创建"+position);
-        holder.content.setText(mList.get(position).content);
+        holder.content.setText(Html.fromHtml(mList.get(position).content));
         System.out.println("textView的内容"+holder.content.getText());
         holder.datetime.setText(mList.get(position).datetime);
         holder.uimg.setImageURL(mList.get(position).uimg);
