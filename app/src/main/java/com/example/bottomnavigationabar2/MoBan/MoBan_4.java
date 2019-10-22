@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,7 +18,6 @@ import com.example.bottomnavigationabar2.Post;
 import com.example.bottomnavigationabar2.R;
 import com.example.bottomnavigationabar2.adapter.NineGridTest2Adapter;
 import com.example.bottomnavigationabar2.model.NineGridTestModel;
-/*import com.example.util.DateTimeUtil;*/
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -38,7 +36,7 @@ import okhttp3.Response;
 
 import static android.support.constraint.Constraints.TAG;
 
-public class MoBan_1 extends Fragment implements MoBanInterface{
+public class MoBan_4 extends Fragment implements MoBanInterface {
     private static final String ARG_LIST = "list";
     private int page=1;
     private MoBan_1 moBan_1=null;
@@ -52,8 +50,8 @@ public class MoBan_1 extends Fragment implements MoBanInterface{
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case MoBanInterface.NOTIFY:
-                        mAdapter.notifyDataSetChanged();
-                        break;
+                    mAdapter.notifyDataSetChanged();
+                    break;
                 case MoBanInterface.SHOWTOAST:
                     Toast.makeText(getContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
 
@@ -119,8 +117,8 @@ public class MoBan_1 extends Fragment implements MoBanInterface{
                         NineGridTestModel model1 = new NineGridTestModel();
                         String[]imgurls = post.getImgUrl().split(",");
                         for(String url:imgurls){
-                        model1.urlList.add(url);
-                    }
+                            model1.urlList.add(url);
+                        }
                         model1.username = post.getUsername();
                         model1.uimg = post.getUimg();
                         model1.datetime = post.getPcreateTime();/*DateTimeUtil.handlerDateTime(post.getPcreateTime());*/

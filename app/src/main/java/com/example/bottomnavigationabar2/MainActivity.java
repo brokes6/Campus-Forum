@@ -141,6 +141,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         switch (position) {
             case 0:
                 if (mHomeFragment == null) {
+                    Log.i(TAG, "onTabSelected:进入");
                     mHomeFragment = HomeFragment.newInstance("首页");
                 }
                 transaction.replace(R.id.tb, mHomeFragment);
