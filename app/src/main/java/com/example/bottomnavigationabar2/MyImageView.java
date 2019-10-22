@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -18,6 +19,15 @@ public class MyImageView extends ImageView {
     public static final int NETWORK_ERROR = 2;
     public static final int SERVER_ERROR = 3;
     private int id;
+    private Bitmap bitmap;
+
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
+
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
+    }
 
     @Override
     public int getId() {
@@ -36,6 +46,7 @@ public class MyImageView extends ImageView {
             switch (msg.what){
                 case GET_DATA_SUCCESS:
                     Bitmap bitmap = (Bitmap) msg.obj;
+                    setBitmap(bitmap);
                     setImageBitmap(bitmap);
                     break;
                 case NETWORK_ERROR:
@@ -100,4 +111,8 @@ public class MyImageView extends ImageView {
         }.start();
     }
 
+    @Override
+    public void setOnClickListener(@Nullable OnClickListener l) {
+        super.setOnClickListener(l);
+    }
 }

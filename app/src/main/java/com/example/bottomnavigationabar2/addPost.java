@@ -247,6 +247,7 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
             public void onClick(DialogInterface dialog, int item) {
                 // 这里item是根据选择的方式，
                 if (item == 0) {
+                    Log.i(TAG, "onClick: 相册啊");
                     Intent intent = new Intent(Intent.ACTION_PICK);
                     intent.setType("image/*");
                     //备份
@@ -267,7 +268,6 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
                     } else {
                         openAlbum();
                     }
-
                 } else {
                     try {
                         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
@@ -283,7 +283,7 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
 
     //打开相册功能
     private void openAlbum() {
-        Intent intent = new Intent("android.intent.action.GET_CONTENT");
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.setType("image/*");
         startActivityForResult(intent, 0); // 打开相册
     }
@@ -495,7 +495,7 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
         message.what = 1;
         handler.sendMessage(message);
     }
-
+    //暂时有问题 服务器图片长度设置过小 弄大点
     public void netUploadPost() throws FileNotFoundException {//用jsonOject方式转string传递其他参数
         Log.i(TAG, "netUploadPost: " + mEditor.getHtml());
         try {

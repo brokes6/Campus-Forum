@@ -38,6 +38,7 @@ public class DatailsText extends LinearLayout {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), PostDetails.class);
                 getContext().startActivity(intent);
+
             }
         });
         //收藏的点击事件

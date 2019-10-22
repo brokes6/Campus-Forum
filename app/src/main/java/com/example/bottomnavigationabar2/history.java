@@ -34,6 +34,7 @@ public class history extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
+                overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
             }
         });
 
@@ -42,7 +43,6 @@ public class history extends AppCompatActivity {
          * 这两段代码只有在布局里添加了上拉和下拉的代码才有效果
          */
         smartRefreshLayout1.setRefreshFooter(new BallPulseFooter(this).setSpinnerStyle(SpinnerStyle.Scale));
-
         //上拉加载
         smartRefreshLayout1.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
