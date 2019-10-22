@@ -2,10 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.bottomnavigationabar2.PostDetails">
+    <include layout="@layout/title" />
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/main_content"
         android:layout_width="match_parent"
@@ -106,27 +106,10 @@
                             android:layout_margin="12dp"
                             android:padding="6dp"/>
                     </LinearLayout>
-                    <TextView
-                        android:id="@+id/detail_page_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="诗和远方"
-                        android:layout_marginLeft="18dp"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginBottom="6dp"
-                        android:textSize="18sp"
-                        android:textColor="#363636"/>
-                    <TextView
-                        android:id="@+id/detail_page_story"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="18dp"
-                        android:text="水光潋滟晴方好，山色空蒙雨亦奇。\n欲把西湖比西子，淡抹浓妆总相宜。"
-                        android:maxLines="10"
-                        android:ellipsize="end"
-                        android:layout_marginRight="10dp"
-                        android:textSize="14sp"
-                        android:textColor="#6e6e6e"/>
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"

@@ -142,7 +142,7 @@ public class MoBan_1 extends Fragment implements MoBanInterface{
                         mList.add(model1);
 
                         /*
-                        *
+                        *文件存储
                          */
 
                         String User_name= post.getUsername();
