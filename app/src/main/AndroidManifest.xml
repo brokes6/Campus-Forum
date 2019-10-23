@@ -36,6 +36,7 @@
         <activity android:name=".MainActivity">
         </activity>
         <activity android:name=".WebDataActivity" />
+        <activity android:name=".Personal_information"/>
         <activity android:name=".activity.ShowImageActivity"/>
         <provider
             android:name="android.support.v4.content.FileProvider"
