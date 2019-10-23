@@ -347,7 +347,7 @@ public class HomeFragment extends Fragment {
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                Log.i(TAG, "onLoadMore: 下拉刷新");
+                Log.i(TAG, "onLoadMore: 下拉加载");
                 refreshLayout.autoLoadMore();
                 moBanInterface.getPostList();
                 refreshLayout.finishLoadMore();
@@ -356,7 +356,7 @@ public class HomeFragment extends Fragment {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                Log.i(TAG, "onRefresh: 上拉加载");
+                Log.i(TAG, "onRefresh: 上拉刷新");
                 refreshLayout.autoRefresh();
                 moBanInterface.clearList();
                 moBanInterface.getPostList();

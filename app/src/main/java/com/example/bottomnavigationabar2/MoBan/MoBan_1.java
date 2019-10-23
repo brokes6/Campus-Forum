@@ -60,7 +60,7 @@ public class MoBan_1 extends Fragment implements MoBanInterface{
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private NineGridTest2Adapter mAdapter;
-    private List<NineGridTestModel> mList = new ArrayList<>();
+    private List<Post> mList = new ArrayList<>();
     private View view;
     private Handler handler=new Handler(){
         @Override
@@ -89,7 +89,6 @@ public class MoBan_1 extends Fragment implements MoBanInterface{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView: ------------");
         view = inflater.inflate(R.layout.mo_ban_1, container, false);
-//        Toast.makeText(getContext(),"gogogo",Toast.LENGTH_SHORT).show();
         initView();
         getPostList();
         return view;
@@ -99,7 +98,6 @@ public class MoBan_1 extends Fragment implements MoBanInterface{
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new NineGridTest2Adapter(getContext());
-        Log.i(TAG, "initView: "+mList.size());
         mAdapter.setList(mList);
         mRecyclerView.setAdapter(mAdapter);
     }
@@ -129,26 +127,14 @@ public class MoBan_1 extends Fragment implements MoBanInterface{
                     Gson gson = new Gson();
                     List<Post> posts = gson.fromJson(dataStr, new TypeToken<List<Post>>() {
                     }.getType());
-                    for (Post post : posts) {
-                        NineGridTestModel model1 = new NineGridTestModel();
-                        String[]imgurls = post.getImgUrl().split(",");
-                        for(String url:imgurls){
-                        model1.urlList.add(url);
-                    }
-                        model1.username = post.getUsername();
-                        model1.uimg = post.getUimg();
-                        model1.datetime = post.getPcreateTime();/*DateTimeUtil.handlerDateTime(post.getPcreateTime());*/
-                        model1.content = post.getContent();
-                        mList.add(model1);
-
-                        /*
-                        *文件存储
-                         */
-
-                        String User_name= post.getUsername();
-                        String Datails = post.getContent();
+                    mAdapter.setList(posts);
+                    Message message = new Message();
+                    message.what = MoBanInterface.NOTIFY;
+                    handler.sendMessage(message);
+                    page++;
                         //存放文章内容
-                        setCache(Datails,getContext(),"Text",MODE_PRIVATE);
+/*
+                        setCache(,getContext(),"Text",MODE_PRIVATE);
                         //存放用户名称
                         setCache(User_name,getContext(),"username",MODE_PRIVATE);
                         //存放图片
@@ -171,11 +157,7 @@ public class MoBan_1 extends Fragment implements MoBanInterface{
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                    }
-                    Message message = new Message();
-                    message.what = MoBanInterface.NOTIFY;
-                    handler.sendMessage(message);
-                    page++;
+*/
                 }catch(Exception exception){
                     exception.printStackTrace();
                 }
@@ -186,6 +168,9 @@ public class MoBan_1 extends Fragment implements MoBanInterface{
     @Override
     public void clearList() {
         mList.clear();
+        mList=new ArrayList<>();
+        mAdapter = new NineGridTest2Adapter(getContext());
+        mRecyclerView.setAdapter(mAdapter);
         page=1;
     }
 

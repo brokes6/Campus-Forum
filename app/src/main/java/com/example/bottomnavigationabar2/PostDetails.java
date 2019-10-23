@@ -1,18 +1,25 @@
 package com.example.bottomnavigationabar2;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Rect;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
@@ -26,14 +33,17 @@ import com.example.bottomnavigationabar2.bean.CommentDetailBean;
 import com.example.bottomnavigationabar2.bean.ReplyDetailBean;
 import com.example.bottomnavigationabar2.model.NineGridTestModel;
 import com.example.bottomnavigationabar2.view.CommentExpandableListView;
+import com.example.bottomnavigationabar2.view.NineGridTestLayout;
 import com.example.util.JsonTOBeanUtil;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.google.gson.JsonObject;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import okhttp3.Call;
@@ -42,11 +52,10 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static android.support.constraint.Constraints.TAG;
-
 
 public class PostDetails extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "MainActivity";
+    public static final int HANDLER_DATA=1;
     private android.support.v7.widget.Toolbar toolbar;
     private TextView bt_comment;
     private CommentExpandableListView expandableListView;
@@ -56,6 +65,25 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
     private List<CommentDetailBean> commentsList;
     private List<NineGridTestModel> mList = new ArrayList<>();
     private BottomSheetDialog dialog;
+    private TextView username;
+    private TextView dateTime;
+    private TextView content;
+    private NineGridTestLayout nineGridTestLayout;
+    private  Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            Post post = (Post) msg.obj;
+            switch (msg.what){
+                case HANDLER_DATA:
+                    username.setText(post.getUsername());
+                    dateTime.setText(post.getPcreateTime());
+                    content.setText(Html.fromHtml(post.getContent()));
+                    nineGridTestLayout.setUrlList(Arrays.asList(post.getImgUrl().split(",")));
+                    nineGridTestLayout.setIsShowAll(post.isShowAll());
+                    break;
+            }
+        }
+    };
     //图片
     private String[] mUrls = new String[]{
             "http://106.54.134.17/image/topicalimg/test.png",
@@ -125,12 +153,13 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.post_details);
         ActionBar actionbar = getSupportActionBar();
         if (actionbar != null) {
             actionbar.hide();
         }
-        getPostList();
+        initDetailsLayout();
         initView();
     }
     //初始化
@@ -142,8 +171,6 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         commentsList = generateTestData();
         initExpandableListView(commentsList);
     }
-
-
 
     private void initExpandableListView(final List<CommentDetailBean> commentList){
         expandableListView.setGroupIndicator(null);
@@ -214,8 +241,8 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
      * 方法：弹出评论框
      */
     private void showCommentDialog(){
-        dialog = new BottomSheetDialog(this);
-        View commentView = LayoutInflater.from(this).inflate(R.layout.comment_dialog_layout,null);
+        dialog = new BottomSheetDialog(this,R.style.BottomSheetEdit);
+        final View commentView = LayoutInflater.from(this).inflate(R.layout.comment_dialog_layout,null);
         final EditText commentText = (EditText) commentView.findViewById(R.id.dialog_comment_et);
         final Button bt_comment = (Button) commentView.findViewById(R.id.dialog_comment_bt);
         dialog.setContentView(commentView);
@@ -226,6 +253,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         View parent = (View) commentView.getParent();
         BottomSheetBehavior behavior = BottomSheetBehavior.from(parent);
         commentView.measure(0,0);
+        Log.i(TAG, "showCommentDialog:height="+commentView.getMeasuredHeight());
         behavior.setPeekHeight(commentView.getMeasuredHeight());
         //commentView.getMeasuredHeight()获得的参数是 632 嘻嘻
         bt_comment.setOnClickListener(new View.OnClickListener() {
@@ -311,9 +339,9 @@ private void showReplyDialog(final int position){
     });
     dialog.show();
 }
-    private void getPostList(){
+    private void getPostById(int postId){
         final Request request = new Request.Builder()
-                .url("http://106.54.134.17/app/getPopularPost?startPage="+page)
+                .url("http://106.54.134.17/app/getPostDetailsById?postId="+postId)
                 .build();
         OkHttpClient okHttpClient = new OkHttpClient();
         okHttpClient.newCall(request).enqueue(new Callback() {
@@ -322,43 +350,47 @@ private void showReplyDialog(final int position){
                 e.printStackTrace();
                 Log.d(TAG, "onFailure:失败呃");
             }
-
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                String dataStr = response.body().string();
+                System.out.println("帖子数据"+dataStr);
+                JSONObject jsonObject = null;
                 try {
-                String responseStr = response.body().string();
-                Log.i(TAG, "onResponse:---"+responseStr);
-                JSONObject jsonObject = new JSONObject(responseStr);
-                int code=jsonObject.getInt("code");
-                if(code==0){
-                    Toast.makeText(PostDetails.this,"别搞拉，去看看其他的地方把",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                String dataStr = jsonObject.getString("data");
-                Gson gson = new Gson();
-                List<Post> posts = gson.fromJson(dataStr, new TypeToken<List<Post>>() {
-                }.getType());
-                for(Post post:posts){
-                    NineGridTestModel model1 = new NineGridTestModel();
-                    String[]imgurls = post.getImgUrl().split(",");
-                    for(String url:imgurls){
-                        model1.urlList.add(url);
+                    jsonObject = new JSONObject(dataStr);
+                    int code = jsonObject.getInt("code");
+                    if(code==0){
+                        Log.i(TAG, "onResponse:失败咯");
+                        return;
                     }
-                    model1.username=post.getUsername();
-                    model1.uimg=post.getUimg();
-                    model1.datetime=post.getPcreateTime();
-                    System.out.println("正文内容"+post.getContent());
-                    model1.content=post.getContent();
-                    mList.add(model1);
-                }
-                page++;
-                }catch(Exception exception) {
-                    exception.printStackTrace();
+                    Gson gson = new Gson();
+                    Post post = gson.fromJson(jsonObject.getString("data"),Post.class);
+                    if(post==null){
+                        Log.i(TAG, "onResponse: 解析json数据失败");
+                        return;
+                    }
+                    handlerData(post);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
         });
     }
-
-
-
+    private void initDetailsLayout(){
+        username=findViewById(R.id.tiezi_username);
+        dateTime=findViewById(R.id.tiezi_time);
+        content=findViewById(R.id.tieze_Text);
+        nineGridTestLayout=findViewById(R.id.layout_nine_grid);
+        int id = getPostId();
+        getPostById(id);
+    }
+    private int getPostId(){
+        Intent intent = getIntent();
+        return intent.getIntExtra("postId",-1);
+    }
+    private void handlerData(Post post){
+        Message message=new Message();
+        message.what=HANDLER_DATA;
+        message.obj=post;
+        handler.sendMessage(message);
+    }
 }

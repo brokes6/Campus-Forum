@@ -55,84 +55,11 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <LinearLayout
-                    android:id="@+id/detail_page_above_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+        <!--详细页组件-->
+                <include layout="@layout/item_bbs_nine_grid"
+                    android:id="@+id/detail_page_above_container"/>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginBottom="10dp"
-                        android:gravity="center_vertical">
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/detail_page_userLogo"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@drawable/user_logo"
-                            android:layout_marginLeft="16dp"
-                            app:civ_border_width="1dp"
-                            app:civ_border_color="@android:color/white"/>
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginLeft="6dp"
-                            android:orientation="vertical">
-                            <TextView
-                                android:id="@+id/detail_page_userName"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="#5B595A"
-                                android:textSize="14sp"
-                                android:text="沐风" />
-                            <TextView
-                                android:id="@+id/detail_page_time"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="1小时前"
-                                android:textSize="12sp"
-                                android:layout_marginTop="3dp"
-                                android:textColor="#989898"/>
-                        </LinearLayout>
-                        <ImageView
-                            android:id="@+id/detail_page_focus"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:src="@drawable/icon_focus"
-                            android:layout_margin="12dp"
-                            android:padding="6dp"/>
-                    </LinearLayout>
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/recyclerView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginRight="16dp"
-                        android:layout_marginLeft="16dp"
-                        android:background="#e6e6e6"/>
-
-                    <com.example.bottomnavigationabar2.view.NineGridTestLayout
-                        xmlns:app="http://schemas.android.com/apk/res-auto"
-                        android:id="@+id/layout_nine_grid"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        app:sapcing="4dp" />
-
-                </LinearLayout>
-
-
-
-
-
-
+                <!--评论组件-->
                 <LinearLayout
                     android:id="@+id/detail_page_comment_container"
                     android:layout_below="@+id/detail_page_above_container"
@@ -155,6 +82,8 @@
         </android.support.v4.widget.NestedScrollView>
     </android.support.design.widget.CoordinatorLayout>
 
+
+    <!--输入框组件-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="58dp"

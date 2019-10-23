@@ -23,18 +23,76 @@ import java.util.List;
 public class NineGridTestModel implements Serializable {
     private static final long serialVersionUID = 2189052605715370758L;
 
-    public List<String> urlList = new ArrayList<>();
+    private List<String> urlList = new ArrayList<>();
 
-    public String username;
+    private String username;
 
-    public String uimg;
+    private String uimg;
 
-    public String datetime;
+    private String datetime;
 
-    public String content;
+    private String content;
 
-    public boolean isShowAll = false;
+    private boolean isShowAll = false;
 
+    private int postId;
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
 
+    public List<String> getUrlList() {
+        return urlList;
+    }
 
+    public void setUrlList(List<String> urlList) {
+        this.urlList = urlList;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUimg() {
+        return uimg;
+    }
+
+    public void setUimg(String uimg) {
+        this.uimg = uimg;
+    }
+
+    public String getDatetime() {
+        return datetime;
+    }
+
+    public void setDatetime(String datetime) {
+        this.datetime = datetime;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public boolean isShowAll() {
+        return isShowAll;
+    }
+
+    public void setShowAll(boolean showAll) {
+        isShowAll = showAll;
+    }
+
+    public int getPostId() {
+        return postId;
+    }
+
+    public void setPostId(int postId) {
+        this.postId = postId;
+    }
 }
