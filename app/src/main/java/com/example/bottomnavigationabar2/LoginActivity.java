@@ -1,5 +1,7 @@
 package com.example.bottomnavigationabar2;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -17,6 +19,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -36,21 +39,30 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity {
-
+    private static final String TAG = "LoginActivity";
         EditText username;
         EditText password;
         String user = null;
         User userData;
         String pass = null;
+        private Context mContext;
+        private Activity mActivity;
         private CheckBox autologin;
         private CheckBox remembermima;
         private IntentFilter intentFilter;
         private NetworkChangeReceiver networkChangeReceiver;
         private SharedPreferences sp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ActionBar actionbar = getSupportActionBar();
+        if (actionbar != null) {
+            actionbar.hide();
+        }
+        mContext = this;
+        mActivity = this;
         //过度效果(没写)
         intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
@@ -139,8 +151,6 @@ public class LoginActivity extends AppCompatActivity {
                     userData = JsonTOBeanUtil.getBeanSingleData(User.class,responseData);
                     if (userData==null) {
                             Toast.makeText(LoginActivity.this, "账号没有注册", Toast.LENGTH_SHORT).show();
-                            Intent intent_denglu = new Intent(LoginActivity.this, RegisterActivity.class);
-                            startActivity(intent_denglu);
                     }
                     else{
                             editor.putString("USER_NAME", user);
@@ -159,14 +169,25 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             editor.commit();
                             //跳转
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
+                            initEvent();
                     }
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }).start();
+    }
+    private void initEvent() {
+        findViewById(R.id.denglu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /**
+                 * 注意这里，没有带共享元素哦(共享元素的打算放到下面讲)
+                 */
+                ActivityOptions compat = ActivityOptions.makeSceneTransitionAnimation(mActivity);
+                startActivity(new Intent(mContext, MainActivity.class), compat.toBundle());
+            }
+        });
     }
 
     @Override
