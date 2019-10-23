@@ -16,7 +16,6 @@ public class User {
     private String uimg;
     private String usign;
     private String token;
-
     public Integer getUid() {
         return uid;
     }

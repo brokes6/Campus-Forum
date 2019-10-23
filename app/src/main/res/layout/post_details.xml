@@ -56,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
         <!--详细页组件-->
-                <include layout="@layout/item_bbs_nine_grid"
+                <include layout="@layout/item_inside"
                     android:id="@+id/detail_page_above_container"/>
 
                 <!--评论组件-->
