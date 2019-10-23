@@ -1,5 +1,7 @@
 package com.example.bottomnavigationabar2;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -10,9 +12,15 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
+import android.transition.Explode;
+import android.transition.Slide;
+import android.transition.Transition;
+import android.transition.TransitionSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
@@ -51,6 +59,8 @@ public class HomeFragment extends Fragment {
     private ArrayList<Integer> imagePath;
     private ArrayList<String> imageTitle;
     private View view;
+    private View mViewBackgroundTop;
+    private View mViewBackgroundBottom;
     private MoBanInterface moBanInterface;
     /**
      * 实际操作的tablayout，
@@ -89,7 +99,6 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         if(view==null) {
-            Log.i(TAG, "onCreateView: 开始创建");
             view = inflater.inflate(R.layout.home_fragment, container, false);
             Bundle bundle = getArguments();
             SearchView searchView = (SearchView) view.findViewById(R.id.searchView);
@@ -139,7 +148,73 @@ public class HomeFragment extends Fragment {
             initRefreshLayout();
             initAppBarLayout();
         }
+        mViewBackgroundTop =view.findViewById(R.id.appbar);
+        mViewBackgroundBottom =view.findViewById(R.id.viewPager);
+        initTransition();
         return view;
+    }
+    //初始化动画
+    private void initTransition() {
+        final TransitionSet transitionSet = new TransitionSet();
+        Slide slide = new Slide(Gravity.BOTTOM);
+        slide.addTarget(R.id.banner);
+        transitionSet.addTransition(slide);
+        //初始化Explode
+        Explode explode = new Explode();
+        explode.excludeTarget(android.R.id.statusBarBackground, true);
+        explode.excludeTarget(android.R.id.navigationBarBackground, true);
+        //将上半部分添加进来
+        explode.excludeTarget(R.id.banner, true);
+        //将Explode添加进Transition中
+        transitionSet.addTransition(explode);
+        //设置Transition的 Ordering
+        transitionSet.setOrdering(TransitionSet.ORDERING_SEQUENTIAL);
+        //android获取屏幕大小宽度的（ getWindow（） ）
+        getActivity().getWindow().setEnterTransition(transitionSet);
+        transitionSet.addListener(new Transition.TransitionListener() {
+            @Override
+            public void onTransitionStart(Transition transition) {
+                //动画开始
+                //指定上半部分的动画效果
+                mViewBackgroundTop.setVisibility(View.GONE);
+                //指定下半部分的动画效果
+                mViewBackgroundBottom.setVisibility(View.GONE);
+            }
+            @Override
+            public void onTransitionEnd(Transition transition) {
+                mViewBackgroundTop.setVisibility(View.VISIBLE);
+                //指定下半部分view的结束动画
+                mViewBackgroundBottom.setVisibility(View.VISIBLE);
+                Animator animationTop = ViewAnimationUtils.createCircularReveal(mViewBackgroundTop,
+                        mViewBackgroundTop.getWidth() / 2,
+                        mViewBackgroundTop.getHeight() / 2,
+                        0, Math.max(mViewBackgroundTop.getWidth() / 2,
+                                mViewBackgroundTop.getHeight() / 2));
+                Animator animationBottom = ViewAnimationUtils.createCircularReveal(mViewBackgroundBottom,
+                        mViewBackgroundBottom.getWidth(),
+                        mViewBackgroundBottom.getHeight(),
+                        0, (float) Math.hypot(mViewBackgroundBottom.getWidth(),
+                                mViewBackgroundBottom.getHeight()));
+                AnimatorSet animatorSet = new AnimatorSet();
+                animatorSet.setDuration(500L);
+                animatorSet.playTogether(animationTop, animationBottom);
+                animatorSet.start();
+                transitionSet.removeListener(this);
+            }
+            @Override
+            public void onTransitionCancel(Transition transition) {
+
+            }
+            @Override
+            public void onTransitionPause(Transition transition) {
+
+            }
+            @Override
+            public void onTransitionResume(Transition transition) {
+
+            }
+
+        });
     }
     private void initData() {
         imagePath = new ArrayList<>();
@@ -272,7 +347,7 @@ public class HomeFragment extends Fragment {
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                Log.i(TAG, "onLoadMore: 下拉刷新");
+                Log.i(TAG, "onLoadMore: 下拉加载");
                 refreshLayout.autoLoadMore();
                 moBanInterface.getPostList();
                 refreshLayout.finishLoadMore();
@@ -281,7 +356,7 @@ public class HomeFragment extends Fragment {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                Log.i(TAG, "onRefresh: 上拉加载");
+                Log.i(TAG, "onRefresh: 上拉刷新");
                 refreshLayout.autoRefresh();
                 moBanInterface.clearList();
                 moBanInterface.getPostList();

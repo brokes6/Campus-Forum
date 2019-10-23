@@ -1,3 +1,4 @@
+/*
 package com.example.bottomnavigationabar2.adapter;
 
 import android.content.Context;
@@ -13,11 +14,13 @@ import com.example.bottomnavigationabar2.view.NineGridTestLayout;
 import java.util.List;
 
 
+*/
 /**
  * 描述：
  * 作者：HMY
  * 时间：2016/5/13
- */
+ *//*
+
 public class NineGridTestAdapter extends BaseAdapter {
 
     private Context mContext;
@@ -50,7 +53,6 @@ public class NineGridTestAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
         ViewHolder holder = null;
         if (convertView == null || convertView.getTag() == null) {
             convertView = inflater.inflate(R.layout.item_bbs_nine_grid, parent, false);
@@ -59,7 +61,6 @@ public class NineGridTestAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-
         holder.layout.setIsShowAll(mList.get(position).isShowAll);
         holder.layout.setUrlList(mList.get(position).urlList);
 
@@ -81,3 +82,4 @@ public class NineGridTestAdapter extends BaseAdapter {
         return list.size();
     }
 }
+*/

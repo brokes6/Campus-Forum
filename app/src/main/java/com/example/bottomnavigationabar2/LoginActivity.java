@@ -1,5 +1,7 @@
 package com.example.bottomnavigationabar2;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -17,6 +19,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -26,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bottomnavigationabar2.bean.ResultBean;
+import static com.example.bottomnavigationabar2.utils.FileCacheUtil.getCache;
 import com.example.bottomnavigationabar2.bean.User;
 import com.example.util.JsonTOBeanUtil;
 
@@ -35,22 +39,36 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class LoginActivity extends AppCompatActivity {
+import static com.example.bottomnavigationabar2.utils.FileCacheUtil.setCache;
+import static java.security.AccessController.getContext;
 
+public class LoginActivity extends AppCompatActivity {
+    private static final String TAG = "LoginActivity";
         EditText username;
         EditText password;
         String user = null;
         User userData;
         String pass = null;
+        private Context mContext;
+        private Activity mActivity;
+        String token ="1";
         private CheckBox autologin;
         private CheckBox remembermima;
         private IntentFilter intentFilter;
+        Boolean checkbox = false;
         private NetworkChangeReceiver networkChangeReceiver;
         private SharedPreferences sp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ActionBar actionbar = getSupportActionBar();
+        if (actionbar != null) {
+            actionbar.hide();
+        }
+        mContext = this;
+        mActivity = this;
         //过度效果(没写)
         intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
@@ -117,6 +135,7 @@ public class LoginActivity extends AppCompatActivity {
                     username = (EditText)findViewById(R.id.username);
                     password = (EditText)findViewById(R.id.password);
                     SharedPreferences.Editor editor =sp.edit();
+                    SharedPreferences.Editor editor1 =sp.edit();
                     user = username.getText().toString();
                     pass = password.getText().toString();
                     if(user.equals("") &&pass.equals("")){
@@ -139,11 +158,8 @@ public class LoginActivity extends AppCompatActivity {
                     userData = JsonTOBeanUtil.getBeanSingleData(User.class,responseData);
                     if (userData==null) {
                             Toast.makeText(LoginActivity.this, "账号没有注册", Toast.LENGTH_SHORT).show();
-                            Intent intent_denglu = new Intent(LoginActivity.this, RegisterActivity.class);
-                            startActivity(intent_denglu);
                     }
-                    else{
-                            editor.putString("USER_NAME", user);
+                    else{   editor.putString("USER_NAME", user);
                             editor.putString("PASSWORD", pass);
                             //判断是否记住密码
                             if(remembermima.isChecked()){
@@ -153,20 +169,37 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             //是否自动登录
                             if(autologin.isChecked()){
-                                editor.putBoolean("autologin", true);
+                                checkbox=true;
+                                editor1.putBoolean("autologin", true);
                             }else{
-                                editor.putBoolean("autologin", false);
+                                editor1.putBoolean("autologin", false);
                             }
                             editor.commit();
                             //跳转
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
+                            initEvent();
                     }
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }).start();
+    }
+    private void initEvent() {
+        findViewById(R.id.denglu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /**
+                 * 注意这里，没有带共享元素哦(共享元素的打算放到下面讲)
+                 */
+                if( checkbox == true){
+                    setCache(token,LoginActivity.this,"User_Key",MODE_PRIVATE);
+                    String ge_key = getCache(LoginActivity.this,"User_Key");
+                    Log.d(TAG, "run: -----------------------2122222222"+ge_key);
+                }
+                ActivityOptions compat = ActivityOptions.makeSceneTransitionAnimation(mActivity);
+                startActivity(new Intent(mContext, MainActivity.class), compat.toBundle());
+            }
+        });
     }
 
     @Override

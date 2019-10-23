@@ -72,7 +72,7 @@
                                     android:layout_centerInParent="true"
                                     android:layout_marginLeft="10px"
                                     android:src="@mipmap/ic_launcher"
-                                    app:civ_border_color="#D7DAD7"
+                                    app:civ_border_color="#4CAF50"
                                     app:civ_border_width="2dp" />
 
                                 <de.hdodenhof.circleimageview.CircleImageView
@@ -151,27 +151,28 @@
 
 
             </LinearLayout>
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tablayout_real"
-            app:tabGravity="fill"
-            app:tabMode="fixed"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="#FFFFFF"
-            android:visibility="visible"
-            app:tabIndicatorColor="@color/colorPrimary"
-            app:tabSelectedTextColor="@color/textColor"
-            />
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tablayout_real"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="#FFFFFF"
+                    android:visibility="visible"
+                    app:tabGravity="fill"
+                    app:tabIndicatorColor="@color/colorPrimary"
+                    app:tabMode="fixed"
+                    app:tabSelectedTextColor="@color/textColor" />
         </android.support.design.widget.AppBarLayout>
+
         <android.support.v4.view.ViewPager
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="16dp"
-            android:paddingRight="16dp"
             android:paddingTop="16dp"
+            android:paddingRight="16dp"
             android:paddingBottom="80dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 </android.support.design.widget.CoordinatorLayout>
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>
