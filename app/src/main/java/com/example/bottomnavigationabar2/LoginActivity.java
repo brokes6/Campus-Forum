@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bottomnavigationabar2.bean.ResultBean;
+import static com.example.bottomnavigationabar2.utils.FileCacheUtil.getCache;
 import com.example.bottomnavigationabar2.bean.User;
 import com.example.util.JsonTOBeanUtil;
 
@@ -37,6 +38,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+
+import static com.example.bottomnavigationabar2.utils.FileCacheUtil.setCache;
+import static java.security.AccessController.getContext;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
@@ -47,9 +51,11 @@ public class LoginActivity extends AppCompatActivity {
         String pass = null;
         private Context mContext;
         private Activity mActivity;
+        String token ="1";
         private CheckBox autologin;
         private CheckBox remembermima;
         private IntentFilter intentFilter;
+        Boolean checkbox = false;
         private NetworkChangeReceiver networkChangeReceiver;
         private SharedPreferences sp;
 
@@ -129,6 +135,7 @@ public class LoginActivity extends AppCompatActivity {
                     username = (EditText)findViewById(R.id.username);
                     password = (EditText)findViewById(R.id.password);
                     SharedPreferences.Editor editor =sp.edit();
+                    SharedPreferences.Editor editor1 =sp.edit();
                     user = username.getText().toString();
                     pass = password.getText().toString();
                     if(user.equals("") &&pass.equals("")){
@@ -152,8 +159,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (userData==null) {
                             Toast.makeText(LoginActivity.this, "账号没有注册", Toast.LENGTH_SHORT).show();
                     }
-                    else{
-                            editor.putString("USER_NAME", user);
+                    else{   editor.putString("USER_NAME", user);
                             editor.putString("PASSWORD", pass);
                             //判断是否记住密码
                             if(remembermima.isChecked()){
@@ -163,9 +169,10 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             //是否自动登录
                             if(autologin.isChecked()){
-                                editor.putBoolean("autologin", true);
+                                checkbox=true;
+                                editor1.putBoolean("autologin", true);
                             }else{
-                                editor.putBoolean("autologin", false);
+                                editor1.putBoolean("autologin", false);
                             }
                             editor.commit();
                             //跳转
@@ -184,6 +191,11 @@ public class LoginActivity extends AppCompatActivity {
                 /**
                  * 注意这里，没有带共享元素哦(共享元素的打算放到下面讲)
                  */
+                if( checkbox == true){
+                    setCache(token,LoginActivity.this,"User_Key",MODE_PRIVATE);
+                    String ge_key = getCache(LoginActivity.this,"User_Key");
+                    Log.d(TAG, "run: -----------------------2122222222"+ge_key);
+                }
                 ActivityOptions compat = ActivityOptions.makeSceneTransitionAnimation(mActivity);
                 startActivity(new Intent(mContext, MainActivity.class), compat.toBundle());
             }

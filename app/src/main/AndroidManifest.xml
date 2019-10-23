@@ -28,12 +28,12 @@
         <activity android:name=".history" />
         <activity android:name=".LoginActivity"
             android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity">
         </activity>
         <activity android:name=".WebDataActivity" />
         <activity android:name=".activity.ShowImageActivity"/>
