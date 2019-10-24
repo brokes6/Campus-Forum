@@ -19,24 +19,34 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".PostDetails" android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".addPost" android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".More"></activity>
+        <activity android:name=".Autograph" />
+        <activity android:name=".Hobby" />
+        <activity android:name=".myName" />
+        <activity
+            android:name=".PostDetails"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".addPost"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".FintoutPasswordActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".Yemian_text" />
-        <activity android:name=".MyCollection"/>
+        <activity android:name=".MyCollection" />
         <activity android:name=".history" />
-        <activity android:name=".LoginActivity"
+        <activity
+            android:name=".LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
-        </activity>
+        <activity android:name=".MainActivity" />
         <activity android:name=".WebDataActivity" />
-        <activity android:name=".activity.ShowImageActivity"/>
+        <activity android:name=".activity.ShowImageActivity" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.example.cameraalbumtest.fileprovider"
