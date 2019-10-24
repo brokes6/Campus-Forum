@@ -16,6 +16,7 @@ import com.example.bottomnavigationabar2.PostDetails;
 import com.example.bottomnavigationabar2.R;
 import com.example.bottomnavigationabar2.model.NineGridTestModel;
 import com.example.bottomnavigationabar2.view.NineGridTestLayout;
+import com.example.util.DateTimeUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,7 +54,7 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Log.i(TAG, "onBindViewHolder: 开始创建"+position);
         holder.content.setText(Html.fromHtml(mList.get(position).getContent()));
-        holder.datetime.setText(mList.get(position).getPcreateTime());
+        holder.datetime.setText(DateTimeUtil.handlerDateTime(mList.get(position).getPcreateTime()));
         holder.uimg.setImageURL(mList.get(position).getUimg());
         holder.username.setText(mList.get(position).getUsername());
         holder.postId=mList.get(position).getPid();

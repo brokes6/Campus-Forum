@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.RequestBody;
 
 /**
  * Author: fuxinbo
@@ -30,13 +31,23 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class CommentExpandAdapter extends BaseExpandableListAdapter {
     private static final String TAG = "CommentExpandAdapter";
     private List<CommentDetailBean> commentBeanList;
-    private List<ReplyDetailBean> replyBeanList;
     private Context context;
     private int pageIndex = 1;
 
     public CommentExpandAdapter(Context context, List<CommentDetailBean> commentBeanList) {
         this.context = context;
         this.commentBeanList = commentBeanList;
+    }
+
+    public void setCommentBeanList(List<CommentDetailBean> commentBeanList) {
+        if(commentBeanList==null){
+            commentBeanList=new ArrayList<>();
+        }
+        this.commentBeanList.addAll(commentBeanList);
+    }
+
+    public List<CommentDetailBean> getCommentBeanList() {
+        return commentBeanList;
     }
 
     @Override
@@ -46,10 +57,12 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int i) {
-        if(commentBeanList.get(i).getReplyList() == null){
+        Log.i(TAG, "getChildrenCount: -----");
+        if(commentBeanList.get(i).getReplyVoList() == null){
             return 0;
         }else {
-            return commentBeanList.get(i).getReplyList().size()>0 ? commentBeanList.get(i).getReplyList().size():0;
+            Log.i(TAG, "getChildrenCount:进入");
+            return commentBeanList.get(i).getReplyVoList().size()>0 ? commentBeanList.get(i).getReplyVoList().size():0;
         }
 
     }
@@ -61,7 +74,7 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int i, int i1) {
-        return commentBeanList.get(i).getReplyList().get(i1);
+        return commentBeanList.get(i).getReplyVoList().get(i1);
     }
 
     @Override
@@ -97,8 +110,8 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
 //                .error(R.mipmap.ic_launcher)
 //                .centerCrop()
 //                .into(groupHolder.logo);
-        groupHolder.tv_name.setText(commentBeanList.get(groupPosition).getNickName());
-        groupHolder.tv_time.setText(commentBeanList.get(groupPosition).getCreateDate());
+        groupHolder.tv_name.setText(commentBeanList.get(groupPosition).getUsername());
+        groupHolder.tv_time.setText(commentBeanList.get(groupPosition).getCcreateTime());
         groupHolder.tv_content.setText(commentBeanList.get(groupPosition).getContent());
         groupHolder.iv_like.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,13 +125,13 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
                 }
             }
         });
-
         return convertView;
     }
 
     @Override
     public View getChildView(final int groupPosition, int childPosition, boolean b, View convertView, ViewGroup viewGroup) {
         final ChildHolder childHolder;
+        Log.i(TAG, "getChildView: 11111111111111");
         if(convertView == null){
             convertView = LayoutInflater.from(context).inflate(R.layout.comment_reply_item_layout,viewGroup, false);
             childHolder = new ChildHolder(convertView);
@@ -127,15 +140,14 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
         else {
             childHolder = (ChildHolder) convertView.getTag();
         }
-
-        String replyUser = commentBeanList.get(groupPosition).getReplyList().get(childPosition).getNickName();
+        String replyUser = commentBeanList.get(groupPosition).getReplyVoList().get(childPosition).getUsername();
         if(!TextUtils.isEmpty(replyUser)){
             childHolder.tv_name.setText(replyUser + ":");
         }else {
             childHolder.tv_name.setText("无名"+":");
         }
 
-        childHolder.tv_content.setText(commentBeanList.get(groupPosition).getReplyList().get(childPosition).getContent());
+        childHolder.tv_content.setText(commentBeanList.get(groupPosition).getReplyVoList().get(childPosition).getContent());
 
         return convertView;
     }
@@ -191,12 +203,12 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
     public void addTheReplyData(ReplyDetailBean replyDetailBean, int groupPosition){
         if(replyDetailBean!=null){
             Log.e(TAG, "addTheReplyData: >>>>该刷新回复列表了:"+replyDetailBean.toString() );
-            if(commentBeanList.get(groupPosition).getReplyList() != null ){
-                commentBeanList.get(groupPosition).getReplyList().add(replyDetailBean);
+            if(commentBeanList.get(groupPosition).getReplyVoList() != null ){
+                commentBeanList.get(groupPosition).getReplyVoList().add(replyDetailBean);
             }else {
                 List<ReplyDetailBean> replyList = new ArrayList<>();
                 replyList.add(replyDetailBean);
-                commentBeanList.get(groupPosition).setReplyList(replyList);
+                commentBeanList.get(groupPosition).setReplyVoList(replyList);
             }
             notifyDataSetChanged();
         }else {
@@ -212,15 +224,14 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
      * @param groupPosition 当前的评论
      */
     private void addReplyList(List<ReplyDetailBean> replyBeanList, int groupPosition){
-        if(commentBeanList.get(groupPosition).getReplyList() != null ){
-            commentBeanList.get(groupPosition).getReplyList().clear();
-            commentBeanList.get(groupPosition).getReplyList().addAll(replyBeanList);
+        if(commentBeanList.get(groupPosition).getReplyVoList() != null ){
+            commentBeanList.get(groupPosition).getReplyVoList().clear();
+            commentBeanList.get(groupPosition).getReplyVoList().addAll(replyBeanList);
         }else {
 
-            commentBeanList.get(groupPosition).setReplyList(replyBeanList);
+            commentBeanList.get(groupPosition).setReplyVoList(replyBeanList);
         }
 
         notifyDataSetChanged();
     }
-
 }

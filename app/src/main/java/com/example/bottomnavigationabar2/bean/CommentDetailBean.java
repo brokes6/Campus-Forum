@@ -7,74 +7,82 @@ import java.util.List;
  */
 
 public class CommentDetailBean {
-    private int id;
-    private String nickName;
-    private String userLogo;
+    private int cid;
+    private String username;
+    private String uimg;
     private String content;
-    private String imgId;
-    private int replyTotal;
-    private String createDate;
-    private List<ReplyDetailBean> replyList;
+    private int love_count;
+    private int replyTotal;//不错 暂定 后期可以添加回复总数
+    private String ccreateTime;
+    private List<ReplyDetailBean> replyVoList;
 
-    public CommentDetailBean(String nickName, String content, String createDate) {
-        this.nickName = nickName;
+    public CommentDetailBean(String username, String content, String ccreateTime) {
+        this.username = username;
         this.content = content;
-        this.createDate = createDate;
+        this.ccreateTime = ccreateTime;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-    public int getId() {
-        return id;
+    public int getCid() {
+        return cid;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-    public String getNickName() {
-        return nickName;
+    public void setCid(int cid) {
+        this.cid = cid;
     }
 
-    public void setUserLogo(String userLogo) {
-        this.userLogo = userLogo;
+    public String getUsername() {
+        return username;
     }
-    public String getUserLogo() {
-        return userLogo;
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUimg() {
+        return uimg;
+    }
+
+    public void setUimg(String uimg) {
+        this.uimg = uimg;
+    }
+
+    public String getContent() {
+        return content;
     }
 
     public void setContent(String content) {
         this.content = content;
     }
-    public String getContent() {
-        return content;
+
+    public int getLove_count() {
+        return love_count;
     }
 
-    public void setImgId(String imgId) {
-        this.imgId = imgId;
+    public void setLove_count(int love_count) {
+        this.love_count = love_count;
     }
-    public String getImgId() {
-        return imgId;
+
+    public int getReplyTotal() {
+        return replyTotal;
     }
 
     public void setReplyTotal(int replyTotal) {
         this.replyTotal = replyTotal;
     }
-    public int getReplyTotal() {
-        return replyTotal;
+
+    public String getCcreateTime() {
+        return ccreateTime;
     }
 
-    public void setCreateDate(String createDate) {
-        this.createDate = createDate;
-    }
-    public String getCreateDate() {
-        return createDate;
+    public void setCcreateTime(String ccreateTime) {
+        this.ccreateTime = ccreateTime;
     }
 
-    public void setReplyList(List<ReplyDetailBean> replyList) {
-        this.replyList = replyList;
+    public List<ReplyDetailBean> getReplyVoList() {
+        return replyVoList;
     }
-    public List<ReplyDetailBean> getReplyList() {
-        return replyList;
+
+    public void setReplyVoList(List<ReplyDetailBean> replyVoList) {
+        this.replyVoList = replyVoList;
     }
 }
