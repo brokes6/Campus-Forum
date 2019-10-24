@@ -116,31 +116,31 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="40dp"
+                                    android:layout_marginLeft="19dp"
                                     android:textSize="18sp"
                                     android:text="文字"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="38dp"
+                                    android:layout_marginLeft="48dp"
                                     android:textSize="18sp"
                                     android:text="文字"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="38dp"
+                                    android:layout_marginLeft="50dp"
                                     android:textSize="18sp"
                                     android:text="文字"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="38dp"
+                                    android:layout_marginLeft="50dp"
                                     android:textSize="18sp"
                                     android:text="文字"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="38dp"
+                                    android:layout_marginLeft="49dp"
                                     android:textSize="18sp"
                                     android:text="文字"/>
                         </LinearLayout>

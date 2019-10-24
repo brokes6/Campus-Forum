@@ -195,7 +195,7 @@ public class LoginActivity extends AppCompatActivity {
                     setCache(token,LoginActivity.this,"User_Key",MODE_PRIVATE);
                     String ge_key = getCache(LoginActivity.this,"User_Key");
                     Log.d(TAG, "run: -----------------------2122222222"+ge_key);
-                }
+                }else{ }
                 ActivityOptions compat = ActivityOptions.makeSceneTransitionAnimation(mActivity);
                 startActivity(new Intent(mContext, MainActivity.class), compat.toBundle());
             }
@@ -215,8 +215,7 @@ public class LoginActivity extends AppCompatActivity {
             NetworkInfo networkInfo = connectionManager.getActiveNetworkInfo();
             if (networkInfo != null && networkInfo.isAvailable()) {
             } else {
-                Toast.makeText(context, "检查到没有网络",
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "检查到没有网络", Toast.LENGTH_SHORT).show();
             }
         }
 
