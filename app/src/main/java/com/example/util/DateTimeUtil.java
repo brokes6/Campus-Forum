@@ -4,18 +4,20 @@ import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 
 import static android.support.constraint.Constraints.TAG;
 
 public class DateTimeUtil {
     public static SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    public static SimpleDateFormat simpleDateFormat1=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    public static SimpleDateFormat simpleDateFormat1=new SimpleDateFormat("MM-dd HH:mm");
     public static String handlerDateTime(long datetime){
         long nowDateTime = System.currentTimeMillis();
         Log.i(TAG, "handlerDateTime: "+nowDateTime);
         Log.i(TAG, "handlerDateTime: datetime="+datetime);
         String strTime="";
         long spaceTime =nowDateTime-datetime;
+        Log.i(TAG, "handlerDateTime: 间距有"+spaceTime);
         if(spaceTime<86400000){
             Log.i(TAG, "handlerDateTime: 1");
             if(spaceTime>=3600000){

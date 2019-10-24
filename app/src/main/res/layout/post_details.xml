@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<com.scwang.smartrefresh.layout.SmartRefreshLayout
+    android:id="@+id/refreshLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -58,7 +64,11 @@
         <!--详细页组件-->
                 <include layout="@layout/item_bbs_nine_grid"
                     android:id="@+id/detail_page_above_container"/>
+                <com.scwang.smartrefresh.layout.footer.BallPulseFooter
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
+                </com.scwang.smartrefresh.layout.footer.BallPulseFooter>
                 <!--评论组件-->
                 <LinearLayout
                     android:id="@+id/detail_page_comment_container"
@@ -67,7 +77,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
-
                     <com.example.bottomnavigationabar2.view.CommentExpandableListView
                         android:id="@+id/detail_page_lv_comment"
                         android:layout_width="match_parent"
@@ -76,7 +85,6 @@
                         android:layout_marginBottom="64dp"
                         android:listSelector="@android:color/transparent"
                         android:scrollbars="none"/>
-
                 </LinearLayout>
             </RelativeLayout>
         </android.support.v4.widget.NestedScrollView>
@@ -132,6 +140,13 @@
             android:text="66"/>
 
     </LinearLayout>
-
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:id="@+id/progress"
+        />
 
 </RelativeLayout>
+</com.scwang.smartrefresh.layout.SmartRefreshLayout>

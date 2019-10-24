@@ -65,6 +65,7 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
     //图片显示
             //你去死
     private static final String TAG = "MainActivity";
+    public static final int SHOW_TOAST=3;
     public static final int CHOOSE_PHOTO = 2;
     public static final int SET_OK = 1;
     private EditText editText;
@@ -160,6 +161,9 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
                     TextView view = (TextView) msg.obj;
                     String num = msg.arg1 + "/9";
                     view.setText(num);
+                    break;
+                case SHOW_TOAST:
+                    Toast.makeText(addPost.this, msg.obj.toString(), Toast.LENGTH_SHORT).show();
                     break;
             }
         }
@@ -436,9 +440,10 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void showShortToast(String msg) {
-        Looper.prepare();
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-        Looper.loop();
+        Message message=new Message();
+        message.obj=msg;
+        message.what=SHOW_TOAST;
+        handler.sendMessage(message);
     }
 
     public static String bitmapToBase64(Bitmap bitmap) {
@@ -483,8 +488,10 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
         try {
             /*                enterEnable(false);*/
             String imgUrl=builder.toString();
-            imgUrl=imgUrl.substring(0,imgUrl.length()-1);
-            System.out.println("imgurl=="+imgUrl);
+            if(!imgUrl.trim().equals("")) {
+                imgUrl = imgUrl.substring(0, imgUrl.length() - 1);
+                System.out.println("imgurl=="+imgUrl);
+            }
             FormBody body = new FormBody.Builder()
                     .add("content", mEditor.getHtml())
                     .add("imgUrl",imgUrl)

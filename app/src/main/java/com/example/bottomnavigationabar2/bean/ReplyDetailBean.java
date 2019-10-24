@@ -1,70 +1,67 @@
 package com.example.bottomnavigationabar2.bean;
 
+
 /**
- * Created by moos on 2018/4/20.
+ * create by czj 2019/10/23
  */
-
 public class ReplyDetailBean {
-    private String nickName;
-    private String userLogo;
-    private int id;
-    private String commentId;
+    private String username;
+    private String uimg;
+    private int uid;
+    private String rcreateTime;
     private String content;
-    private String status;
-    private String createDate;
+    private int love_count;
 
-    public ReplyDetailBean(String nickName, String content) {
-        this.nickName = nickName;
+    public ReplyDetailBean(String username, String content) {
+        this.username = username;
         this.content = content;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-    public String getNickName() {
-        return nickName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserLogo(String userLogo) {
-        this.userLogo = userLogo;
-    }
-    public String getUserLogo() {
-        return userLogo;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-    public int getId() {
-        return id;
+    public String getUimg() {
+        return uimg;
     }
 
-    public void setCommentId(String commentId) {
-        this.commentId = commentId;
+    public void setUimg(String uimg) {
+        this.uimg = uimg;
     }
-    public String getCommentId() {
-        return commentId;
+
+    public int getUid() {
+        return uid;
+    }
+
+    public void setUid(int uid) {
+        this.uid = uid;
+    }
+
+    public String getRcreateTime() {
+        return rcreateTime;
+    }
+
+    public void setRcreateTime(String rcreateTime) {
+        this.rcreateTime = rcreateTime;
+    }
+
+    public String getContent() {
+        return content;
     }
 
     public void setContent(String content) {
         this.content = content;
     }
-    public String getContent() {
-        return content;
+
+    public int getLove_count() {
+        return love_count;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setLove_count(int love_count) {
+        this.love_count = love_count;
     }
-    public String getStatus() {
-        return status;
-    }
-
-    public void setCreateDate(String createDate) {
-        this.createDate = createDate;
-    }
-    public String getCreateDate() {
-        return createDate;
-    }
-
 }
