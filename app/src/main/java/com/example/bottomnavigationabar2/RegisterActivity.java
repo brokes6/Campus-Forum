@@ -1,5 +1,8 @@
 package com.example.bottomnavigationabar2;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -33,6 +36,8 @@ public class RegisterActivity extends AppCompatActivity {
     EditText username_denglu;
     EditText pass_dengli_1;
     EditText email;
+    private Context mContext;
+    private Activity mActivity;
     private static final String TAG = "RegisterActivity";
     String regex1 = "[a-zA-Z0-9_]*@[a-zA-Z0-9]+[.][a-zA-Z0-9]+";
     String Data;
@@ -40,6 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        //用于屏蔽系统的头部，（现已无用）
         ActionBar actionbar = getSupportActionBar();
         if (actionbar != null) {
             actionbar.hide();
@@ -115,5 +121,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }).start();
     }
+
+
 
 }
