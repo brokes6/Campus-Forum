@@ -23,6 +23,8 @@
             android:id="@+id/tiezi_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             android:text="我是名字"
             android:textColor="@android:color/holo_blue_dark" />
         <TextView
@@ -30,11 +32,13 @@
             android:layout_marginLeft="220dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-15dp"
+            android:layout_marginTop="-23dp"
             android:text="我是时间"
             />
 
         <TextView
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
             android:id="@+id/tieze_Text"
             android:text="1111111111111111111111111111111111111111111111111111"
             android:layout_width="wrap_content"
@@ -69,7 +73,7 @@
                             android:id="@+id/comment"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
-                            android:background="@mipmap/ic_launcher" />
+                            android:background="@drawable/dianzan" />
                         <TextView
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="5dp"
@@ -91,7 +95,7 @@
                             android:id="@+id/give_the_thumbs_up"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
-                            android:background="@mipmap/ic_launcher" />
+                            android:background="@drawable/shocang" />
                         <TextView
                             android:layout_marginLeft="5dp"
                             android:text="收藏数"
@@ -113,7 +117,7 @@
                             android:id="@+id/Collection"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
-                            android:background="@mipmap/ic_launcher" />
+                            android:background="@drawable/pingl" />
                         <TextView
                             android:layout_marginLeft="5dp"
                             android:text="评论数"
