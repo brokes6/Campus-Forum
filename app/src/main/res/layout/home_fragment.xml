@@ -13,6 +13,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
         <android.support.design.widget.AppBarLayout
+            android:background="#FAFAFA"
             android:id="@+id/appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -115,31 +116,31 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="40dp"
+                                    android:layout_marginLeft="19dp"
                                     android:textSize="18sp"
                                     android:text="文字"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="38dp"
+                                    android:layout_marginLeft="48dp"
                                     android:textSize="18sp"
                                     android:text="文字"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="38dp"
+                                    android:layout_marginLeft="50dp"
                                     android:textSize="18sp"
                                     android:text="文字"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="38dp"
+                                    android:layout_marginLeft="50dp"
                                     android:textSize="18sp"
                                     android:text="文字"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="38dp"
+                                    android:layout_marginLeft="49dp"
                                     android:textSize="18sp"
                                     android:text="文字"/>
                         </LinearLayout>
@@ -170,9 +171,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="16dp"
-            android:paddingTop="16dp"
+            android:paddingTop="10dp"
             android:paddingRight="16dp"
-            android:paddingBottom="80dp"
+            android:paddingBottom="10dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 </android.support.design.widget.CoordinatorLayout>
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>

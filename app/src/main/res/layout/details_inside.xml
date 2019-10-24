@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/Ins_Lin_comment"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/Ins_comment"
+                android:layout_width="29dp"
+                android:layout_height="29dp"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/ic_launcher"
+                app:civ_border_color="#4CAF50"
+                app:civ_border_width="2dp" />
+            <TextView
+                android:layout_marginTop="1dp"
+                android:layout_marginLeft="5dp"
+                android:text="点赞数"
+                android:textColor="#090808"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/Ins_Lin_give_the_thumbs_up"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/Ins_give_the_thumbs_up"
+                android:layout_width="29dp"
+                android:layout_height="29dp"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/ic_launcher"
+                app:civ_border_color="#4CAF50"
+                app:civ_border_width="2dp" />
+            <TextView
+                android:layout_marginTop="1dp"
+                android:layout_marginLeft="5dp"
+                android:text="收藏数"
+                android:textColor="#090808"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/Ins_Lin_Collection"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/Ins_Collection"
+                android:layout_width="29dp"
+                android:layout_height="29dp"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/ic_launcher"
+                app:civ_border_color="#4CAF50"
+                app:civ_border_width="2dp" />
+            <TextView
+                android:layout_marginTop="1dp"
+                android:layout_marginLeft="5dp"
+                android:text="评论数"
+                android:textColor="#090808"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

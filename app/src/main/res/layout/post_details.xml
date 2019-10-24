@@ -62,7 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
         <!--详细页组件-->
-                <include layout="@layout/item_bbs_nine_grid"
+                <include layout="@layout/item_inside"
                     android:id="@+id/detail_page_above_container"/>
                 <com.scwang.smartrefresh.layout.footer.BallPulseFooter
                     android:layout_width="wrap_content"

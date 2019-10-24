@@ -125,13 +125,15 @@ public class MoBan_1 extends Fragment implements MoBanInterface{
                     }
                     String dataStr = jsonObject.getString("data");
                     Gson gson = new Gson();
-                    List<Post> posts = gson.fromJson(dataStr, new TypeToken<List<Post>>() {
-                    }.getType());
+                    List<Post> posts = gson.fromJson(dataStr, new TypeToken<List<Post>>() {}.getType());
                     mAdapter.setList(posts);
                     Message message = new Message();
                     message.what = MoBanInterface.NOTIFY;
                     handler.sendMessage(message);
                     page++;
+                    for (Post post:posts){
+                        post.getUsername();
+                    }
                         //存放文章内容
 /*
                         setCache(,getContext(),"Text",MODE_PRIVATE);
@@ -140,7 +142,7 @@ public class MoBan_1 extends Fragment implements MoBanInterface{
                         //存放图片
                         String dir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/ErGaoJi/images/";
                         String state = Environment.getExternalStorageState();
-                        //如果状态不是mounted，无法读写
+                        //如果状态不是mounted，无法读写`
                         if (!state.equals(Environment.MEDIA_MOUNTED)) {
                             return;
                         }

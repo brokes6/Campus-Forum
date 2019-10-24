@@ -31,7 +31,8 @@
                     android:id="@+id/name_denglu"
                     android:layout_width="200dp"
                     android:hint="请输入名称"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"/>
         </LinearLayout>
             <LinearLayout
                 android:layout_marginLeft="80dp"
@@ -48,7 +49,8 @@
                     android:id="@+id/username_denglu"
                     android:layout_width="200dp"
                     android:hint="请输入（数字和字母）"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_marginLeft="80dp"
@@ -65,7 +67,8 @@
                     android:id="@+id/password_denglu"
                     android:layout_width="200dp"
                     android:hint="请输入（数字和字母）"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"/>
             </LinearLayout>
     <LinearLayout
         android:layout_marginLeft="32dp"
@@ -82,7 +85,8 @@
             android:id="@+id/password_again"
             android:layout_width="200dp"
             android:hint="请再输入一遍密码"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:singleLine="true"/>
     </LinearLayout>
             <LinearLayout
                 android:layout_marginLeft="80dp"
@@ -99,7 +103,8 @@
                     android:id="@+id/youxiang"
                     android:layout_width="200dp"
                     android:hint="请输入邮箱"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_gravity="center_horizontal"

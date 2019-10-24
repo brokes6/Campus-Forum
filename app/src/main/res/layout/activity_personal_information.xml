@@ -24,13 +24,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="个人信息"
-            android:textSize="28sp"
+            android:textSize="24sp"
             android:layout_gravity="center_vertical"
             android:textColor="#151515"
             android:layout_marginLeft="105dp"
             android:textStyle="bold"/>
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/myHead"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,12 +47,16 @@
             android:gravity="center_vertical">
 
         </TextView>
-
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="230dp"
+            android:src="@drawable/user_other"/>
+        <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="280dp"
             android:src="@drawable/san"/>
 
     </LinearLayout>
@@ -61,28 +66,109 @@
         android:background="#ccc"
         android:layout_marginLeft="10dp"/>
     <LinearLayout
+        android:id="@+id/myName"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFF">
-
-        <TextView
-            android:layout_marginLeft="10dp"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:textColor="#151515"
-            android:text="我的名字"
-            android:textSize="20dp"
-            android:gravity="center_vertical">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="55dp"
+                android:textColor="#151515"
+                android:text="我的名字"
+                android:textSize="20dp"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+            android:orientation="vertical">
 
-        </TextView>
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="55dp"
+                android:layout_gravity="right"
+                android:textColor="#818181"
+                android:text="我的名字"
+                android:textSize="18dp"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="280dp"
-            android:src="@drawable/san"/>
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="right"
+                android:src="@drawable/san"/>
+        </LinearLayout>
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ccc"
+        android:layout_marginLeft="10dp"/>
+
+    <LinearLayout
+        android:id="@+id/myAccount"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFF">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="55dp"
+                android:textColor="#151515"
+                android:text="我的账号"
+                android:textSize="20dp"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="55dp"
+                android:layout_gravity="right"
+                android:textColor="#818181"
+                android:text="15112371163"
+                android:textSize="18dp"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="right"
+                android:src="@drawable/san"/>
+        </LinearLayout>
 
     </LinearLayout>
     <View
@@ -91,28 +177,53 @@
         android:background="#ccc"
         android:layout_marginLeft="10dp"/>
     <LinearLayout
+        android:id="@+id/Hobby"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFF">
-
-        <TextView
-            android:layout_marginLeft="10dp"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:textColor="#151515"
-            android:text="我的账号"
-            android:textSize="20dp"
-            android:gravity="center_vertical">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="55dp"
+                android:textColor="#151515"
+                android:text="兴趣爱好"
+                android:textSize="20dp"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+            android:orientation="vertical">
 
-        </TextView>
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="55dp"
+                android:layout_gravity="right"
+                android:textColor="#818181"
+                android:text="唱歌跳舞打篮球"
+                android:textSize="18dp"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="280dp"
-            android:src="@drawable/san"/>
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="right"
+                android:src="@drawable/san"/>
+        </LinearLayout>
 
     </LinearLayout>
     <View
@@ -121,60 +232,90 @@
         android:background="#ccc"
         android:layout_marginLeft="10dp"/>
     <LinearLayout
+        android:id="@+id/autograph"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFF">
-
-        <TextView
-            android:layout_marginLeft="10dp"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:textColor="#151515"
-            android:text="个性签名"
-            android:textSize="20dp"
-            android:gravity="center_vertical">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="55dp"
+                android:textColor="#151515"
+                android:text="个性签名"
+                android:textSize="20dp"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+            android:orientation="vertical">
 
-        </TextView>
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="55dp"
+                android:layout_gravity="right"
+                android:textColor="#818181"
+                android:text="我是陈巨魔芋的爹"
+                android:textSize="18dp"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="280dp"
-            android:src="@drawable/san"/>
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="right"
+                android:src="@drawable/san"/>
+        </LinearLayout>
 
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#ccc"
-        android:layout_marginLeft="10dp"/>
+
     <LinearLayout
+        android:id="@+id/more"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFF">
-
-        <TextView
-            android:layout_marginLeft="10dp"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:textColor="#151515"
-            android:text="我的班级"
-            android:textSize="20dp"
-            android:gravity="center_vertical">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="55dp"
+                android:textColor="#151515"
+                android:text="更多"
+                android:textSize="20dp"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
 
-        </TextView>
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="280dp"
-            android:src="@drawable/san"/>
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="right"
+                android:src="@drawable/san"/>
+        </LinearLayout>
 
     </LinearLayout>
-
-
 </LinearLayout>
