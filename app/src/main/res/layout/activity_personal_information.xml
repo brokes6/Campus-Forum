@@ -31,6 +31,7 @@
             android:textStyle="bold"/>
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/myHead"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,8 +48,8 @@
 
         </TextView>
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="230dp"
             android:src="@drawable/user_other"/>
@@ -207,7 +208,7 @@
                 android:layout_height="55dp"
                 android:layout_gravity="right"
                 android:textColor="#818181"
-                android:text="17移动互联网G5班"
+                android:text="唱歌跳舞打篮球"
                 android:textSize="18dp"
                 android:gravity="center_vertical"/>
         </LinearLayout>
@@ -262,7 +263,7 @@
                 android:layout_height="55dp"
                 android:layout_gravity="right"
                 android:textColor="#818181"
-                android:text="我是付辛博的爹"
+                android:text="我是陈巨魔芋的爹"
                 android:textSize="18dp"
                 android:gravity="center_vertical"/>
         </LinearLayout>
