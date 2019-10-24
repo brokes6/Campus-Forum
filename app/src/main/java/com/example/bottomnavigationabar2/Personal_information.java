@@ -4,9 +4,9 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.LinearLayout;
-import android.widget.Switch;
+
+import com.example.bottomnavigationabar2.personalpage.More;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -30,14 +30,14 @@ public class Personal_information extends AppCompatActivity {
         myName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(Personal_information.this,myName.class);
+                Intent intent=new Intent(Personal_information.this, com.example.bottomnavigationabar2.personalpage.myName.class);
                 startActivity(intent);
             }
         });
         Hobby.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(Personal_information.this,Hobby.class);
+                Intent intent=new Intent(Personal_information.this, com.example.bottomnavigationabar2.personalpage.Hobby.class);
                 startActivity(intent);
 
             }
@@ -53,7 +53,7 @@ public class Personal_information extends AppCompatActivity {
         more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(Personal_information.this,More.class);
+                Intent intent=new Intent(Personal_information.this, More.class);
                 startActivity(intent);
 
             }

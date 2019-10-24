@@ -13,7 +13,7 @@ public class Autograph extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_name);
+        setContentView(R.layout.activity_autograph);
         ImageView imageView=(ImageView)findViewById(R.id.autograph_return);
         TextView textView=(TextView)findViewById(R.id.autograph_sure);
         imageView.setOnClickListener(new View.OnClickListener() {
