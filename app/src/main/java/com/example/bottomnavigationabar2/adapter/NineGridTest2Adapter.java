@@ -51,7 +51,7 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         Log.i(TAG, "onBindViewHolder: 开始创建"+position);
         holder.content.setText(Html.fromHtml(mList.get(position).getContent()));
         holder.datetime.setText(DateTimeUtil.handlerDateTime(mList.get(position).getPcreateTime()));
@@ -60,12 +60,12 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
         holder.postId=mList.get(position).getPid();
         holder.layout.setIsShowAll(mList.get(position).isShowAll());
         holder.layout.setUrlList(Arrays.asList(mList.get(position).getImgUrl().split(",")));
-        convertView.setOnClickListener(new View.OnClickListener() {
+        holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "onClick: 随便响应"+holder.postId);
+                Log.i(TAG, "onClick: 随便响应"+mList.get(position).getPid());
                 Intent intent = new Intent(mContext, PostDetails.class);
-                intent.putExtra("postId",holder.postId);
+                intent.putExtra("postId",mList.get(position).getPid());
                 mContext.startActivity(intent);
             }
         });
@@ -77,6 +77,7 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        View view;
         NineGridTestLayout layout;
         TextView username;
         MyImageView uimg;
@@ -85,6 +86,7 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
         int postId;
         public ViewHolder(View itemView) {
             super(itemView);
+            this.view=itemView;
             layout = (NineGridTestLayout) itemView.findViewById(R.id.layout_nine_grid);
             username=itemView.findViewById(R.id.tiezi_username);
             uimg=itemView.findViewById(R.id.tieze_user_img);

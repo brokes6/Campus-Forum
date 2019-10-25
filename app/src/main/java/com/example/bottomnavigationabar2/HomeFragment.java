@@ -108,6 +108,23 @@ public class HomeFragment extends Fragment {
             setDefaultFragment();
             //实际的tablayout的点击切换
             viewPager = view.findViewById(R.id.viewPager);
+            viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int i, float v, int i1) {
+                    Log.i(TAG, "onPageScrolled: what are you doing?!---"+i);
+                    moBanInterface=(MoBanInterface) mainTabFragmentAdapter.fragments.get(i);
+                }
+
+                @Override
+                public void onPageSelected(int i) {
+
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int i) {
+
+                }
+            });
             viewPager.setAdapter(mainTabFragmentAdapter);
             viewPager.setOffscreenPageLimit(mainTabFragmentAdapter.getCount());
             viewPager.setOffscreenPageLimit(1);
@@ -127,7 +144,6 @@ public class HomeFragment extends Fragment {
                     viewPager.setCurrentItem(tab.getPosition());
                     moBanInterface = (MoBanInterface) mainTabFragmentAdapter.fragments.get(tab.getPosition());
                 }
-
                 @Override
                 public void onTabUnselected(TabLayout.Tab tab) {
 
@@ -264,32 +280,11 @@ public class HomeFragment extends Fragment {
                     .into(imageView);
         }
     }
-    private void setScrollPos(int newPos) {
-        if (lastPos != newPos) {
-            realTabLayout.setScrollPosition(newPos, 0, true);
-        }
-        lastPos = newPos;
-    }
-
-    private int getScreenHeight() {
-        return getResources().getDisplayMetrics().heightPixels;
-    }
-
-    public int getStatusBarHeight(Context context) {
-        int result = 0;
-        int resourceId = context.getResources()
-                .getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = context.getResources().getDimensionPixelSize(resourceId);
-        }
-        return result;
-    }
     private void setDefaultFragment() {
         mainTabFragmentAdapter = new MainTabFragmentAdapter(((AppCompatActivity)getActivity()).getSupportFragmentManager(),getActivity());
         moBanInterface= (MoBanInterface) mainTabFragmentAdapter.getItem(0);
         Log.i(TAG, "setDefaultFragment: 11111111111");
     }
-
     public boolean isFlag() {
         return flag;
     }
@@ -319,13 +314,9 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-
-    public void setFlag(boolean flag) {
-        this.flag = flag;
-    }
     public void exit(){
         flag=false;
-        ((MoBanInterface)mainTabFragmentAdapter.getFragments().get(0)).getRecycler().scrollToPosition(0);
+        moBanInterface.getRecycler().scrollToPosition(0);
         topLayout.setVisibility(View.VISIBLE);
         new Handler().postDelayed(new Runnable() {
             @Override
