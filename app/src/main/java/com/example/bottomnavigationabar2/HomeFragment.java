@@ -63,7 +63,7 @@ public class HomeFragment extends Fragment {
     private View mViewBackgroundBottom;
     private MoBanInterface moBanInterface;
     /**
-     * 实际操作的tablayout，
+     * 实际操作的tablayout，傻逼陈梓佳
      */
     private TabLayout realTabLayout;
     private MoBan_1 moban1;
@@ -339,6 +339,7 @@ public class HomeFragment extends Fragment {
             }
         },10);
     }
+    //重写下拉刷新
     public void initRefreshLayout(){
         refreshLayout = view.findViewById(R.id.refreshLayout);
         refreshLayout.setRefreshHeader(new MaterialHeader(getContext()));

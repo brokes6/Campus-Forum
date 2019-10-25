@@ -214,7 +214,7 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
                 if (fileList.size() > 9) {
                     Toast.makeText(addPost.this, "一次最多上传9张图片！", Toast.LENGTH_SHORT).show();
                 } else {
-                    selectPic();  //选择添加图片方法
+                    selectPic();  //调用加载图片方法
                 }
 
             }
