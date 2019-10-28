@@ -7,7 +7,6 @@ import java.util.Date;
 /**
  * 创建于2019/9/16 21:00🐎
  */
-//1
 public class Post {
     private Integer pid;
     private Integer puid;
