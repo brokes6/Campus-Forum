@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.bottomnavigationabar2.MyImageView;
@@ -27,7 +29,11 @@ import java.util.List;
  * Created by HMY on 2016/8/6
  */
 public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adapter.ViewHolder> {
-
+    private  Boolean oh =true;
+    private  Boolean oh2 =true;
+    private ImageView shoucang;
+    private LinearLayout linearLayout;
+    private LinearLayout linearLayout2;
     private Context mContext;
     private View convertView;
     private List<Post> mList=new ArrayList<>();
@@ -46,6 +52,8 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         convertView = inflater.inflate(R.layout.item_bbs_nine_grid, parent, false);
         ViewHolder viewHolder = new ViewHolder(convertView);
+        linearLayout = convertView.findViewById(R.id.Lin_comment);
+        linearLayout2 = convertView.findViewById(R.id.Lin_give_the_thumbs_up);
         Log.i(TAG, "onCreateViewHolder:111");
         return viewHolder;
     }
@@ -60,6 +68,32 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
         holder.postId=mList.get(position).getPid();
         holder.layout.setIsShowAll(mList.get(position).isShowAll());
         holder.layout.setUrlList(Arrays.asList(mList.get(position).getImgUrl().split(",")));
+        linearLayout.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                if (oh){
+                    holder.loveNum.setImageDrawable(mContext.getResources().getDrawable(R.drawable.dianzanwanc));
+                    oh=false;
+                }else{
+                    holder.loveNum.setImageDrawable(mContext.getResources().getDrawable(R.drawable.dianzan));
+                    oh=true;
+                }
+            }
+        });
+        linearLayout2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (oh2==true){
+                    holder.collection.setImageDrawable(mContext.getResources().getDrawable(R.drawable.shocangwanc));
+                    oh2=false;
+                    return;
+                }else if(oh2==false){
+                    holder.collection.setImageDrawable(mContext.getResources().getDrawable(R.drawable.shocang));
+                    oh2=true;
+                    return;
+                }
+            }
+        });
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,6 +103,7 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
                 mContext.startActivity(intent);
             }
         });
+
     }
 
     @Override
@@ -83,6 +118,8 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
         MyImageView uimg;
         TextView datetime;
         TextView content;
+        ImageView loveNum;
+        ImageView collection;
         int postId;
         public ViewHolder(View itemView) {
             super(itemView);
@@ -92,6 +129,8 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
             uimg=itemView.findViewById(R.id.tieze_user_img);
             datetime=itemView.findViewById(R.id.tiezi_time);
             content=itemView.findViewById(R.id.tieze_Text);
+            loveNum=itemView.findViewById(R.id.loveNum);
+            collection=itemView.findViewById(R.id.collection);
         }
 
     }

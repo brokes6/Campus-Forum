@@ -42,7 +42,8 @@
             android:text="-抗压吧-"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#2196F3"
+            android:textColor="#F44336"
+            android:textSize="12sp"
             />
 
         <TextView
@@ -79,10 +80,10 @@
                         android:layout_weight="1">
 
                         <ImageView
-                            android:id="@+id/comment"
+                            android:id="@+id/loveNum"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
-                            android:background="@drawable/dianzan" />
+                            android:src="@drawable/dianzan" />
                         <TextView
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="5dp"
@@ -101,7 +102,7 @@
                         android:layout_weight="1">
 
                         <ImageView
-                            android:id="@+id/give_the_thumbs_up"
+                            android:id="@+id/collection"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:background="@drawable/shocang" />
@@ -141,4 +142,9 @@
 
 
         </LinearLayout>
+
+
+
+
+
     </LinearLayout>
