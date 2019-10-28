@@ -14,12 +14,21 @@ public class CommentDetailBean {
     private int love_count;
     private int replyTotal;//不错 暂定 后期可以添加回复总数
     private String ccreateTime;
+    private int status;
     private List<ReplyDetailBean> replyVoList;
 
     public CommentDetailBean(String username, String content, String ccreateTime) {
         this.username = username;
         this.content = content;
         this.ccreateTime = ccreateTime;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public int getCid() {

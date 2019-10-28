@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import java.util.TimerTask;
  */
 public abstract class NineGridLayout extends ViewGroup {
 
+    private static final String TAG = "NineGridLayout";
     private static final float DEFUALT_SPACING = 3f;
     private static final int MAX_COUNT = 9;
 
@@ -132,6 +134,7 @@ public abstract class NineGridLayout extends ViewGroup {
             params.height = mSingleWidth;
             setLayoutParams(params);
             imageView.layout(0, 0, mSingleWidth, mSingleWidth);
+            Log.i(TAG, "refresh:url="+url);
             boolean isShowDefualt = displayOneImage(imageView, url, mTotalWidth);
             if (isShowDefualt) {
                 layoutImageView(imageView, 0, url, false);
