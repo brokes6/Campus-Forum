@@ -214,7 +214,7 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
                 if (fileList.size() > 9) {
                     Toast.makeText(addPost.this, "一次最多上传9张图片！", Toast.LENGTH_SHORT).show();
                 } else {
-                    selectPic();  //选择添加图片方法
+                    selectPic();  //调用加载图片方法
                 }
 
             }
@@ -370,7 +370,12 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
     //重写onActivityResult方法
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode==0){
+            Toast.makeText(this,"返回发帖页面",Toast.LENGTH_SHORT);
+            return;
+        }
         if (requestCode == 1) {
+            Log.i(TAG, "onActivityResult: resultCode="+resultCode);
             Bundle bundle = data.getExtras();
             Bitmap bitmap = (Bitmap) bundle.get("data");
             Log.d(TAG, "bitmap=" + bitmap);

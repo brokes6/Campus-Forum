@@ -198,6 +198,7 @@ public class LoginActivity extends AppCompatActivity {
                 }else{ }
                 ActivityOptions compat = ActivityOptions.makeSceneTransitionAnimation(mActivity);
                 startActivity(new Intent(mContext, MainActivity.class), compat.toBundle());
+                finish();
             }
         });
     }

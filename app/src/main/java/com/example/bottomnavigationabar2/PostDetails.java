@@ -108,7 +108,6 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                     for(int i =index; i<commentsList.size()+index; i++){
                         expandableListView.expandGroup(i);
                     }
-                    adapter.notifyDataSetChanged();
                     break;
 
             }
@@ -149,7 +148,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         expandableListView.setGroupIndicator(null);
         //默认展开所有回复
         expandableListView.setAdapter(adapter);
-        initExpandableListView(commentsList);
+        initExpandableListView();
         getPopularComments();
         progressBar=findViewById(R.id.progress);
     }
@@ -167,12 +166,12 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
             }
         });
     }
-    private void initExpandableListView(final List<CommentDetailBean> commentsList){
+    private void initExpandableListView(){
         expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView expandableListView, View view, int groupPosition, long l) {
                 boolean isExpanded = expandableListView.isGroupExpanded(groupPosition);
-                Log.e(TAG, "onGroupClick: 当前的评论id>>>"+commentsList.get(groupPosition).getCid());
+                Log.e(TAG, "onGroupClick: 当前的评论id>>>"+adapter.getCommentBeanList().get(groupPosition).getCid());
                 showReplyDialog(groupPosition);
                 return true;
             }
@@ -181,7 +180,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
                 Toast.makeText(PostDetails.this,"点击了回复",Toast.LENGTH_SHORT).show();
-                Log.e(TAG, "onGroupClick: 当前的评论id>>>"+commentsList.get(groupPosition).getCid());
+                Log.e(TAG, "onGroupClick: -----当前的评论id>>>"+adapter.getCommentBeanList().get(groupPosition).getCid());
                 showReplyDialog(groupPosition);
                 return false;
             }
@@ -275,7 +274,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         Log.i(TAG, "showReplyDialog: view="+commentView);
         final EditText commentText = (EditText) commentView.findViewById(R.id.dialog_comment_et);
         final Button bt_comment = (Button) commentView.findViewById(R.id.dialog_comment_bt);
-        commentText.setHint("回复 " + commentsList.get(position).getUsername() + " 的评论:");
+        commentText.setHint("回复 " +adapter.getCommentBeanList().get(position).getUsername() + " 的评论:");
         dialog.setContentView(commentView);
         View parent = (View) commentView.getParent();
         BottomSheetBehavior behavior = BottomSheetBehavior.from(parent);
@@ -288,8 +287,8 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                 String replyContent = commentText.getText().toString().trim();
                 if(!TextUtils.isEmpty(replyContent)){
                     dialog.dismiss();
-                    Log.i(TAG, "onClick: commentId="+commentsList.get(position).getCid());
-                    addReply(replyContent,token,commentsList.get(position).getCid());
+                    Log.i(TAG, "onClick: commentId="+adapter.getCommentBeanList().get(position).getCid());
+                    addReply(replyContent,token,adapter.getCommentBeanList().get(position).getCid());
                     //等会在搞
                     ReplyDetailBean detailBean = new ReplyDetailBean("付鑫博",replyContent);
                     adapter.addTheReplyData(detailBean, position);

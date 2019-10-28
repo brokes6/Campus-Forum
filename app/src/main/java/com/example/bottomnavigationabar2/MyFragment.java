@@ -59,7 +59,7 @@ public class MyFragment extends Fragment {
         view = inflater.inflate(R.layout.my_fragment, container, false);
         Bundle bundle = getArguments();
         picture = (ImageView)view.findViewById(R.id.user_head_img);
-        TextView Tuichu = (TextView)view.findViewById(R.id.tuichu);
+//        TextView Tuichu = (TextView)view.findViewById(R.id.tuichu);
         LinearLayout history=(LinearLayout)view.findViewById(R.id.history);
         LinearLayout collection=(LinearLayout)view.findViewById(R.id.Collection);
 
@@ -80,7 +80,7 @@ public class MyFragment extends Fragment {
             }
         });
 
-        Tuichu.setOnClickListener(new View.OnClickListener() {
+        /*Tuichu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //系统将终止一切和这个程序包关联的，所有共享同一 uid 的 process全部杀掉，还会停止相关的服务，并且会发送一个广播。
@@ -91,7 +91,7 @@ public class MyFragment extends Fragment {
                 am.killBackgroundProcesses(getActivity().getPackageName());
                 System.exit(0);
             }
-        });
+        });*/
         picture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

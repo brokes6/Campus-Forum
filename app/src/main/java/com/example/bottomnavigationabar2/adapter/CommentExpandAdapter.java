@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -118,9 +119,11 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
             public void onClick(View view) {
                 if(isLike){
                     isLike = false;
+                    Toast.makeText(context, "取消赞", Toast.LENGTH_SHORT).show();
                     groupHolder.iv_like.setColorFilter(Color.parseColor("#aaaaaa"));
                 }else {
                     isLike = true;
+                    Toast.makeText(context, "点赞", Toast.LENGTH_SHORT).show();
                     groupHolder.iv_like.setColorFilter(Color.parseColor("#FF5C5C"));
                 }
             }
@@ -186,8 +189,7 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
      */
     public void addTheCommentData(CommentDetailBean commentDetailBean){
         if(commentDetailBean!=null){
-
-            commentBeanList.add(commentDetailBean);
+            commentBeanList.add(0,commentDetailBean);
             notifyDataSetChanged();
         }else {
             throw new IllegalArgumentException("评论数据为空!");

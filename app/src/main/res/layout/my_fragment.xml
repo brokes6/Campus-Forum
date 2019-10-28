@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#ccc"
+    android:background="#eeeeee"
     tools:context=".MainActivity">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="230dp"
         android:orientation="horizontal"
         android:background="@drawable/teaser_mohu">
 
@@ -40,14 +40,12 @@
         android:background="#FFF"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp">
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:layout_marginLeft="20dp"
-            android:layout_width="40dp"
+            android:layout_width="35dp"
             android:layout_weight="1"
-            android:layout_height="40dp"
-            android:src="@mipmap/ic_launcher"
-            app:civ_border_color="#4CAF50"
-            app:civ_border_width="2dp"
+            android:layout_height="35dp"
+            android:src="@drawable/guanzhu"
             android:layout_gravity="center_vertical" />
         <TextView
             android:layout_marginLeft="10dp"
@@ -61,9 +59,9 @@
         </TextView>
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="40dp"
+            android:layout_width="30dp"
             android:layout_weight="1"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:layout_gravity="center_vertical"
             android:src="@drawable/san"/>
     </LinearLayout>
@@ -73,14 +71,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFF">
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:layout_marginLeft="20dp"
-            android:layout_width="40dp"
+            android:layout_width="35dp"
             android:layout_weight="1"
-            android:layout_height="40dp"
-            android:src="@mipmap/ic_launcher"
-            app:civ_border_color="#4CAF50"
-            app:civ_border_width="2dp"
+            android:layout_height="35dp"
+            android:src="@drawable/history"
             android:layout_gravity="center_vertical" />
         <TextView
             android:layout_marginLeft="10dp"
@@ -94,9 +90,9 @@
         </TextView>
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="40dp"
+            android:layout_width="30dp"
             android:layout_weight="1"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:layout_gravity="center_vertical"
             android:src="@drawable/san"/>
 
@@ -105,21 +101,19 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#ccc"
-        android:layout_marginLeft="50dp"/>
+        android:layout_marginLeft="70dp"/>
     <LinearLayout
         android:id="@+id/Collection"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFF">
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:layout_marginLeft="20dp"
-            android:layout_width="40dp"
+            android:layout_width="35dp"
             android:layout_weight="1"
-            android:layout_height="40dp"
-            android:src="@mipmap/ic_launcher"
-            app:civ_border_color="#4CAF50"
-            app:civ_border_width="2dp"
+            android:layout_height="35dp"
+            android:src="@drawable/collection"
             android:layout_gravity="center_vertical" />
         <TextView
             android:layout_marginLeft="10dp"
@@ -133,9 +127,9 @@
         </TextView>
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="40dp"
+            android:layout_width="30dp"
             android:layout_weight="1"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:layout_gravity="center_vertical"
             android:src="@drawable/san" />
 
@@ -144,20 +138,18 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#ccc"
-        android:layout_marginLeft="50dp"/>
+        android:layout_marginLeft="70dp"/>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFF">
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:layout_marginLeft="20dp"
-            android:layout_width="40dp"
+            android:layout_width="35dp"
             android:layout_weight="1"
-            android:layout_height="40dp"
-            android:src="@mipmap/ic_launcher"
-            app:civ_border_color="#4CAF50"
-            app:civ_border_width="2dp"
+            android:layout_height="35dp"
+            android:src="@drawable/pinglun"
             android:layout_gravity="center_vertical" />
         <TextView
             android:layout_marginLeft="10dp"
@@ -171,9 +163,9 @@
         </TextView>
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="40dp"
+            android:layout_width="30dp"
             android:layout_weight="1"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:layout_gravity="center_vertical"
             android:src="@drawable/san"/>
 
@@ -182,36 +174,34 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#ccc"
-        android:layout_marginLeft="50dp"/>
+        android:layout_marginLeft="70dp"/>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFF">
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:layout_marginLeft="20dp"
-            android:layout_width="40dp"
+            android:layout_width="35dp"
             android:layout_weight="1"
-            android:layout_height="40dp"
-            android:src="@mipmap/ic_launcher"
-            app:civ_border_color="#4CAF50"
-            app:civ_border_width="2dp"
+            android:layout_height="35dp"
+            android:src="@drawable/information"
             android:layout_gravity="center_vertical" />
         <TextView
             android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_weight="30"
             android:layout_height="50dp"
-            android:text="关于 我们"
+            android:text="关于我们"
             android:textSize="20dp"
             android:gravity="center_vertical">
 
         </TextView>
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="40dp"
+            android:layout_width="30dp"
             android:layout_weight="1"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:layout_gravity="center_vertical"
             android:src="@drawable/san"/>
 
@@ -220,20 +210,18 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#ccc"
-        android:layout_marginLeft="50dp"/>
+        android:layout_marginLeft="70dp"/>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFF">
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:layout_marginLeft="20dp"
-            android:layout_width="40dp"
+            android:layout_width="35dp"
             android:layout_weight="1"
-            android:layout_height="40dp"
-            android:src="@mipmap/ic_launcher"
-            app:civ_border_color="#4CAF50"
-            app:civ_border_width="2dp"
+            android:layout_height="35dp"
+            android:src="@drawable/setting"
             android:layout_gravity="center_vertical" />
         <TextView
             android:layout_marginLeft="10dp"
@@ -247,47 +235,11 @@
         </TextView>
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="40dp"
+            android:layout_width="30dp"
             android:layout_weight="1"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:layout_gravity="center_vertical"
             android:src="@drawable/san"/>
 
     </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFF"
-        android:layout_marginTop="10dp">
-
-        <TextView
-            android:id="@+id/tuichu"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
-            android:layout_weight="30"
-            android:layout_height="50dp"
-            android:text="注 销"
-            android:textSize="25sp"
-            android:gravity="center_horizontal"
-            android:textColor="#F70000"
-            >
-        </TextView>
-
-    </LinearLayout>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="30dp"
-        android:background="#FFF">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="30dp"
-            android:layout_alignParentBottom="true"/>
-    </RelativeLayout>
 </LinearLayout>
