@@ -2,6 +2,7 @@ package com.example.bottomnavigationabar2.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,12 +18,23 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.bottomnavigationabar2.R;
 import com.example.bottomnavigationabar2.bean.CommentDetailBean;
 import com.example.bottomnavigationabar2.bean.ReplyDetailBean;
+import com.google.gson.JsonObject;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * Author: fuxinbo
@@ -34,7 +46,7 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
     private List<CommentDetailBean> commentBeanList;
     private Context context;
     private int pageIndex = 1;
-
+    public static final String TESTOKEN="jCJdTl6mIY7UHl4mOluafQ%3D%3D";
     public CommentExpandAdapter(Context context, List<CommentDetailBean> commentBeanList) {
         this.context = context;
         this.commentBeanList = commentBeanList;
@@ -92,7 +104,6 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
     public boolean hasStableIds() {
         return true;
     }
-    boolean isLike = false;
 
     @Override
     public View getGroupView(final int groupPosition, boolean isExpand, View convertView, ViewGroup viewGroup) {
@@ -111,22 +122,36 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
 //                .error(R.mipmap.ic_launcher)
 //                .centerCrop()
 //                .into(groupHolder.logo);
+        Log.i(TAG, "getGroupView: groupPosition:"+groupPosition);
         groupHolder.tv_name.setText(commentBeanList.get(groupPosition).getUsername());
         groupHolder.tv_time.setText(commentBeanList.get(groupPosition).getCcreateTime());
         groupHolder.tv_content.setText(commentBeanList.get(groupPosition).getContent());
+        groupHolder.status=commentBeanList.get(groupPosition).getStatus();
+        groupHolder.position=groupPosition;
+        if(groupHolder.status==1){
+            groupHolder.iv_like.setColorFilter(Color.parseColor("#FF5C5C"));
+        }
+        else{
+            groupHolder.iv_like.setColorFilter(Color.parseColor("#aaaaaa"));
+        }
         groupHolder.iv_like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isLike){
-                    isLike = false;
+                if(groupHolder.status==1){
+                    groupHolder.status=0;
                     Toast.makeText(context, "取消赞", Toast.LENGTH_SHORT).show();
                     groupHolder.iv_like.setColorFilter(Color.parseColor("#aaaaaa"));
                 }else {
-                    isLike = true;
+                    groupHolder.status=1;
                     Toast.makeText(context, "点赞", Toast.LENGTH_SHORT).show();
                     groupHolder.iv_like.setColorFilter(Color.parseColor("#FF5C5C"));
                 }
+                Log.i(TAG, "onClick: 开始搞赞好吧");
+                Log.i(TAG, "onClick: ?position="+groupHolder.position);
+                Log.i(TAG, "onClick: commentId="+commentBeanList.get(groupHolder.position).getCid());
+                updateCommentLove(commentBeanList.get(groupPosition).getCid(),TESTOKEN);
             }
+
         });
         return convertView;
     }
@@ -164,6 +189,8 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
         private CircleImageView logo;
         private TextView tv_name, tv_content, tv_time;
         private ImageView iv_like;
+        private int status;
+        private int position;
         public GroupHolder(View view) {
             logo = (CircleImageView) view.findViewById(R.id.comment_item_logo);
             tv_content = (TextView) view.findViewById(R.id.comment_item_content);
@@ -235,5 +262,37 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
         }
 
         notifyDataSetChanged();
+    }
+    private void updateCommentLove(int commentId,String token){
+        final Request request =new Request.Builder()
+                .url("http://106.54.134.17/app/updateLoveComment?token="+token+"&commentId="+commentId)
+                .build();
+        OkHttpClient okHttpClient = new OkHttpClient();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                Log.d(TAG, "onFailure: 失败呃");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String dataStr = response.body().string();
+                Log.i(TAG, "onResponse: 返回json数据"+dataStr);
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject=new JSONObject(dataStr);
+                    int code=jsonObject.getInt("code");
+                    if(code==0){
+                        Log.i(TAG, "onResponse:点赞/取消赞 遇到未知错误。。");
+                        return;
+                    }
+                    String msg=jsonObject.getString("msg");
+                    Log.i(TAG, "onResponse: 响应信息"+msg);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }
