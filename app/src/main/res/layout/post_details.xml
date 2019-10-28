@@ -11,7 +11,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.bottomnavigationabar2.PostDetails">
-    <include layout="@layout/title" />
+    <com.example.bottomnavigationabar2.adapter.Top_Title
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </com.example.bottomnavigationabar2.adapter.Top_Title>
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/main_content"
         android:layout_width="match_parent"

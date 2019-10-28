@@ -35,12 +35,21 @@
             android:layout_marginTop="-23dp"
             android:text="我是时间"
             />
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/tieze_felei"
+            android:text="-抗压吧-"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#2196F3"
+            />
 
         <TextView
             android:layout_marginTop="5dp"
             android:layout_marginLeft="10dp"
             android:id="@+id/tieze_Text"
-            android:text="1111111111111111111111111111111111111111111111111111"
+            android:text="123"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
