@@ -127,6 +127,7 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
         groupHolder.tv_time.setText(commentBeanList.get(groupPosition).getCcreateTime());
         groupHolder.tv_content.setText(commentBeanList.get(groupPosition).getContent());
         groupHolder.status=commentBeanList.get(groupPosition).getStatus();
+        groupHolder.loveNum.setText(String.valueOf(commentBeanList.get(groupPosition).getLove_count()));
         groupHolder.position=groupPosition;
         if(groupHolder.status==1){
             groupHolder.iv_like.setColorFilter(Color.parseColor("#FF5C5C"));
@@ -141,10 +142,12 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
                     groupHolder.status=0;
                     Toast.makeText(context, "取消赞", Toast.LENGTH_SHORT).show();
                     groupHolder.iv_like.setColorFilter(Color.parseColor("#aaaaaa"));
+                    groupHolder.loveNum.setText(String.valueOf(Integer.valueOf(groupHolder.loveNum.getText().toString())-1));
                 }else {
                     groupHolder.status=1;
                     Toast.makeText(context, "点赞", Toast.LENGTH_SHORT).show();
                     groupHolder.iv_like.setColorFilter(Color.parseColor("#FF5C5C"));
+                    groupHolder.loveNum.setText(String.valueOf(Integer.valueOf(groupHolder.loveNum.getText().toString())+1));
                 }
                 Log.i(TAG, "onClick: 开始搞赞好吧");
                 Log.i(TAG, "onClick: ?position="+groupHolder.position);
@@ -187,7 +190,7 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
 
     private class GroupHolder{
         private CircleImageView logo;
-        private TextView tv_name, tv_content, tv_time;
+        private TextView tv_name, tv_content, tv_time,loveNum;
         private ImageView iv_like;
         private int status;
         private int position;
@@ -197,7 +200,9 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
             tv_name = (TextView) view.findViewById(R.id.comment_item_userName);
             tv_time = (TextView) view.findViewById(R.id.comment_item_time);
             iv_like = (ImageView) view.findViewById(R.id.comment_item_like);
+            loveNum=view.findViewById(R.id.loveNum);
         }
+
     }
 
     private class ChildHolder{
