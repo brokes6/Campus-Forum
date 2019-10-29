@@ -42,9 +42,9 @@
         android:layout_marginBottom="10dp">
         <ImageView
             android:layout_marginLeft="20dp"
-            android:layout_width="35dp"
+            android:layout_width="30dp"
             android:layout_weight="1"
-            android:layout_height="35dp"
+            android:layout_height="30dp"
             android:src="@drawable/guanzhu"
             android:layout_gravity="center_vertical" />
         <TextView
@@ -73,9 +73,9 @@
         android:background="#FFF">
         <ImageView
             android:layout_marginLeft="20dp"
-            android:layout_width="35dp"
+            android:layout_width="30dp"
             android:layout_weight="1"
-            android:layout_height="35dp"
+            android:layout_height="30dp"
             android:src="@drawable/history"
             android:layout_gravity="center_vertical" />
         <TextView
@@ -99,9 +99,8 @@
     </LinearLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#ccc"
-        android:layout_marginLeft="70dp"/>
+        android:layout_height="1.5dp"
+        android:background="#ccc"/>
     <LinearLayout
         android:id="@+id/Collection"
         android:orientation="horizontal"
@@ -110,9 +109,9 @@
         android:background="#FFF">
         <ImageView
             android:layout_marginLeft="20dp"
-            android:layout_width="35dp"
+            android:layout_width="30dp"
             android:layout_weight="1"
-            android:layout_height="35dp"
+            android:layout_height="30dp"
             android:src="@drawable/collection"
             android:layout_gravity="center_vertical" />
         <TextView
@@ -137,22 +136,21 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#ccc"
-        android:layout_marginLeft="70dp"/>
+        android:background="#ccc"/>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFF">
         <ImageView
-            android:layout_marginLeft="20dp"
-            android:layout_width="35dp"
+            android:layout_marginLeft="22dp"
+            android:layout_width="25dp"
             android:layout_weight="1"
-            android:layout_height="35dp"
+            android:layout_height="25dp"
             android:src="@drawable/pinglun"
             android:layout_gravity="center_vertical" />
         <TextView
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="13dp"
             android:layout_width="wrap_content"
             android:layout_weight="30"
             android:layout_height="50dp"
@@ -173,22 +171,21 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#ccc"
-        android:layout_marginLeft="70dp"/>
+        android:background="#ccc"/>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFF">
         <ImageView
-            android:layout_marginLeft="20dp"
-            android:layout_width="35dp"
+            android:layout_marginLeft="22dp"
+            android:layout_width="25dp"
             android:layout_weight="1"
-            android:layout_height="35dp"
+            android:layout_height="25dp"
             android:src="@drawable/information"
             android:layout_gravity="center_vertical" />
         <TextView
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="13dp"
             android:layout_width="wrap_content"
             android:layout_weight="30"
             android:layout_height="50dp"
@@ -209,8 +206,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#ccc"
-        android:layout_marginLeft="70dp"/>
+        android:background="#ccc"/>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -218,9 +214,9 @@
         android:background="#FFF">
         <ImageView
             android:layout_marginLeft="20dp"
-            android:layout_width="35dp"
+            android:layout_width="30dp"
             android:layout_weight="1"
-            android:layout_height="35dp"
+            android:layout_height="30dp"
             android:src="@drawable/setting"
             android:layout_gravity="center_vertical" />
         <TextView

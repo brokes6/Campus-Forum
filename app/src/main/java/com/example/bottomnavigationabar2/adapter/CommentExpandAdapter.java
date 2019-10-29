@@ -2,6 +2,7 @@ package com.example.bottomnavigationabar2.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.bottomnavigationabar2.MyImageView;
 import com.example.bottomnavigationabar2.R;
 import com.example.bottomnavigationabar2.bean.CommentDetailBean;
 import com.example.bottomnavigationabar2.bean.ReplyDetailBean;
@@ -44,6 +46,7 @@ import okhttp3.Response;
 public class CommentExpandAdapter extends BaseExpandableListAdapter {
     private static final String TAG = "CommentExpandAdapter";
     private List<CommentDetailBean> commentBeanList;
+    private static final int REPLYNUM=3;
     private Context context;
     private int pageIndex = 1;
     public static final String TESTOKEN="jCJdTl6mIY7UHl4mOluafQ%3D%3D";
@@ -70,12 +73,10 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int i) {
-        Log.i(TAG, "getChildrenCount: -----");
         if(commentBeanList.get(i).getReplyVoList() == null){
             return 0;
         }else {
-            Log.i(TAG, "getChildrenCount:进入");
-            return commentBeanList.get(i).getReplyVoList().size()>0 ? commentBeanList.get(i).getReplyVoList().size():0;
+            return commentBeanList.get(i).getReplyVoList().size()>2 ?REPLYNUM :commentBeanList.get(i).getReplyVoList().size();
         }
 
     }
@@ -117,12 +118,11 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
             groupHolder = (GroupHolder) convertView.getTag();
         }
 //        Glide.with(context).load(R.drawable.user_other)
-//                //不清楚，但注释掉没问题
 //               .diskCacheStrategy(DiskCacheStrategy.RESULT)
 //                .error(R.mipmap.ic_launcher)
 //                .centerCrop()
 //                .into(groupHolder.logo);
-        Log.i(TAG, "getGroupView: groupPosition:"+groupPosition);
+        groupHolder.logo.setImageURL("http://106.54.134.17/image/topicalimg/98c59323be294a438ffe82a0427912dbsmall.jpeg");
         groupHolder.tv_name.setText(commentBeanList.get(groupPosition).getUsername());
         groupHolder.tv_time.setText(commentBeanList.get(groupPosition).getCcreateTime());
         groupHolder.tv_content.setText(commentBeanList.get(groupPosition).getContent());
@@ -162,24 +162,24 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(final int groupPosition, int childPosition, boolean b, View convertView, ViewGroup viewGroup) {
         final ChildHolder childHolder;
-        Log.i(TAG, "getChildView: 11111111111111");
-        if(convertView == null){
+        List<ReplyDetailBean> replyDetailBeans =  commentBeanList.get(groupPosition).getReplyVoList();
+        Log.i(TAG, "getChildView:groupPosition="+groupPosition+"childposition="+childPosition);
+        if(replyDetailBeans.size()>=3&&childPosition==2){
+            Log.i(TAG, "getChildView: 最后一个啦你不操作一下?\nchildPosition="+childPosition);
+            convertView= LayoutInflater.from(context).inflate(R.layout.look_more_layout,viewGroup, false);
+            return convertView;
+        }
             convertView = LayoutInflater.from(context).inflate(R.layout.comment_reply_item_layout,viewGroup, false);
             childHolder = new ChildHolder(convertView);
             convertView.setTag(childHolder);
-        }
-        else {
-            childHolder = (ChildHolder) convertView.getTag();
-        }
-        String replyUser = commentBeanList.get(groupPosition).getReplyVoList().get(childPosition).getUsername();
+        Log.i(TAG, "getChildView: childHolder="+childHolder);
+        String replyUser = replyDetailBeans.get(childPosition).getUsername();
         if(!TextUtils.isEmpty(replyUser)){
             childHolder.tv_name.setText(replyUser + ":");
         }else {
             childHolder.tv_name.setText("无名"+":");
         }
-
         childHolder.tv_content.setText(commentBeanList.get(groupPosition).getReplyVoList().get(childPosition).getContent());
-
         return convertView;
     }
 
@@ -189,13 +189,13 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
     }
 
     private class GroupHolder{
-        private CircleImageView logo;
+        private MyImageView logo;
         private TextView tv_name, tv_content, tv_time,loveNum;
         private ImageView iv_like;
         private int status;
         private int position;
         public GroupHolder(View view) {
-            logo = (CircleImageView) view.findViewById(R.id.comment_item_logo);
+            logo = view.findViewById(R.id.comment_item_logo);
             tv_content = (TextView) view.findViewById(R.id.comment_item_content);
             tv_name = (TextView) view.findViewById(R.id.comment_item_userName);
             tv_time = (TextView) view.findViewById(R.id.comment_item_time);

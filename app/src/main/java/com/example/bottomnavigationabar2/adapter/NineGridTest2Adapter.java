@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.RequestBuilder;
 import com.example.bottomnavigationabar2.MyImageView;
 import com.example.bottomnavigationabar2.Post;
 import com.example.bottomnavigationabar2.PostDetails;
@@ -24,6 +25,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import okhttp3.Request;
 
 /**
  * Created by HMY on 2016/8/6
@@ -67,6 +70,7 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
         holder.username.setText(mList.get(position).getUsername());
         holder.postId=mList.get(position).getPid();
         holder.layout.setIsShowAll(mList.get(position).isShowAll());
+        holder.loveNumStr.setText(String.valueOf(mList.get(position).getLoveCount()));
         holder.layout.setUrlList(Arrays.asList(mList.get(position).getImgUrl().split(",")));
         linearLayout.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -114,12 +118,9 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
     public class ViewHolder extends RecyclerView.ViewHolder {
         View view;
         NineGridTestLayout layout;
-        TextView username;
         MyImageView uimg;
-        TextView datetime;
-        TextView content;
-        ImageView loveNum;
-        ImageView collection;
+        TextView datetime,content,username,loveNumStr,collectionStr,talkNumStr;
+        ImageView loveNum,collection;
         int postId;
         public ViewHolder(View itemView) {
             super(itemView);
@@ -131,6 +132,9 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
             content=itemView.findViewById(R.id.tieze_Text);
             loveNum=itemView.findViewById(R.id.loveNum);
             collection=itemView.findViewById(R.id.collection);
+            loveNumStr=itemView.findViewById(R.id.loveNumStr);
+            collectionStr=itemView.findViewById(R.id.collectionStr);
+            talkNumStr=itemView.findViewById(R.id.talkNumStr);
         }
 
     }
@@ -145,4 +149,8 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
         mList=null;
         mList=new ArrayList<>();
     }
+/*    private void updatePostLove(int postId,String token){
+        Request request = new Request.Builder()
+                .url()
+    }*/
 }

@@ -118,7 +118,6 @@ public class ScanFragment extends Fragment implements View.OnClickListener{
         //计算出滚动条初始的偏移量
         //计算出切换一个界面时，滚动条的位移量
         return view;
-
     }
     public class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
         @Override

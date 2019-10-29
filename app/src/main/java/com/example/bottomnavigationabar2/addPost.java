@@ -185,15 +185,16 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(addPost.this,MainActivity.class);
-                startActivity(intent);
                 Toast.makeText(addPost.this,"以返回",Toast.LENGTH_SHORT).show();
                 //跳转完成后，需要调用重新刷新
                 try {
                     netUploadPost();
+                    finish();
+
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
-                }
+                };
+                finish();
             }
         });
 

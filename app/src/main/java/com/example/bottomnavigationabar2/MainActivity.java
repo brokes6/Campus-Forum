@@ -4,6 +4,8 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -17,7 +19,7 @@ import com.ashokvarma.bottomnavigation.BottomNavigationItem;
  * Created by 武当山道士 on 2017/8/16.
  */
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener{
+public class MainActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener {
 
     private BottomNavigationBar bottomNavigationBar;
     String user_name;
@@ -30,7 +32,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     float x2 = 0;
     float y1 = 0;
     float y2 = 0;
-    int num=0;
+    int num = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         }
         Intent intent = getIntent();
         user_name = intent.getStringExtra("username");
-        Toast.makeText(this,"账号"+user_name,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "账号" + user_name, Toast.LENGTH_SHORT).show();
         /**
          * bottomNavigation 设置
          */
@@ -76,8 +79,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         bottomNavigationBar
                 .addItem(new BottomNavigationItem(R.mipmap.home, "首页"))
                 .addItem(new BottomNavigationItem(R.mipmap.fenlei, "分类"))
-                .addItem(new BottomNavigationItem(R.mipmap.personal,"个人设置"))
-                .setFirstSelectedPosition(lastSelectedPosition )
+                .addItem(new BottomNavigationItem(R.mipmap.personal, "个人设置"))
+                .setFirstSelectedPosition(lastSelectedPosition)
                 .initialise(); //initialise 一定要放在 所有设置的最后一项
 
         setDefaultFragment();//设置默认导航栏
@@ -181,14 +184,20 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     public void onTabReselected(int position) {
 
     }
-
+    private long exitTime = 0;
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if ( keyCode == KeyEvent.KEYCODE_BACK ){
-            //监听返回键
-            if (mHomeFragment.isFlag()){
-                mHomeFragment.exit();
-            }else {
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if ((System .currentTimeMillis() - exitTime) > 2000) {
+                //弹出提示，可以有多种方式
+                Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                exitTime = System.currentTimeMillis();
+           if (mHomeFragment.isFlag()) {
+               mHomeFragment.exit();
+               }
+
+            } else {
                 //如果不需要拉出顶部的header，直接关闭当前的界面
                 finish();
             }
@@ -196,6 +205,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         }
         return super.onKeyDown(keyCode, event);
     }
+    private static boolean isExit = false;
+
+    Handler mHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            isExit = false;
+        }
+    };
 
 }
-
