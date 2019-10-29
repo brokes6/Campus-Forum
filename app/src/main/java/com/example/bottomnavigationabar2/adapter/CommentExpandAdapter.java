@@ -2,6 +2,8 @@ package com.example.bottomnavigationabar2.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,15 +16,27 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.bottomnavigationabar2.MyImageView;
 import com.example.bottomnavigationabar2.R;
 import com.example.bottomnavigationabar2.bean.CommentDetailBean;
 import com.example.bottomnavigationabar2.bean.ReplyDetailBean;
+import com.google.gson.JsonObject;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * Author: fuxinbo
@@ -32,9 +46,10 @@ import okhttp3.RequestBody;
 public class CommentExpandAdapter extends BaseExpandableListAdapter {
     private static final String TAG = "CommentExpandAdapter";
     private List<CommentDetailBean> commentBeanList;
+    private static final int REPLYNUM=3;
     private Context context;
     private int pageIndex = 1;
-
+    public static final String TESTOKEN="jCJdTl6mIY7UHl4mOluafQ%3D%3D";
     public CommentExpandAdapter(Context context, List<CommentDetailBean> commentBeanList) {
         this.context = context;
         this.commentBeanList = commentBeanList;
@@ -58,12 +73,10 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int i) {
-        Log.i(TAG, "getChildrenCount: -----");
         if(commentBeanList.get(i).getReplyVoList() == null){
             return 0;
         }else {
-            Log.i(TAG, "getChildrenCount:进入");
-            return commentBeanList.get(i).getReplyVoList().size()>0 ? commentBeanList.get(i).getReplyVoList().size():0;
+            return commentBeanList.get(i).getReplyVoList().size()>2 ?REPLYNUM :commentBeanList.get(i).getReplyVoList().size();
         }
 
     }
@@ -92,7 +105,6 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
     public boolean hasStableIds() {
         return true;
     }
-    boolean isLike = false;
 
     @Override
     public View getGroupView(final int groupPosition, boolean isExpand, View convertView, ViewGroup viewGroup) {
@@ -106,27 +118,43 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
             groupHolder = (GroupHolder) convertView.getTag();
         }
 //        Glide.with(context).load(R.drawable.user_other)
-//                //不清楚，但注释掉没问题
 //               .diskCacheStrategy(DiskCacheStrategy.RESULT)
 //                .error(R.mipmap.ic_launcher)
 //                .centerCrop()
 //                .into(groupHolder.logo);
+        groupHolder.logo.setImageURL("http://106.54.134.17/image/topicalimg/98c59323be294a438ffe82a0427912dbsmall.jpeg");
         groupHolder.tv_name.setText(commentBeanList.get(groupPosition).getUsername());
         groupHolder.tv_time.setText(commentBeanList.get(groupPosition).getCcreateTime());
         groupHolder.tv_content.setText(commentBeanList.get(groupPosition).getContent());
+        groupHolder.status=commentBeanList.get(groupPosition).getStatus();
+        groupHolder.loveNum.setText(String.valueOf(commentBeanList.get(groupPosition).getLove_count()));
+        groupHolder.position=groupPosition;
+        if(groupHolder.status==1){
+            groupHolder.iv_like.setColorFilter(Color.parseColor("#FF5C5C"));
+        }
+        else{
+            groupHolder.iv_like.setColorFilter(Color.parseColor("#aaaaaa"));
+        }
         groupHolder.iv_like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isLike){
-                    isLike = false;
+                if(groupHolder.status==1){
+                    groupHolder.status=0;
                     Toast.makeText(context, "取消赞", Toast.LENGTH_SHORT).show();
                     groupHolder.iv_like.setColorFilter(Color.parseColor("#aaaaaa"));
+                    groupHolder.loveNum.setText(String.valueOf(Integer.valueOf(groupHolder.loveNum.getText().toString())-1));
                 }else {
-                    isLike = true;
+                    groupHolder.status=1;
                     Toast.makeText(context, "点赞", Toast.LENGTH_SHORT).show();
                     groupHolder.iv_like.setColorFilter(Color.parseColor("#FF5C5C"));
+                    groupHolder.loveNum.setText(String.valueOf(Integer.valueOf(groupHolder.loveNum.getText().toString())+1));
                 }
+                Log.i(TAG, "onClick: 开始搞赞好吧");
+                Log.i(TAG, "onClick: ?position="+groupHolder.position);
+                Log.i(TAG, "onClick: commentId="+commentBeanList.get(groupHolder.position).getCid());
+                updateCommentLove(commentBeanList.get(groupPosition).getCid(),TESTOKEN);
             }
+
         });
         return convertView;
     }
@@ -134,24 +162,24 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(final int groupPosition, int childPosition, boolean b, View convertView, ViewGroup viewGroup) {
         final ChildHolder childHolder;
-        Log.i(TAG, "getChildView: 11111111111111");
-        if(convertView == null){
+        List<ReplyDetailBean> replyDetailBeans =  commentBeanList.get(groupPosition).getReplyVoList();
+        Log.i(TAG, "getChildView:groupPosition="+groupPosition+"childposition="+childPosition);
+        if(replyDetailBeans.size()>=3&&childPosition==2){
+            Log.i(TAG, "getChildView: 最后一个啦你不操作一下?\nchildPosition="+childPosition);
+            convertView= LayoutInflater.from(context).inflate(R.layout.look_more_layout,viewGroup, false);
+            return convertView;
+        }
             convertView = LayoutInflater.from(context).inflate(R.layout.comment_reply_item_layout,viewGroup, false);
             childHolder = new ChildHolder(convertView);
             convertView.setTag(childHolder);
-        }
-        else {
-            childHolder = (ChildHolder) convertView.getTag();
-        }
-        String replyUser = commentBeanList.get(groupPosition).getReplyVoList().get(childPosition).getUsername();
+        Log.i(TAG, "getChildView: childHolder="+childHolder);
+        String replyUser = replyDetailBeans.get(childPosition).getUsername();
         if(!TextUtils.isEmpty(replyUser)){
             childHolder.tv_name.setText(replyUser + ":");
         }else {
             childHolder.tv_name.setText("无名"+":");
         }
-
         childHolder.tv_content.setText(commentBeanList.get(groupPosition).getReplyVoList().get(childPosition).getContent());
-
         return convertView;
     }
 
@@ -161,16 +189,20 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
     }
 
     private class GroupHolder{
-        private CircleImageView logo;
-        private TextView tv_name, tv_content, tv_time;
+        private MyImageView logo;
+        private TextView tv_name, tv_content, tv_time,loveNum;
         private ImageView iv_like;
+        private int status;
+        private int position;
         public GroupHolder(View view) {
-            logo = (CircleImageView) view.findViewById(R.id.comment_item_logo);
+            logo = view.findViewById(R.id.comment_item_logo);
             tv_content = (TextView) view.findViewById(R.id.comment_item_content);
             tv_name = (TextView) view.findViewById(R.id.comment_item_userName);
             tv_time = (TextView) view.findViewById(R.id.comment_item_time);
             iv_like = (ImageView) view.findViewById(R.id.comment_item_like);
+            loveNum=view.findViewById(R.id.loveNum);
         }
+
     }
 
     private class ChildHolder{
@@ -235,5 +267,37 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
         }
 
         notifyDataSetChanged();
+    }
+    private void updateCommentLove(int commentId,String token){
+        final Request request =new Request.Builder()
+                .url("http://106.54.134.17/app/updateLoveComment?token="+token+"&commentId="+commentId)
+                .build();
+        OkHttpClient okHttpClient = new OkHttpClient();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                Log.d(TAG, "onFailure: 失败呃");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String dataStr = response.body().string();
+                Log.i(TAG, "onResponse: 返回json数据"+dataStr);
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject=new JSONObject(dataStr);
+                    int code=jsonObject.getInt("code");
+                    if(code==0){
+                        Log.i(TAG, "onResponse:点赞/取消赞 遇到未知错误。。");
+                        return;
+                    }
+                    String msg=jsonObject.getString("msg");
+                    Log.i(TAG, "onResponse: 响应信息"+msg);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }

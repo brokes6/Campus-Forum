@@ -179,8 +179,12 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
-                Toast.makeText(PostDetails.this,"点击了回复",Toast.LENGTH_SHORT).show();
-                Log.e(TAG, "onGroupClick: -----当前的评论id>>>"+adapter.getCommentBeanList().get(groupPosition).getCid());
+                if(childPosition==2) {
+                    Log.i(TAG, "onChildClick: 点击查看更多");
+                    return false;
+                }
+                Toast.makeText(PostDetails.this, "点击了回复", Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "onGroupClick: -----当前的评论id>>>" + adapter.getCommentBeanList().get(groupPosition).getCid());
                 showReplyDialog(groupPosition);
                 return false;
             }
@@ -453,7 +457,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
     }
     private void getPopularComments(){
         final Request request =new Request.Builder()
-                .url("http://106.54.134.17/app/getPopularComments?startPage="+commentPage+"&postId="+postId)
+                .url("http://106.54.134.17/app/getPopularComments?startPage="+commentPage+"&postId="+postId+"&token="+CommentExpandAdapter.TESTOKEN)
                 .build();
         OkHttpClient okHttpClient = new OkHttpClient();
         okHttpClient.newCall(request).enqueue(new Callback() {

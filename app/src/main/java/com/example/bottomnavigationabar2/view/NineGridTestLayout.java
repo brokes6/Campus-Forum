@@ -55,6 +55,8 @@ public class NineGridTestLayout extends NineGridLayout {
 
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap bitmap) {
+                Log.i(TAG, "onLoadingComplete: imageUri="+imageUri);
+                Log.i(TAG, "onLoadingComplete: bitmap="+bitmap);
                 int w = bitmap.getWidth();
                 int h = bitmap.getHeight();
 

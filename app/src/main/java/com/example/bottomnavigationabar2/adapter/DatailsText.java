@@ -1,5 +1,6 @@
 package com.example.bottomnavigationabar2.adapter;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.util.AttributeSet;
@@ -7,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.bottomnavigationabar2.PostDetails;
 import com.example.bottomnavigationabar2.R;
@@ -27,8 +29,7 @@ public class DatailsText extends LinearLayout {
         linearLayout.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), PostDetails.class);
-                getContext().startActivity(intent);
+                Toast.makeText(getContext(),"点赞成功",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -36,17 +37,15 @@ public class DatailsText extends LinearLayout {
         linearLayout2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), PostDetails.class);
-                getContext().startActivity(intent);
-
+                Toast.makeText(getContext(),"收藏成功",Toast.LENGTH_SHORT).show();
             }
         });
         //收藏的点击事件
         linearLayout3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), PostDetails.class);
-                getContext().startActivity(intent);
+                ActivityOptions compat = ActivityOptions.makeCustomAnimation(getContext(), R.anim.top_in, R.anim.bottom_out);
+                getContext().startActivity(new Intent(getContext(), PostDetails.class), compat.toBundle());
             }
         });
     }

@@ -10,8 +10,8 @@
     android:layout_height="wrap_content">
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/img_ski"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_centerInParent="true"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
@@ -22,67 +22,63 @@
 
         <LinearLayout
             android:id="@+id/list_item"
-            android:layout_width="wrap_content"
-            android:layout_height="95dp">
+            android:layout_width="match_parent"
+            android:layout_height="75dp">
             <TextView
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp"
                 android:id="@+id/text_ski"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"
+                android:textSize="19sp"
                 android:text="新闻情报"/>
             <TextView
             android:id="@+id/time_ski"
             android:textSize="15sp"
-            android:layout_marginTop="52dp"
-            android:layout_marginLeft="-96dp"
+            android:layout_marginTop="41dp"
+            android:layout_marginLeft="-76dp"
             android:layout_below="@id/text_ski"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="来着 xx 社团" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+                android:textColor="#03A9F4"
+            android:text="-抗压吧-" />
             <TextView
                 android:id="@+id/Time"
                 android:textSize="15sp"
-                android:layout_marginTop="52dp"
-                android:layout_marginLeft="20dp"
-                android:layout_below="@id/text_ski"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="xxx前发布" />
-            <TextView
-                android:id="@+id/guangzhu"
-                android:paddingLeft="5dp"
-                android:background="@drawable/bt_shape"
                 android:layout_marginTop="30dp"
-                android:layout_marginLeft="35dp"
-                android:text="+关注"
-                android:textSize="24sp"
-                android:layout_width="75dp"
-                android:layout_height="35dp" />
+                android:layout_marginLeft="180dp"
+                android:layout_below="@id/text_ski"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="xxx前发布" />
+
         </LinearLayout>
 
     <LinearLayout
         android:paddingRight="20dp"
         android:orientation="vertical"
-        android:layout_marginTop="105dp"
-        android:layout_marginLeft="-379dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginLeft="-400dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/fenlei"
-                android:textSize="15sp"
-                android:text="#社团分类 社团分类 社团分类#"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+
             <TextView
                 android:id="@+id/neirou"
                 android:layout_marginTop="10dp"
-                android:layout_below="@id/fenlei"
                 android:text="2004年参演电视剧《与青春有关的日子》，开始在影视圈崭露头角[1]。2005年拍摄古装剧《锦衣卫》。2007年主演赵宝刚导演的青春剧《奋斗》[2]同年主演首部电影《走着瞧》。"
                 android:textSize="15sp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"/>
+
+        <com.example.bottomnavigationabar2.view.NineGridTestLayout
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/layout_nine_grid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
+            app:sapcing="4dp" />
 
     </LinearLayout>
 </LinearLayout>

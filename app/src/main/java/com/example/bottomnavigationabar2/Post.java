@@ -14,44 +14,12 @@ public class Post {
     //现在觉得不合适 后期修改 应该改为string
     private Integer ptag;
     private String content;
-    private Integer plove;
+    private Integer loveCount;
     private Integer pviewNum;
     private String imgUrl;
     private String uimg;
     private String username;
     private boolean isShowAll = false;
-
-    public boolean isShowAll() {
-        return isShowAll;
-    }
-
-    public void setShowAll(boolean showAll) {
-        isShowAll = showAll;
-    }
-
-    public String getUimg() {
-        return uimg;
-    }
-
-    public void setUimg(String uimg) {
-        this.uimg = uimg;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
-    }
 
     public Integer getPid() {
         return pid;
@@ -93,12 +61,12 @@ public class Post {
         this.content = content;
     }
 
-    public Integer getPlove() {
-        return plove;
+    public Integer getLoveCount() {
+        return loveCount;
     }
 
-    public void setPlove(Integer plove) {
-        this.plove = plove;
+    public void setLoveCount(Integer loveCount) {
+        this.loveCount = loveCount;
     }
 
     public Integer getPviewNum() {
@@ -107,5 +75,37 @@ public class Post {
 
     public void setPviewNum(Integer pviewNum) {
         this.pviewNum = pviewNum;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public String getUimg() {
+        return uimg;
+    }
+
+    public void setUimg(String uimg) {
+        this.uimg = uimg;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public boolean isShowAll() {
+        return isShowAll;
+    }
+
+    public void setShowAll(boolean showAll) {
+        isShowAll = showAll;
     }
 }

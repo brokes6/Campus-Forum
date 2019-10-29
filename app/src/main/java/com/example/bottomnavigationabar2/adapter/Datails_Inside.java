@@ -18,6 +18,10 @@ import com.example.bottomnavigationabar2.R;
  * 创建于2019/10/16 9:07🐎
  */
 public class Datails_Inside extends LinearLayout {
+    private  Boolean oh =true;
+    private  Boolean oh2 =true;
+    private ImageView imageView1;
+    private ImageView imageView2;
     private ImageView Ins_comment;
     private ImageView Ins_give_the_thumbs_up;
     private ImageView Ins_collection;
@@ -27,10 +31,21 @@ public class Datails_Inside extends LinearLayout {
         LinearLayout linearLayout = findViewById(R.id.Ins_Lin_comment);
         LinearLayout linearLayout2 = findViewById(R.id.Ins_Lin_give_the_thumbs_up);
         LinearLayout linearLayout3 = findViewById(R.id.Ins_Lin_Collection);
+        imageView1 = findViewById(R.id.comment);
+        imageView2 = findViewById(R.id.give_the_thumbs_up);
         linearLayout.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),"点赞成功",Toast.LENGTH_SHORT).show();
+                if (oh==true){
+                    imageView1.setImageDrawable(getResources().getDrawable(R.drawable.dianzanwanc));
+                    oh=false;
+                    return;
+                }else if(oh==false){
+                    imageView1.setImageDrawable(getResources().getDrawable(R.drawable.dianzan));
+                    oh=true;
+                    return;
+                }
+
             }
         });
 
@@ -38,7 +53,15 @@ public class Datails_Inside extends LinearLayout {
         linearLayout2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),"收藏成功",Toast.LENGTH_SHORT).show();
+                if (oh2==true){
+                    imageView2.setImageDrawable(getResources().getDrawable(R.drawable.shocangwanc));
+                    oh2=false;
+                    return;
+                }else if(oh2==false){
+                    imageView2.setImageDrawable(getResources().getDrawable(R.drawable.shocang));
+                    oh2=true;
+                    return;
+                }
 
             }
         });

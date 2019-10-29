@@ -35,12 +35,22 @@
             android:layout_marginTop="-23dp"
             android:text="我是时间"
             />
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/tieze_felei"
+            android:text="-抗压吧-"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#F44336"
+            android:textSize="12sp"
+            />
 
         <TextView
             android:layout_marginTop="5dp"
             android:layout_marginLeft="10dp"
             android:id="@+id/tieze_Text"
-            android:text="1111111111111111111111111111111111111111111111111111"
+            android:text="123"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
@@ -70,11 +80,12 @@
                         android:layout_weight="1">
 
                         <ImageView
-                            android:id="@+id/comment"
+                            android:id="@+id/loveNum"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
-                            android:background="@drawable/dianzan" />
+                            android:src="@drawable/dianzan" />
                         <TextView
+                            android:id="@+id/loveNumStr"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="5dp"
                             android:text="点赞数"
@@ -92,12 +103,13 @@
                         android:layout_weight="1">
 
                         <ImageView
-                            android:id="@+id/give_the_thumbs_up"
+                            android:id="@+id/collection"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:background="@drawable/shocang" />
                         <TextView
                             android:layout_marginLeft="5dp"
+                            android:id="@+id/collectionStr"
                             android:text="收藏数"
                             android:textColor="#090808"
                             android:layout_width="wrap_content"
@@ -114,12 +126,13 @@
                         android:layout_weight="1">
 
                         <ImageView
-                            android:id="@+id/Collection"
+                            android:id="@+id/talkNum"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:background="@drawable/pingl" />
                         <TextView
                             android:layout_marginLeft="5dp"
+                            android:id="@+id/talkNumStr"
                             android:text="评论数"
                             android:textColor="#090808"
                             android:layout_width="wrap_content"
@@ -132,4 +145,9 @@
 
 
         </LinearLayout>
+
+
+
+
+
     </LinearLayout>
