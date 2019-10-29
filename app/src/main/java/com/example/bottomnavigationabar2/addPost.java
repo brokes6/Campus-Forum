@@ -90,8 +90,6 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
     private TextView mTextColor;
     //显示显示View
     private LinearLayout llColorView;
-    //预览按钮
-    private TextView mPreView;
     //按序号排列（ol）
     private ImageView mListOL;
     //按序号排列（ul）
@@ -178,6 +176,31 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
         if (actionbar != null) {
             actionbar.hide();
         }
+        ImageView back = findViewById(R.id.title_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // super.onBackPressed();//注释掉这行,back键不退出activity
+                AlertDialog.Builder dialog = new AlertDialog.Builder(addPost.this);
+                dialog.setTitle("提醒");
+                dialog.setMessage("是否保存");
+                dialog.setCancelable(false);
+                dialog.setPositiveButton("是", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(addPost.this,"已保存",Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                });
+                dialog.setNegativeButton("否", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+                dialog.show();
+            }
+        });
         rvPic = (RecyclerView) findViewById(R.id.rvPic);
         tvNum = (TextView) findViewById(R.id.tvNum);
         sendButton = findViewById(R.id.sendPost);
@@ -571,7 +594,8 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
      */
     private void initEditor() {
         mEditor = findViewById(R.id.re_main_editor);
-        //mEditor.setEditorHeight(400);
+
+        mEditor.setEditorHeight(120);
         //输入框显示字体的大小
         mEditor.setEditorFontSize(18);
         //输入框显示字体的颜色
@@ -627,7 +651,6 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
         mBold = findViewById(R.id.button_bold);
         mTextColor = findViewById(R.id.button_text_color);
         llColorView = findViewById(R.id.ll_main_color);
-        mPreView = findViewById(R.id.tv_main_preview);
         mListOL = findViewById(R.id.button_list_ol);
         mListUL = findViewById(R.id.button_list_ul);
         mLean = findViewById(R.id.button_underline);
@@ -663,7 +686,6 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
     private void initClickListener() {
         mBold.setOnClickListener(this);
         mTextColor.setOnClickListener(this);
-        mPreView.setOnClickListener(this);
         mListOL.setOnClickListener(this);
         mListUL.setOnClickListener(this);
         mLean.setOnClickListener(this);
