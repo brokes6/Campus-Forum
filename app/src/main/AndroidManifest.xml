@@ -19,6 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".UserInformation"></activity>
         <activity android:name=".LoadActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,17 +45,14 @@
         <activity android:name=".history" />
         <activity
             android:name=".LoginActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".MainActivity">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".MainActivity"></activity>
         <activity android:name=".WebDataActivity" />
         <activity android:name=".activity.ShowImageActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.example.cameraalbumtest.fileprovider"
+            android:authorities="com.example.bottomnavigationabar2.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

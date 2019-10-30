@@ -17,6 +17,7 @@ import com.example.bottomnavigationabar2.MyImageView;
 import com.example.bottomnavigationabar2.Post;
 import com.example.bottomnavigationabar2.PostDetails;
 import com.example.bottomnavigationabar2.R;
+import com.example.bottomnavigationabar2.UserInformation;
 import com.example.bottomnavigationabar2.model.NineGridTestModel;
 import com.example.bottomnavigationabar2.view.NineGridTestLayout;
 import com.example.util.DateTimeUtil;
@@ -38,6 +39,7 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
     private LinearLayout linearLayout;
     private LinearLayout linearLayout2;
     private Context mContext;
+    private MyImageView tieze_user_img;
     private View convertView;
     private List<Post> mList=new ArrayList<>();
     protected LayoutInflater inflater;
@@ -55,6 +57,7 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         convertView = inflater.inflate(R.layout.item_bbs_nine_grid, parent, false);
         ViewHolder viewHolder = new ViewHolder(convertView);
+        tieze_user_img =convertView.findViewById(R.id.tieze_user_img);
         linearLayout = convertView.findViewById(R.id.Lin_comment);
         linearLayout2 = convertView.findViewById(R.id.Lin_give_the_thumbs_up);
         Log.i(TAG, "onCreateViewHolder:111");
@@ -82,6 +85,14 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
                     holder.loveNum.setImageDrawable(mContext.getResources().getDrawable(R.drawable.dianzan));
                     oh=true;
                 }
+            }
+        });
+        tieze_user_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent;
+                intent = new Intent(mContext, UserInformation.class);
+                mContext.startActivity(intent);
             }
         });
         linearLayout2.setOnClickListener(new View.OnClickListener() {

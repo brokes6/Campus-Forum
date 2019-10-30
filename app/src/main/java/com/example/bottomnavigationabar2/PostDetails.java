@@ -180,6 +180,8 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         initDetailsLayout();
         initView();
         initRefreshLayout();
+
+
     }
     //初始化
     private void initView() {
