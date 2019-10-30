@@ -23,7 +23,7 @@ public class LoadActivity extends AppCompatActivity {
                 if(lag){
                     finish();
                     Toast.makeText(LoadActivity.this , "wait 5s!" , Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(LoadActivity.this , MainActivity.class);
+                    Intent intent = new Intent(LoadActivity.this ,MainActivity.class);
                     startActivity(intent);
                 }
             }

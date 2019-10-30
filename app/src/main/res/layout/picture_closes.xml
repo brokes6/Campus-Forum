@@ -29,15 +29,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <TextView
-            android:text=" 1 / 9 "
-            android:textSize="18sp"
-            android:textColor="#F44336"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
+            android:id="@+id/picture_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right|center_vertical"/>
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:text="1/9"
+            android:textColor="#F44336"
+            android:textSize="18sp" />
 
     </LinearLayout>
 </LinearLayout>

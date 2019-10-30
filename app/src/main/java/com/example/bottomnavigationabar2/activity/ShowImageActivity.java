@@ -44,13 +44,14 @@ public class ShowImageActivity extends AppCompatActivity {
     private static final String TAG = "ShowImageActivity";
     private ViewPager viewPager;
     private TextView picture_text;
+    private TextView picture_num;
     private List<View>  listViews =null;
     private int index=0;
     private ImageView back;
     private ShowImageAdapter imageAdapter;
     private List<Post> mList=new ArrayList<>();
     private ArrayList<String> urls =null;
-    private int position;
+    private int position,total;
     //子线程不能操作UI，通过Handler设置图片
     private Handler handler = new Handler() {
         @Override
@@ -104,10 +105,16 @@ public class ShowImageActivity extends AppCompatActivity {
     }
     private void initView(){
         viewPager =findViewById(R.id.show_view_pager);
+        picture_text = findViewById(R.id.picture_text);
+        picture_num=findViewById(R.id.picture_num);
     }
     private void initData(){
+        Bundle bundle=getIntent().getExtras();
+        total=bundle.getInt("total",0);
         listViews=new ArrayList<>();
-        position=getIntent().getIntExtra("id",0);
+        position=bundle.getInt("id",0);
+        picture_num.setText(position+1+"/"+total);
+        picture_text.setText(bundle.getString("content","没有文字喔"));
         Log.i(TAG, "initData: postition="+position);
     }
     private void inint() {
@@ -117,7 +124,6 @@ public class ShowImageActivity extends AppCompatActivity {
                         R.layout.view_pager_item, null);   //绑定viewpager的item布局文件
 //                ImageView iv = (ImageView) view.findViewById(R.id.view_image);   //绑定布局中的id
 //                iv.setImageBitmap(urls.get(i));   //设置当前点击的图片
-                picture_text = findViewById(R.id.picture_text);
                 setImageURL(urls.get(i),i);
                 listViews.add(view);
                 /**
@@ -155,7 +161,7 @@ public class ShowImageActivity extends AppCompatActivity {
 
         @Override
         public void onPageScrollStateChanged(int arg0) {
-
+            Log.i(TAG, "onPageScrollStateChanged: 滚动啊");
         }
 
         @Override
@@ -164,8 +170,10 @@ public class ShowImageActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onPageSelected(int arg0) {
-            index = arg0;
+        public void onPageSelected(int position) {
+            Log.i(TAG, "onPageSelected: 冲啊");
+            picture_num.setText(position+1+"/"+total);
+            index = position;
         }
 
     }

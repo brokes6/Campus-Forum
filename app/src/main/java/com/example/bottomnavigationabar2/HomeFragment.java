@@ -64,9 +64,6 @@ public class HomeFragment extends Fragment {
     private View mViewBackgroundTop;
     private View mViewBackgroundBottom;
     private MoBanInterface moBanInterface;
-    /**
-     * 实际操作的tablayout，傻逼陈梓佳
-     */
     private TabLayout realTabLayout;
     private MoBan_1 moban1;
     private MoBan_2 moban2;

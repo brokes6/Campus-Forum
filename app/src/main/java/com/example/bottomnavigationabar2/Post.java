@@ -20,6 +20,24 @@ public class Post {
     private String uimg;
     private String username;
     private boolean isShowAll = false;
+    private int status;
+    private int commentCount;
+
+    public int getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public Integer getPid() {
         return pid;

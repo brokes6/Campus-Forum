@@ -10,7 +10,6 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:id="@+id/Ins_Lin_Collection"
             android:layout_marginTop="15dp"
             android:orientation="vertical"
             android:layout_width="0dp"
@@ -20,13 +19,16 @@
             android:paddingRight="20dp"
             android:layout_gravity="right|center_vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:id="@+id/commentLayout"
+            >
             <ImageView
-                android:id="@+id/Collection"
+                android:id="@+id/commentImg"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:background="@drawable/pingl" />
             <TextView
+                android:id="@+id/commentStr"
                 android:layout_marginTop="1dp"
                 android:layout_marginLeft="5dp"
                 android:text="220"

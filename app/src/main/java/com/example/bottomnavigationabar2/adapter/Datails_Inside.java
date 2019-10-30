@@ -23,15 +23,7 @@ public class Datails_Inside extends LinearLayout {
     private ImageView Ins_collection;
     public Datails_Inside(Context context, AttributeSet attrs) {
         super(context, attrs);
-        LayoutInflater.from(context).inflate(R.layout.details_inside, this);
-        LinearLayout linearLayout3 = findViewById(R.id.Ins_Lin_Collection);
-
-        linearLayout3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getTopActivity(getContext());
-            }
-        });
+        View view=LayoutInflater.from(context).inflate(R.layout.details_inside, this);
     }
     public static String getTopActivity(Context context){
         ActivityManager am = (ActivityManager) context.getSystemService(context.ACTIVITY_SERVICE);

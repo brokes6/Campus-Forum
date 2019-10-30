@@ -159,7 +159,8 @@ public class LoginActivity extends AppCompatActivity {
                     if (userData==null) {
                             Toast.makeText(LoginActivity.this, "账号没有注册", Toast.LENGTH_SHORT).show();
                     }
-                    else{   editor.putString("USER_NAME", user);
+                    else{
+                            editor.putString("USER_NAME", user);
                             editor.putString("PASSWORD", pass);
                             //判断是否记住密码
                             if(remembermima.isChecked()){

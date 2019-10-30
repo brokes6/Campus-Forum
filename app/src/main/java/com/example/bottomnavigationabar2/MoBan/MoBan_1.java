@@ -103,7 +103,7 @@ public class MoBan_1 extends Fragment implements MoBanInterface{
     }
     public void getPostList(){
         final Request request = new Request.Builder()
-                .url("http://106.54.134.17/app/getPopularPost?startPage="+page)
+                .url("http://106.54.134.17/app/getPopularPost?startPage="+page+"&token=HnpMvU%2BV3ZHjrbMhOaOuCA%3D%3D")
                 .build();
         OkHttpClient okHttpClient = new OkHttpClient();
         okHttpClient.newCall(request).enqueue(new Callback() {

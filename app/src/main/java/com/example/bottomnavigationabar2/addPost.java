@@ -224,7 +224,6 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
                 try {
                     netUploadPost();
                     finish();
-
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 };
@@ -235,11 +234,10 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
         initView();
         initClickListener();
     }
-
     //initAdapter方法
     private void initAdapter() {
         fileList.add(new LoadFileVo());
-        adapter = new LoadPicAdapter(this, fileList, 8);
+        adapter = new LoadPicAdapter(this, fileList, 9);
         rvPic.setAdapter(adapter);
         rvPic.setLayoutManager(new GridLayoutManager(this, 3));
         adapter.setListener(new LoadPicAdapter.OnItemClickListener() {
@@ -252,14 +250,12 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
                 }
 
             }
-
             @Override
             public void del(View view) {
-                tvNum.setText((fileList.size() - 1) + "/8");
+                tvNum.setText((fileList.size() - 1) + "/9");
             }
         });
     }
-
     //自定义方法selectPic
     private void selectPic() {
         //动态请求权限，除此之外还需进行Androidmanifest.xml中进行请求
@@ -278,25 +274,22 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
                     } else {
                         Intent intent = new Intent(Intent.ACTION_PICK);
                         intent.setType("image/*");
-                        startActivityForResult(intent, 0); // 打开相册
+                        startActivityForResult(intent,  0); // 打开相册
                     }
                 } else {
                     try {
                         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
                         file=cratephotofile();
                         if(!file.getParentFile().exists()){
-                            Log.i(TAG, "onClick: 父目录没有开始创建");
                             file.getParentFile().mkdir();
                         }
                         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.N) {
                             intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                             imageUri= FileProvider.getUriForFile(addPost.this,"com.example.bottomnavigationabar2.fileprovider",file);
                             intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri);
-                            Log.i(TAG, "onClick: 创建了？");
                         }else{
                             imageUri = Uri.fromFile(file);
                         }
-                        Log.i(TAG, "file="+file.getAbsolutePath());
                         startActivityForResult(intent,1);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -322,7 +315,6 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
             default:
         }
     }
-
     @TargetApi(19)
     private void handleImageOnKitKat(Intent data) {
         String imagePath = null;
@@ -351,13 +343,11 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
         }
         displayImage(imagePath); // 根据图片路径显示图片
     }
-
     private void handleImageBeforeKitKat(Intent data) {
         Uri uri = data.getData();
         String imagePath = getImagePath(uri, null);
         displayImage(imagePath);
     }
-
     private String getImagePath(Uri uri, String selection) {
         String path = null;
         // 通过Uri和selection来获取真实的图片路径
@@ -374,9 +364,8 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
 
     private void displayImage(String imagePath) {
         if (imagePath != null) {
-            Log.i(TAG, "displayImage: 冲冲冲");
-            Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-            imgString = bitmapToBase64(bitmap);
+            file=new File(imagePath);
+            Log.i(TAG, "displayImage: 相册选择="+file.length());
             netUploadImg();
         } else {
             Toast.makeText(this, "failed to get image", Toast.LENGTH_SHORT).show();
@@ -431,7 +420,7 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
                     .addFormDataPart("file",file.getName(),RequestBody.create(MediaType.parse("application/octet-stream"),file))
                     .build();
             final Request request = new Request.Builder()
-                    .url("http://10.0.2.2:8080/app/addPostImg")
+                    .url("http://106.54.134.17/app/addPostImg")
                     .post(body)
                     .build();
             OkHttpClient okHttpClient = new OkHttpClient();
@@ -460,9 +449,7 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
         } catch (Exception e) {
             e.printStackTrace();
             isRequestHttp = true;
-            //hideLoadingDialog();
             showShortToast("上传图片请求异常！");
-            /*enterEnable(true);*/
 
         }
     }
@@ -513,7 +500,6 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
     //暂时有问题 服务器图片长度设置过小 弄大点
     public void netUploadPost() throws FileNotFoundException {//用jsonOject方式转string传递其他参数
         try {
-            /*                enterEnable(false);*/
             String imgUrl=builder.toString();
             if(!imgUrl.trim().equals("")) {
                 imgUrl = imgUrl.substring(0, imgUrl.length() - 1);
@@ -544,14 +530,10 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
         } catch (Exception e) {
             e.printStackTrace();
             isRequestHttp = true;
-            //hideLoadingDialog();
             showShortToast("上传图片请求异常！");
-            /*enterEnable(true);*/
 
         }
     }
-
-
     /**
      * 初始化View
      */
@@ -560,7 +542,6 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
         initMenu();
         initColorPicker();
     }
-
     @Override
     public void onBackPressed() {
         // super.onBackPressed();//注释掉这行,back键不退出activity

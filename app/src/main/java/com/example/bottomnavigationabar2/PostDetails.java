@@ -38,6 +38,7 @@ import com.example.bottomnavigationabar2.bean.CommentDetailBean;
 import com.example.bottomnavigationabar2.bean.ReplyDetailBean;
 import com.example.bottomnavigationabar2.model.NineGridTestModel;
 import com.example.bottomnavigationabar2.utils.FileCacheUtil;
+import com.example.bottomnavigationabar2.utils.NetWorkUtil;
 import com.example.bottomnavigationabar2.view.CommentExpandableListView;
 import com.example.bottomnavigationabar2.view.NineGridTestLayout;
 import com.example.util.JsonTOBeanUtil;
@@ -80,32 +81,55 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
     private CommentExpandAdapter adapter;
     private int postId;
     private int commentPage=1;
-    private  Boolean oh =true;
-    private  Boolean oh2 =true;
+    private int status=0;
     private CommentBean commentBean;
     private List<CommentDetailBean> commentsList=new ArrayList<>();
     private BottomSheetDialog dialog;
     private TextView username;
     private TextView dateTime;
     private TextView content;
-    private ImageView imageView1;
-    private ImageView imageView2;
-    private LinearLayout linearLayout1;
-    private LinearLayout linearLayout2;
+    private TextView loveNumStr;
+    private TextView commentStr;
+    private ImageView loveNum;
     private NineGridTestLayout nineGridTestLayout;
+    private LinearLayout loveLayout;
     private ProgressBar progressBar;
     private SmartRefreshLayout refreshLayout;
+    private NetWorkUtil netWorkUtil;
     private  Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            Post post = (Post) msg.obj;
+            final Post post = (Post) msg.obj;
             switch (msg.what){
                 case HANDLER_DATA:
                     username.setText(post.getUsername());
                     dateTime.setText(post.getPcreateTime());
                     content.setText(Html.fromHtml(post.getContent()));
+                    commentStr.setText(String.valueOf(post.getCommentCount()));
                     nineGridTestLayout.setUrlList(Arrays.asList(post.getImgUrl().split(",")));
                     nineGridTestLayout.setIsShowAll(post.isShowAll());
+                    status=post.getStatus();
+                    loveNumStr.setText(String.valueOf(post.getLoveCount()));
+                    loveLayout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (status==1){
+                                loveNum.setImageDrawable(getResources().getDrawable(R.drawable.dianzan));
+                                status=0;
+                                loveNumStr.setText(String.valueOf(Integer.valueOf(loveNumStr.getText().toString())-1));
+                            }else{
+                                loveNum.setImageDrawable(getResources().getDrawable(R.drawable.dianzanwanc));
+                                status=1;
+                                loveNumStr.setText(String.valueOf(Integer.valueOf(loveNumStr.getText().toString())+1));
+                            }
+                            netWorkUtil.updatePostLove(postId,"HnpMvU%2BV3ZHjrbMhOaOuCA%3D%3D");
+                        }
+                    });
+                    if(status==1){
+                        loveNum.setImageDrawable(getResources().getDrawable(R.drawable.dianzanwanc));
+                    }else{
+                        loveNum.setImageDrawable(getResources().getDrawable(R.drawable.dianzan));
+                    }
                     break;
                 case CANCEL_PROGRESS:
                     progressBar.setVisibility(View.GONE);
@@ -142,41 +166,6 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         if (actionbar != null) {
             actionbar.hide();
         }
-        //获取点赞，收藏
-        linearLayout1 = findViewById(R.id.pinglen_Collection);
-        linearLayout1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (oh2==true){
-                    imageView2.setImageDrawable(getResources().getDrawable(R.drawable.dianzanwanc));
-                    oh2=false;
-                    return;
-                }else if(oh2==false){
-                    imageView2.setImageDrawable(getResources().getDrawable(R.drawable.dianzan));
-                    oh2=true;
-                    return;
-                }
-            }
-        });
-        linearLayout2 = findViewById(R.id.Give_up);
-        linearLayout2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (oh2==true){
-                    imageView1.setImageDrawable(getResources().getDrawable(R.drawable.shocangwanc));
-                    oh2=false;
-                    return;
-                }else if(oh2==false){
-                    imageView1.setImageDrawable(getResources().getDrawable(R.drawable.shocang));
-                    oh2=true;
-                    return;
-                }
-
-            }
-        });
-        imageView1 = findViewById(R.id.comment);
-        imageView2 = findViewById(R.id.give_the_thumbs_up);
-
         initDetailsLayout();
         initView();
         initRefreshLayout();
@@ -368,7 +357,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
     }
     private void getPostById(int postId){
         final Request request = new Request.Builder()
-                .url("http://106.54.134.17/app/getPostDetailsById?postId="+postId)
+                .url("http://106.54.134.17/app/getPostDetailsById?postId="+postId+"&token=HnpMvU%2BV3ZHjrbMhOaOuCA%3D%3D")
                 .build();
         OkHttpClient okHttpClient = new OkHttpClient();
         okHttpClient.newCall(request).enqueue(new Callback() {
@@ -403,11 +392,16 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         });
     }
     private void initDetailsLayout(){
+        netWorkUtil=new NetWorkUtil(this);
         username=findViewById(R.id.tiezi_username);
         dateTime=findViewById(R.id.tiezi_time);
         content=findViewById(R.id.tieze_Text);
         nineGridTestLayout=findViewById(R.id.layout_nine_grid);
         postId = getPostId();
+        loveNum=findViewById(R.id.loveNum);
+        loveNumStr=findViewById(R.id.loveNumStr);
+        loveLayout=findViewById(R.id.loveLayout);
+        commentStr=findViewById(R.id.commentStr);
         getPostById(postId);
     }
     private int getPostId(){

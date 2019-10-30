@@ -31,6 +31,7 @@ public class NineGridTestLayout extends NineGridLayout {
     private static final String TAG = "NineGridTestLayout";
     protected static final int MAX_W_H_RATIO = 3;
     private List<String> detailsImgUrls;
+    private String content;
     public NineGridTestLayout(Context context) {
         super(context);
     }
@@ -102,7 +103,12 @@ public class NineGridTestLayout extends NineGridLayout {
         EventBus.getDefault().postSticky(detailsImgUrls);
         Intent intent = new Intent(getContext(), ShowImageActivity.class);
         intent.putExtra("id",i);   //将当前点击的位置传递过去
+        intent.putExtra("content",content);
+        intent.putExtra("total",urlList.size());
         getContext().startActivity(intent);     //启动Activity
     }
 
+    public void setContent(String content) {
+        this.content = content;
+    }
 }
