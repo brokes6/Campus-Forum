@@ -4,13 +4,18 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
+    <com.example.bottomnavigationabar2.adapter.Edit_text_header
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </com.example.bottomnavigationabar2.adapter.Edit_text_header>
 
     <com.example.bottomnavigationabar2.view.RichEditor
         android:id="@+id/re_main_editor"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_weight="1" />
+        android:minHeight="120dp"
+        />
 
     <LinearLayout
         android:id="@+id/ll_main_color"
@@ -32,7 +37,8 @@
     <RelativeLayout
         android:layout_marginBottom="30dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <LinearLayout
             android:id="@+id/lin1"
@@ -65,23 +71,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="#f2f1f6">
-        <Button
-            android:layout_marginLeft="-8dp"
-            android:text="发送"
-            android:id="@+id/sendPost"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/kongbai"
-            android:textColor="#dd3333"
-            android:textSize="18sp"/>
+        android:layout_alignParentStart="true"
+        android:background="#f2f1f6"
+        android:gravity="bottom"
+        android:paddingRight="10dp">
 
         <HorizontalScrollView
             style="@style/EditorIcon"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_toLeftOf="@+id/tv_main_preview"
             android:layout_toStartOf="@+id/tv_main_preview"
+            android:layout_toLeftOf="@+id/tv_main_preview"
             android:scrollbars="none">
 
             <LinearLayout
@@ -171,18 +171,6 @@
             </LinearLayout>
         </HorizontalScrollView>
 
-        <TextView
-            android:id="@+id/tv_main_preview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:paddingLeft="14dp"
-            android:paddingRight="14dp"
-            android:text="预览"
-            android:textColor="#dd3333"
-            android:textSize="18sp" />
     </RelativeLayout>
 
 </LinearLayout>

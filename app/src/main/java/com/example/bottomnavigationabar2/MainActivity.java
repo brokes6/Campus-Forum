@@ -2,6 +2,7 @@ package com.example.bottomnavigationabar2;//这里换成你自己的
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,11 +10,14 @@ import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.DisplayCutout;
 import android.view.KeyEvent;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.example.bottomnavigationabar2.ScreenAdaptation.DisplayCutoutDemo;
 
 /**
  * Created by 武当山道士 on 2017/8/16.
@@ -42,6 +46,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         if (actionbar != null) {
             actionbar.hide();
         }
+        getStatusBarHeight(this);
+        DisplayCutoutDemo displayCutoutDemo = new DisplayCutoutDemo(this);
+        displayCutoutDemo.openFullScreenModel();
+
         Intent intent = getIntent();
         user_name = intent.getStringExtra("username");
         Toast.makeText(this, "账号" + user_name, Toast.LENGTH_SHORT).show();
@@ -86,6 +94,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         setDefaultFragment();//设置默认导航栏
 
     }
+    public int getStatusBarHeight(Context context) {
+        int result = 0;
+        int resourceId = context.getResources().getIdentifier("status_bar_height","dimen", "android");
+        if (resourceId > 0) {
+            result = context.getResources().getDimensionPixelSize(resourceId);
+        }
+        Log.d("刘海屏的高度---","**getStatusBarHeight**" + result);
+        return result;
+    }
+
     //------------手势--------------
 //    @Override
 //    public boolean onTouchEvent(MotionEvent event) {
@@ -130,6 +148,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         transaction.replace(R.id.tb, mHomeFragment);
         transaction.commit();
     }
+
 
     /**
      * 设置导航选中的事件

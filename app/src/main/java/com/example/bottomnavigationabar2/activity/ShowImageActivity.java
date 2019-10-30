@@ -7,17 +7,23 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewParent;
 import android.view.Window;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
+import com.example.bottomnavigationabar2.Post;
 import com.example.bottomnavigationabar2.R;
+import com.example.bottomnavigationabar2.adapter.NineGridTest2Adapter;
 import com.example.bottomnavigationabar2.adapter.ShowImageAdapter;
 
 import org.greenrobot.eventbus.EventBus;
@@ -37,9 +43,12 @@ public class ShowImageActivity extends AppCompatActivity {
     public static final int SERVER_ERROR = 3;
     private static final String TAG = "ShowImageActivity";
     private ViewPager viewPager;
+    private TextView picture_text;
     private List<View>  listViews =null;
     private int index=0;
+    private ImageView back;
     private ShowImageAdapter imageAdapter;
+    private List<Post> mList=new ArrayList<>();
     private ArrayList<String> urls =null;
     private int position;
     //子线程不能操作UI，通过Handler设置图片
@@ -69,11 +78,27 @@ public class ShowImageActivity extends AppCompatActivity {
             }
         }
     };
+    public void setList(List<Post> list) {
+        mList.addAll(list);
+    }
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        ActionBar actionbar = getSupportActionBar();
+        if (actionbar != null) {
+            actionbar.hide();
+        }
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.show_image_layout);
+        back = findViewById(R.id.title_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         initView();
         initData();
     }
@@ -92,6 +117,7 @@ public class ShowImageActivity extends AppCompatActivity {
                         R.layout.view_pager_item, null);   //绑定viewpager的item布局文件
 //                ImageView iv = (ImageView) view.findViewById(R.id.view_image);   //绑定布局中的id
 //                iv.setImageBitmap(urls.get(i));   //设置当前点击的图片
+                picture_text = findViewById(R.id.picture_text);
                 setImageURL(urls.get(i),i);
                 listViews.add(view);
                 /**
