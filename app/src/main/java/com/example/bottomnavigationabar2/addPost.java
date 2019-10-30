@@ -82,6 +82,7 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
     List<LoadFileVo> fileList = new ArrayList<>();
     LoadPicAdapter adapter = null;
     RecyclerView rvPic;
+    private Button sendButton;
     TextView tvNum;
     boolean isRequestHttp = false;
     private Uri imageUri=null;
@@ -208,6 +209,23 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
         });
         rvPic = (RecyclerView) findViewById(R.id.rvPic);
         tvNum = (TextView) findViewById(R.id.tvNum);
+        sendButton = findViewById(R.id.sendPost);
+        //发送的点击事件
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(addPost.this,"以返回",Toast.LENGTH_SHORT).show();
+                //跳转完成后，需要调用重新刷新
+                try {
+                    netUploadPost();
+                    finish();
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                };
+                finish();
+            }
+        });
         initAdapter();
         initView();
         initClickListener();

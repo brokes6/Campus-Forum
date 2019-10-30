@@ -8,14 +8,14 @@
         android:layout_weight="1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-    <ImageView
-        android:id="@+id/title_back"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_gravity="center"
-        android:src="@drawable/close"
-        android:paddingRight="10dp"
-        android:paddingLeft="20dp"/>
+        <ImageView
+            android:id="@+id/title_back"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_gravity="center"
+            android:src="@drawable/close"
+            android:paddingRight="10dp"
+            android:paddingLeft="20dp"/>
 
         <TextView
             android:layout_marginTop="9dp"
