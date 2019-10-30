@@ -1,6 +1,7 @@
 package com.example.bottomnavigationabar2;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +17,10 @@ public class Personal_information extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_information);
+        ActionBar actionBar=getSupportActionBar();
+        if (actionBar!=null) {
+            actionBar.hide();
+        }
         CircleImageView circleImageView=(CircleImageView) findViewById(R.id.personal_return);
         LinearLayout myHead=(LinearLayout)findViewById(R.id.myHead);
         LinearLayout myName=(LinearLayout)findViewById(R.id.myName);
