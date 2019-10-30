@@ -18,12 +18,15 @@ import android.widget.Toast;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.example.bottomnavigationabar2.ScreenAdaptation.DisplayCutoutDemo;
+import com.example.bottomnavigationabar2.activity.BaseActivity;
+import com.example.util.ScreenAdapterUtil;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 /**
  * Created by 武当山道士 on 2017/8/16.
  */
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener {
+public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
 
     private BottomNavigationBar bottomNavigationBar;
     String user_name;
@@ -32,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     private MyFragment mMyFragment;
     private ScanFragment mScanFragment;
     private HomeFragment mHomeFragment;
+    private SmartRefreshLayout refreshLayout;
+    int sum= 0;
     float x1 = 0;
     float x2 = 0;
     float y1 = 0;
@@ -41,16 +46,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //屏幕适配
-        DisplayCutoutDemo displayCutoutDemo = new DisplayCutoutDemo(this);
-        displayCutoutDemo.openFullScreenModel();
         setContentView(R.layout.activity_main);
         ActionBar actionbar = getSupportActionBar();
         if (actionbar != null) {
             actionbar.hide();
         }
-        getStatusBarHeight(this);
-
         Intent intent = getIntent();
         user_name = intent.getStringExtra("username");
         Toast.makeText(this, "账号" + user_name, Toast.LENGTH_SHORT).show();
@@ -94,15 +94,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
         setDefaultFragment();//设置默认导航栏
 
-    }
-    public int getStatusBarHeight(Context context) {
-        int result = 0;
-        int resourceId = context.getResources().getIdentifier("status_bar_height","dimen", "android");
-        if (resourceId > 0) {
-            result = context.getResources().getDimensionPixelSize(resourceId);
-        }
-        Log.d("刘海屏的高度---","**getStatusBarHeight**" + result);
-        return result;
     }
 
     //------------手势--------------

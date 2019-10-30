@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#F44336</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#92D7DF</color>
+    <color name="colorPrimary">#3F424E</color>
+    <color name="colorPrimaryDark">#00000000</color><!--透明-->
+    <color name="colorAccent">#FF4081</color>
     <color name="gray">#6D6969</color>
     <color name="button_enabled">#333333</color>
     <color name="textColor">#6D6969</color>
+    <color name="default_bg">#F44336</color>
+
 </resources>

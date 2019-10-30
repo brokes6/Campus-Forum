@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!-- 最外层是支持嵌套滑动的CoordinatorLayout -->
 <com.scwang.smartrefresh.layout.SmartRefreshLayout
     android:id="@+id/refreshLayout"
+    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
