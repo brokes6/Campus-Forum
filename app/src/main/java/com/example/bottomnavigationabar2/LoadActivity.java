@@ -10,7 +10,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 public class LoadActivity extends AppCompatActivity {
-    private final int time = 3000;
+    private final int time = 2000;
     private boolean lag = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

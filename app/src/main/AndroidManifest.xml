@@ -44,7 +44,8 @@
         <activity android:name=".history" />
         <activity
             android:name=".LoginActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+        </activity>
         <activity android:name=".MainActivity">
 
         </activity>
