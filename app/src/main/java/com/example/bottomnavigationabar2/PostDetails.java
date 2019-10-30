@@ -25,6 +25,8 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -78,12 +80,18 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
     private CommentExpandAdapter adapter;
     private int postId;
     private int commentPage=1;
+    private  Boolean oh =true;
+    private  Boolean oh2 =true;
     private CommentBean commentBean;
     private List<CommentDetailBean> commentsList=new ArrayList<>();
     private BottomSheetDialog dialog;
     private TextView username;
     private TextView dateTime;
     private TextView content;
+    private ImageView imageView1;
+    private ImageView imageView2;
+    private LinearLayout linearLayout1;
+    private LinearLayout linearLayout2;
     private NineGridTestLayout nineGridTestLayout;
     private ProgressBar progressBar;
     private SmartRefreshLayout refreshLayout;
@@ -134,6 +142,41 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         if (actionbar != null) {
             actionbar.hide();
         }
+        //获取点赞，收藏
+        linearLayout1 = findViewById(R.id.pinglen_Collection);
+        linearLayout1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (oh2==true){
+                    imageView2.setImageDrawable(getResources().getDrawable(R.drawable.dianzanwanc));
+                    oh2=false;
+                    return;
+                }else if(oh2==false){
+                    imageView2.setImageDrawable(getResources().getDrawable(R.drawable.dianzan));
+                    oh2=true;
+                    return;
+                }
+            }
+        });
+        linearLayout2 = findViewById(R.id.Give_up);
+        linearLayout2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (oh2==true){
+                    imageView1.setImageDrawable(getResources().getDrawable(R.drawable.shocangwanc));
+                    oh2=false;
+                    return;
+                }else if(oh2==false){
+                    imageView1.setImageDrawable(getResources().getDrawable(R.drawable.shocang));
+                    oh2=true;
+                    return;
+                }
+
+            }
+        });
+        imageView1 = findViewById(R.id.comment);
+        imageView2 = findViewById(R.id.give_the_thumbs_up);
+
         initDetailsLayout();
         initView();
         initRefreshLayout();

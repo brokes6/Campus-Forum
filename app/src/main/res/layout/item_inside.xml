@@ -26,15 +26,22 @@
             android:text="我是名字"
             android:textColor="@android:color/holo_blue_dark" />
         <TextView
+            android:text="-抗压吧-"
+            android:textColor="#F44336"
+            android:paddingTop="7dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
             android:id="@+id/tiezi_time"
             android:layout_marginLeft="220dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-15dp"
+            android:layout_marginTop="-40dp"
             android:text="我是时间"
             />
 
         <TextView
+            android:paddingTop="15dp"
             android:id="@+id/tieze_Text"
             android:text=""
             android:layout_width="wrap_content"

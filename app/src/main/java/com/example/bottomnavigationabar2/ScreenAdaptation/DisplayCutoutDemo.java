@@ -12,7 +12,6 @@ public class DisplayCutoutDemo {
     private Activity mAc;
 
     public DisplayCutoutDemo(Activity ac) {
-
         mAc = ac;
     }
     //在使用LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES的时候，状态栏会显示为白色，这和主内容区域颜色冲突,

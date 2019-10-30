@@ -116,10 +116,15 @@
             android:layout_marginRight="22dp"
             android:gravity="center_vertical"
             android:paddingLeft="18dp"/>
+        <LinearLayout
+            android:id="@+id/pinglen_Collection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
         <ImageView
+            android:id="@+id/give_the_thumbs_up"
             android:layout_width="22dp"
             android:layout_height="22dp"
-            android:src="@drawable/icon_collect"/>
+            android:src="@drawable/dianzan"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -127,11 +132,16 @@
             android:textSize="14sp"
             android:layout_marginLeft="10dp"
             android:text="32"/>
-
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/Give_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
         <ImageView
+            android:id="@+id/comment"
             android:layout_width="22dp"
             android:layout_height="22dp"
-            android:src="@drawable/icon_work_like"
+            android:src="@drawable/shocang"
             android:layout_marginLeft="20dp" />
         <TextView
             android:layout_width="wrap_content"
@@ -141,7 +151,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="14dp"
             android:text="66"/>
-
+    </LinearLayout>
     </LinearLayout>
     <ProgressBar
         android:layout_width="wrap_content"

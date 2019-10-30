@@ -99,7 +99,6 @@ public class NineGridTestLayout extends NineGridLayout {
                 detailsImgUrls.add(str);
             }
         }
-        Toast.makeText(mContext, "点击了图片" + url, Toast.LENGTH_SHORT).show();
         EventBus.getDefault().postSticky(detailsImgUrls);
         Intent intent = new Intent(getContext(), ShowImageActivity.class);
         intent.putExtra("id",i);   //将当前点击的位置传递过去
