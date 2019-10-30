@@ -15,8 +15,9 @@
         android:layout_width="match_parent"
         android:layout_height="70dp">
             <TextView
+                android:id="@+id/picture_text"
                 android:padding="10dp"
-                android:text="123456"
+                android:text="图片文字内容"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
     </LinearLayout>
