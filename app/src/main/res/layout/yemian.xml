@@ -9,6 +9,7 @@
 
 
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:background="#d27925"
@@ -16,7 +17,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="20dp"
             android:orientation="horizontal"
             android:layout_marginTop="50dp">
             <de.hdodenhof.circleimageview.CircleImageView
@@ -48,6 +49,7 @@
                         android:text="仲夏夜梦"/>
             </LinearLayout>
             <Button
+                android:layout_marginLeft="55dp"
                 android:layout_marginTop="10dp"
                 android:layout_width="60dp"
                 android:layout_height="30dp"
@@ -60,11 +62,12 @@
         android:layout_width="300dp"
         android:layout_height="70dp"
         android:layout_marginTop="125dp"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="55dp"
         android:background="@drawable/border"
         android:orientation="vertical"
         >
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:orientation="horizontal"
@@ -84,6 +87,7 @@
                 android:text="抗压吧举报申诉专贴"/>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/tab_yemian"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:orientation="horizontal"
@@ -103,392 +107,12 @@
                 android:text="抗压吧文工团招募"/>
         </LinearLayout>
     </LinearLayout>
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="210dp">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <LinearLayout
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_marginTop="195dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="wrap_content"/>
 
-                android:background="#FFF"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:orientation="horizontal">
-                    <!--头像-->
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_marginRight="5dp"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@mipmap/ic_launcher"
-                        app:civ_border_color="#4CAF50"
-                        app:civ_border_width="2dp"
-                        android:layout_gravity="center_vertical" />
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginRight="118dp">
-                        <!--ID-->
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="20sp"
-                            android:textStyle="bold"
-                            android:text="吧名"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="回复于刚刚"/>
-                    </LinearLayout>
-                </LinearLayout>
-                <!--内容-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <!--标题-->
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="历史上有哪些付辛博?"
-                        android:textSize="20sp"
-                        android:textStyle="bold"/>
-                    <!--图片内容-->
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/ic_launcher"
-                        android:background="@drawable/border"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-
-                    <!--转发-->
-                    <ImageView
-                        android:src="@mipmap/ic_launcher"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"/>
-                    <!--评论-->
-                    <ImageView
-                        android:src="@mipmap/ic_launcher"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"/>
-                    <!--点赞-->
-                    <ImageView
-                        android:src="@mipmap/ic_launcher"
-                        android:layout_marginLeft="220dp"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"/>
-                </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="#FFF"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:orientation="horizontal">
-                    <!--头像-->
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_marginRight="5dp"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@mipmap/ic_launcher"
-                        app:civ_border_color="#4CAF50"
-                        app:civ_border_width="2dp"
-                        android:layout_gravity="center_vertical" />
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginRight="118dp">
-                        <!--ID-->
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="20sp"
-                            android:textStyle="bold"
-                            android:text="吧名"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="回复于刚刚"/>
-                    </LinearLayout>
-                </LinearLayout>
-                <!--内容-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <!--标题-->
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="历史上有哪些付辛博?"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-                    <!--图片内容-->
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/border"
-                        android:src="@mipmap/ic_launcher" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-
-                    <!--转发-->
-                    <ImageView
-                        android:src="@mipmap/ic_launcher"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"/>
-                    <!--评论-->
-                    <ImageView
-                        android:src="@mipmap/ic_launcher"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"/>
-                    <!--点赞-->
-                    <ImageView
-                        android:src="@mipmap/ic_launcher"
-                        android:layout_marginLeft="220dp"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"/>
-                </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="#FFF"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:orientation="horizontal">
-                    <!--头像-->
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_marginRight="5dp"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@mipmap/ic_launcher"
-                        app:civ_border_color="#4CAF50"
-                        app:civ_border_width="2dp"
-                        android:layout_gravity="center_vertical" />
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginRight="118dp">
-                        <!--ID-->
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="20sp"
-                            android:textStyle="bold"
-                            android:text="吧名"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="回复于刚刚"/>
-                    </LinearLayout>
-                </LinearLayout>
-                <!--内容-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <!--标题-->
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="历史上有哪些付辛博?"
-                        android:textSize="20sp"
-                        android:textStyle="bold"/>
-                    <!--图片内容-->
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/ic_launcher"
-                        android:background="@drawable/border"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-
-                    <!--转发-->
-                    <ImageView
-                        android:src="@mipmap/ic_launcher"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"/>
-                    <!--评论-->
-                    <ImageView
-                        android:src="@mipmap/ic_launcher"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"/>
-                    <!--点赞-->
-                    <ImageView
-                        android:src="@mipmap/ic_launcher"
-                        android:layout_marginLeft="220dp"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"/>
-                </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="#FFF"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:orientation="horizontal">
-                    <!--头像-->
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_marginRight="5dp"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@mipmap/ic_launcher"
-                        app:civ_border_color="#4CAF50"
-                        app:civ_border_width="2dp"
-                        android:layout_gravity="center_vertical" />
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginRight="118dp">
-                        <!--ID-->
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="20sp"
-                            android:textStyle="bold"
-                            android:text="吧名"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="回复于刚刚"/>
-                    </LinearLayout>
-                </LinearLayout>
-                <!--内容-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <!--标题-->
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="历史上有哪些付辛博?"
-                        android:textSize="20sp"
-                        android:textStyle="bold"/>
-                    <!--图片内容-->
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/ic_launcher"
-                        android:background="@drawable/border"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-
-                    <!--转发-->
-                    <ImageView
-                        android:src="@mipmap/ic_launcher"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"/>
-                    <!--评论-->
-                    <ImageView
-                        android:src="@mipmap/ic_launcher"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"/>
-                    <!--点赞-->
-                    <ImageView
-                        android:src="@mipmap/ic_launcher"
-                        android:layout_marginLeft="220dp"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"/>
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
