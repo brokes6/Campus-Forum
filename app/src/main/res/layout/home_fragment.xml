@@ -62,87 +62,72 @@
 
 
                         <LinearLayout
-                            android:gravity="center"
-                            android:layout_marginTop="10dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                                <de.hdodenhof.circleimageview.CircleImageView
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:layout_centerInParent="true"
-                                    android:layout_marginLeft="10px"
-                                    android:src="@mipmap/ic_launcher"
-                                    app:civ_border_color="#4CAF50"
-                                    app:civ_border_width="2dp" />
-
-                                <de.hdodenhof.circleimageview.CircleImageView
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:layout_centerInParent="true"
-                                    android:layout_marginLeft="120px"
-                                    android:src="@mipmap/ic_launcher"
-                                    app:civ_border_color="#4CAF50"
-                                    app:civ_border_width="2dp" />
-                                <de.hdodenhof.circleimageview.CircleImageView
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:layout_centerInParent="true"
-                                    android:layout_marginLeft="120px"
-                                    android:src="@mipmap/ic_launcher"
-                                    app:civ_border_color="#4CAF50"
-                                    app:civ_border_width="2dp" />
-                                <de.hdodenhof.circleimageview.CircleImageView
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:layout_centerInParent="true"
-                                    android:layout_marginLeft="120px"
-                                    android:src="@mipmap/ic_launcher"
-                                    app:civ_border_color="#4CAF50"
-                                    app:civ_border_width="2dp" />
-                                <de.hdodenhof.circleimageview.CircleImageView
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:layout_centerInParent="true"
-                                    android:layout_marginLeft="120px"
-                                    android:src="@mipmap/ic_launcher"
-                                    app:civ_border_color="#4CAF50"
-                                    app:civ_border_width="2dp" />
-                        </LinearLayout>
-                        <LinearLayout
                             android:layout_marginTop="5dp"
                             android:layout_width="match_parent"
+                            android:layout_marginBottom="5dp"
                             android:layout_height="wrap_content">
-                                <TextView
-                                    android:layout_width="wrap_content"
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="19dp"
-                                    android:textSize="18sp"
-                                    android:text="文字"/>
-                                <TextView
-                                    android:layout_width="wrap_content"
+                                    android:gravity="center_horizontal|center_vertical"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                        <TextView
+                                            android:layout_width="50dp"
+                                            android:layout_height="wrap_content"
+                                            android:text="最新公告"
+                                            android:textSize="24dp"
+                                            />
+
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="48dp"
-                                    android:textSize="18sp"
-                                    android:text="文字"/>
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="50dp"
-                                    android:textSize="18sp"
-                                    android:text="文字"/>
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="50dp"
-                                    android:textSize="18sp"
-                                    android:text="文字"/>
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="49dp"
-                                    android:textSize="18sp"
-                                    android:text="文字"/>
+                                    android:layout_weight="4"
+
+                                    android:orientation="vertical">
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center_vertical"
+                                            android:layout_marginTop="5dp"
+                                            android:orientation="horizontal">
+                                                <TextView
+                                                    android:layout_width="220dp"
+                                                    android:layout_height="wrap_content"
+                                                    android:textSize="18dp"
+                                                    android:text="羽毛球社团明天有比赛"
+                                                    android:maxLines="1"
+                                                    android:ellipsize="end"/>
+                                                <TextView
+                                                    android:layout_width="100dp"
+                                                    android:layout_height="wrap_content"
+                                                    android:textSize="18dp"
+                                                    android:text="2019/10/30"/>
+                                        </LinearLayout>
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center_vertical"
+                                            android:layout_marginTop="10dp"
+                                            android:orientation="horizontal">
+                                                <TextView
+                                                    android:layout_width="220dp"
+                                                    android:layout_height="wrap_content"
+                                                    android:textSize="18dp"
+                                                    android:text="羽毛球社团明天有比赛"
+                                                    android:maxLines="1"
+                                                    android:ellipsize="end"/>
+                                                <TextView
+                                                    android:layout_width="100dp"
+                                                    android:layout_height="wrap_content"
+                                                    android:textSize="18dp"
+                                                    android:text="2019/10/30"/>
+                                        </LinearLayout>
+
+                                </LinearLayout>
                         </LinearLayout>
                         <TextView
                             android:layout_width="match_parent"
