@@ -1,117 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@drawable/bt_shape"/>
-        <ImageView
-            android:layout_marginTop="-80dp"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:background="@drawable/bt_shape">
+            <ImageView
+                android:id="@+id/title_back"
+                android:layout_gravity="left"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:paddingLeft="20dp"
+                android:src="@mipmap/back"/>
+
+            <TextView
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="100dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="个人信息"
+                android:textSize="26sp"/>
+            <ImageView
+                android:layout_marginLeft="80dp"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:background="@mipmap/personal"/>
+        </LinearLayout>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="-20dp"
             android:layout_gravity="center"
-            android:background="@drawable/ic_launcher_foreground"/>
+            android:src="@mipmap/ic_launcher"
+            app:civ_border_color="#4CAF50"
+            app:civ_border_width="2dp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="马力-在招聘"
-            android:textSize="35dp"/>
+            android:text="余政洋-在招聘"
+            android:textSize="35dp" />
+
         <TextView
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:gravity="center"
             android:text="我在招人，具体见我专栏文章。旗下产品服务问题，请直接私信我反馈。"
-            android:textSize="15dp"/>
+            android:textSize="15dp" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
             <Button
                 android:layout_width="100dp"
                 android:layout_height="40dp"
-                android:text="私信"
+                android:layout_marginRight="10dp"
                 android:background="#555"
-                android:textColor="#fff"
-                android:layout_marginRight="10dp"/>
+                android:text="私信"
+                android:textColor="#fff" />
+
             <Button
                 android:layout_width="100dp"
                 android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
                 android:text="已关注"
-                android:textColor="#555"
-                android:layout_marginLeft="10dp"/>
+                android:textColor="#555" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:layout_marginTop="20dp"
-            >
+            android:layout_marginTop="20dp">
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#ccc"/>
+                android:background="#ccc" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#ccc"/>
+                android:background="#ccc" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="10000"
-                    android:textSize="20sp"
-                    />
+                    android:textSize="20sp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="他关注的人"
-                    android:textSize="20sp"
                     android:layout_marginRight="20dp"
-                    />
+                    android:text="他关注的人"
+                    android:textSize="20sp" />
+
                 <ImageView
                     android:layout_width="2dp"
                     android:layout_height="15dp"
-                    android:background="#ccc"
-                    />
+                    android:background="#ccc" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:text="10"
-                    android:textSize="20sp"
-                    />
+                    android:textSize="20sp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="关注他的人"
-                    android:textSize="20sp"
-                    />
+                    android:textSize="20sp" />
             </LinearLayout>
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#ccc"/>
+                android:background="#ccc" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="陈梓佳、付辛博等你关注的人关注了他"/>
+                android:text="陈梓佳、付辛博等你关注的人关注了他" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
