@@ -41,14 +41,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //适配屏幕
+        DisplayCutoutDemo displayCutoutDemo = new DisplayCutoutDemo(this);
+        displayCutoutDemo.openFullScreenModel();
         setContentView(R.layout.activity_main);
         ActionBar actionbar = getSupportActionBar();
         if (actionbar != null) {
             actionbar.hide();
         }
         getStatusBarHeight(this);
-        DisplayCutoutDemo displayCutoutDemo = new DisplayCutoutDemo(this);
-        displayCutoutDemo.openFullScreenModel();
 
         Intent intent = getIntent();
         user_name = intent.getStringExtra("username");

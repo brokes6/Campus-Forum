@@ -75,9 +75,9 @@
                                     android:orientation="vertical">
 
                                         <TextView
-                                            android:layout_width="50dp"
+                                            android:layout_width="60dp"
                                             android:layout_height="wrap_content"
-                                            android:text="最新公告"
+                                            android:text="最 新公 告"
                                             android:textSize="24dp"
                                             />
 
