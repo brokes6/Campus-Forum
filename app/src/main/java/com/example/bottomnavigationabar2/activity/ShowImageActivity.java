@@ -2,6 +2,7 @@ package com.example.bottomnavigationabar2.activity;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -87,6 +88,10 @@ public class ShowImageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            //修改为深色，因为我们把状态栏的背景色修改为主题色白色，默认的文字及图标颜色为白色，导致看不到了。
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
         ActionBar actionbar = getSupportActionBar();
         if (actionbar != null) {
             actionbar.hide();

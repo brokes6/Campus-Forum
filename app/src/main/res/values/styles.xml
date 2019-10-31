@@ -21,6 +21,8 @@
     <style name="AppTheme" parent="AppTheme.Base">
         <!-- Navigation Bar 【false适配某些虚拟按键手机】-->
         <item name="android:windowTranslucentNavigation">false</item>
+        <!--允许启用窗口内容转换效果-->
+        <item name="android:windowContentTransitions">true</item>
     </style>
 
     <style name="EditorIcon">

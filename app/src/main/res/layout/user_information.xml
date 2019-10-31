@@ -92,6 +92,7 @@
                     android:layout_height="40dp"
                     android:layout_marginLeft="10dp"
                     android:text="已关注"
+                    android:background="#ccc"
                     android:textColor="#555" />
             </LinearLayout>
 

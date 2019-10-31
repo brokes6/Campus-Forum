@@ -7,54 +7,66 @@
     android:padding="10dp"
     >
 
-    <com.example.bottomnavigationabar2.MyImageView
-        android:id="@+id/tieze_user_img"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@mipmap/ic_launcher" />
-
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:orientation="vertical">
 
+        <com.example.bottomnavigationabar2.MyImageView
+            android:id="@+id/tieze_user_img"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@mipmap/ic_launcher" />
+
         <TextView
             android:id="@+id/tiezi_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="-45dp"
             android:text="我是名字"
             android:textColor="@android:color/holo_blue_dark" />
         <TextView
-            android:text="-抗压吧-"
-            android:textColor="#F44336"
-            android:paddingTop="7dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
             android:id="@+id/tiezi_time"
-            android:layout_marginLeft="220dp"
+            android:layout_marginLeft="290dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-40dp"
+            android:layout_marginTop="-15dp"
             android:text="我是时间"
+            android:transitionName="time"
+            />
+        <TextView
+            android:layout_marginTop="-16dp"
+            android:layout_marginLeft="71dp"
+            android:id="@+id/tieze_felei"
+            android:text="-抗压吧-"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#F44336"
+            android:textSize="12sp"
             />
 
         <TextView
-            android:paddingTop="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="5dp"
+            android:textSize="15sp"
             android:id="@+id/tieze_Text"
-            android:text=""
+            android:text="123"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:transitionName="longtext"
             />
 
         <com.example.bottomnavigationabar2.view.NineGridTestLayout
+
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/layout_nine_grid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:sapcing="4dp" />
+            app:sapcing="4dp"
+            android:transitionName="image"/>
 
         <com.example.bottomnavigationabar2.adapter.Datails_Inside
             android:layout_width="match_parent"

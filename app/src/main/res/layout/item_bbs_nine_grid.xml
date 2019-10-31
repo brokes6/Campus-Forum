@@ -17,7 +17,8 @@
             android:id="@+id/tieze_user_img"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@mipmap/ic_launcher" />
+            android:background="@mipmap/ic_launcher"
+            android:transitionName="userphoto"/>
 
         <TextView
             android:id="@+id/tiezi_username"
@@ -26,7 +27,8 @@
             android:layout_marginLeft="70dp"
             android:layout_marginTop="-45dp"
             android:text="我是名字"
-            android:textColor="@android:color/holo_blue_dark" />
+            android:textColor="@android:color/holo_blue_dark"
+            android:transitionName="username"/>
         <TextView
             android:id="@+id/tiezi_time"
             android:layout_marginLeft="290dp"
@@ -34,6 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="-15dp"
             android:text="我是时间"
+            android:transitionName="time"
             />
         <TextView
             android:layout_marginTop="1dp"
@@ -54,15 +57,18 @@
             android:text="123"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:transitionName="longtext"
             />
 
         <com.example.bottomnavigationabar2.view.NineGridTestLayout
+
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/layout_nine_grid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:sapcing="4dp" />
+            app:sapcing="4dp"
+            android:transitionName="image"/>
 
         <LinearLayout
             android:layout_width="match_parent"

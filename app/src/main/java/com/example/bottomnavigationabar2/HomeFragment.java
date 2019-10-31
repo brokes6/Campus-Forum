@@ -168,6 +168,7 @@ public class HomeFragment extends Fragment {
         initTransition();
         return view;
     }
+
     //初始化动画
     private void initTransition() {
         final TransitionSet transitionSet = new TransitionSet();

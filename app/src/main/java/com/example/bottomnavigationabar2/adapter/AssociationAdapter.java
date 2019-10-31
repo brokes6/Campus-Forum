@@ -1,10 +1,8 @@
 package com.example.bottomnavigationabar2.adapter;
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
@@ -20,7 +18,6 @@ import com.example.bottomnavigationabar2.MyImageView;
 import com.example.bottomnavigationabar2.Post;
 import com.example.bottomnavigationabar2.PostDetails;
 import com.example.bottomnavigationabar2.R;
-import com.example.bottomnavigationabar2.UserInformation;
 import com.example.bottomnavigationabar2.model.NineGridTestModel;
 import com.example.bottomnavigationabar2.utils.HandlerUtil;
 import com.example.bottomnavigationabar2.utils.NetWorkUtil;
@@ -45,15 +42,14 @@ import okhttp3.Response;
 /**
  * Created by HMY on 2016/8/6
  */
-public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adapter.ViewHolder> {
+public class AssociationAdapter extends RecyclerView.Adapter<AssociationAdapter.ViewHolder> {
     private static final String TAG = "NineGridTest2Adapter";
-    private MyImageView tieze_user_img;
     private Context mContext;
     private View convertView;
     private List<Post> mList=new ArrayList<>();
     protected LayoutInflater inflater;
     private NetWorkUtil netWorkUtil;
-    public NineGridTest2Adapter(Context context) {
+    public AssociationAdapter(Context context) {
         mContext = context;
         inflater = LayoutInflater.from(context);
         netWorkUtil=new NetWorkUtil(context);
@@ -101,7 +97,7 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
                     //减减
                     holder.loveNumStr.setText(String.valueOf(Integer.valueOf(holder.loveNumStr.getText().toString())+1));
                 }
-               netWorkUtil.updatePostLove(holder.postId,"HnpMvU%2BV3ZHjrbMhOaOuCA%3D%3D");
+                netWorkUtil.updatePostLove(holder.postId,"HnpMvU%2BV3ZHjrbMhOaOuCA%3D%3D");
             }
         });
         if(holder.loveStatus==1){
@@ -116,20 +112,6 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
                 Log.i(TAG, "onClick: 随便响应"+mList.get(position).getPid());
                 Intent intent = new Intent(mContext, PostDetails.class);
                 intent.putExtra("postId",mList.get(position).getPid());
-                android.support.v4.util.Pair<View, String> uimg = new android.support.v4.util.Pair(holder.uimg, "userphoto");
-                android.support.v4.util.Pair<View, String> username = new android.support.v4.util.Pair(holder.username, "username");
-                android.support.v4.util.Pair<View, String> image = new android.support.v4.util.Pair(holder.layout, "image");
-                android.support.v4.util.Pair<View, String> text = new android.support.v4.util.Pair(holder.datetime, "time");
-                android.support.v4.util.Pair<View, String> longtext = new android.support.v4.util.Pair(holder.content, "longtext");
-                ActivityOptionsCompat optionsCompat =
-                        ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, image,text,longtext,uimg,username);
-                mContext.startActivity(intent,optionsCompat.toBundle());
-            }
-        });
-        tieze_user_img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, UserInformation.class);
                 mContext.startActivity(intent);
             }
         });
@@ -154,7 +136,6 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
             this.view=itemView;
             layout = (NineGridTestLayout) itemView.findViewById(R.id.layout_nine_grid);
             username=itemView.findViewById(R.id.tiezi_username);
-            tieze_user_img = itemView.findViewById(R.id.tieze_user_img);
             uimg=itemView.findViewById(R.id.tieze_user_img);
             datetime=itemView.findViewById(R.id.tiezi_time);
             content=itemView.findViewById(R.id.tieze_Text);

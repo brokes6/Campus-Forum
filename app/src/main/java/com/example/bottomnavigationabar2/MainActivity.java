@@ -169,6 +169,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
             case 2:
                 if (mMyFragment == null) {
                     mMyFragment = MyFragment.newInstance("个人");
+
                 }
                 transaction.replace(R.id.tb, mMyFragment);
                 break;
