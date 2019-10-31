@@ -19,8 +19,12 @@ import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.example.bottomnavigationabar2.ScreenAdaptation.DisplayCutoutDemo;
 import com.example.bottomnavigationabar2.activity.BaseActivity;
+import com.example.bottomnavigationabar2.bean.User;
+import com.example.bottomnavigationabar2.utils.FileCacheUtil;
 import com.example.util.ScreenAdapterUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+
+import java.io.File;
 
 /**
  * Created by 武当山道士 on 2017/8/16.
@@ -29,6 +33,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
 
     private BottomNavigationBar bottomNavigationBar;
+    public User userData;
     String user_name;
     int lastSelectedPosition = 0;
     private String TAG = MainActivity.class.getSimpleName();
@@ -54,6 +59,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         Intent intent = getIntent();
         user_name = intent.getStringExtra("username");
         Toast.makeText(this, "账号" + user_name, Toast.LENGTH_SHORT).show();
+        userData=FileCacheUtil.getCache(this,"USERDATA.txt",0, User.class);
         /**
          * bottomNavigation 设置
          */
@@ -136,7 +142,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     private void setDefaultFragment() {
         FragmentManager fm = getFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
-        mHomeFragment = HomeFragment.newInstance("首页");
+        mHomeFragment = HomeFragment.newInstance("首页",userData);
         transaction.replace(R.id.tb, mHomeFragment);
         transaction.commit();
     }
@@ -156,7 +162,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
             case 0:
                 if (mHomeFragment == null) {
                     Log.i(TAG, "onTabSelected:进入");
-                    mHomeFragment = HomeFragment.newInstance("首页");
+                    mHomeFragment = HomeFragment.newInstance("首页",userData);
                 }
                 transaction.replace(R.id.tb, mHomeFragment);
                 break;

@@ -35,6 +35,7 @@ import com.example.bottomnavigationabar2.MoBan.MoBan_1;
 import com.example.bottomnavigationabar2.MoBan.MoBan_2;
 import com.example.bottomnavigationabar2.MoBan.MoBan_3;
 import com.example.bottomnavigationabar2.adapter.MainTabFragmentAdapter;
+import com.example.bottomnavigationabar2.bean.User;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -79,16 +80,21 @@ public class HomeFragment extends Fragment {
     private MainTabFragmentAdapter mainTabFragmentAdapter;
     private ViewPager viewPager;
     private SmartRefreshLayout refreshLayout;
-    public static HomeFragment newInstance(String param1) {
-        HomeFragment fragment = new HomeFragment();
+    public static User userData;
+    public static HomeFragment newInstance(String param1,User user) {
+        HomeFragment fragment = new HomeFragment(user);
         Bundle args = new Bundle();
         args.putString("agrs1", param1);
         fragment.setArguments(args);
         return fragment;
     }
-    public HomeFragment() {
-
+    public HomeFragment(User user) {
+        userData=user;
     }
+
+    public HomeFragment() {
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -283,6 +289,7 @@ public class HomeFragment extends Fragment {
     private void setDefaultFragment() {
         mainTabFragmentAdapter = new MainTabFragmentAdapter(((AppCompatActivity)getActivity()).getSupportFragmentManager(),getActivity());
         moBanInterface= (MoBanInterface) mainTabFragmentAdapter.getItem(0);
+        moBanInterface.getPostList(userData.getToken());
         Log.i(TAG, "setDefaultFragment: 11111111111");
     }
     public boolean isFlag() {
@@ -341,7 +348,7 @@ public class HomeFragment extends Fragment {
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 Log.i(TAG, "onLoadMore: 下拉加载");
                 refreshLayout.autoLoadMore();
-                moBanInterface.getPostList();
+                moBanInterface.getPostList(userData.getToken());
                 refreshLayout.finishLoadMore();
             }
         });
@@ -351,7 +358,7 @@ public class HomeFragment extends Fragment {
                 Log.i(TAG, "onRefresh: 上拉刷新");
                 refreshLayout.autoRefresh();
                 moBanInterface.clearList();
-                moBanInterface.getPostList();
+                moBanInterface.getPostList(userData.getToken());
                 refreshLayout.finishRefresh();
             }
         });

@@ -10,6 +10,7 @@ import com.example.bottomnavigationabar2.MoBan.MoBan_1;
 import com.example.bottomnavigationabar2.MoBan.MoBan_2;
 import com.example.bottomnavigationabar2.MoBan.MoBan_3;
 import com.example.bottomnavigationabar2.MoBan.MoBan_4;
+import com.example.bottomnavigationabar2.bean.User;
 
 import java.util.ArrayList;
 

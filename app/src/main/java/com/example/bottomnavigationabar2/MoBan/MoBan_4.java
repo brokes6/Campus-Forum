@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.bottomnavigationabar2.HomeFragment;
 import com.example.bottomnavigationabar2.Post;
 import com.example.bottomnavigationabar2.R;
 import com.example.bottomnavigationabar2.adapter.NineGridTest2Adapter;
@@ -74,7 +75,7 @@ public class MoBan_4 extends Fragment implements MoBanInterface {
         view = inflater.inflate(R.layout.mo_ban_1, container, false);
 //        Toast.makeText(getContext(),"gogogo",Toast.LENGTH_SHORT).show();
         initView();
-        getPostList();
+        getPostList(HomeFragment.userData.getToken());
         return view;
     }
     private void initView() {
@@ -86,9 +87,9 @@ public class MoBan_4 extends Fragment implements MoBanInterface {
         mAdapter.setList(mList);
         mRecyclerView.setAdapter(mAdapter);
     }
-    public void getPostList(){
+    public void getPostList(String token){
         final Request request = new Request.Builder()
-                .url("http://106.54.134.17/app/getPopularPost?startPage="+page)
+                .url("http://106.54.134.17/app/getPopularPost?startPage="+page+"&token="+token)
                 .build();
         OkHttpClient okHttpClient = new OkHttpClient();
         okHttpClient.newCall(request).enqueue(new Callback() {
