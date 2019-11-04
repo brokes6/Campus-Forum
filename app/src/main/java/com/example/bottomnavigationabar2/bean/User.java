@@ -1,9 +1,12 @@
 package com.example.bottomnavigationabar2.bean;
 
+import java.io.Serializable;
+
 /**
  * 创建于2019/9/27 15:30🐎
  */
-public class User {
+public class User implements Serializable {
+    public static final long serialVersionUID=4725L;
     private Integer uid;
     private String account;
     private String username;

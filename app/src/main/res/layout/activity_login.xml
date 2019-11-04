@@ -62,7 +62,7 @@
         android:layout_height="wrap_content">
     <CheckBox
         android:layout_marginTop="7dp"
-        android:id="@+id/jz_mima"
+        android:id="@+id/rememberPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="58dp"
@@ -71,7 +71,7 @@
 
         <CheckBox
             android:layout_marginTop="7dp"
-            android:id="@+id/zd_denglu"
+            android:id="@+id/autoLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"

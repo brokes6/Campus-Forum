@@ -27,6 +27,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bottomnavigationabar2.bean.User;
+import com.example.bottomnavigationabar2.utils.FileCacheUtil;
+
 import static android.app.Activity.RESULT_OK;
 
 /**
@@ -36,6 +39,8 @@ import static android.app.Activity.RESULT_OK;
 public class MyFragment extends Fragment {
     private LinearLayout Set_up;
     private View view;
+    private User userData;
+    private TextView usernameView;
     public static final int CHOOSE_PHOTO = 2;
     private ImageView picture;
     public static MyFragment newInstance(String param1) {
@@ -58,8 +63,10 @@ public class MyFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.my_fragment, container, false);
+        userData=FileCacheUtil.getCache(getContext(),"USERDATA.txt",0, User.class);
         Bundle bundle = getArguments();
-        picture = (ImageView)view.findViewById(R.id.user_head_img);
+        initView();
+        initData();
 //        TextView Tuichu = (TextView)view.findViewById(R.id.tuichu);
         LinearLayout history=(LinearLayout)view.findViewById(R.id.history);
         LinearLayout collection=(LinearLayout)view.findViewById(R.id.Collection);
@@ -141,6 +148,32 @@ public class MyFragment extends Fragment {
         } else {
             Toast.makeText(getActivity(), "failed to get image", Toast.LENGTH_SHORT).show();
         }
+    }
+    private void initView(){
+        usernameView=view.findViewById(R.id.username);
+        picture = (ImageView)view.findViewById(R.id.user_head_img);
+        LinearLayout history=(LinearLayout)view.findViewById(R.id.history);
+        LinearLayout collection=(LinearLayout)view.findViewById(R.id.Collection);
+
+        history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getContext(),history.class);
+                getActivity().overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
+                startActivity(intent);
+            }
+        });
+        collection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getContext(),MyCollection.class);
+                getActivity().overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
+                startActivity(intent);
+            }
+        });
+    }
+    private void initData(){
+        usernameView.setText(userData.getAccount());
     }
 }
 

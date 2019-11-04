@@ -1,5 +1,6 @@
 package com.example.bottomnavigationabar2;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.Notification;
@@ -15,10 +16,13 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -31,8 +35,18 @@ import android.widget.Toast;
 import com.example.bottomnavigationabar2.bean.ResultBean;
 import static com.example.bottomnavigationabar2.utils.FileCacheUtil.getCache;
 import com.example.bottomnavigationabar2.bean.User;
+import com.example.bottomnavigationabar2.utils.FileCacheUtil;
+import com.example.bottomnavigationabar2.utils.HandlerUtil;
 import com.example.util.JsonTOBeanUtil;
+import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -44,21 +58,33 @@ import static java.security.AccessController.getContext;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
-        EditText username;
-        EditText password;
-        String user = null;
-        User userData;
-        String pass = null;
-        private Context mContext;
-        private Activity mActivity;
-        String token ="1";
-        private CheckBox autologin;
-        private CheckBox remembermima;
-        private IntentFilter intentFilter;
-        Boolean checkbox = false;
-        private NetworkChangeReceiver networkChangeReceiver;
-        private SharedPreferences sp;
-
+    public static final int STARTACTIVITY=1;
+    private EditText usernameEdit;
+    private EditText passwordEdit;
+    String user = null;
+    User userData;
+    String pass = null;
+    String token ="1";
+    private CheckBox autologin;
+    private CheckBox rememberPassword;
+    private IntentFilter intentFilter;
+    Boolean checkbox = false;
+    private NetworkChangeReceiver networkChangeReceiver;
+    private SharedPreferences sp;
+    private HandlerUtil handlerUtil;
+    private Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case STARTACTIVITY:
+                    FileCacheUtil.setCache(msg.obj,LoginActivity.this,"USERDATA.txt",0);
+                    ActivityOptions compat = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this);
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class), compat.toBundle());
+                    finish();
+                    break;
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,8 +97,6 @@ public class LoginActivity extends AppCompatActivity {
         if (actionbar != null) {
             actionbar.hide();
         }
-        mContext = this;
-        mActivity = this;
         //过度效果(没写)
         intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
@@ -80,38 +104,39 @@ public class LoginActivity extends AppCompatActivity {
         registerReceiver(networkChangeReceiver, intentFilter);
         //获取记住密码，自动登录主键
         sp = getSharedPreferences("userInfo", 0);
-        autologin = findViewById(R.id.jz_mima);
-        remembermima = findViewById(R.id.zd_denglu);
+        autologin = findViewById(R.id.autoLogin);
+        rememberPassword = findViewById(R.id.rememberPassword);
         //获取账号 密码 登录按钮
-        username = (EditText)findViewById(R.id.username);
-        password = (EditText)findViewById(R.id.password);
+        usernameEdit = (EditText)findViewById(R.id.username);
+        passwordEdit = (EditText)findViewById(R.id.password);
         Button denglu = (Button)findViewById(R.id.denglu);
+        handlerUtil = new HandlerUtil(this);
         denglu.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
-                sendOkHttp();
+                login();
             }
         });
-        //将账号密码 和sp值存入
-        sp = getSharedPreferences("userInfo", 0);
-        String name=sp.getString("USER_NAME", "");
+        //将账号密码 和sp值存
+        String name=sp.getString("USERNAME", "");
         String pass =sp.getString("PASSWORD", "");
+        Log.i(TAG, "onCreate: name="+name);
+        Log.i(TAG, "onCreate: password="+pass);
         //获取单选按钮的状态
         boolean choseRemember =sp.getBoolean("remember", false);
+        Log.i(TAG, "onCreate: chose="+choseRemember);
         boolean choseAutoLogin =sp.getBoolean("autologin", false);
         //如果上次选了记住密码，那进入登录页面也自动勾选记住密码，并填上用户名和密码
+ /*       if(choseAutoLogin){
+            Intent intent =new Intent(LoginActivity.this,MainActivity.class);
+            startActivity(intent);
+        }*/
         if(choseRemember){
-            username.setText(name);
-            password.setText(pass);
-            autologin.setChecked(true);
+            usernameEdit.setText(name);
+            passwordEdit.setText(pass);
+            rememberPassword.setChecked(true);
         }
-        if(choseAutoLogin){
-            autologin.setChecked(true);
-        }
-
-
-
         TextView textView = (TextView)findViewById(R.id.tex3);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,85 +154,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
-    private void sendOkHttp(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    //获取账号   密码
-                    username = (EditText)findViewById(R.id.username);
-                    password = (EditText)findViewById(R.id.password);
-                    SharedPreferences.Editor editor =sp.edit();
-                    SharedPreferences.Editor editor1 =sp.edit();
-                    user = username.getText().toString();
-                    pass = password.getText().toString();
-                    if(user.equals("") &&pass.equals("")){
-                        Toast.makeText(LoginActivity.this,"账号密码有误 !",Toast.LENGTH_SHORT).show();
-                    }
-                    OkHttpClient client = new OkHttpClient();
-                    RequestBody requestBody = new FormBody.Builder()
-                            //post请求
-                            .add("username", username.getText().toString())
-                            .add("password",password.getText().toString())
-                            .build();
-                    Request request = new Request.Builder()
-                            .url("http://106.54.134.17/app/login")
-                            .post(requestBody)
-                            //服务器ip地址
-                            .build();
-                    Response shuju_jieshou = client.newCall(request).execute();
-                    String responseData = shuju_jieshou.body().string();
-                    System.out.println(responseData);
-                    userData = JsonTOBeanUtil.getBeanSingleData(User.class,responseData);
-                    if (userData==null) {
-                            Toast.makeText(LoginActivity.this, "账号没有注册", Toast.LENGTH_SHORT).show();
-                    }
-                    else{
-                            editor.putString("USER_NAME", user);
-                            editor.putString("PASSWORD", pass);
-                            //判断是否记住密码
-                            if(remembermima.isChecked()){
-                                editor.putBoolean("remember", true);
-                            }else{
-                                editor.putBoolean("remember", false);
-                            }
-                            //是否自动登录
-                            if(autologin.isChecked()){
-                                checkbox=true;
-                                editor1.putBoolean("autologin", true);
-                            }else{
-                                editor1.putBoolean("autologin", false);
-                            }
-                            editor.commit();
-                            //跳转
-                            initEvent();
-                    }
-                }catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
-    private void initEvent() {
-        findViewById(R.id.denglu).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /**
-                 * 注意这里，没有带共享元素哦(共享元素的打算放到下面讲)
-                 */
-                if( checkbox == true){
-                    setCache(token,LoginActivity.this,"User_Key",MODE_PRIVATE);
-                    String ge_key = getCache(LoginActivity.this,"User_Key");
-                    Log.d(TAG, "run: -----------------------2122222222"+ge_key);
-                }else{ }
-                ActivityOptions compat = ActivityOptions.makeSceneTransitionAnimation(mActivity);
-                startActivity(new Intent(mContext, MainActivity.class), compat.toBundle());
-                finish();
-            }
-        });
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -226,4 +172,76 @@ public class LoginActivity extends AppCompatActivity {
         }
 
     }
+    private void login(final String username, final String password){
+        RequestBody requestBody = new FormBody.Builder()
+                .add("username",username)
+                .add("password",password)
+                .build();
+        Request request =new Request.Builder()
+                .post(requestBody)
+                .url("http://106.54.134.17/app/login")
+                .build();
+        OkHttpClient client = new OkHttpClient();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.i(TAG, "onFailure: 登录失败");
+                handlerUtil.sendToast("服务器出现异常，请稍后再试");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String responseStr = response.body().string();
+                Log.i(TAG, "onResponse: 登录json情况"+responseStr);
+                try {
+                    JSONObject jsonObject =new JSONObject(responseStr);
+                    int code = jsonObject.getInt("code");
+                    String msg = jsonObject.getString("msg");
+                    SharedPreferences.Editor editor =sp.edit();
+                    Gson gson =new Gson();
+                    User user=gson.fromJson(jsonObject.getString("data"),User.class);
+                    if(code==0){
+                        handlerUtil.sendToast(msg);
+                        return;
+                    }
+                    if( checkbox == true){
+                        setCache(token,LoginActivity.this,"User_Key",MODE_PRIVATE);
+                        String ge_key = getCache(LoginActivity.this,"User_Key");
+                    }
+                    if(rememberPassword.isChecked()){
+                        Log.i(TAG, "onResponse: ???");
+                        editor.putBoolean("remember", true);
+                        editor.putString("USERNAME",username);
+                        editor.putString("PASSWORD",password);
+                    }else{
+                        editor.putBoolean("remember", false);
+                    }
+                    //是否自动登录
+                    if(autologin.isChecked()){
+                        checkbox=true;
+                        editor.putBoolean("autologin", true);
+                    }else{
+                        editor.putBoolean("autologin", false);
+                    }
+                    editor.commit();
+                    Message message=new Message();
+                    message.obj=user;
+                    message.what=STARTACTIVITY;
+                    handler.sendMessage(message);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+    private void login(){
+        String usernamee =usernameEdit.getText().toString();
+        String password=passwordEdit.getText().toString();
+        if(TextUtils.isEmpty(usernamee)||TextUtils.isEmpty(password)){
+            Log.i(TAG, "login: 输入为空");
+            handlerUtil.sendToast("用户名或者密码不能为空");
+        }
+        login(usernamee,password);
+    }
+
 }
