@@ -34,6 +34,7 @@ import static android.app.Activity.RESULT_OK;
  */
 
 public class MyFragment extends Fragment {
+    private LinearLayout Set_up;
     private View view;
     public static final int CHOOSE_PHOTO = 2;
     private ImageView picture;
@@ -62,7 +63,14 @@ public class MyFragment extends Fragment {
 //        TextView Tuichu = (TextView)view.findViewById(R.id.tuichu);
         LinearLayout history=(LinearLayout)view.findViewById(R.id.history);
         LinearLayout collection=(LinearLayout)view.findViewById(R.id.Collection);
-
+        Set_up = view.findViewById(R.id.Set_up);
+        Set_up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(),Set_up.class);
+                startActivity(intent);
+            }
+        });
         history.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
