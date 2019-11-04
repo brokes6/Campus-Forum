@@ -91,12 +91,13 @@ public class FileCacheUtil {
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        if (file.exists()) {
+            Log.i(TAG, "setCache:"+file.delete());
+        }
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         try {
             fileOutputStream = new FileOutputStream(file.toString());
@@ -146,5 +147,8 @@ public class FileCacheUtil {
             }
             return null;
 
+    }
+    public static User getUser(Context context){
+        return FileCacheUtil.getCache(context,"USERDATA.txt",0, User.class);
     }
 }

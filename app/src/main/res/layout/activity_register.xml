@@ -28,7 +28,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <EditText
-                    android:id="@+id/name_denglu"
+                    android:id="@+id/usernameEdit"
                     android:layout_width="200dp"
                     android:hint="请输入名称"
                     android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <EditText
-                    android:id="@+id/username_denglu"
+                    android:id="@+id/accountEdit"
                     android:layout_width="200dp"
                     android:hint="请输入（数字和字母）"
                     android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <EditText
-                    android:id="@+id/password_denglu"
+                    android:id="@+id/passwordEdit"
                     android:layout_width="200dp"
                     android:hint="请输入（数字和字母）"
                     android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <EditText
-            android:id="@+id/password_again"
+            android:id="@+id/password_againEdit"
             android:layout_width="200dp"
             android:hint="请再输入一遍密码"
             android:layout_height="wrap_content"
@@ -100,7 +100,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <EditText
-                    android:id="@+id/youxiang"
+                    android:id="@+id/emailEdit"
                     android:layout_width="200dp"
                     android:hint="请输入邮箱"
                     android:layout_height="wrap_content"

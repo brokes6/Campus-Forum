@@ -49,10 +49,11 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
     private static final int REPLYNUM=3;
     private Context context;
     private int pageIndex = 1;
-    public static final String TESTOKEN="jCJdTl6mIY7UHl4mOluafQ%3D%3D";
-    public CommentExpandAdapter(Context context, List<CommentDetailBean> commentBeanList) {
+    private String token;
+    public CommentExpandAdapter(Context context, List<CommentDetailBean> commentBeanList,String token) {
         this.context = context;
         this.commentBeanList = commentBeanList;
+        this.token=token;
     }
 
     public void setCommentBeanList(List<CommentDetailBean> commentBeanList) {
@@ -61,16 +62,13 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
         }
         this.commentBeanList.addAll(commentBeanList);
     }
-
     public List<CommentDetailBean> getCommentBeanList() {
         return commentBeanList;
     }
-
     @Override
     public int getGroupCount() {
         return commentBeanList.size();
     }
-
     @Override
     public int getChildrenCount(int i) {
         if(commentBeanList.get(i).getReplyVoList() == null){
@@ -80,22 +78,18 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
         }
 
     }
-
     @Override
     public Object getGroup(int i) {
         return commentBeanList.get(i);
     }
-
     @Override
     public Object getChild(int i, int i1) {
         return commentBeanList.get(i).getReplyVoList().get(i1);
     }
-
     @Override
     public long getGroupId(int groupPosition) {
         return groupPosition;
     }
-
     @Override
     public long getChildId(int groupPosition, int childPosition) {
         return getCombinedChildId(groupPosition, childPosition);
@@ -122,6 +116,7 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
 //                .error(R.mipmap.ic_launcher)
 //                .centerCrop()
 //                .into(groupHolder.logo);
+        Log.i(TAG, "getGroupView: token="+token);
         groupHolder.logo.setImageURL("http://106.54.134.17/image/topicalimg/98c59323be294a438ffe82a0427912dbsmall.jpeg");
         groupHolder.tv_name.setText(commentBeanList.get(groupPosition).getUsername());
         groupHolder.tv_time.setText(commentBeanList.get(groupPosition).getCcreateTime());
@@ -149,10 +144,7 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
                     groupHolder.iv_like.setColorFilter(Color.parseColor("#FF5C5C"));
                     groupHolder.loveNum.setText(String.valueOf(Integer.valueOf(groupHolder.loveNum.getText().toString())+1));
                 }
-                Log.i(TAG, "onClick: 开始搞赞好吧");
-                Log.i(TAG, "onClick: ?position="+groupHolder.position);
-                Log.i(TAG, "onClick: commentId="+commentBeanList.get(groupHolder.position).getCid());
-                updateCommentLove(commentBeanList.get(groupPosition).getCid(),TESTOKEN);
+                updateCommentLove(commentBeanList.get(groupPosition).getCid());
             }
 
         });
@@ -268,7 +260,7 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
 
         notifyDataSetChanged();
     }
-    private void updateCommentLove(int commentId,String token){
+    private void updateCommentLove(int commentId){
         final Request request =new Request.Builder()
                 .url("http://106.54.134.17/app/updateLoveComment?token="+token+"&commentId="+commentId)
                 .build();

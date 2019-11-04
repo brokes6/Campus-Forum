@@ -77,11 +77,6 @@ public class MoBan_1 extends Fragment implements MoBanInterface{
             }
         }
     };
-    public static void startActivity(Context context, List<NineGridTestModel> list) {
-        Intent intent = new Intent(context, MoBan_1.class);
-        intent.putExtra(ARG_LIST, (Serializable) list);
-        context.startActivity(intent);
-    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

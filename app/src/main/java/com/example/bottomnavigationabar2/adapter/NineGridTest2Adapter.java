@@ -22,6 +22,7 @@ import com.example.bottomnavigationabar2.PostDetails;
 import com.example.bottomnavigationabar2.R;
 import com.example.bottomnavigationabar2.UserInformation;
 import com.example.bottomnavigationabar2.model.NineGridTestModel;
+import com.example.bottomnavigationabar2.utils.FileCacheUtil;
 import com.example.bottomnavigationabar2.utils.HandlerUtil;
 import com.example.bottomnavigationabar2.utils.NetWorkUtil;
 import com.example.bottomnavigationabar2.view.NineGridTestLayout;
@@ -53,10 +54,12 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
     private List<Post> mList=new ArrayList<>();
     protected LayoutInflater inflater;
     private NetWorkUtil netWorkUtil;
+    private String token;
     public NineGridTest2Adapter(Context context) {
         mContext = context;
         inflater = LayoutInflater.from(context);
         netWorkUtil=new NetWorkUtil(context);
+        token=FileCacheUtil.getUser(context).getToken();
     }
 
     public void setList(List<Post> list) {
@@ -101,7 +104,7 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
                     //减减
                     holder.loveNumStr.setText(String.valueOf(Integer.valueOf(holder.loveNumStr.getText().toString())+1));
                 }
-               netWorkUtil.updatePostLove(holder.postId,"HnpMvU%2BV3ZHjrbMhOaOuCA%3D%3D");
+               netWorkUtil.updatePostLove(holder.postId,token);
             }
         });
         if(holder.loveStatus==1){

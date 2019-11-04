@@ -37,6 +37,7 @@ import com.example.bottomnavigationabar2.adapter.CommentExpandAdapter;
 import com.example.bottomnavigationabar2.bean.CommentBean;
 import com.example.bottomnavigationabar2.bean.CommentDetailBean;
 import com.example.bottomnavigationabar2.bean.ReplyDetailBean;
+import com.example.bottomnavigationabar2.bean.User;
 import com.example.bottomnavigationabar2.model.NineGridTestModel;
 import com.example.bottomnavigationabar2.utils.FileCacheUtil;
 import com.example.bottomnavigationabar2.utils.NetWorkUtil;
@@ -76,6 +77,9 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
     public static final int CANCEL_PROGRESS=2;
     public static final int NOTIFY=3;
     public static final int NOTIFY_NOCOMMENT=4;
+    public static final String REQUEST_POST_DETAILS_STR="http://106.54.134.17/app/getPostDetailsById";//mode=1
+    public static final String REQUEST_COMMENT_STR="http://106.54.134.17/app/getPopularComments";//mode=2
+    public static final String REQUEST_ADD_COMMENT_STR="http://106.54.134.17/app/addComment";//mode=3
     private android.support.v7.widget.Toolbar toolbar;
     private TextView bt_comment;
     private CommentExpandableListView expandableListView;
@@ -97,6 +101,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
     private ProgressBar progressBar;
     private SmartRefreshLayout refreshLayout;
     private NetWorkUtil netWorkUtil;
+    private User userData;
     private  Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -123,7 +128,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                                 status=1;
                                 loveNumStr.setText(String.valueOf(Integer.valueOf(loveNumStr.getText().toString())+1));
                             }
-                            netWorkUtil.updatePostLove(postId,"HnpMvU%2BV3ZHjrbMhOaOuCA%3D%3D");
+                            netWorkUtil.updatePostLove(postId,userData.getToken());
                         }
                     });
                     if(status==1){
@@ -146,18 +151,6 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
             }
         }
     };
-    //图片
-    private String[] mUrls = new String[]{
-            "http://106.54.134.17/image/topicalimg/test.png",
-            "http://106.54.134.17/image/topicalimg/test.png",
-            "http://106.54.134.17/image/topicalimg/test.png",
-            "http://106.54.134.17/image/topicalimg/test.png",
-            "http://106.54.134.17/image/topicalimg/test.png",
-            "http://106.54.134.17/image/topicalimg/test.png",
-            "http://106.54.134.17/image/topicalimg/test.png",
-            "http://106.54.134.17/image/topicalimg/test.png",
-            "http://106.54.134.17/image/topicalimg/test.png",
-    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -171,8 +164,9 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         if (actionbar != null) {
             actionbar.hide();
         }
-        initDetailsLayout();
+        userData=FileCacheUtil.getUser(this);
         initView();
+        initDetailsLayout();
         initRefreshLayout();
 
 
@@ -183,13 +177,14 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         expandableListView = (CommentExpandableListView) findViewById(R.id.detail_page_lv_comment);
         bt_comment = (TextView) findViewById(R.id.detail_page_do_comment);
         bt_comment.setOnClickListener(this);
-        adapter = new CommentExpandAdapter(this,commentsList);
+        adapter = new CommentExpandAdapter(this,commentsList,userData.getToken());
         expandableListView.setGroupIndicator(null);
         //默认展开所有回复
         expandableListView.setAdapter(adapter);
         initExpandableListView();
         getPopularComments();
         progressBar=findViewById(R.id.progress);
+        Log.i(TAG, "initView: userData="+userData);
     }
     private void initRefreshLayout(){
         refreshLayout=findViewById(R.id.refreshLayout);
@@ -235,7 +230,6 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
 
             }
         });
-
     }
     //onOptionsItemSelected方法
     @Override
@@ -271,13 +265,12 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
             @Override
             public void onClick(View view) {
                 String commentContent = commentText.getText().toString().trim();
-                String token = FileCacheUtil.getCache(PostDetails.this,"token");
                 //后期需要检查token的值 查看是否被更改了喔
                 if(!TextUtils.isEmpty(commentContent)){
                     progressBar.setVisibility(View.VISIBLE);
-                    addComment(commentContent,token);
+                    addComment(commentContent);
                     dialog.dismiss();
-                    CommentDetailBean detailBean = new CommentDetailBean("czj", commentContent,"刚刚");
+                    CommentDetailBean detailBean = new CommentDetailBean(userData.getUsername(), commentContent,"刚刚");
                     adapter.addTheCommentData(detailBean);
                     Toast.makeText(PostDetails.this,"评论成功",Toast.LENGTH_SHORT).show();
 
@@ -333,7 +326,8 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                     Log.i(TAG, "onClick: commentId="+adapter.getCommentBeanList().get(position).getCid());
                     addReply(replyContent,token,adapter.getCommentBeanList().get(position).getCid());
                     //等会在搞
-                    ReplyDetailBean detailBean = new ReplyDetailBean("付鑫博",replyContent);
+                    Log.i(TAG, "onClick: 账号名为:"+userData.getUsername());
+                    ReplyDetailBean detailBean = new ReplyDetailBean(userData.getUsername(),replyContent);
                     adapter.addTheReplyData(detailBean, position);
                     expandableListView.expandGroup(position);
                     Toast.makeText(PostDetails.this,"回复成功",Toast.LENGTH_SHORT).show();
@@ -360,9 +354,9 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         });
     dialog.show();
     }
-    private void getPostById(int postId){
+    private void getPostById(){
         final Request request = new Request.Builder()
-                .url("http://106.54.134.17/app/getPostDetailsById?postId="+postId+"&token=HnpMvU%2BV3ZHjrbMhOaOuCA%3D%3D")
+                .url(getRequestStr(1))
                 .build();
         OkHttpClient okHttpClient = new OkHttpClient();
         okHttpClient.newCall(request).enqueue(new Callback() {
@@ -407,7 +401,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         loveNumStr=findViewById(R.id.loveNumStr);
         loveLayout=findViewById(R.id.loveLayout);
         commentStr=findViewById(R.id.commentStr);
-        getPostById(postId);
+        getPostById();
     }
     private int getPostId(){
         Intent intent = getIntent();
@@ -419,14 +413,14 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         message.obj=post;
         handler.sendMessage(message);
     }
-    private void addComment(String content,String token){
+    private void addComment(String content){
         RequestBody requestBody = new FormBody.Builder()
                 .add("cpid", String.valueOf(postId))
                 .add("content",content)
-                .add("token","HnpMvU%2BV3ZHjrbMhOaOuCA%3D%3D")
+                .add("token",userData.getToken())
                 .build();
         final Request request = new Request.Builder()
-                .url("http://106.54.134.17/app/addComment")
+                .url(REQUEST_ADD_COMMENT_STR)
                 .post(requestBody)
                 .build();
         OkHttpClient okHttpClient = new OkHttpClient();
@@ -439,7 +433,6 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String dataStr = response.body().string();
-                System.out.println("帖子数据"+dataStr);
                 JSONObject jsonObject = null;
                 try {
                     jsonObject = new JSONObject(dataStr);
@@ -448,7 +441,6 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                         Log.i(TAG, "onResponse:失败咯");
                         return;
                     }
-                    Log.i(TAG, "onResponse:信息"+jsonObject.getString("msg"));
                     Message message=new Message();
                     message.what=CANCEL_PROGRESS;
                     handler.sendMessage(message);
@@ -501,7 +493,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
     }
     private void getPopularComments(){
         final Request request =new Request.Builder()
-                .url("http://106.54.134.17/app/getPopularComments?startPage="+commentPage+"&postId="+postId+"&token="+CommentExpandAdapter.TESTOKEN)
+                .url(getRequestStr(2))
                 .build();
         OkHttpClient okHttpClient = new OkHttpClient();
         okHttpClient.newCall(request).enqueue(new Callback() {
@@ -510,7 +502,6 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                 e.printStackTrace();
                 Log.d(TAG, "onFailure:失败呃");
             }
-
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String responseStr = response.body().string();
@@ -538,5 +529,21 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                 }
             }
         });
+    }
+    private String getRequestStr(int mode){
+        String urlStr=null;
+        String token=null;
+        switch (mode){
+            case 1:urlStr=REQUEST_POST_DETAILS_STR+"?postId="+postId;
+                            break;
+            case 2:urlStr=REQUEST_COMMENT_STR+"?startPage="+commentPage+"&postId="+postId;
+                            break;
+            default:break;
+        }
+        token=userData.getToken();
+        if(token==null) {
+            return urlStr;
+        }
+        return urlStr+"&token="+token;
     }
 }

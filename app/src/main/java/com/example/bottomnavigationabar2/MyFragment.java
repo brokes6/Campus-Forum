@@ -139,7 +139,7 @@ public class MyFragment extends Fragment {
         });
     }
     private void initData(){
-        usernameView.setText(userData.getAccount());
+        usernameView.setText(userData.getUsername());
     }
 }
 
