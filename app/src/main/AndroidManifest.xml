@@ -19,14 +19,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Set_up"></activity>
+        <activity android:name=".Set_up">
+        </activity>
         <activity android:name=".UserInformation" />
         <activity android:name=".LoadActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".personalpage.More" />
         <activity android:name=".Autograph" />
@@ -46,7 +43,13 @@
         <activity android:name=".history" />
         <activity
             android:name=".LoginActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".WebDataActivity" />
         <activity android:name=".activity.ShowImageActivity" />

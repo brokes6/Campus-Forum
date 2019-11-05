@@ -1,0 +1,24 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="#fff"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <ImageView
+        android:paddingLeft="10dp"
+        android:id="@+id/setup_back"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:background="#FFFFFF"
+        android:src="@drawable/other_back" />
+    <TextView
+        android:paddingLeft="15dp"
+        android:layout_gravity="center_vertical"
+        android:textSize="24sp"
+        android:text="设置"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
