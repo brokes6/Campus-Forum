@@ -37,6 +37,7 @@ import static android.app.Activity.RESULT_OK;
  */
 
 public class MyFragment extends Fragment {
+    private LinearLayout Set_up;
     private View view;
     private User userData;
     private TextView usernameView;
@@ -53,6 +54,7 @@ public class MyFragment extends Fragment {
     public MyFragment() {
 
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +68,33 @@ public class MyFragment extends Fragment {
         initView();
         initData();
 //        TextView Tuichu = (TextView)view.findViewById(R.id.tuichu);
+        LinearLayout history=(LinearLayout)view.findViewById(R.id.history);
+        LinearLayout collection=(LinearLayout)view.findViewById(R.id.Collection);
+        Set_up = view.findViewById(R.id.Set_up);
+        Set_up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(),Set_up.class);
+                startActivity(intent);
+            }
+        });
+        history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getContext(),history.class);
+                getActivity().overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
+                startActivity(intent);
+            }
+        });
+        collection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getContext(),MyCollection.class);
+                getActivity().overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
+                startActivity(intent);
+            }
+        });
+
         /*Tuichu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,6 +116,11 @@ public class MyFragment extends Fragment {
         });
         return view;
     }
+
+
+
+
+
     private void handleImageBeforeKitKat(Intent data) {
         Uri uri = data.getData();
         String imagePath = getImagePath(uri, null);

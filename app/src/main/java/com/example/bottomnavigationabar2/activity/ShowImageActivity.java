@@ -17,11 +17,14 @@ import android.view.View;
 import android.view.ViewParent;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
+import com.example.bottomnavigationabar2.Animation.DepthPageTransformer;
+import com.example.bottomnavigationabar2.Animation.ZoomOutPageTransformer;
 import com.example.bottomnavigationabar2.Post;
 import com.example.bottomnavigationabar2.R;
 import com.example.bottomnavigationabar2.adapter.NineGridTest2Adapter;
@@ -52,6 +55,7 @@ public class ShowImageActivity extends AppCompatActivity {
     private ShowImageAdapter imageAdapter;
     private List<Post> mList=new ArrayList<>();
     private ArrayList<String> urls =null;
+    private ArrayList<Boolean> booleans;
     private int position,total;
     //子线程不能操作UI，通过Handler设置图片
     private Handler handler = new Handler() {
@@ -110,6 +114,8 @@ public class ShowImageActivity extends AppCompatActivity {
     }
     private void initView(){
         viewPager =findViewById(R.id.show_view_pager);
+        //将设置好的动画指定给它
+        viewPager.setPageTransformer(true, new DepthPageTransformer());
         picture_text = findViewById(R.id.picture_text);
         picture_num=findViewById(R.id.picture_num);
     }
@@ -145,6 +151,7 @@ public class ShowImageActivity extends AppCompatActivity {
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     public void onEventMainThread(Object o) {
         urls = (ArrayList<String>)o;
+        booleans=new ArrayList<>(urls.size());
         inint();   //初始化
     }
 
@@ -178,6 +185,10 @@ public class ShowImageActivity extends AppCompatActivity {
         public void onPageSelected(int position) {
             Log.i(TAG, "onPageSelected: 冲啊");
             picture_num.setText(position+1+"/"+total);
+//            boolean b = booleans.get(position);
+//            if(!b){
+//                ProgressBar progressBar=new ProgressBar();
+//            }
             index = position;
         }
 

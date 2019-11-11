@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -8,12 +7,13 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
+        android:background="#FFF"
         android:layout_height="50dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/MyCollection_return"
             android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_height="38dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5dp"
             android:src="@drawable/sanzuo"/>
@@ -22,10 +22,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="我的收藏"
-            android:textSize="28sp"
+            android:textSize="22sp"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="105dp"
-            android:textStyle="bold"/>
+            android:layout_marginLeft="15dp" />
     </LinearLayout>
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
@@ -43,78 +42,42 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="380dp"
-                    android:layout_height="70dp"
-                    android:background="#FFFF"
-                    android:layout_marginTop="1dp"
-                    android:layout_gravity="center"
-                    >
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_width="55dp"
-                        android:layout_height="55dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="12dp"
-                        android:src="@drawable/ic_launcher_background"/>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textStyle="bold"
-                            android:text="这个社团的姓名"
-                            android:layout_marginBottom="5dp"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textStyle="bold"
-                            android:text="这个人发布的东东的标题"/>
-                    </LinearLayout>
-                </LinearLayout>
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:background="#FFFF"
+                android:layout_marginTop="1dp"
+                android:layout_gravity="center"
+                >
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="12dp"
+                    android:src="@drawable/ic_launcher_background"/>
 
                 <LinearLayout
-                    android:layout_width="380dp"
-                    android:layout_height="70dp"
-                    android:background="#FFFF"
-                    android:layout_marginTop="1dp"
-                    android:layout_gravity="center"
-                    >
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_width="55dp"
-                        android:layout_height="55dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="12dp"
-                        android:src="@drawable/ic_launcher_background"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical">
 
-                    <LinearLayout
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
-                        android:orientation="vertical">
+                        android:textStyle="bold"
+                        android:text="这个社团的姓名"
+                        android:layout_marginBottom="5dp"/>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textStyle="bold"
-                            android:text="这个社团的姓名"
-                            android:layout_marginBottom="5dp"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textStyle="bold"
-                            android:text="这个人发布的东东的标题"/>
-                    </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="这个人发布的东东的标题"/>
                 </LinearLayout>
+            </LinearLayout>
                 <LinearLayout
-                    android:layout_width="380dp"
+                    android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:background="#FFFF"
                     android:layout_marginTop="1dp"
@@ -149,7 +112,7 @@
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
-                    android:layout_width="380dp"
+                    android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:background="#FFFF"
                     android:layout_marginTop="1dp"
@@ -184,7 +147,7 @@
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
-                    android:layout_width="380dp"
+                    android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:background="#FFFF"
                     android:layout_marginTop="1dp"
@@ -219,7 +182,7 @@
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
-                    android:layout_width="380dp"
+                    android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:background="#FFFF"
                     android:layout_marginTop="1dp"
@@ -254,7 +217,7 @@
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
-                    android:layout_width="380dp"
+                    android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:background="#FFFF"
                     android:layout_marginTop="1dp"
@@ -289,7 +252,7 @@
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
-                    android:layout_width="380dp"
+                    android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:background="#FFFF"
                     android:layout_marginTop="1dp"
@@ -323,6 +286,42 @@
                             android:text="这个人发布的东东的标题"/>
                     </LinearLayout>
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:background="#FFFF"
+                    android:layout_marginTop="1dp"
+                    android:layout_gravity="center"
+                    >
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="12dp"
+                        android:src="@drawable/ic_launcher_background"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:text="这个社团的姓名"
+                            android:layout_marginBottom="5dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:text="这个人发布的东东的标题"/>
+                    </LinearLayout>
+                </LinearLayout>
+
 
             </LinearLayout>
         </ScrollView>

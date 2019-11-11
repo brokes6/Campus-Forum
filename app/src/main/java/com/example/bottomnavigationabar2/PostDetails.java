@@ -93,6 +93,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
     private TextView username;
     private TextView dateTime;
     private TextView content;
+    private TextView tishi;
     private TextView loveNumStr;
     private TextView commentStr;
     private ImageView loveNum;
@@ -147,7 +148,9 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                         expandableListView.expandGroup(i);
                     }
                     break;
-
+                case NOTIFY_NOCOMMENT:
+//                    tishi.setVisibility(View.GONE);
+                    tishi.setText("-暂且没有评论-");
             }
         }
     };
@@ -174,6 +177,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
     //初始化
     private void initView() {
         //获取实列
+        tishi = findViewById(R.id.tishi);
         expandableListView = (CommentExpandableListView) findViewById(R.id.detail_page_lv_comment);
         bt_comment = (TextView) findViewById(R.id.detail_page_do_comment);
         bt_comment.setOnClickListener(this);
@@ -514,7 +518,8 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                         Log.i(TAG, "onResponse: 返回评论失败:"+msg);
                         Message message = new Message();
                         commentsList=new ArrayList<>();
-                        message.what=NOTIFY;
+                        message.what=NOTIFY_NOCOMMENT;
+
                         handler.sendMessage(message);
                         return;
                     }

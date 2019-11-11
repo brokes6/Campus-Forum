@@ -5,36 +5,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <com.example.bottomnavigationabar2.adapter.Top_Title
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+    </com.example.bottomnavigationabar2.adapter.Top_Title>
 
-        <Button
-            android:id="@+id/title_back"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_gravity="left"
-            android:background="@mipmap/home"
-            android:paddingLeft="20dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp"
-            android:layout_marginTop="5dp"
-            android:gravity="center"
-            android:text="个人信息"
-            android:textColor="#00f"
-            android:textSize="26sp" />
-
-        <Button
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_marginLeft="90dp"
-            android:background="@mipmap/personal" />
-    </LinearLayout>
-
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -46,14 +22,14 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="200dp"
                 android:background="@drawable/bt_shape"></LinearLayout>
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="-50dp"
+                android:layout_marginTop="-100dp"
                 android:src="@mipmap/ic_launcher"
                 app:civ_border_color="#4CAF50"
                 app:civ_border_width="2dp" />
@@ -74,6 +50,7 @@
                 android:textSize="15dp" />
 
             <LinearLayout
+                android:paddingTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -91,14 +68,14 @@
                     android:layout_width="100dp"
                     android:layout_height="40dp"
                     android:layout_marginLeft="10dp"
-                    android:text="已关注"
                     android:background="#ccc"
+                    android:text="已关注"
                     android:textColor="#555" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="250dp"
                 android:layout_marginTop="20dp">
 
                 <ImageView
@@ -163,9 +140,10 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="陈梓佳、付辛博等你关注的人关注了他" />
             </LinearLayout>
         </LinearLayout>
 
-    </ScrollView>
+    </LinearLayout>
 </LinearLayout>
