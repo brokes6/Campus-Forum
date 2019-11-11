@@ -10,27 +10,26 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="230dp"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:background="@drawable/teaser_mohu">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/user_head_img"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_marginLeft="170dp"
             android:src="@mipmap/ic_launcher"
             app:civ_border_color="#4CAF50"
             app:civ_border_width="2dp"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center"
+            android:layout_marginTop="80dp"/>
         <TextView
             android:id="@+id/username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="姓名"
             android:textColor="#fff"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="center"
             android:layout_marginBottom="-60dp"
-            android:layout_marginLeft="-54dp"
             />
     </LinearLayout>
 
@@ -54,7 +53,7 @@
             android:layout_weight="30"
             android:layout_height="50dp"
             android:text="我的关注"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:gravity="center_vertical">
 
         </TextView>
@@ -85,7 +84,7 @@
             android:layout_weight="30"
             android:layout_height="50dp"
             android:text="浏览历史"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:gravity="center_vertical">
 
         </TextView>
@@ -121,7 +120,7 @@
             android:layout_weight="30"
             android:layout_height="50dp"
             android:text="我的收藏"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:gravity="center_vertical">
 
         </TextView>
@@ -156,7 +155,7 @@
             android:layout_weight="30"
             android:layout_height="50dp"
             android:text="我的评论"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:gravity="center_vertical">
 
         </TextView>
@@ -191,7 +190,7 @@
             android:layout_weight="30"
             android:layout_height="50dp"
             android:text="关于我们"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:gravity="center_vertical">
 
         </TextView>
@@ -227,7 +226,7 @@
             android:layout_weight="30"
             android:layout_height="50dp"
             android:text="设置"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:gravity="center_vertical">
 
         </TextView>

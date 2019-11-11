@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -45,37 +47,32 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            //修改为深色，因为我们把状态栏的背景色修改为主题色白色，默认的文字及图标颜色为白色，导致看不到了。
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
         //用于屏蔽系统的头部，（现已无用）
         ActionBar actionbar = getSupportActionBar();
         if (actionbar != null) {
             actionbar.hide();
         }
-        final EditText name_denglu = (EditText)findViewById(R.id.name_denglu);
-        final EditText username_denglu = (EditText)findViewById(R.id.username_denglu);
-        final EditText pass_denglu = (EditText)findViewById(R.id.password_denglu);
-        final EditText pass_dengli_1 = (EditText)findViewById(R.id.password_again);
-        final EditText email = (EditText)findViewById(R.id.youxiang);
+        final EditText name_denglu = (EditText)findViewById(R.id.ret_name);
+        final EditText username_denglu = (EditText)findViewById(R.id.ret_username);
+        final EditText pass_denglu = (EditText)findViewById(R.id.ret_password);
+        final EditText email = (EditText)findViewById(R.id.ret_email);
         Button button_denglu = (Button)findViewById(R.id.button_denglu);
         button_denglu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            String email_1 = email.getText().toString();
-                String userpass_1 = pass_denglu.getText().toString();
-                String pass_again = pass_dengli_1.getText().toString();
+                String name = name_denglu.getText().toString();
+                String email_1 = email.getText().toString();
                 boolean youxiang = email_1.matches(regex1);
-                boolean mima = userpass_1.equals(pass_again);
                 if (email_1.matches(regex1)){
                 }
                 else{
-                    Toast.makeText(RegisterActivity.this,"邮箱格式不对",Toast.LENGTH_SHORT).show();
+                    email.setError("邮箱格式错误");
                 }
-                if (userpass_1.equals(pass_again)) {
-
-                }else{
-                    Toast.makeText(RegisterActivity.this,"密码不一致",Toast.LENGTH_SHORT).show();
-                }
-                if(youxiang == true &&mima == true){
-                   Log.d(TAG, "为"+mima);
+                if(youxiang == true){
                     sendOkHttp();
                 }
             }
@@ -86,10 +83,10 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    name_denglu = (EditText)findViewById(R.id.name_denglu);
-                    username_denglu = (EditText)findViewById(R.id.username_denglu);
-                    pass_dengli_1 = (EditText)findViewById(R.id.password_again);
-                    email = (EditText)findViewById(R.id.youxiang);
+                    name_denglu = (EditText)findViewById(R.id.ret_name);
+                    username_denglu = (EditText)findViewById(R.id.ret_username);
+                    pass_dengli_1 = (EditText)findViewById(R.id.ret_password);
+                    email = (EditText)findViewById(R.id.ret_email);
                     OkHttpClient client = new OkHttpClient();
                     RequestBody requestBody = new FormBody.Builder()
                             //post请求
@@ -108,7 +105,6 @@ public class RegisterActivity extends AppCompatActivity {
                     System.out.println(responseData);
                     resultBean = JsonTOBeanUtil.getResultBean(responseData);
                     if(resultBean.getCode()==1){
-                        System.out.println("注册成功！");
                         data_user=name_denglu.getText().toString();
                         Intent intent = new Intent(RegisterActivity.this,MainActivity.class);
                         intent.putExtra("username",data_user);

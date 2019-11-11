@@ -107,8 +107,8 @@ public class LoginActivity extends AppCompatActivity {
         autologin = findViewById(R.id.autoLogin);
         rememberPassword = findViewById(R.id.rememberPassword);
         //获取账号 密码 登录按钮
-        usernameEdit = (EditText)findViewById(R.id.username);
-        passwordEdit = (EditText)findViewById(R.id.password);
+        usernameEdit = (EditText)findViewById(R.id.et_username);
+        passwordEdit = (EditText)findViewById(R.id.et_password);
         Button denglu = (Button)findViewById(R.id.denglu);
         handlerUtil = new HandlerUtil(this);
         denglu.setOnClickListener(new View.OnClickListener() {
@@ -237,9 +237,11 @@ public class LoginActivity extends AppCompatActivity {
     private void login(){
         String usernamee =usernameEdit.getText().toString();
         String password=passwordEdit.getText().toString();
-        if(TextUtils.isEmpty(usernamee)||TextUtils.isEmpty(password)){
-            Log.i(TAG, "login: 输入为空");
-            handlerUtil.sendToast("用户名或者密码不能为空");
+        if(TextUtils.isEmpty(usernamee)){
+            usernameEdit.setError("账号不能为空");
+        }
+        if(TextUtils.isEmpty(password)){
+            passwordEdit.setError("密码不能为空");
         }
         login(usernamee,password);
     }

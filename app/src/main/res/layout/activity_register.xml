@@ -2,110 +2,135 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <TextView
-        android:textSize="30sp"
-        android:text="注册"
-        android:layout_marginTop="45dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:layout_marginTop="15dp"
-        android:background="#999797"
-        android:layout_width="match_parent"
-        android:layout_height="3dp" />
-        <LinearLayout
-            android:layout_marginLeft="80dp"
-            android:layout_marginTop="35dp"
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-                <TextView
-                    android:textSize="25sp"
-                    android:text="名称"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <EditText
-                    android:id="@+id/name_denglu"
-                    android:layout_width="200dp"
-                    android:hint="请输入名称"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true"/>
-        </LinearLayout>
-            <LinearLayout
-                android:layout_marginLeft="80dp"
-                android:layout_marginTop="15dp"
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:textSize="25sp"
-                    android:text="账号"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <EditText
-                    android:id="@+id/username_denglu"
-                    android:layout_width="200dp"
-                    android:hint="请输入（数字和字母）"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_marginLeft="80dp"
-                android:layout_marginTop="15dp"
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:textSize="25sp"
-                    android:text="密码"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <EditText
-                    android:id="@+id/password_denglu"
-                    android:layout_width="200dp"
-                    android:hint="请输入（数字和字母）"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true"/>
-            </LinearLayout>
     <LinearLayout
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="15dp"
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TextView
-            android:textSize="25sp"
-            android:text="确认密码"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <EditText
-            android:id="@+id/password_again"
-            android:layout_width="200dp"
-            android:hint="请再输入一遍密码"
-            android:layout_height="wrap_content"
-            android:singleLine="true"/>
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="#2196F3"
+        android:orientation="vertical">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="90dp"
+            android:layout_marginLeft="-110dp"
+            android:src="@mipmap/ic_launcher"
+            app:civ_border_color="#4CAF50"
+            app:civ_border_width="2dp"
+            android:layout_gravity="center_horizontal"/>
     </LinearLayout>
-            <LinearLayout
-                android:layout_marginLeft="80dp"
-                android:layout_marginTop="15dp"
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:textSize="25sp"
-                    android:text="邮箱"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <EditText
-                    android:id="@+id/youxiang"
-                    android:layout_width="200dp"
-                    android:hint="请输入邮箱"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true"/>
-            </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="27dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_marginLeft="67dp"
+            android:textColor="#03A9F4"
+            android:textSize="19sp"
+            android:text="用户信息 :"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    <android.support.design.widget.TextInputLayout
+        android:layout_gravity="center"
+        android:id="@+id/re_name"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColorHint="#c1c2c4"
+        app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
+        <EditText
+            android:id="@+id/ret_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="名称:"
+            android:maxLength="25"
+            android:maxLines="1"/>
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:layout_gravity="center"
+        android:id="@+id/re_email"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColorHint="#c1c2c4"
+        app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
+        <EditText
+            android:id="@+id/ret_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入邮箱:"
+            android:maxLength="25"
+            android:maxLines="1"/>
+    </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="27dp">
+        <TextView
+            android:layout_marginLeft="67dp"
+            android:textColor="#03A9F4"
+            android:textSize="19sp"
+            android:text="账号密码 :"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    <android.support.design.widget.TextInputLayout
+        android:layout_gravity="center"
+        android:id="@+id/re_password"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:textColorHint="#c1c2c4"
+        android:layout_centerInParent="true"
+        app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
+        <EditText
+            android:id="@+id/ret_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入（数字或字母）:"
+            android:maxLength="25"
+            android:maxLines="1"/>
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:layout_gravity="center"
+        android:id="@+id/re_username"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColorHint="#c1c2c4"
+        app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
+        >
+        <EditText
+            android:id="@+id/ret_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入（数字或字母）:"
+            android:maxLength="25"
+            android:maxLines="1"/>
+    </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+<!--    <LinearLayout-->
+<!--        android:layout_marginLeft="32dp"-->
+<!--        android:layout_marginTop="15dp"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content">-->
+<!--        <TextView-->
+<!--            android:textSize="25sp"-->
+<!--            android:text="确认密码"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content" />-->
+<!--        <EditText-->
+<!--            android:id="@+id/password_again"-->
+<!--            android:layout_width="200dp"-->
+<!--            android:hint="请再输入一遍密码"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:singleLine="true"/>-->
+<!--    </LinearLayout>-->
+
             <LinearLayout
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="25dp"
@@ -117,7 +142,7 @@
                         android:textSize="20sp"
                         android:text="注册"
                         android:id="@+id/button_denglu"
-                        android:layout_width="wrap_content"
+                        android:layout_width="280dp"
                         android:layout_height="wrap_content" />
 
             </LinearLayout>
