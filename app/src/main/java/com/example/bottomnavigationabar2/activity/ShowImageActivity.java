@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewParent;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +50,8 @@ public class ShowImageActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private TextView picture_text;
     private TextView picture_num;
+    private LinearLayout lin;
+    private android.support.v4.view.ViewPager  viewp;
     private List<View>  listViews =null;
     private int index=0;
     private ImageView back;
@@ -66,6 +69,10 @@ public class ShowImageActivity extends AppCompatActivity {
                     Bitmap bitmap= (Bitmap) msg.obj;
                     SubsamplingScaleImageView iv = (SubsamplingScaleImageView) listViews.get(msg.arg1).findViewById(R.id.view_image);//绑定布局中的id/
                     iv.setImage(ImageSource.bitmap(bitmap));
+                    //取消加载动画
+                    viewp.setVisibility(View.VISIBLE);
+                    lin.setVisibility(View.GONE);
+                    //
                     iv.setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
                         public boolean onLongClick(View v) {
@@ -103,6 +110,12 @@ public class ShowImageActivity extends AppCompatActivity {
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.show_image_layout);
         back = findViewById(R.id.title_back);
+        lin = findViewById(R.id.lin_go);
+        viewp = findViewById(R.id.show_view_pager);
+        //设置加载动画
+        viewp.setVisibility(View.GONE);
+        lin.setVisibility(View.VISIBLE);
+        //
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
