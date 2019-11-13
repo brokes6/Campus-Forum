@@ -26,11 +26,12 @@ import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.example.bottomnavigationabar2.Animation.DepthPageTransformer;
 import com.example.bottomnavigationabar2.Animation.ZoomOutPageTransformer;
+import com.example.bottomnavigationabar2.Pictureutils.LocalCacheUtils;
+import com.example.bottomnavigationabar2.Pictureutils.MemoryCacheUtils;
 import com.example.bottomnavigationabar2.Post;
 import com.example.bottomnavigationabar2.R;
 import com.example.bottomnavigationabar2.adapter.NineGridTest2Adapter;
 import com.example.bottomnavigationabar2.adapter.ShowImageAdapter;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -46,6 +47,10 @@ public class ShowImageActivity extends AppCompatActivity {
     public static final int GET_DATA_SUCCESS = 1;
     public static final int NETWORK_ERROR = 2;
     public static final int SERVER_ERROR = 3;
+    //---两个缓存方法----
+    private LocalCacheUtils mLocalCacheUtils;
+    private MemoryCacheUtils mMemoryCacheUtils;
+    //----
     private static final String TAG = "ShowImageActivity";
     private ViewPager viewPager;
     private TextView picture_text;
@@ -95,7 +100,6 @@ public class ShowImageActivity extends AppCompatActivity {
         mList.addAll(list);
     }
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,6 +126,8 @@ public class ShowImageActivity extends AppCompatActivity {
                 finish();
             }
         });
+        mMemoryCacheUtils = MemoryCacheUtils.getInstance();
+        mLocalCacheUtils = LocalCacheUtils.getInstance();
         initView();
         initData();
     }
@@ -206,7 +212,7 @@ public class ShowImageActivity extends AppCompatActivity {
         }
 
     }
-    //设置网络图片
+    //设置网络图片（从网络中获取图片）
     public void setImageURL(final String path, final int index) {
         //开启一个线程用于联网
         new Thread() {
@@ -223,6 +229,7 @@ public class ShowImageActivity extends AppCompatActivity {
                     connection.setConnectTimeout(10000);
                     //获取返回码
                     int code = connection.getResponseCode();
+                    //当返回码是200，代表获取成功
                     if (code == 200) {
                         InputStream inputStream = connection.getInputStream();
                         //使用工厂把网络的输入流生产Bitmap
@@ -232,6 +239,12 @@ public class ShowImageActivity extends AppCompatActivity {
                         msg.obj = bitmap;
                         msg.what = GET_DATA_SUCCESS;
                         msg.arg1=index;
+                        //--将图片缓存进内存和本地--
+                        mLocalCacheUtils.setBitmapToLocal(path,bitmap);
+                        //从本地获取图片
+                        Bitmap bitmap1 = mLocalCacheUtils.getBitmapFromLocal(path);
+                        mMemoryCacheUtils.setBitmapToMemory(path, bitmap);
+                        //***---***
                         handler.sendMessage(msg);
                         inputStream.close();
                     }else {
