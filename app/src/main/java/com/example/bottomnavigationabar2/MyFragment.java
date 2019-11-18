@@ -43,6 +43,7 @@ public class MyFragment extends Fragment {
     private TextView usernameView;
     public static final int CHOOSE_PHOTO = 2;
     private ImageView picture;
+    private LinearLayout fragmentHead;
     public static MyFragment newInstance(String param1) {
         MyFragment fragment = new MyFragment();
         Bundle args = new Bundle();
@@ -114,6 +115,13 @@ public class MyFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        fragmentHead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getContext(),Personal_information.class);
+                startActivity(intent);
+            }
+        });
         return view;
     }
 
@@ -121,11 +129,11 @@ public class MyFragment extends Fragment {
 
 
 
-    private void handleImageBeforeKitKat(Intent data) {
+    /*private void handleImageBeforeKitKat(Intent data) {
         Uri uri = data.getData();
         String imagePath = getImagePath(uri, null);
         displayImage(imagePath);
-    }
+    }*/
 
     private String getImagePath(Uri uri, String selection) {
         String path = null;
@@ -141,17 +149,18 @@ public class MyFragment extends Fragment {
         return path;
     }
 
-    private void displayImage(String imagePath) {
+    /*private void displayImage(String imagePath) {
         if (imagePath != null) {
             Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
             picture.setImageBitmap(bitmap);
         } else {
             Toast.makeText(getActivity(), "failed to get image", Toast.LENGTH_SHORT).show();
         }
-    }
+    }*/
     private void initView(){
         usernameView=view.findViewById(R.id.username);
         picture = (ImageView)view.findViewById(R.id.user_head_img);
+        fragmentHead=(LinearLayout)view.findViewById(R.id.fragment_head);
         LinearLayout history=(LinearLayout)view.findViewById(R.id.history);
         LinearLayout collection=(LinearLayout)view.findViewById(R.id.Collection);
 
