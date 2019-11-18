@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewParent;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,11 +26,12 @@ import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.example.bottomnavigationabar2.Animation.DepthPageTransformer;
 import com.example.bottomnavigationabar2.Animation.ZoomOutPageTransformer;
+import com.example.bottomnavigationabar2.Pictureutils.LocalCacheUtils;
+import com.example.bottomnavigationabar2.Pictureutils.MemoryCacheUtils;
 import com.example.bottomnavigationabar2.Post;
 import com.example.bottomnavigationabar2.R;
 import com.example.bottomnavigationabar2.adapter.NineGridTest2Adapter;
 import com.example.bottomnavigationabar2.adapter.ShowImageAdapter;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -45,10 +47,16 @@ public class ShowImageActivity extends AppCompatActivity {
     public static final int GET_DATA_SUCCESS = 1;
     public static final int NETWORK_ERROR = 2;
     public static final int SERVER_ERROR = 3;
+    //---两个缓存方法----
+    private LocalCacheUtils mLocalCacheUtils;
+    private MemoryCacheUtils mMemoryCacheUtils;
+    //----
     private static final String TAG = "ShowImageActivity";
     private ViewPager viewPager;
     private TextView picture_text;
     private TextView picture_num;
+    private LinearLayout lin;
+    private android.support.v4.view.ViewPager  viewp;
     private List<View>  listViews =null;
     private int index=0;
     private ImageView back;
@@ -66,6 +74,10 @@ public class ShowImageActivity extends AppCompatActivity {
                     Bitmap bitmap= (Bitmap) msg.obj;
                     SubsamplingScaleImageView iv = (SubsamplingScaleImageView) listViews.get(msg.arg1).findViewById(R.id.view_image);//绑定布局中的id/
                     iv.setImage(ImageSource.bitmap(bitmap));
+                    //取消加载动画
+                    viewp.setVisibility(View.VISIBLE);
+                    lin.setVisibility(View.GONE);
+                    //
                     iv.setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
                         public boolean onLongClick(View v) {
@@ -88,7 +100,6 @@ public class ShowImageActivity extends AppCompatActivity {
         mList.addAll(list);
     }
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,12 +114,20 @@ public class ShowImageActivity extends AppCompatActivity {
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.show_image_layout);
         back = findViewById(R.id.title_back);
+        lin = findViewById(R.id.lin_go);
+        viewp = findViewById(R.id.show_view_pager);
+        //设置加载动画
+        viewp.setVisibility(View.GONE);
+        lin.setVisibility(View.VISIBLE);
+        //
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+        mMemoryCacheUtils = MemoryCacheUtils.getInstance();
+        mLocalCacheUtils = LocalCacheUtils.getInstance();
         initView();
         initData();
     }
@@ -193,7 +212,7 @@ public class ShowImageActivity extends AppCompatActivity {
         }
 
     }
-    //设置网络图片
+    //设置网络图片（从网络中获取图片）
     public void setImageURL(final String path, final int index) {
         //开启一个线程用于联网
         new Thread() {
@@ -210,6 +229,7 @@ public class ShowImageActivity extends AppCompatActivity {
                     connection.setConnectTimeout(10000);
                     //获取返回码
                     int code = connection.getResponseCode();
+                    //当返回码是200，代表获取成功
                     if (code == 200) {
                         InputStream inputStream = connection.getInputStream();
                         //使用工厂把网络的输入流生产Bitmap
@@ -219,6 +239,12 @@ public class ShowImageActivity extends AppCompatActivity {
                         msg.obj = bitmap;
                         msg.what = GET_DATA_SUCCESS;
                         msg.arg1=index;
+                        //--将图片缓存进内存和本地--
+                        mLocalCacheUtils.setBitmapToLocal(path,bitmap);
+                        //从本地获取图片
+                        Bitmap bitmap1 = mLocalCacheUtils.getBitmapFromLocal(path);
+                        mMemoryCacheUtils.setBitmapToMemory(path, bitmap);
+                        //***---***
                         handler.sendMessage(msg);
                         inputStream.close();
                     }else {

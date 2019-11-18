@@ -220,7 +220,7 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
             @Override
             public void onClick(View view) {
                 Toast.makeText(addPost.this,"以返回",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(addPost.this,HomeFragment.class);
+                Intent intent = new Intent(addPost.this,MainActivity.class);
                 startActivity(intent);
                 //跳转完成后，需要调用重新刷新
                 try {
