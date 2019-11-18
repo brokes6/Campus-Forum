@@ -90,13 +90,13 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
             @Override
             public void onClick(View v) {
                 if (holder.loveStatus==1){
-                    holder.loveNum.setImageDrawable(mContext.getResources().getDrawable(R.drawable.dianzan));
+                    holder.loveNum.setImageDrawable(mContext.getResources().getDrawable(R.drawable.thumbs_up_white));
                     holder.loveStatus=0;
                     //加加
                     holder.loveNumStr.setText(String.valueOf(Integer.valueOf(holder.loveNumStr.getText().toString())-1));
 
                 }else{
-                    holder.loveNum.setImageDrawable(mContext.getResources().getDrawable(R.drawable.dianzanwanc));
+                    holder.loveNum.setImageDrawable(mContext.getResources().getDrawable(R.drawable.thumbs_up_complete));
                     holder.loveStatus=1;
                     //减减
                     holder.loveNumStr.setText(String.valueOf(Integer.valueOf(holder.loveNumStr.getText().toString())+1));
@@ -105,9 +105,9 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
             }
         });
         if(holder.loveStatus==1){
-            holder.loveNum.setImageDrawable(mContext.getResources().getDrawable(R.drawable.dianzanwanc));
+            holder.loveNum.setImageDrawable(mContext.getResources().getDrawable(R.drawable.thumbs_up_complete));
         }else{
-            holder.loveNum.setImageDrawable(mContext.getResources().getDrawable(R.drawable.dianzan));
+            holder.loveNum.setImageDrawable(mContext.getResources().getDrawable(R.drawable.thumbs_up_white));
         }
         //这里还没搞收藏的点击事件
         holder.view.setOnClickListener(new View.OnClickListener() {

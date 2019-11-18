@@ -99,7 +99,7 @@
                         android:id="@+id/loveNum"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/dianzan" />
+                        android:src="@drawable/thumbs_up_white" />
                     <TextView
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="5dp"
@@ -143,7 +143,7 @@
                         android:id="@+id/Collection"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:background="@drawable/pingl" />
+                        android:background="@drawable/comment_white" />
                     <TextView
                         android:layout_marginLeft="5dp"
                         android:text="评论数"

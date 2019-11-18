@@ -41,13 +41,13 @@ public class LocalCacheUtils {
             File file = new File(CACHE_PATH, fileName);
 
             Bitmap bitmap = BitmapFactory.decodeStream(new FileInputStream(file));
-            Log.d(TAG, "从缓存中读取结果*******************"+"成功");
+            Log.d(TAG, "从本地中读取结果*******************"+"成功");
             return bitmap;
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return null;
+
     }
     /**
      * 从网络获取图片后,保存至本地缓存
@@ -65,7 +65,7 @@ public class LocalCacheUtils {
             }
             //把图片保存至本地
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream(file));
-            Log.d(TAG, "缓存结果为****************************成功");
+            Log.d(TAG, "存入本地结果为****************************成功");
         } catch (Exception e) {
             e.printStackTrace();
         }

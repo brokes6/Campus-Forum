@@ -1,15 +1,19 @@
 package com.example.bottomnavigationabar2.Pictureutils;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import java.lang.ref.SoftReference;
 import java.util.HashMap;
 import java.util.Map;
 
+
+
 /**
  * 创建于2019/11/13 9:01🐎
  */
 public class MemoryCacheUtils {
+    private static final String TAG = "MemoryCacheUtils";
     private static  MemoryCacheUtils mInstance;
     private ImageCache mImageCache;
 
@@ -43,6 +47,7 @@ public class MemoryCacheUtils {
                 bitmap = softReference.get();
                 //重新放入强引用缓存中
                 mImageCache.put(url,bitmap);
+                Log.d(TAG, "-----------------从内存获取图片成功");
             }
         }
         return bitmap;
@@ -56,6 +61,7 @@ public class MemoryCacheUtils {
      */
     public void setBitmapToMemory(String url, Bitmap bitmap) {
         mImageCache.put(url,bitmap);
+        Log.d(TAG, "-----------------从内存写入图片成功");
     }
 
 }

@@ -65,8 +65,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
         <!--详细页组件-->
-                <include layout="@layout/item_inside"
-                    android:id="@+id/detail_page_above_container"/>
+                <include
+                    android:id="@+id/detail_page_above_container"
+                    layout="@layout/item_inside" />
+
                 <com.scwang.smartrefresh.layout.footer.BallPulseFooter
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
@@ -133,7 +135,7 @@
             android:id="@+id/loveNum"
             android:layout_width="22dp"
             android:layout_height="22dp"
-            android:src="@drawable/dianzan"/>
+            android:src="@drawable/thumbs_up_white"/>
         <TextView
             android:id="@+id/loveNumStr"
             android:layout_width="wrap_content"
@@ -148,10 +150,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
         <ImageView
-            android:id="@+id/comment"
+            android:id="@+id/collection"
             android:layout_width="22dp"
             android:layout_height="22dp"
-            android:src="@drawable/shocang"
+            android:src="@drawable/shocang_text"
             android:layout_marginLeft="20dp" />
         <TextView
             android:layout_width="wrap_content"
@@ -162,6 +164,25 @@
             android:layout_marginRight="14dp"
             android:text="66"/>
     </LinearLayout>
+        <LinearLayout
+            android:layout_marginRight="10dp"
+            android:id="@+id/comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/comment_picture"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/comment_white"/>
+            <TextView
+                android:id="@+id/commentStr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#9A9A9A"
+                android:textSize="14sp"
+                android:layout_marginLeft="10dp"
+                android:text="32"/>
+        </LinearLayout>
     </LinearLayout>
     <ProgressBar
         android:layout_width="wrap_content"

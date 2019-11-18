@@ -88,6 +88,7 @@ public class FileCacheUtil {
         FileOutputStream fileOutputStream=null;
         ObjectOutputStream objectOutputStream = null;
         File file =new File(Environment.getExternalStorageDirectory().toString() + File.separator+cacheFileName);
+        Log.i(TAG, "setCache: filePath"+file.toString());
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
