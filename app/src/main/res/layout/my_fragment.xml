@@ -9,42 +9,78 @@
     tools:context=".MainActivity">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="230dp"
+        android:layout_height="180dp"
         android:orientation="vertical"
-        android:background="@drawable/teaser_mohu">
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/user_head_img"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@mipmap/ic_launcher"
-            app:civ_border_color="#4CAF50"
-            app:civ_border_width="2dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="80dp"/>
-        <TextView
-            android:id="@+id/username"
-            android:layout_width="wrap_content"
+        android:background="#FFF"
+        android:gravity="center_vertical|center_horizontal">
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="姓名"
-            android:textColor="#fff"
-            android:layout_gravity="center"
-            android:layout_marginBottom="-60dp"
-            />
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="15dp"
+                android:gravity="center_vertical|center_horizontal">
+                <ImageView
+                    android:id="@+id/user_head_img"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@mipmap/ic_launcher"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="15dp"
+                android:gravity="left|center_vertical">
+                <TextView
+                    android:id="@+id/username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="40dp"
+                    android:textColor="#000"
+                    android:text="南霸天"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:text="账号："/>
+                    <TextView
+                        android:id="@+id/user_account"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:text="1313131313"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#d9d9d9"/>
+    <View
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#d9d9d9"/>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFF"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp">
+        android:background="#FFF">
         <ImageView
             android:layout_marginLeft="20dp"
-            android:layout_width="30dp"
+            android:layout_width="28dp"
             android:layout_weight="1"
-            android:layout_height="30dp"
+            android:layout_height="28dp"
             android:src="@drawable/guanzhu"
             android:layout_gravity="center_vertical" />
         <TextView
@@ -53,18 +89,27 @@
             android:layout_weight="30"
             android:layout_height="50dp"
             android:text="我的关注"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:gravity="center_vertical">
 
         </TextView>
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:layout_width="30dp"
             android:layout_weight="1"
             android:layout_height="30dp"
             android:layout_gravity="center_vertical"
             android:src="@drawable/san"/>
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#d9d9d9"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="0.5dp"
+        android:background="#d9d9d9"/>
     <LinearLayout
         android:id="@+id/history"
         android:orientation="horizontal"
@@ -84,12 +129,12 @@
             android:layout_weight="30"
             android:layout_height="50dp"
             android:text="浏览历史"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:gravity="center_vertical">
 
         </TextView>
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:layout_width="30dp"
             android:layout_weight="1"
             android:layout_height="30dp"
@@ -99,8 +144,8 @@
     </LinearLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="1.5dp"
-        android:background="#ccc"/>
+        android:layout_height="0.7dp"
+        android:background="#dedede"/>
     <LinearLayout
         android:id="@+id/Collection"
         android:orientation="horizontal"
@@ -120,12 +165,12 @@
             android:layout_weight="30"
             android:layout_height="50dp"
             android:text="我的收藏"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:gravity="center_vertical">
 
         </TextView>
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:layout_width="30dp"
             android:layout_weight="1"
             android:layout_height="30dp"
@@ -135,8 +180,8 @@
     </LinearLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#ccc"/>
+        android:layout_height="0.7dp"
+        android:background="#dedede"/>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -155,12 +200,12 @@
             android:layout_weight="30"
             android:layout_height="50dp"
             android:text="我的评论"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:gravity="center_vertical">
 
         </TextView>
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:layout_width="30dp"
             android:layout_weight="1"
             android:layout_height="30dp"
@@ -170,8 +215,8 @@
     </LinearLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#ccc"/>
+        android:layout_height="0.7dp"
+        android:background="#dedede"/>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -190,12 +235,12 @@
             android:layout_weight="30"
             android:layout_height="50dp"
             android:text="关于我们"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:gravity="center_vertical">
 
         </TextView>
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:layout_width="30dp"
             android:layout_weight="1"
             android:layout_height="30dp"
@@ -205,8 +250,14 @@
     </LinearLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#ccc"/>
+        android:layout_height="0.5dp"
+        android:background="#d9d9d9"/>
+
+    <View
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#d9d9d9"/>
     <LinearLayout
         android:id="@+id/Set_up"
         android:orientation="horizontal"
@@ -226,12 +277,12 @@
             android:layout_weight="30"
             android:layout_height="50dp"
             android:text="设置"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:gravity="center_vertical">
 
         </TextView>
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:layout_width="30dp"
             android:layout_weight="1"
             android:layout_height="30dp"
@@ -239,4 +290,8 @@
             android:src="@drawable/san"/>
 
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#d9d9d9"/>
 </LinearLayout>

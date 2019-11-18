@@ -68,9 +68,6 @@
             app:sapcing="4dp"
             android:transitionName="image"/>
 
-        <com.example.bottomnavigationabar2.adapter.Datails_Inside
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </com.example.bottomnavigationabar2.adapter.Datails_Inside>
+
     </LinearLayout>
 </LinearLayout>

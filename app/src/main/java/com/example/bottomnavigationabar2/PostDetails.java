@@ -121,11 +121,11 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                         @Override
                         public void onClick(View v) {
                             if (status==1){
-                                loveNum.setImageDrawable(getResources().getDrawable(R.drawable.dianzan));
+                                loveNum.setImageDrawable(getResources().getDrawable(R.drawable.thumbs_up_white));
                                 status=0;
                                 loveNumStr.setText(String.valueOf(Integer.valueOf(loveNumStr.getText().toString())-1));
                             }else{
-                                loveNum.setImageDrawable(getResources().getDrawable(R.drawable.dianzanwanc));
+                                loveNum.setImageDrawable(getResources().getDrawable(R.drawable.thumbs_up_complete));
                                 status=1;
                                 loveNumStr.setText(String.valueOf(Integer.valueOf(loveNumStr.getText().toString())+1));
                             }
@@ -133,9 +133,9 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                         }
                     });
                     if(status==1){
-                        loveNum.setImageDrawable(getResources().getDrawable(R.drawable.dianzanwanc));
+                        loveNum.setImageDrawable(getResources().getDrawable(R.drawable.thumbs_up_complete));
                     }else{
-                        loveNum.setImageDrawable(getResources().getDrawable(R.drawable.dianzan));
+                        loveNum.setImageDrawable(getResources().getDrawable(R.drawable.thumbs_up_white));
                     }
                     break;
                 case CANCEL_PROGRESS:
