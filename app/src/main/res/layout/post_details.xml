@@ -1,20 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginTop="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:id="@+id/title_back"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:src="@drawable/sanzuo" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="返回"
+            android:textSize="17sp"
+            android:textColor="#979797"
+            android:layout_gravity="center_vertical"/>
+
+    </LinearLayout>
+<com.scwang.smartrefresh.layout.SmartRefreshLayout
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/refreshLayout"
+    android:layout_marginTop="-20dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.example.bottomnavigationabar2.adapter.Top_Title
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </com.example.bottomnavigationabar2.adapter.Top_Title>
-
     <RelativeLayout
         android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.bottomnavigationabar2.PostDetails">
+        android:layout_height="match_parent"
+        tools:context="com.example.bottomnavigationabar2.PostDetails">
+
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/main_content"
         android:layout_width="match_parent"
@@ -61,10 +86,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-        <!--详细页组件-->
+                <!--详细页组件-->
                 <include
                     android:id="@+id/detail_page_above_container"
                     layout="@layout/item_inside" />
@@ -77,19 +103,20 @@
                 <!--评论组件-->
                 <LinearLayout
                     android:id="@+id/detail_page_comment_container"
-                    android:layout_below="@+id/detail_page_above_container"
-                    android:layout_marginTop="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_below="@+id/detail_page_above_container"
+                    android:layout_marginTop="20dp"
                     android:orientation="vertical">
+
                     <com.example.bottomnavigationabar2.view.CommentExpandableListView
                         android:id="@+id/detail_page_lv_comment"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:divider="@null"
                         android:layout_marginBottom="64dp"
+                        android:divider="@null"
                         android:listSelector="@android:color/transparent"
-                        android:scrollbars="none"/>
+                        android:scrollbars="none" />
 
                     <TextView
                         android:id="@+id/tishi"
@@ -194,3 +221,4 @@
 
 </RelativeLayout>
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</LinearLayout>

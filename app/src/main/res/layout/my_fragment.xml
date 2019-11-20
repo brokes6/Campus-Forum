@@ -14,6 +14,7 @@
         android:background="#FFF"
         android:gravity="center_vertical|center_horizontal">
         <LinearLayout
+            android:id="@+id/fragment_head"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -40,7 +41,7 @@
                     android:id="@+id/username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="40dp"
+                    android:textSize="35dp"
                     android:textColor="#000"
                     android:text="南霸天"/>
                 <LinearLayout
@@ -72,6 +73,7 @@
         android:layout_height="0.5dp"
         android:background="#d9d9d9"/>
     <LinearLayout
+        android:id="@+id/my_concern"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -182,6 +184,44 @@
         android:layout_width="match_parent"
         android:layout_height="0.7dp"
         android:background="#dedede"/>
+
+    <LinearLayout
+        android:id="@+id/news"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFF">
+        <ImageView
+            android:layout_marginLeft="20dp"
+            android:layout_width="30dp"
+            android:layout_weight="1"
+            android:layout_height="30dp"
+            android:src="@drawable/news"
+            android:layout_gravity="center_vertical" />
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_weight="30"
+            android:layout_height="50dp"
+            android:text="我的消息"
+            android:textSize="20dp"
+            android:gravity="center_vertical">
+
+        </TextView>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_weight="1"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/san" />
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.7dp"
+        android:background="#dedede"/>
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
