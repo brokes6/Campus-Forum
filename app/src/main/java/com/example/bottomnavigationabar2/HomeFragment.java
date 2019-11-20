@@ -238,6 +238,7 @@ public class HomeFragment extends Fragment {
 
         });
     }
+    //初始化轮播图
     private void initData() {
         imagePath = new ArrayList<>();
         imageTitle = new ArrayList<>();

@@ -1,5 +1,6 @@
 package com.example.bottomnavigationabar2;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -23,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
@@ -53,12 +55,14 @@ import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 
+import org.angmarch.views.NiceSpinner;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import okhttp3.Call;
@@ -68,6 +72,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+
+import static java.security.AccessController.getContext;
 
 
 public class PostDetails extends AppCompatActivity implements View.OnClickListener{
@@ -90,6 +96,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
     private TextView dateTime;
     private TextView content;
     private TextView tishi;
+    private ImageView img;
     private TextView loveNumStr;
     private TextView commentStr;
     private ImageView loveNum;
@@ -98,6 +105,8 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
     private ProgressBar progressBar;
     private SmartRefreshLayout refreshLayout;
     private NetWorkUtil netWorkUtil;
+    private NiceSpinner niceSpinner;
+    private List<String> spinnerData = new LinkedList<>(Arrays.asList("热度排序", "点赞排序","时间排序","时间排序","时间排序"));
     private  Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -188,6 +197,25 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         bt_comment = (TextView) findViewById(R.id.detail_page_do_comment);
         bt_comment.setOnClickListener(this);
         adapter = new CommentExpandAdapter(this,commentsList);
+        img = findViewById(R.id.title_back);
+        img.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        //下拉框
+        niceSpinner = findViewById(R.id.nice_spinner);
+        niceSpinner.attachDataSource(spinnerData);
+        niceSpinner.setBackgroundResource(R.drawable.textview_round_border);
+        niceSpinner.setTextColor(Color.BLACK);
+        niceSpinner.setTextSize(13);
+        niceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
         expandableListView.setGroupIndicator(null);
         //默认展开所有回复
         expandableListView.setAdapter(adapter);

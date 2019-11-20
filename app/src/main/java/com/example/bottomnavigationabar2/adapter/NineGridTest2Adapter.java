@@ -65,13 +65,16 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        //获取模板 item_bbs_nine_grid
         convertView = inflater.inflate(R.layout.item_bbs_nine_grid, parent, false);
+        //将获取到的模板传入ViewHolder
         ViewHolder viewHolder = new ViewHolder(convertView);
         Log.i(TAG, "onCreateViewHolder:111");
         return viewHolder;
     }
 
     @Override
+    //将从服务器获取的值设置上去
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         Log.i(TAG, "onBindViewHolder: 开始创建"+position);
         String content=Html.fromHtml(mList.get(position).getContent()).toString();
@@ -111,22 +114,26 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
         }
         //这里还没搞收藏的点击事件
         holder.view.setOnClickListener(new View.OnClickListener() {
+            //跳转的时候的动画
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "onClick: 随便响应"+mList.get(position).getPid());
                 Intent intent = new Intent(mContext, PostDetails.class);
                 intent.putExtra("postId",mList.get(position).getPid());
+                //获取两个页面的共同值
                 android.support.v4.util.Pair<View, String> uimg = new android.support.v4.util.Pair(holder.uimg, "userphoto");
                 android.support.v4.util.Pair<View, String> username = new android.support.v4.util.Pair(holder.username, "username");
                 android.support.v4.util.Pair<View, String> image = new android.support.v4.util.Pair(holder.layout, "image");
                 android.support.v4.util.Pair<View, String> text = new android.support.v4.util.Pair(holder.datetime, "time");
                 android.support.v4.util.Pair<View, String> longtext = new android.support.v4.util.Pair(holder.content, "longtext");
                 ActivityOptionsCompat optionsCompat =
+                        //将获取到的共同值传入，随后进行跳转
                         ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, image,text,longtext,uimg,username);
                 mContext.startActivity(intent,optionsCompat.toBundle());
             }
         });
         tieze_user_img.setOnClickListener(new View.OnClickListener() {
+            //点击头像进入个人页面
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, UserInformation.class);
@@ -138,6 +145,7 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
 
     @Override
     public int getItemCount() {
+        //获取长度
         return getListSize(mList);
     }
 
@@ -150,6 +158,7 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
         ImageView loveNum,collection;
         int postId,loveStatus,collectionStatus;
         public ViewHolder(View itemView) {
+            //获取各种组件
             super(itemView);
             this.view=itemView;
             layout = (NineGridTestLayout) itemView.findViewById(R.id.layout_nine_grid);

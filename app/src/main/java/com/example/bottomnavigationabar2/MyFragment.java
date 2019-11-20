@@ -41,6 +41,7 @@ public class MyFragment extends Fragment {
     private View view;
     private User userData;
     private TextView usernameView;
+    private TextView user_account;
     public static final int CHOOSE_PHOTO = 2;
     private ImageView picture;
     private LinearLayout fragmentHead;
@@ -72,6 +73,14 @@ public class MyFragment extends Fragment {
 //        TextView Tuichu = (TextView)view.findViewById(R.id.tuichu);
         LinearLayout history=(LinearLayout)view.findViewById(R.id.history);
         LinearLayout collection=(LinearLayout)view.findViewById(R.id.Collection);
+        LinearLayout news = view.findViewById(R.id.news);
+        news.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(),Mynews.class);
+                startActivity(intent);
+            }
+        });
         Set_up = view.findViewById(R.id.Set_up);
         Set_up.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,6 +176,7 @@ public class MyFragment extends Fragment {
     }*/
     private void initView(){
         usernameView=view.findViewById(R.id.username);
+        user_account= view.findViewById(R.id.user_account);
         picture = (ImageView)view.findViewById(R.id.user_head_img);
         fragmentHead=(LinearLayout)view.findViewById(R.id.fragment_head);
         myconcern=(LinearLayout)view.findViewById(R.id.my_concern);
@@ -191,7 +201,8 @@ public class MyFragment extends Fragment {
         });
     }
     private void initData(){
-        usernameView.setText(userData.getAccount());
+        usernameView.setText(userData.getUsername());
+        user_account.setText(userData.getAccount());
     }
 }
 
