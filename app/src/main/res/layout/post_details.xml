@@ -8,7 +8,7 @@
 
     <com.example.bottomnavigationabar2.adapter.Top_Title
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="35dp">
     </com.example.bottomnavigationabar2.adapter.Top_Title>
 
     <RelativeLayout

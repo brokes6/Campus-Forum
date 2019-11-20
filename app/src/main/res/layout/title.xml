@@ -3,14 +3,15 @@
     android:layout_width="match_parent"
     android:layout_marginTop="5dp"
     android:layout_height="wrap_content"
-    android:background="#fff">
+    android:background="#fff"
+    android:orientation="horizontal">
 
     <ImageView
+        android:layout_marginLeft="5dp"
         android:id="@+id/title_back"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_gravity="center"
-        android:layout_margin="5dp"
         android:src="@drawable/sanzuo" />
 
 

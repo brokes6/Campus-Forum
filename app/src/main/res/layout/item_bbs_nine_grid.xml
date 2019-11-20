@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/linearlayou_broder"
     android:orientation="horizontal"
-    android:paddingTop="5dp"
-    >
+    android:paddingTop="5dp">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -17,8 +17,18 @@
             android:id="@+id/tieze_user_img"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@mipmap/ic_launcher"
-            android:transitionName="userphoto"/>
+            android:src="@drawable/ic_launcher_round"
+            android:scaleType="centerCrop" />
+<!--        <de.hdodenhof.circleimageview.CircleImageView-->
+<!--            android:id="@+id/tieze_user_img"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            android:layout_marginTop="80dp"-->
+<!--            android:src="@mipmap/ic_launcher"-->
+<!--            app:civ_border_color="#4CAF50"-->
+<!--            app:civ_border_width="2dp"-->
+<!--            android:layout_gravity="center_horizontal"/>-->
 
         <TextView
             android:id="@+id/tiezi_username"
@@ -100,8 +110,8 @@
 
                         <ImageView
                             android:id="@+id/loveNum"
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             android:src="@drawable/thumbs_up_white" />
                         <TextView
                             android:id="@+id/loveNumStr"
@@ -115,7 +125,7 @@
                     </LinearLayout>
                     <LinearLayout
                         android:layout_marginLeft="100dp"
-                        android:layout_marginRight="100dp"
+                        android:layout_marginRight="90dp"
                         android:id="@+id/collectionLayout"
                         android:layout_marginTop="25dp"
                         android:orientation="horizontal"
@@ -124,8 +134,8 @@
 
                         <ImageView
                             android:id="@+id/collection"
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             android:background="@drawable/shocang_text" />
                         <TextView
                             android:layout_marginLeft="5dp"
@@ -146,8 +156,8 @@
 
                         <ImageView
                             android:id="@+id/talkNum"
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             android:background="@drawable/comment_white" />
                         <TextView
                             android:layout_marginLeft="5dp"

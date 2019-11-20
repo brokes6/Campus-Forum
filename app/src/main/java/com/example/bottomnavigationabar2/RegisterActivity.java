@@ -72,7 +72,7 @@ public class RegisterActivity extends AppCompatActivity {
             //修改为深色，因为我们把状态栏的背景色修改为主题色白色，默认的文字及图标颜色为白色，导致看不到了。
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
-        //用于屏蔽系统的头部，（现已无用）
+        //用于屏蔽系统的头部，（以用）
         ActionBar actionbar = getSupportActionBar();
         if (actionbar != null) {
             actionbar.hide();

@@ -32,6 +32,7 @@ public class Set_up extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(Set_up.this,"已退出",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Set_up.this,LoginActivity.class);
+                intent.putExtra("key",true);
                 startActivity(intent);
             }
         });

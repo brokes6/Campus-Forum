@@ -1,7 +1,9 @@
 package com.example.bottomnavigationabar2;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.ActivityOptions;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -24,6 +26,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -44,6 +47,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -68,6 +72,7 @@ public class LoginActivity extends AppCompatActivity {
     private CheckBox autologin;
     private CheckBox rememberPassword;
     private IntentFilter intentFilter;
+    private Boolean key;
     Boolean checkbox = false;
     private NetworkChangeReceiver networkChangeReceiver;
     private SharedPreferences sp;
@@ -97,6 +102,7 @@ public class LoginActivity extends AppCompatActivity {
         if (actionbar != null) {
             actionbar.hide();
         }
+        key = getIntent().getBooleanExtra("key",false);
         //过度效果(没写)
         intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
@@ -137,6 +143,10 @@ public class LoginActivity extends AppCompatActivity {
             passwordEdit.setText(pass);
             rememberPassword.setChecked(true);
         }
+        if(key){
+            passwordEdit.setText("");
+            rememberPassword.setChecked(false);
+        }
         TextView textView = (TextView)findViewById(R.id.tex3);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,6 +182,35 @@ public class LoginActivity extends AppCompatActivity {
         }
 
     }
+
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        this.exit();
+//        return super.onKeyDown(keyCode, event);
+//    }
+//
+//    private void exit() {
+//        Intent startMain = new Intent(Intent.ACTION_MAIN);
+//        startMain.addCategory(Intent.CATEGORY_HOME);
+//        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        startActivity(startMain);
+//        System.exit(0);
+//    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        exitAPP();
+    }
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void exitAPP() {
+
+        ActivityManager activityManager = (ActivityManager) this.getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.AppTask> appTaskList = activityManager.getAppTasks();
+        for (ActivityManager.AppTask appTask : appTaskList) {
+            appTask.finishAndRemoveTask();
+        }
+    }
+
     private void login(final String username, final String password){
         RequestBody requestBody = new FormBody.Builder()
                 .add("username",username)
@@ -234,6 +273,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
     private void login(){
         String usernamee =usernameEdit.getText().toString();
         String password=passwordEdit.getText().toString();
