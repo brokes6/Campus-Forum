@@ -5,7 +5,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/linearlayou_broder"
     android:orientation="vertical">
-
     <LinearLayout
         android:padding="10dp"
         android:layout_width="fill_parent"

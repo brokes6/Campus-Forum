@@ -1,5 +1,6 @@
 package com.example.bottomnavigationabar2;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -72,6 +73,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import static java.security.AccessController.getContext;
+
 
 public class PostDetails extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "MainActivity";
@@ -93,6 +96,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
     private TextView dateTime;
     private TextView content;
     private TextView tishi;
+    private ImageView img;
     private TextView loveNumStr;
     private TextView commentStr;
     private ImageView loveNum;
@@ -193,6 +197,13 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         bt_comment = (TextView) findViewById(R.id.detail_page_do_comment);
         bt_comment.setOnClickListener(this);
         adapter = new CommentExpandAdapter(this,commentsList);
+        img = findViewById(R.id.title_back);
+        img.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         //下拉框
         niceSpinner = findViewById(R.id.nice_spinner);
         niceSpinner.attachDataSource(spinnerData);
