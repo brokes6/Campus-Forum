@@ -44,6 +44,7 @@ public class MyFragment extends Fragment {
     public static final int CHOOSE_PHOTO = 2;
     private ImageView picture;
     private LinearLayout fragmentHead;
+    private LinearLayout myconcern;
     public static MyFragment newInstance(String param1) {
         MyFragment fragment = new MyFragment();
         Bundle args = new Bundle();
@@ -122,6 +123,13 @@ public class MyFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        myconcern.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getContext(),MyConcern.class);
+                startActivity(intent);
+            }
+        });
         return view;
     }
 
@@ -161,6 +169,7 @@ public class MyFragment extends Fragment {
         usernameView=view.findViewById(R.id.username);
         picture = (ImageView)view.findViewById(R.id.user_head_img);
         fragmentHead=(LinearLayout)view.findViewById(R.id.fragment_head);
+        myconcern=(LinearLayout)view.findViewById(R.id.my_concern);
         LinearLayout history=(LinearLayout)view.findViewById(R.id.history);
         LinearLayout collection=(LinearLayout)view.findViewById(R.id.Collection);
 
