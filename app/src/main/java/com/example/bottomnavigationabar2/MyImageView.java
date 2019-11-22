@@ -8,12 +8,15 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Shader;
+import android.graphics.drawable.AdaptiveIconDrawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -136,20 +139,34 @@ public class MyImageView extends ImageView {
     @SuppressLint("DrawAllocation")
     @Override
     protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
         mPaint = new Paint();
         Drawable drawable = getDrawable();
         if (null != drawable) {
-            Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+            Bitmap bitmap =null;
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && drawable instanceof AdaptiveIconDrawable){
+                System.out.println("??????????");
+                bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+                System.out.println("bitmap="+bitmap.getWidth());
+                canvas = new Canvas(bitmap);
+                drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+                drawable.draw(canvas);
+
+            }else{
+                bitmap = ((BitmapDrawable) drawable).getBitmap();
+                System.out.println("11111111111");
+                BitmapShader bitmapShader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+                //计算缩放比例
+                mScale = (mRadius * 2.0f) / Math.min(bitmap.getHeight(), bitmap.getWidth());
+                Matrix matrix = new Matrix();
+                matrix.setScale(mScale, mScale);
+                bitmapShader.setLocalMatrix(matrix);
+                mPaint.setShader(bitmapShader);
+                //画圆形，指定好坐标，半径，画笔
+                canvas.drawCircle(mRadius, mRadius, mRadius, mPaint);
+                System.out.println(canvas);
+            }
             //初始化BitmapShader，传入bitmap对象
-            BitmapShader bitmapShader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
-            //计算缩放比例
-            mScale = (mRadius * 2.0f) / Math.min(bitmap.getHeight(), bitmap.getWidth());
-            Matrix matrix = new Matrix();
-            matrix.setScale(mScale, mScale);
-            bitmapShader.setLocalMatrix(matrix);
-            mPaint.setShader(bitmapShader);
-            //画圆形，指定好坐标，半径，画笔
-            canvas.drawCircle(mRadius, mRadius, mRadius, mPaint);
         } else {
             super.onDraw(canvas);
         }

@@ -1,5 +1,7 @@
 package com.example.bottomnavigationabar2.bean;
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 
 /**
@@ -19,6 +21,16 @@ public class User implements Serializable {
     private String uimg;
     private String usign;
     private String token;
+    private Bitmap bitmap;
+
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
+
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
+    }
+
     public Integer getUid() {
         return uid;
     }

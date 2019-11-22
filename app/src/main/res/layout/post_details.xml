@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_marginTop="20dp">
+    android:layout_marginTop="20dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,25 +28,11 @@
             android:layout_gravity="center_vertical"/>
 
     </LinearLayout>
-<com.scwang.smartrefresh.layout.SmartRefreshLayout
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/refreshLayout"
-    android:layout_marginTop="-20dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.example.bottomnavigationabar2.PostDetails">
 
-    <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/main_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
 
         <!--<android.support.design.widget.AppBarLayout-->
         <!--android:id="@+id/appbar"-->
@@ -81,12 +69,23 @@
 
         <!--</android.support.design.widget.CollapsingToolbarLayout>-->
         <!--</android.support.design.widget.AppBarLayout>-->
-
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="48dp"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto">
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
+            <android.support.design.widget.CoordinatorLayout
+                android:id="@+id/main_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -94,12 +93,6 @@
                 <include
                     android:id="@+id/detail_page_above_container"
                     layout="@layout/item_inside" />
-
-                <com.scwang.smartrefresh.layout.footer.BallPulseFooter
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                </com.scwang.smartrefresh.layout.footer.BallPulseFooter>
                 <!--评论组件-->
                 <LinearLayout
                     android:id="@+id/detail_page_comment_container"
@@ -113,7 +106,6 @@
                         android:id="@+id/detail_page_lv_comment"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="64dp"
                         android:divider="@null"
                         android:listSelector="@android:color/transparent"
                         android:scrollbars="none" />
@@ -128,10 +120,9 @@
                 </LinearLayout>
 
             </RelativeLayout>
+        </android.support.design.widget.CoordinatorLayout>
         </android.support.v4.widget.NestedScrollView>
-    </android.support.design.widget.CoordinatorLayout>
-
-
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
     <!--输入框组件-->
     <LinearLayout
         android:layout_width="match_parent"
@@ -220,5 +211,4 @@
         />
 
 </RelativeLayout>
-</com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

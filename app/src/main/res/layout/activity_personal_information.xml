@@ -47,7 +47,8 @@
             android:gravity="center_vertical">
 
         </TextView>
-        <ImageView
+        <com.example.bottomnavigationabar2.MyImageView
+            android:id="@+id/userImg"
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:layout_gravity="center_vertical"
@@ -92,6 +93,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/username"
                 android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"

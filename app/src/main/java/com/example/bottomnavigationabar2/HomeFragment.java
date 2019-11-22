@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -27,6 +28,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -35,12 +37,18 @@ import com.example.bottomnavigationabar2.MoBan.MoBan_1;
 import com.example.bottomnavigationabar2.MoBan.MoBan_2;
 import com.example.bottomnavigationabar2.MoBan.MoBan_3;
 import com.example.bottomnavigationabar2.adapter.MainTabFragmentAdapter;
+import com.example.bottomnavigationabar2.adapter.NineGridTest2Adapter;
 import com.example.bottomnavigationabar2.bean.User;
+import com.example.bottomnavigationabar2.utils.NetWorkUtil;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.RefreshState;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -48,8 +56,11 @@ import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
-import static android.support.constraint.Constraints.TAG;
+import static com.scwang.smartrefresh.layout.internal.InternalClassics.ID_IMAGE_PROGRESS;
+import static com.scwang.smartrefresh.layout.internal.InternalClassics.ID_TEXT_TITLE;
 
 
 /**
@@ -57,6 +68,8 @@ import static android.support.constraint.Constraints.TAG;
  */
 
 public class HomeFragment extends Fragment {
+    private static final String TAG = "HomeFragment";
+    public static final int POSTDETAILS=1;
     private Banner mBanner;
     private MyImageLoader mMyImageLoader;
     private ArrayList<Integer> imagePath;
@@ -81,6 +94,7 @@ public class HomeFragment extends Fragment {
     private ViewPager viewPager;
     private SmartRefreshLayout refreshLayout;
     public static User userData;
+    private NineGridTest2Adapter.ViewHolder viewHolder;
     public static HomeFragment newInstance(String param1,User user) {
         HomeFragment fragment = new HomeFragment(user);
         Bundle args = new Bundle();
@@ -116,7 +130,6 @@ public class HomeFragment extends Fragment {
             viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
                 public void onPageScrolled(int i, float v, int i1) {
-                    Log.i(TAG, "onPageScrolled: what are you doing?!---"+i);
                     moBanInterface=(MoBanInterface) mainTabFragmentAdapter.fragments.get(i);
                 }
 
@@ -127,11 +140,10 @@ public class HomeFragment extends Fragment {
 
                 @Override
                 public void onPageScrollStateChanged(int i) {
-
                 }
             });
+            realTabLayout.setupWithViewPager(viewPager);
             viewPager.setAdapter(mainTabFragmentAdapter);
-            viewPager.setOffscreenPageLimit(mainTabFragmentAdapter.getCount());
             viewPager.setOffscreenPageLimit(1);
             topLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
@@ -161,9 +173,6 @@ public class HomeFragment extends Fragment {
             });
             searchView.setQueryHint("请输入搜索内容");
             searchView.setIconifiedByDefault(false);
-            for (int i = 0; i < tabTxt.length; i++) {
-                realTabLayout.addTab(realTabLayout.newTab().setText(tabTxt[i]));
-            }
             initData();
             initView();
             initRefreshLayout();
@@ -196,6 +205,7 @@ public class HomeFragment extends Fragment {
         transitionSet.addListener(new Transition.TransitionListener() {
             @Override
             public void onTransitionStart(Transition transition) {
+                Log.i(TAG, "onTransitionStart: ??????");
                 //动画开始
                 //指定上半部分的动画效果
                 mViewBackgroundTop.setVisibility(View.GONE);
@@ -342,8 +352,10 @@ public class HomeFragment extends Fragment {
     public void initRefreshLayout(){
         refreshLayout = view.findViewById(R.id.refreshLayout);
         refreshLayout.setRefreshHeader(new MaterialHeader(getContext()));
+        refreshLayout.setRefreshFooter(new ClassicsFooter(getContext()));
         refreshLayout.setEnableLoadMore(false);
         refreshLayout.setEnableRefresh(false);
+        initRefreshFootLayout();
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -380,5 +392,100 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case POSTDETAILS:
+
+        }
+    }
+
+    public void setViewHolder(NineGridTest2Adapter.ViewHolder viewHolder) {
+        this.viewHolder = viewHolder;
+    }
+    public void updateInfo(Intent intent){
+        moBanInterface.updateInfo(intent);
+    }
+    private void initRefreshFootLayout(){
+        refreshLayout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
+        final TextView tv = refreshLayout.getLayout().findViewById(ID_TEXT_TITLE);
+        final ImageView iv2 = refreshLayout.getLayout().findViewById(ID_IMAGE_PROGRESS);
+        final AtomicBoolean net = new AtomicBoolean(true);
+        final AtomicInteger mostTimes = new AtomicInteger(0);//假设只有三屏数据
+
+        //设置多监听器，包括顶部下拉刷新、底部上滑刷新
+        refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener(){
+
+            /**
+             * 根据上拉的状态，设置文字，并且判断条件
+             * @param refreshLayout
+             * @param oldState
+             * @param newState
+             */
+            @Override
+            public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
+                switch (newState) {
+                    case None:
+                    case PullUpToLoad:
+                        break;
+                    case Loading:
+                    case LoadReleased:
+                        tv.setText("正在加载..."); //在这里修改文字
+                        if (!NetWorkUtil.isNetworkConnected(getContext().getApplicationContext())) {
+                            net.set(false);
+                        } else {
+                            net.set(true);
+                        }
+                        break;
+                    case ReleaseToLoad:
+                        tv.setText("release");
+                        break;
+                    case Refreshing:
+                        tv.setText("refreshing");
+                        break;
+                }
+            }
+
+            /**
+             * 添加是否可以加载更多数据的条件
+             * @param refreshLayout
+             */
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                if (mostTimes.get() < 3) {
+
+                    mostTimes.getAndIncrement();
+                }
+                refreshLayout.finishLoadMore(1000); //这个记得设置，否则一直转圈
+            }
+
+            /**
+             *  在这里根据不同的情况来修改加载完成后的提示语
+             * @param footer
+             * @param success
+             */
+            @Override
+            public void onFooterFinish(RefreshFooter footer, boolean success) {
+                super.onFooterFinish(footer, success);
+                if (net.get() == false) {
+                    tv.setText("请检查网络设置");
+                } else if (mostTimes.get() >= 3) {
+                    tv.setText("没有更多消息拉");
+                } else {
+                    tv.setText("加载完成");
+                    if (mostTimes.get() == 2) {
+                        mostTimes.getAndIncrement();
+                    }
+                }
+            }
+        });
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                Log.i(TAG, "onLoadMore: 下拉加载");
+                refreshLayout.autoLoadMore();
+            }
+        });
+    }
 }
 

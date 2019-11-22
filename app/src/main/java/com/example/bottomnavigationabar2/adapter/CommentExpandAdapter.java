@@ -20,6 +20,7 @@ import com.example.bottomnavigationabar2.MyImageView;
 import com.example.bottomnavigationabar2.R;
 import com.example.bottomnavigationabar2.bean.CommentDetailBean;
 import com.example.bottomnavigationabar2.bean.ReplyDetailBean;
+import com.example.util.DateTimeUtil;
 import com.google.gson.JsonObject;
 
 import org.json.JSONException;
@@ -117,9 +118,9 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
 //                .centerCrop()
 //                .into(groupHolder.logo);
         Log.i(TAG, "getGroupView: token="+token);
-        groupHolder.logo.setImageURL("http://106.54.134.17/image/topicalimg/98c59323be294a438ffe82a0427912dbsmall.jpeg");
+        groupHolder.logo.setImageURL(commentBeanList.get(groupPosition).getUimg());
         groupHolder.tv_name.setText(commentBeanList.get(groupPosition).getUsername());
-        groupHolder.tv_time.setText(commentBeanList.get(groupPosition).getCcreateTime());
+        groupHolder.tv_time.setText(DateTimeUtil.handlerDateTime(commentBeanList.get(groupPosition).getCcreateTime()));
         groupHolder.tv_content.setText(commentBeanList.get(groupPosition).getContent());
         groupHolder.status=commentBeanList.get(groupPosition).getStatus();
         groupHolder.loveNum.setText(String.valueOf(commentBeanList.get(groupPosition).getLove_count()));

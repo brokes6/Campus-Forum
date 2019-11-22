@@ -7,6 +7,7 @@ import java.util.List;
  */
 
 public class CommentDetailBean {
+    private int uid;
     private int cid;
     private String username;
     private String uimg;
@@ -21,6 +22,14 @@ public class CommentDetailBean {
         this.username = username;
         this.content = content;
         this.ccreateTime = ccreateTime;
+    }
+
+    public int getUid() {
+        return uid;
+    }
+
+    public void setUid(int uid) {
+        this.uid = uid;
     }
 
     public int getStatus() {

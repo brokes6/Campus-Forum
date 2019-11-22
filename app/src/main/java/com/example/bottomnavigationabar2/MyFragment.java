@@ -41,8 +41,8 @@ public class MyFragment extends Fragment {
     private View view;
     private User userData;
     private TextView usernameView;
+    private MyImageView picture;
     public static final int CHOOSE_PHOTO = 2;
-    private ImageView picture;
     public static MyFragment newInstance(String param1) {
         MyFragment fragment = new MyFragment();
         Bundle args = new Bundle();
@@ -117,10 +117,6 @@ public class MyFragment extends Fragment {
         return view;
     }
 
-
-
-
-
     private void handleImageBeforeKitKat(Intent data) {
         Uri uri = data.getData();
         String imagePath = getImagePath(uri, null);
@@ -151,10 +147,10 @@ public class MyFragment extends Fragment {
     }
     private void initView(){
         usernameView=view.findViewById(R.id.username);
-        picture = (ImageView)view.findViewById(R.id.user_head_img);
+        picture = view.findViewById(R.id.user_head_img);
         LinearLayout history=(LinearLayout)view.findViewById(R.id.history);
         LinearLayout collection=(LinearLayout)view.findViewById(R.id.Collection);
-
+        LinearLayout news = view.findViewById(R.id.news);
         history.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -171,9 +167,17 @@ public class MyFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        news.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(),Mynews.class);
+                startActivity(intent);
+            }
+        });
     }
     private void initData(){
         usernameView.setText(userData.getUsername());
+        /*picture.setImageURL(userData.getUimg());*/
     }
 }
 

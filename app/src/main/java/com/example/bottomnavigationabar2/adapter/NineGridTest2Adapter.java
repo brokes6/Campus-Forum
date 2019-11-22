@@ -16,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.RequestBuilder;
+import com.example.bottomnavigationabar2.HomeFragment;
+import com.example.bottomnavigationabar2.MoBan.MoBanInterface;
 import com.example.bottomnavigationabar2.MyImageView;
 import com.example.bottomnavigationabar2.Post;
 import com.example.bottomnavigationabar2.PostDetails;
@@ -55,8 +57,9 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
     protected LayoutInflater inflater;
     private NetWorkUtil netWorkUtil;
     private String token;
+    private ViewHolder nowViewHolder;
     public NineGridTest2Adapter(Context context) {
-        mContext = context;
+        this.mContext = context;
         inflater = LayoutInflater.from(context);
         netWorkUtil=new NetWorkUtil(context);
         token=FileCacheUtil.getUser(context).getToken();
@@ -132,7 +135,8 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
                 ActivityOptionsCompat optionsCompat =
                         //将获取到的共同值传入，随后进行跳转
                         ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, image,text,longtext,uimg,username);
-                mContext.startActivity(intent,optionsCompat.toBundle());
+                nowViewHolder=holder;
+                ((Activity) mContext).startActivityForResult(intent, HomeFragment.POSTDETAILS,optionsCompat.toBundle());
             }
         });
         tieze_user_img.setOnClickListener(new View.OnClickListener() {
@@ -190,5 +194,20 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
     public void clear(){
         mList=null;
         mList=new ArrayList<>();
+    }
+    public void updateInfo(Intent intent){
+        Log.i(TAG, "updateInfo: intent="+intent);
+        String loveNum=intent.getStringExtra("loveNum");
+        String talkNum=intent.getStringExtra("talkNum");
+        int status=intent.getIntExtra("status",0);
+        nowViewHolder.loveNumStr.setText(loveNum);
+        nowViewHolder.talkNumStr.setText(talkNum);
+        if(status==1){
+            nowViewHolder.loveNum.setImageDrawable(mContext.getResources().getDrawable(R.drawable.thumbs_up_complete));
+            nowViewHolder.loveStatus=0;
+        }else{
+            nowViewHolder.loveNum.setImageDrawable(mContext.getResources().getDrawable(R.drawable.thumbs_up_white));
+            nowViewHolder.loveStatus=1;
+        }
     }
 }

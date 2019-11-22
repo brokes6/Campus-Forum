@@ -26,7 +26,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -72,11 +71,11 @@ public class LoginActivity extends AppCompatActivity {
     private CheckBox autologin;
     private CheckBox rememberPassword;
     private IntentFilter intentFilter;
-    private Boolean key;
     Boolean checkbox = false;
     private NetworkChangeReceiver networkChangeReceiver;
     private SharedPreferences sp;
     private HandlerUtil handlerUtil;
+    private Boolean key;
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -182,20 +181,6 @@ public class LoginActivity extends AppCompatActivity {
         }
 
     }
-
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        this.exit();
-//        return super.onKeyDown(keyCode, event);
-//    }
-//
-//    private void exit() {
-//        Intent startMain = new Intent(Intent.ACTION_MAIN);
-//        startMain.addCategory(Intent.CATEGORY_HOME);
-//        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        startActivity(startMain);
-//        System.exit(0);
-//    }
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -210,7 +195,6 @@ public class LoginActivity extends AppCompatActivity {
             appTask.finishAndRemoveTask();
         }
     }
-
     private void login(final String username, final String password){
         RequestBody requestBody = new FormBody.Builder()
                 .add("username",username)
@@ -273,7 +257,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
     private void login(){
         String usernamee =usernameEdit.getText().toString();
         String password=passwordEdit.getText().toString();

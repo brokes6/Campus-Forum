@@ -1,5 +1,6 @@
 package com.example.bottomnavigationabar2.MoBan;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 
 
@@ -9,4 +10,5 @@ public interface MoBanInterface {
     public void getPostList(String token);
     public void clearList();
     public RecyclerView getRecycler();
+    public void updateInfo(Intent intent);
 }

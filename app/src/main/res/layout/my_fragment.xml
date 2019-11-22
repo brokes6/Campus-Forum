@@ -25,7 +25,7 @@
                 android:orientation="vertical"
                 android:layout_marginLeft="15dp"
                 android:gravity="center_vertical|center_horizontal">
-                <ImageView
+                <com.example.bottomnavigationabar2.MyImageView
                     android:id="@+id/user_head_img"
                     android:layout_width="80dp"
                     android:layout_height="80dp"

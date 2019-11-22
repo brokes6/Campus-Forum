@@ -39,6 +39,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import cn.jpush.android.api.JPushInterface;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -209,6 +210,7 @@ public class RegisterActivity extends AppCompatActivity {
                     username_denglu = (EditText)findViewById(R.id.ret_username);
                     pass_dengli_1 = (EditText)findViewById(R.id.ret_password);
                     email = (EditText)findViewById(R.id.ret_email);
+                    String regId= JPushInterface.getRegistrationID(RegisterActivity.this);
                     OkHttpClient client = new OkHttpClient();
                     RequestBody requestBody = new FormBody.Builder()
                             //post请求
@@ -216,6 +218,7 @@ public class RegisterActivity extends AppCompatActivity {
                             .add("account",username_denglu.getText().toString())
                             .add("password",pass_dengli_1.getText().toString())
                             .add("email",email.getText().toString())
+                            .add("regId",regId)
                             .build();
                     Request request = new Request.Builder()
                             .url("http://106.54.134.17/app/register")

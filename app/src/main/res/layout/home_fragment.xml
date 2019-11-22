@@ -6,12 +6,12 @@
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-<android.support.design.widget.CoordinatorLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:android="http://schemas.android.com/apk/res/android">
         <android.support.design.widget.AppBarLayout
             android:background="#FAFAFA"
             android:id="@+id/appbar"
@@ -150,7 +150,6 @@
                     app:tabMode="fixed"
                     app:tabSelectedTextColor="@color/textColor" />
         </android.support.design.widget.AppBarLayout>
-
         <android.support.v4.view.ViewPager
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
@@ -158,7 +157,7 @@
             android:paddingLeft="16dp"
             android:paddingTop="10dp"
             android:paddingRight="16dp"
-            android:paddingBottom="10dp"
+            android:paddingBottom="50dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 </android.support.design.widget.CoordinatorLayout>
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -234,4 +235,13 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         }
     };
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        switch (requestCode){
+            case HomeFragment.POSTDETAILS:
+                Log.i(TAG, "onActivityResult: 开始了");
+                mHomeFragment.updateInfo(data);
+                break;
+        }
+    }
 }

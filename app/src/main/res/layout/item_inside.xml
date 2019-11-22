@@ -38,7 +38,6 @@
             android:transitionName="time"
             />
         <TextView
-            android:layout_marginTop="-16dp"
             android:layout_marginLeft="71dp"
             android:id="@+id/tieze_felei"
             android:text="-抗压吧-"
@@ -103,7 +102,6 @@
                 android:layout_height="match_parent"
                 app:arrowTint="#444444"
                 app:textTint="#363636"
-                app:dropDownListPaddingBottom="60dp"
                 android:layout_marginEnd="12dp"
                 android:layout_marginRight="12dp"
                 android:layout_gravity="right|center"/>

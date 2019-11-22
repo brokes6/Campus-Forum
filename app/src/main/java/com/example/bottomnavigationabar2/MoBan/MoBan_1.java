@@ -183,4 +183,9 @@ public class MoBan_1 extends Fragment implements MoBanInterface{
         message.obj=msg;
         handler.sendMessage(message);
     }
+
+    @Override
+    public void updateInfo(Intent intent) {
+        mAdapter.updateInfo(intent);
+    }
 }

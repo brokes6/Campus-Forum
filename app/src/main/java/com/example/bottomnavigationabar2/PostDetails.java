@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
@@ -43,24 +44,32 @@ import com.example.bottomnavigationabar2.utils.FileCacheUtil;
 import com.example.bottomnavigationabar2.utils.NetWorkUtil;
 import com.example.bottomnavigationabar2.view.CommentExpandableListView;
 import com.example.bottomnavigationabar2.view.NineGridTestLayout;
+import com.example.util.DateTimeUtil;
 import com.example.util.JsonTOBeanUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 
+import org.angmarch.views.NiceSpinner;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -70,6 +79,9 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import static com.scwang.smartrefresh.layout.internal.InternalClassics.ID_IMAGE_PROGRESS;
+import static com.scwang.smartrefresh.layout.internal.InternalClassics.ID_TEXT_TITLE;
+
 
 public class PostDetails extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "MainActivity";
@@ -77,6 +89,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
     public static final int CANCEL_PROGRESS=2;
     public static final int NOTIFY=3;
     public static final int NOTIFY_NOCOMMENT=4;
+    public static final int NOTIFY_COMMENT=5;
     public static final String REQUEST_POST_DETAILS_STR="http://106.54.134.17/app/getPostDetailsById";//mode=1
     public static final String REQUEST_COMMENT_STR="http://106.54.134.17/app/getPopularComments";//mode=2
     public static final String REQUEST_ADD_COMMENT_STR="http://106.54.134.17/app/addComment";//mode=3
@@ -103,6 +116,8 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
     private SmartRefreshLayout refreshLayout;
     private NetWorkUtil netWorkUtil;
     private User userData;
+    private NiceSpinner niceSpinner;
+    private List<String> spinnerData = new LinkedList<>(Arrays.asList("热度排序", "点赞排序","时间排序"));
     private  Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -110,7 +125,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
             switch (msg.what){
                 case HANDLER_DATA:
                     username.setText(post.getUsername());
-                    dateTime.setText(post.getPcreateTime());
+                    dateTime.setText(DateTimeUtil.handlerDateTime(post.getPcreateTime()));
                     content.setText(Html.fromHtml(post.getContent()));
                     commentStr.setText(String.valueOf(post.getCommentCount()));
                     nineGridTestLayout.setUrlList(Arrays.asList(post.getImgUrl().split(",")));
@@ -151,6 +166,11 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                 case NOTIFY_NOCOMMENT:
 //                    tishi.setVisibility(View.GONE);
                     tishi.setText("-暂且没有评论-");
+                    break;
+                case NOTIFY_COMMENT:
+                    commentStr.setText(String.valueOf(Integer.valueOf(commentStr.getText().toString())+1));
+                    progressBar.setVisibility(View.GONE);
+                    break;
             }
         }
     };
@@ -168,11 +188,10 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
             actionbar.hide();
         }
         userData=FileCacheUtil.getUser(this);
+        postId = getPostId();
         initView();
         initDetailsLayout();
         initRefreshLayout();
-
-
     }
     //初始化
     private void initView() {
@@ -189,20 +208,23 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         getPopularComments();
         progressBar=findViewById(R.id.progress);
         Log.i(TAG, "initView: userData="+userData);
+        niceSpinner = findViewById(R.id.nice_spinner);
+        niceSpinner.attachDataSource(spinnerData);
+        niceSpinner.setBackgroundResource(R.drawable.textview_round_border);
+        niceSpinner.setTextColor(Color.BLACK);
+        niceSpinner.setTextSize(13);
+        niceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
     }
     private void initRefreshLayout(){
         refreshLayout=findViewById(R.id.refreshLayout);
         refreshLayout.setEnableRefresh(false);
-        refreshLayout.setRefreshFooter(new BallPulseFooter(PostDetails.this));
-        refreshLayout.setFooterHeight(100);
-        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                refreshLayout.autoLoadMore();
-                getPopularComments();
-                refreshLayout.finishLoadMore();
-            }
-        });
+        refreshLayout.setRefreshFooter(new ClassicsFooter(this));
+        initRefreshFootLayout();
     }
     private void initExpandableListView(){
         expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
@@ -272,7 +294,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                 //后期需要检查token的值 查看是否被更改了喔
                 if(!TextUtils.isEmpty(commentContent)){
                     progressBar.setVisibility(View.VISIBLE);
-                    addComment(commentContent);
+                    addComment(commentContent,userData.getUsername(),content.getText().toString(),postId);
                     dialog.dismiss();
                     CommentDetailBean detailBean = new CommentDetailBean(userData.getUsername(), commentContent,"刚刚");
                     adapter.addTheCommentData(detailBean);
@@ -328,7 +350,8 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                 if(!TextUtils.isEmpty(replyContent)){
                     dialog.dismiss();
                     Log.i(TAG, "onClick: commentId="+adapter.getCommentBeanList().get(position).getCid());
-                    addReply(replyContent,token,adapter.getCommentBeanList().get(position).getCid());
+                    CommentDetailBean commentDetailBean=adapter.getCommentBeanList().get(position);
+                    addReply(replyContent,token,commentDetailBean.getUid(),commentDetailBean.getContent(),commentDetailBean.getCid());
                     //等会在搞
                     Log.i(TAG, "onClick: 账号名为:"+userData.getUsername());
                     ReplyDetailBean detailBean = new ReplyDetailBean(userData.getUsername(),replyContent);
@@ -400,7 +423,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         dateTime=findViewById(R.id.tiezi_time);
         content=findViewById(R.id.tieze_Text);
         nineGridTestLayout=findViewById(R.id.layout_nine_grid);
-        postId = getPostId();
+        Log.i(TAG, "initDetailsLayout: ---------id=="+postId);
         loveNum=findViewById(R.id.loveNum);
         loveNumStr=findViewById(R.id.loveNumStr);
         loveLayout=findViewById(R.id.loveLayout);
@@ -417,11 +440,14 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         message.obj=post;
         handler.sendMessage(message);
     }
-    private void addComment(String content){
+    private void addComment(String content,String username,String postContent,int puid){
         RequestBody requestBody = new FormBody.Builder()
                 .add("cpid", String.valueOf(postId))
                 .add("content",content)
                 .add("token",userData.getToken())
+                .add("username",username)
+                .add("postContent",postContent)
+                .add("puid",String.valueOf(puid))
                 .build();
         final Request request = new Request.Builder()
                 .url(REQUEST_ADD_COMMENT_STR)
@@ -446,7 +472,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                         return;
                     }
                     Message message=new Message();
-                    message.what=CANCEL_PROGRESS;
+                    message.what=NOTIFY_COMMENT;
                     handler.sendMessage(message);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -454,13 +480,16 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
             }
         });
     }
-    private void addReply(String content,String token,int commentUserId){
+    private void addReply(String content,String token,int commentUserId,String commentContent,int cid){
     //修改回复 设置参数
         RequestBody requestBody = new FormBody.Builder()
                 .add("rcid", String.valueOf(commentUserId))
                 .add("content",content)
                 .add("tcuid", String.valueOf(commentUserId))
                 .add("token","HnpMvU%2BV3ZHjrbMhOaOuCA%3D%3D")
+                .add("pid", String.valueOf(postId))
+                .add("commentContent",commentContent)
+                .add("cid",String.valueOf(cid))
                 .build();
         final Request request = new Request.Builder()
                 .url("http://106.54.134.17/app/addReply")
@@ -542,6 +571,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
             case 1:urlStr=REQUEST_POST_DETAILS_STR+"?postId="+postId;
                             break;
             case 2:urlStr=REQUEST_COMMENT_STR+"?startPage="+commentPage+"&postId="+postId;
+                Log.i(TAG, "getRequestStr: postId="+postId);
                             break;
             default:break;
         }
@@ -550,5 +580,95 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
             return urlStr;
         }
         return urlStr+"&token="+token;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent=new Intent();
+        intent.putExtra("loveNum",loveNumStr.getText().toString());
+        intent.putExtra("talkNum",commentStr.getText().toString());
+        intent.putExtra("status",status);
+        setResult(HomeFragment.POSTDETAILS,intent);
+        finish();
+    }
+    private void initRefreshFootLayout(){
+        refreshLayout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
+        final TextView tv = refreshLayout.getLayout().findViewById(ID_TEXT_TITLE);
+        final ImageView iv2 = refreshLayout.getLayout().findViewById(ID_IMAGE_PROGRESS);
+        final AtomicBoolean net = new AtomicBoolean(true);
+        final AtomicInteger mostTimes = new AtomicInteger(0);//假设只有三屏数据
+        //设置多监听器，包括顶部下拉刷新、底部上滑刷新
+        refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener(){
+
+            /**
+             * 根据上拉的状态，设置文字，并且判断条件
+             * @param refreshLayout
+             * @param oldState
+             * @param newState
+             */
+            @Override
+            public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
+                switch (newState) {
+                    case None:
+                    case PullUpToLoad:
+                        break;
+                    case Loading:
+                    case LoadReleased:
+                        tv.setText("正在加载..."); //在这里修改文字
+                        if (!NetWorkUtil.isNetworkConnected(getApplicationContext())) {
+                            net.set(false);
+                        } else {
+                            net.set(true);
+                        }
+                        break;
+                    case ReleaseToLoad:
+                        tv.setText("release");
+                        break;
+                    case Refreshing:
+                        tv.setText("refreshing");
+                        break;
+                }
+            }
+
+            /**
+             * 添加是否可以加载更多数据的条件
+             * @param refreshLayout
+             */
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                if (mostTimes.get() < 3) {
+
+                    mostTimes.getAndIncrement();
+                }
+                refreshLayout.finishLoadMore(1000); //这个记得设置，否则一直转圈
+            }
+
+            /**
+             *  在这里根据不同的情况来修改加载完成后的提示语
+             * @param footer
+             * @param success
+             */
+            @Override
+            public void onFooterFinish(RefreshFooter footer, boolean success) {
+                super.onFooterFinish(footer, success);
+                if (net.get() == false) {
+                    tv.setText("请检查网络设置");
+                } else if (mostTimes.get() >= 3) {
+                    tv.setText("没有更多消息拉");
+                } else {
+                    tv.setText("加载完成");
+                    if (mostTimes.get() == 2) {
+                        mostTimes.getAndIncrement();
+                    }
+                }
+            }
+        });
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                Log.i(TAG, "onLoadMore: 下拉加载");
+                refreshLayout.autoLoadMore();
+            }
+        });
     }
 }
