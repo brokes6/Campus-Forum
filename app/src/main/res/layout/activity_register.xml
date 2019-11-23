@@ -46,7 +46,7 @@
         android:textColorHint="#2B2A2A"
         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
         <EditText
-            android:id="@+id/ret_name"
+            android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="名称:"
@@ -62,7 +62,7 @@
         android:textColorHint="#2B2A2A"
         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
         <EditText
-            android:id="@+id/ret_email"
+            android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="请输入邮箱:"
@@ -91,7 +91,7 @@
         android:layout_centerInParent="true"
         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
         <EditText
-            android:id="@+id/ret_password"
+            android:id="@+id/account"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="请输入（账号）:"
@@ -108,7 +108,7 @@
         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
         >
         <EditText
-            android:id="@+id/ret_username"
+            android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="请输入（密码）:"

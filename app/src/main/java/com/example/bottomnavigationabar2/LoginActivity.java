@@ -20,6 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBar;
@@ -151,7 +152,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent2 = new Intent(LoginActivity.this,RegisterActivity.class);
-                startActivity(intent2);
+                startActivityForResult(intent2,1);
             }
         });
         TextView textView1 = (TextView)findViewById(R.id.tex1);
@@ -269,4 +270,12 @@ public class LoginActivity extends AppCompatActivity {
         login(usernamee,password);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        switch (requestCode){
+            case 1:String account=data.getStringExtra("account");
+                   usernameEdit.setText(account);
+                   break;
+        }
+    }
 }

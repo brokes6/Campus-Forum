@@ -45,6 +45,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bottomnavigationabar2.R;
+import com.example.bottomnavigationabar2.utils.FileCacheUtil;
 import com.example.bottomnavigationabar2.view.ColorPickerView;
 import com.example.bottomnavigationabar2.view.RichEditor;
 
@@ -86,7 +87,7 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
     TextView tvNum;
     boolean isRequestHttp = false;
     private Uri imageUri=null;
-
+    private String token;
     //文本编辑器
     private RichEditor mEditor;
     //加粗按钮
@@ -219,13 +220,9 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(addPost.this,"以返回",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(addPost.this,MainActivity.class);
-                startActivity(intent);
                 //跳转完成后，需要调用重新刷新
                 try {
-                    netUploadPost();
-                    finish();
+                    netUploadPost(token);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 };
@@ -234,6 +231,7 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
         });
         initAdapter();
         initView();
+        initData();
         initClickListener();
     }
     //initAdapter方法
@@ -500,7 +498,7 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
         handler.sendMessage(message);
     }
     //暂时有问题 服务器图片长度设置过小 弄大点
-    public void netUploadPost() throws FileNotFoundException {//用jsonOject方式转string传递其他参数
+    public void netUploadPost(String token) throws FileNotFoundException {//用jsonOject方式转string传递其他参数
         try {
             String imgUrl=builder.toString();
             if(!imgUrl.trim().equals("")) {
@@ -510,7 +508,7 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
             FormBody body = new FormBody.Builder()
                     .add("content", mEditor.getHtml())
                     .add("imgUrl",imgUrl)
-                    .add("token", "HnpMvU%2BV3ZHjrbMhOaOuCA%3D%3D")
+                    .add("token", token)
                     .build();
             final Request request = new Request.Builder()
                     .url("http://106.54.134.17/app/post").post(body)
@@ -527,6 +525,10 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
                 public void onResponse(Call call, Response response) throws IOException {
                     Log.i(TAG, "onResponse: 发帖情况" + response.body().string());
                     showShortToast("发帖成功！");
+                    Toast.makeText(addPost.this,"以返回",Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(addPost.this,MainActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
             });
         } catch (Exception e) {
@@ -897,5 +899,8 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
         File image=File.createTempFile(name,".jpeg",stordir);
         //1：字首2：后缀3：在哪个目录下
         return  image;
+    }
+    private void initData(){
+        token= FileCacheUtil.getUser(this).getToken();
     }
 }

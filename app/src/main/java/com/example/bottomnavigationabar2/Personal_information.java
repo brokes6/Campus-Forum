@@ -177,6 +177,7 @@ public class Personal_information extends AppCompatActivity {
     private void initData(){
         userData= FileCacheUtil.getUser(Personal_information.this);
         textView.setText(userData.getUsername());
+        userImg.setImageURL(userData.getUimg());
     }
     @TargetApi(19)
     private void handleImageOnKitKat(Intent data) {
@@ -342,7 +343,7 @@ public class Personal_information extends AppCompatActivity {
                     .addFormDataPart("token",token)
                     .build();
             final Request request = new Request.Builder()
-                    .url("http://10.0.2.2:8080/app/updateUserImg")
+                    .url("http://106.54.134.17/app/updateUserImg")
                     .post(body)
                     .build();
             OkHttpClient okHttpClient = new OkHttpClient();

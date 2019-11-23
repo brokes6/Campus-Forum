@@ -177,7 +177,7 @@ public class MyFragment extends Fragment {
     }
     private void initData(){
         usernameView.setText(userData.getUsername());
-        /*picture.setImageURL(userData.getUimg());*/
+        picture.setImageURL(userData.getUimg());
     }
 }
 

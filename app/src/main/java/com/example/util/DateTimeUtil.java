@@ -23,7 +23,12 @@ public class DateTimeUtil {
             if(spaceTime>=3600000){
                 strTime=(spaceTime/3600000)+"小时前";
             }else{
-                strTime=(spaceTime/60000)+"分钟前";
+                long time=spaceTime/60000;
+                if(time==0){
+                    strTime="刚刚";
+                }else {
+                    strTime=time+"分钟前";
+                }
             }
         }else{
             strTime=simpleDateFormat1.format(datetime);
@@ -31,6 +36,8 @@ public class DateTimeUtil {
         return strTime;
     }
     public static String handlerDateTime(String str){
+        if(str.equals("刚刚"))
+            return str;
         try {
             return handlerDateTime(simpleDateFormat.parse(str).getTime());
         } catch (ParseException e) {

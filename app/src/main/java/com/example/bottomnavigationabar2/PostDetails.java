@@ -106,10 +106,13 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
     private TextView username;
     private TextView dateTime;
     private TextView content;
-    private TextView tishi;
+    private TextView message;
     private TextView loveNumStr;
     private TextView commentStr;
+    private MyImageView userImg;
     private ImageView loveNum;
+    private LinearLayout messageLayout;
+    private LinearLayout commentLayout;
     private NineGridTestLayout nineGridTestLayout;
     private LinearLayout loveLayout;
     private ProgressBar progressBar;
@@ -124,11 +127,14 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
             final Post post = (Post) msg.obj;
             switch (msg.what){
                 case HANDLER_DATA:
+                    String str=Html.fromHtml(post.getContent()).toString();
                     username.setText(post.getUsername());
+                    userImg.setImageURL(post.getUimg());
                     dateTime.setText(DateTimeUtil.handlerDateTime(post.getPcreateTime()));
-                    content.setText(Html.fromHtml(post.getContent()));
+                    content.setText(str);
                     commentStr.setText(String.valueOf(post.getCommentCount()));
                     nineGridTestLayout.setUrlList(Arrays.asList(post.getImgUrl().split(",")));
+                    nineGridTestLayout.setContent(str);
                     nineGridTestLayout.setIsShowAll(post.isShowAll());
                     status=post.getStatus();
                     loveNumStr.setText(String.valueOf(post.getLoveCount()));
@@ -162,14 +168,26 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                     for(int i =index; i<commentsList.size()+index; i++){
                         expandableListView.expandGroup(i);
                     }
+                    if(index<6){
+                        refreshLayout.setEnableLoadMore(false);
+                        Log.i(TAG, "handleMessage: 不能够加载更多");
+                    }
+                    messageLayout.setVisibility(View.VISIBLE);
+                    message.setText("暂无更多");
+                    message.setTextSize(14);
                     break;
                 case NOTIFY_NOCOMMENT:
-//                    tishi.setVisibility(View.GONE);
-                    tishi.setText("-暂且没有评论-");
+                    Log.i(TAG, "handleMessage: 喔有运行？");
+                    commentLayout.setMinimumHeight(500);
+                    refreshLayout.setEnableLoadMore(false);
+                    messageLayout.setVisibility(View.VISIBLE);
                     break;
                 case NOTIFY_COMMENT:
+                    int index1=adapter.getCommentBeanList().size();
                     commentStr.setText(String.valueOf(Integer.valueOf(commentStr.getText().toString())+1));
                     progressBar.setVisibility(View.GONE);
+                    if(index1>=6)
+                        messageLayout.setVisibility(View.GONE);
                     break;
             }
         }
@@ -196,7 +214,10 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
     //初始化
     private void initView() {
         //获取实列
-        tishi = findViewById(R.id.tishi);
+        userImg=findViewById(R.id.tieze_user_img);
+        message = findViewById(R.id.message);
+        messageLayout=findViewById(R.id.messageLayout);
+        commentLayout=findViewById(R.id.detail_page_comment_container);
         expandableListView = (CommentExpandableListView) findViewById(R.id.detail_page_lv_comment);
         bt_comment = (TextView) findViewById(R.id.detail_page_do_comment);
         bt_comment.setOnClickListener(this);

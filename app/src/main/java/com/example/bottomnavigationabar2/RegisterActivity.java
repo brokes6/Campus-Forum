@@ -54,10 +54,10 @@ public class RegisterActivity extends AppCompatActivity {
     private de.hdodenhof.circleimageview.CircleImageView userimg;
     String data_user =null;
     ResultBean resultBean;
-    EditText name_denglu;
-    EditText username_denglu;
-    EditText pass_dengli_1;
-    EditText email;
+    private EditText usernameEdit;
+    private EditText accountEdit;
+    private EditText passwordEdit;
+    private EditText emailEdit;
     public static final int PICK_PHOTO = 102;
     private Uri imageUri;
     private Context mContext;
@@ -78,44 +78,7 @@ public class RegisterActivity extends AppCompatActivity {
         if (actionbar != null) {
             actionbar.hide();
         }
-        final EditText name_denglu = (EditText)findViewById(R.id.ret_name);
-        final EditText username_denglu = (EditText)findViewById(R.id.ret_username);
-        final EditText pass_denglu = (EditText)findViewById(R.id.ret_password);
-        final EditText email = (EditText)findViewById(R.id.ret_email);
-        userimg = findViewById(R.id.zhc_userimg);
-        userimg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //动态申请获取访问 读写磁盘的权限
-                if (ContextCompat.checkSelfPermission(RegisterActivity.this,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(RegisterActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 101);
-                } else {
-                    //打开相册
-                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                    //Intent.ACTION_GET_CONTENT = "android.intent.action.GET_CONTENT"
-                    intent.setType("image/*");
-                    startActivityForResult(intent, PICK_PHOTO); // 打开相册
-                }
-            }
-        });
-        Button button_denglu = (Button)findViewById(R.id.button_denglu);
-        button_denglu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String name = name_denglu.getText().toString();
-                String email_1 = email.getText().toString();
-                boolean youxiang = email_1.matches(regex1);
-                if (email_1.matches(regex1)){
-                }
-                else{
-                    email.setError("邮箱格式错误");
-                }
-                if(youxiang == true){
-                    sendOkHttp();
-                }
-            }
-        });
+        initView();
         }
             //打开系统相机
             @Override
@@ -201,23 +164,19 @@ public class RegisterActivity extends AppCompatActivity {
      * 将数据传上服务器
      * -
      */
-    private void sendOkHttp(){
+    private void register(final String account, final String password, final String username, final String email){
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    name_denglu = (EditText)findViewById(R.id.ret_name);
-                    username_denglu = (EditText)findViewById(R.id.ret_username);
-                    pass_dengli_1 = (EditText)findViewById(R.id.ret_password);
-                    email = (EditText)findViewById(R.id.ret_email);
                     String regId= JPushInterface.getRegistrationID(RegisterActivity.this);
                     OkHttpClient client = new OkHttpClient();
                     RequestBody requestBody = new FormBody.Builder()
                             //post请求
-                            .add("username", name_denglu.getText().toString())
-                            .add("account",username_denglu.getText().toString())
-                            .add("password",pass_dengli_1.getText().toString())
-                            .add("email",email.getText().toString())
+                            .add("username",username)
+                            .add("account",account)
+                            .add("password",password)
+                            .add("email",email)
                             .add("regId",regId)
                             .build();
                     Request request = new Request.Builder()
@@ -230,11 +189,14 @@ public class RegisterActivity extends AppCompatActivity {
                     System.out.println(responseData);
                     resultBean = JsonTOBeanUtil.getResultBean(responseData);
                     if(resultBean.getCode()==1){
-                        data_user=name_denglu.getText().toString();
-                        Intent intent = new Intent(RegisterActivity.this,MainActivity.class);
-                        intent.putExtra("username",data_user);
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.fade_out,R.anim.fade_in);
+/*
+                        Toast.makeText(RegisterActivity.this, "注册成功!", Toast.LENGTH_SHORT).show();
+*/
+                        Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
+                        intent.putExtra("account",account);
+                        setResult(1,intent);
+                        finish();
+                        /*              overridePendingTransition(R.anim.fade_out,R.anim.fade_in);*/
                     }
                 }catch (Exception e) {
                     e.printStackTrace();
@@ -242,7 +204,65 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }).start();
     }
-
-
-
+    private void initView(){
+        usernameEdit=findViewById(R.id.username);
+        emailEdit=findViewById(R.id.email);
+        accountEdit=findViewById(R.id.account);
+        passwordEdit=findViewById(R.id.password);
+        userimg = findViewById(R.id.zhc_userimg);
+        userimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //动态申请获取访问 读写磁盘的权限
+                if (ContextCompat.checkSelfPermission(RegisterActivity.this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(RegisterActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 101);
+                } else {
+                    //打开相册
+                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                    //Intent.ACTION_GET_CONTENT = "android.intent.action.GET_CONTENT"
+                    intent.setType("image/*");
+                    startActivityForResult(intent, PICK_PHOTO); // 打开相册
+                }
+            }
+        });
+        Button button_denglu = (Button)findViewById(R.id.button_denglu);
+        button_denglu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String account=accountEdit.getText().toString();
+                String username=usernameEdit.getText().toString();
+                String password=passwordEdit.getText().toString();
+                String email=emailEdit.getText().toString();
+                boolean flag=checkInput(account,password,username,email);
+                if(flag){
+                    register(account,password,username,email);
+                }
+            }
+        });
+    }
+    private boolean checkInput(String account,String password,String username,String email){
+        boolean flag=true;
+        if(TextUtils.isEmpty(account)){
+            accountEdit.setError("用户名输入不能空");
+            flag=false;
+        }
+        if(TextUtils.isEmpty(username)){
+            usernameEdit.setError("账号输入不能空");
+            flag=false;
+        }
+        if(TextUtils.isEmpty(password)){
+            passwordEdit.setError("密码输入不能空");
+            flag=false;
+        }
+        if(TextUtils.isEmpty(email)){
+            emailEdit.setError("邮箱输入不能空");
+            flag=false;
+        }
+        if(!email.matches(regex1)){
+            emailEdit.setError("邮箱格式不正确,请检查输入!");
+            flag=false;
+        }
+        return flag;
+    }
 }

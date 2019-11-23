@@ -64,6 +64,7 @@ public class MoBan_1 extends Fragment implements MoBanInterface{
     private NineGridTest2Adapter mAdapter;
     private List<Post> mList = new ArrayList<>();
     private View view;
+    private String token=FileCacheUtil.getUser(getContext()).getToken();
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -86,7 +87,8 @@ public class MoBan_1 extends Fragment implements MoBanInterface{
         Log.i(TAG, "onCreateView: ------------");
         view = inflater.inflate(R.layout.mo_ban_1, container, false);
         initView();
-        getPostList(HomeFragment.userData.getToken());
+        Log.i(TAG, "onCreateView: token="+token);
+        getPostList(token);
         return view;
     }
     private void initView() {
