@@ -128,14 +128,19 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
             switch (msg.what){
                 case HANDLER_DATA:
                     String str=Html.fromHtml(post.getContent()).toString();
+                    String imgUrls=post.getImgUrl();
                     username.setText(post.getUsername());
                     userImg.setImageURL(post.getUimg());
                     dateTime.setText(DateTimeUtil.handlerDateTime(post.getPcreateTime()));
                     content.setText(str);
                     commentStr.setText(String.valueOf(post.getCommentCount()));
-                    nineGridTestLayout.setUrlList(Arrays.asList(post.getImgUrl().split(",")));
+                    if(imgUrls==null||imgUrls.trim().equals("")){
+                        nineGridTestLayout.setVisibility(View.GONE);
+                    }else {
+                        nineGridTestLayout.setUrlList(Arrays.asList(imgUrls.split(",")));
+                        nineGridTestLayout.setIsShowAll(post.isShowAll());
+                    }
                     nineGridTestLayout.setContent(str);
-                    nineGridTestLayout.setIsShowAll(post.isShowAll());
                     status=post.getStatus();
                     loveNumStr.setText(String.valueOf(post.getLoveCount()));
                     loveLayout.setOnClickListener(new View.OnClickListener() {

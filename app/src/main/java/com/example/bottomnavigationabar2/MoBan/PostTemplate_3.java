@@ -37,10 +37,10 @@ import okhttp3.Response;
 
 import static android.support.constraint.Constraints.TAG;
 
-public class MoBan_3 extends Fragment implements MoBanInterface{
+public class PostTemplate_3 extends Fragment implements PostTemplateInterface {
     private static final String ARG_LIST = "list";
     private int page=1;
-    private MoBan_3 moBan=null;
+    private PostTemplate_3 moBan=null;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private NineGridTest2Adapter mAdapter;
@@ -50,17 +50,17 @@ public class MoBan_3 extends Fragment implements MoBanInterface{
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what){
-                case MoBanInterface.NOTIFY:
+                case PostTemplateInterface.NOTIFY:
                     mAdapter.notifyDataSetChanged();
                     break;
-                case MoBanInterface.SHOWTOAST:
+                case PostTemplateInterface.SHOWTOAST:
                     Toast.makeText(getContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
 
             }
         }
     };
     public static void startActivity(Context context, List<NineGridTestModel> list) {
-        Intent intent = new Intent(context, MoBan_1.class);
+        Intent intent = new Intent(context, PopularPostTemplate.class);
         intent.putExtra(ARG_LIST, (Serializable) list);
         context.startActivity(intent);
     }
@@ -112,7 +112,7 @@ public class MoBan_3 extends Fragment implements MoBanInterface{
                     List<Post> posts = gson.fromJson(dataStr, new TypeToken<List<Post>>() {}.getType());
                     mAdapter.setList(posts);
                     Message message = new Message();
-                    message.what = MoBanInterface.NOTIFY;
+                    message.what = PostTemplateInterface.NOTIFY;
                     handler.sendMessage(message);
                     page++;
                     for (Post post:posts){
@@ -167,7 +167,7 @@ public class MoBan_3 extends Fragment implements MoBanInterface{
 
     public void showToast(String msg){
         Message message = new Message();
-        message.what=MoBanInterface.SHOWTOAST;
+        message.what= PostTemplateInterface.SHOWTOAST;
         message.obj=msg;
         handler.sendMessage(message);
     }

@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
@@ -20,7 +19,6 @@ import android.transition.Transition;
 import android.transition.TransitionSet;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -32,10 +30,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.bottomnavigationabar2.MoBan.MoBanInterface;
-import com.example.bottomnavigationabar2.MoBan.MoBan_1;
-import com.example.bottomnavigationabar2.MoBan.MoBan_2;
-import com.example.bottomnavigationabar2.MoBan.MoBan_3;
+import com.example.bottomnavigationabar2.MoBan.PostTemplateInterface;
+import com.example.bottomnavigationabar2.MoBan.PopularPostTemplate;
+import com.example.bottomnavigationabar2.MoBan.NewPostTemplate;
+import com.example.bottomnavigationabar2.MoBan.PostTemplate_3;
 import com.example.bottomnavigationabar2.adapter.MainTabFragmentAdapter;
 import com.example.bottomnavigationabar2.adapter.NineGridTest2Adapter;
 import com.example.bottomnavigationabar2.bean.User;
@@ -77,11 +75,11 @@ public class HomeFragment extends Fragment {
     private View view;
     private View mViewBackgroundTop;
     private View mViewBackgroundBottom;
-    private MoBanInterface moBanInterface;
+    private PostTemplateInterface postTemplateInterface;
     private TabLayout realTabLayout;
-    private MoBan_1 moban1;
-    private MoBan_2 moban2;
-    private MoBan_3 moban3;
+    private PopularPostTemplate moban1;
+    private NewPostTemplate moban2;
+    private PostTemplate_3 moban3;
     private String[] tabTxt = {"热门", "最新", "推荐", "关注",};
     //记录上一次位置，防止在同一内容块里滑动 重复定位到tablayout
     private int lastPos = 0;
@@ -130,7 +128,7 @@ public class HomeFragment extends Fragment {
             viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
                 public void onPageScrolled(int i, float v, int i1) {
-                    moBanInterface=(MoBanInterface) mainTabFragmentAdapter.fragments.get(i);
+                    postTemplateInterface =(PostTemplateInterface) mainTabFragmentAdapter.fragments.get(i);
                 }
 
                 @Override
@@ -159,7 +157,7 @@ public class HomeFragment extends Fragment {
                     Toast.makeText(getContext(), "以点击" + tab.getText().toString(), Toast.LENGTH_SHORT).show();
                     Log.i(TAG, "onTabSelected: 点击的是" + tab.getPosition());
                     viewPager.setCurrentItem(tab.getPosition());
-                    moBanInterface = (MoBanInterface) mainTabFragmentAdapter.fragments.get(tab.getPosition());
+                    postTemplateInterface = (PostTemplateInterface) mainTabFragmentAdapter.fragments.get(tab.getPosition());
                 }
                 @Override
                 public void onTabUnselected(TabLayout.Tab tab) {
@@ -299,8 +297,8 @@ public class HomeFragment extends Fragment {
     }
     private void setDefaultFragment() {
         mainTabFragmentAdapter = new MainTabFragmentAdapter(((AppCompatActivity)getActivity()).getSupportFragmentManager(),getActivity());
-        moBanInterface= (MoBanInterface) mainTabFragmentAdapter.getItem(0);
-        moBanInterface.getPostList(userData.getToken());
+        postTemplateInterface = (PostTemplateInterface) mainTabFragmentAdapter.getItem(0);
+        postTemplateInterface.getPostList(userData.getToken());
         Log.i(TAG, "setDefaultFragment: 11111111111");
     }
     public boolean isFlag() {
@@ -334,7 +332,7 @@ public class HomeFragment extends Fragment {
     }
     public void exit(){
         flag=false;
-        moBanInterface.getRecycler().scrollToPosition(0);
+        postTemplateInterface.getRecycler().scrollToPosition(0);
         topLayout.setVisibility(View.VISIBLE);
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -361,7 +359,7 @@ public class HomeFragment extends Fragment {
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 Log.i(TAG, "onLoadMore: 下拉加载");
                 refreshLayout.autoLoadMore();
-                moBanInterface.getPostList(userData.getToken());
+                postTemplateInterface.getPostList(userData.getToken());
                 refreshLayout.finishLoadMore();
             }
         });
@@ -370,8 +368,8 @@ public class HomeFragment extends Fragment {
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 Log.i(TAG, "onRefresh: 上拉刷新");
                 refreshLayout.autoRefresh();
-                moBanInterface.clearList();
-                moBanInterface.getPostList(userData.getToken());
+                postTemplateInterface.clearList();
+                postTemplateInterface.getPostList(userData.getToken());
                 refreshLayout.finishRefresh();
             }
         });
@@ -404,7 +402,7 @@ public class HomeFragment extends Fragment {
         this.viewHolder = viewHolder;
     }
     public void updateInfo(Intent intent){
-        moBanInterface.updateInfo(intent);
+        postTemplateInterface.updateInfo(intent);
     }
     private void initRefreshFootLayout(){
         refreshLayout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);

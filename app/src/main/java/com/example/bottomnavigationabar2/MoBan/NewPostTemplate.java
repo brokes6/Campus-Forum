@@ -2,14 +2,8 @@ package com.example.bottomnavigationabar2.MoBan;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.icu.text.SimpleDateFormat;
-import android.icu.util.Calendar;
-import android.icu.util.GregorianCalendar;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,24 +18,16 @@ import com.example.bottomnavigationabar2.HomeFragment;
 import com.example.bottomnavigationabar2.Post;
 import com.example.bottomnavigationabar2.R;
 import com.example.bottomnavigationabar2.adapter.NineGridTest2Adapter;
-import com.example.bottomnavigationabar2.bean.User;
 import com.example.bottomnavigationabar2.model.NineGridTestModel;
-/*import com.example.util.DateTimeUtil;*/
-import com.example.bottomnavigationabar2.utils.FileCacheUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Random;
-import java.util.UUID;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -49,35 +35,36 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static android.content.Context.MODE_PRIVATE;
 import static android.support.constraint.Constraints.TAG;
-import static android.view.View.MEASURED_SIZE_MASK;
-import static com.example.bottomnavigationabar2.utils.FileCacheUtil.getCache;
-import static com.example.bottomnavigationabar2.utils.FileCacheUtil.setCache;
 
-public class MoBan_1 extends Fragment implements MoBanInterface{
+public class NewPostTemplate extends Fragment implements PostTemplateInterface {
     private static final String ARG_LIST = "list";
     private int page=1;
-    private MoBan_1 moBan_1=null;
+    private NewPostTemplate moBan=null;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private NineGridTest2Adapter mAdapter;
     private List<Post> mList = new ArrayList<>();
     private View view;
-    private String token=FileCacheUtil.getUser(getContext()).getToken();
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what){
-                case MoBanInterface.NOTIFY:
-                        mAdapter.notifyDataSetChanged();
-                        break;
-                case MoBanInterface.SHOWTOAST:
+                case PostTemplateInterface.NOTIFY:
+                    mAdapter.notifyDataSetChanged();
+                    break;
+                case PostTemplateInterface.SHOWTOAST:
                     Toast.makeText(getContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
 
             }
         }
     };
+    public static void startActivity(Context context, List<NineGridTestModel> list) {
+        Intent intent = new Intent(context, PopularPostTemplate.class);
+        intent.putExtra(ARG_LIST, (Serializable) list);
+        context.startActivity(intent);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,8 +74,7 @@ public class MoBan_1 extends Fragment implements MoBanInterface{
         Log.i(TAG, "onCreateView: ------------");
         view = inflater.inflate(R.layout.mo_ban_1, container, false);
         initView();
-        Log.i(TAG, "onCreateView: token="+token);
-        getPostList(token);
+        getPostList(HomeFragment.userData.getToken());
         return view;
     }
     private void initView() {
@@ -100,8 +86,9 @@ public class MoBan_1 extends Fragment implements MoBanInterface{
         mRecyclerView.setAdapter(mAdapter);
     }
     public void getPostList(String token){
+        Log.i(TAG, "getPostList: page="+page);
         final Request request = new Request.Builder()
-                .url("http://106.54.134.17/app/getPopularPost?startPage="+page+"&token="+token)
+                .url("http://106.54.134.17/app/getNewPost?startPage="+page+"&token="+token)
                 .build();
         OkHttpClient okHttpClient = new OkHttpClient();
         okHttpClient.newCall(request).enqueue(new Callback() {
@@ -126,13 +113,13 @@ public class MoBan_1 extends Fragment implements MoBanInterface{
                     List<Post> posts = gson.fromJson(dataStr, new TypeToken<List<Post>>() {}.getType());
                     mAdapter.setList(posts);
                     Message message = new Message();
-                    message.what = MoBanInterface.NOTIFY;
+                    message.what = PostTemplateInterface.NOTIFY;
                     handler.sendMessage(message);
                     page++;
                     for (Post post:posts){
                         post.getUsername();
                     }
-                        //存放文章内容
+                    //存放文章内容
 /*
                         setCache(,getContext(),"Text",MODE_PRIVATE);
                         //存放用户名称
@@ -181,11 +168,10 @@ public class MoBan_1 extends Fragment implements MoBanInterface{
 
     public void showToast(String msg){
         Message message = new Message();
-        message.what=MoBanInterface.SHOWTOAST;
+        message.what= PostTemplateInterface.SHOWTOAST;
         message.obj=msg;
         handler.sendMessage(message);
     }
-
     @Override
     public void updateInfo(Intent intent) {
         mAdapter.updateInfo(intent);

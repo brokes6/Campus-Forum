@@ -9,9 +9,7 @@
         <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:android="http://schemas.android.com/apk/res/android">
+            android:orientation="vertical">
         <android.support.design.widget.AppBarLayout
             android:background="#FAFAFA"
             android:id="@+id/appbar"
@@ -107,24 +105,27 @@
                                                     android:textSize="18dp"
                                                     android:text="2019/10/30"/>
                                         </LinearLayout>
+
                                         <LinearLayout
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:gravity="center_vertical"
                                             android:layout_marginTop="10dp"
+                                            android:gravity="center_vertical"
                                             android:orientation="horizontal">
+
                                                 <TextView
                                                     android:layout_width="220dp"
                                                     android:layout_height="wrap_content"
-                                                    android:textSize="18dp"
-                                                    android:text="羽毛球社团明天有比赛"
+                                                    android:ellipsize="end"
                                                     android:maxLines="1"
-                                                    android:ellipsize="end"/>
+                                                    android:text="羽毛球社团明天有比赛"
+                                                    android:textSize="18dp" />
+
                                                 <TextView
                                                     android:layout_width="100dp"
                                                     android:layout_height="wrap_content"
-                                                    android:textSize="18dp"
-                                                    android:text="2019/10/30"/>
+                                                    android:text="2019/10/30"
+                                                    android:textSize="18dp" />
                                         </LinearLayout>
 
                                 </LinearLayout>
@@ -150,14 +151,15 @@
                     app:tabMode="fixed"
                     app:tabSelectedTextColor="@color/textColor" />
         </android.support.design.widget.AppBarLayout>
-        <android.support.v4.view.ViewPager
-            android:id="@+id/viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="16dp"
-            android:paddingTop="10dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="50dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-</android.support.design.widget.CoordinatorLayout>
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="50dp"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        </android.support.design.widget.CoordinatorLayout>
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>

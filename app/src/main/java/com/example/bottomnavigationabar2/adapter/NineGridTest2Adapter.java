@@ -1,7 +1,6 @@
 package com.example.bottomnavigationabar2.adapter;
 
 import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -15,35 +14,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.RequestBuilder;
 import com.example.bottomnavigationabar2.HomeFragment;
-import com.example.bottomnavigationabar2.MoBan.MoBanInterface;
 import com.example.bottomnavigationabar2.MyImageView;
 import com.example.bottomnavigationabar2.Post;
 import com.example.bottomnavigationabar2.PostDetails;
 import com.example.bottomnavigationabar2.R;
 import com.example.bottomnavigationabar2.UserInformation;
-import com.example.bottomnavigationabar2.model.NineGridTestModel;
 import com.example.bottomnavigationabar2.utils.FileCacheUtil;
-import com.example.bottomnavigationabar2.utils.HandlerUtil;
 import com.example.bottomnavigationabar2.utils.NetWorkUtil;
 import com.example.bottomnavigationabar2.view.NineGridTestLayout;
 import com.example.util.DateTimeUtil;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 /**
  * Created by HMY on 2016/8/6
@@ -84,6 +68,8 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         Log.i(TAG, "onBindViewHolder: 开始创建"+position);
         String content=Html.fromHtml(mList.get(position).getContent()).toString();
+        String imgUrls=mList.get(position).getImgUrl();
+        Log.i(TAG, "onBindViewHolder: imgUrls="+imgUrls);
         holder.content.setText(content);
         holder.datetime.setText(DateTimeUtil.handlerDateTime(mList.get(position).getPcreateTime()));
         holder.uimg.setImageURL(mList.get(position).getUimg());
@@ -91,9 +77,14 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
         holder.postId=mList.get(position).getPid();
         holder.loveStatus=mList.get(position).getStatus();
         holder.talkNumStr.setText(String.valueOf(mList.get(position).getCommentCount()));
-        holder.layout.setIsShowAll(mList.get(position).isShowAll());
         holder.loveNumStr.setText(String.valueOf(mList.get(position).getLoveCount()));
-        holder.layout.setUrlList(Arrays.asList(mList.get(position).getImgUrl().split(",")));
+        if (imgUrls==null||imgUrls.trim().equals("")){
+            Log.i(TAG, "onBindViewHolder: 我被执行了没有图片喔");
+            holder.layout.setVisibility(View.GONE);
+        }else {
+            holder.layout.setUrlList(Arrays.asList(imgUrls.split(",")));
+            holder.layout.setIsShowAll(mList.get(position).isShowAll());
+        }
         holder.layout.setContent(content);
         holder.loveLayout.setOnClickListener(new View.OnClickListener(){
             @Override

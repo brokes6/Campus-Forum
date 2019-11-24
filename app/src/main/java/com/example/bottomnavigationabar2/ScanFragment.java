@@ -69,6 +69,7 @@ public class ScanFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onClick(View v) {
                 Intent intent_yemian = new Intent(getActivity(),Yemian_text.class);
+                //我真的服了 代码重构把
                 startActivity(intent_yemian);
             }
         });
@@ -161,7 +162,6 @@ public class ScanFragment extends Fragment implements View.OnClickListener{
             case R.id.tv_tj:
                 qiandao.setVisibility(view.GONE);
                 viewPager.setCurrentItem(1);
-
                 break;
             default:
                 break;

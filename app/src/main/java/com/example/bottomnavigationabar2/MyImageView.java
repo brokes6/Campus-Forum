@@ -140,7 +140,6 @@ public class MyImageView extends ImageView {
     @SuppressLint("DrawAllocation")
     @Override
     protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
         mPaint = new Paint();
         Drawable drawable = getDrawable();
         if (null != drawable) {
@@ -152,7 +151,6 @@ public class MyImageView extends ImageView {
                 canvas = new Canvas(bitmap);
                 drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
                 drawable.draw(canvas);
-
             }else{
                 bitmap = ((BitmapDrawable) drawable).getBitmap();
                 System.out.println("11111111111");
