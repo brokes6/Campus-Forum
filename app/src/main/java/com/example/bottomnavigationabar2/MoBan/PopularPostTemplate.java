@@ -33,11 +33,11 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static android.support.constraint.Constraints.TAG;
 import static com.example.bottomnavigationabar2.utils.FileCacheUtil.getCache;
 import static com.example.bottomnavigationabar2.utils.FileCacheUtil.setCache;
 
 public class PopularPostTemplate extends Fragment implements PostTemplateInterface {
+    private static final String TAG = "PopularPostTemplate";
     private static final String ARG_LIST = "list";
     private boolean flag=false;
     private int tagId;
@@ -93,6 +93,7 @@ public class PopularPostTemplate extends Fragment implements PostTemplateInterfa
         mRecyclerView.setAdapter(mAdapter);
     }
     public void getPostList(String token){
+        Log.i(TAG, "getPostList: 你说你page="+page);
         final Request request = new Request.Builder()
                 .url(handlerUrl(token))
                 .build();
@@ -190,5 +191,11 @@ public class PopularPostTemplate extends Fragment implements PostTemplateInterfa
             requestUrl+="&tagId="+tagId;
         }
         return requestUrl;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        page=1;
     }
 }

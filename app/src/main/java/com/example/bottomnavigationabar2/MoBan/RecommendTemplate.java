@@ -37,10 +37,10 @@ import okhttp3.Response;
 
 import static android.support.constraint.Constraints.TAG;
 
-public class PostTemplate_4 extends Fragment implements PostTemplateInterface {
+public class RecommendTemplate extends Fragment implements PostTemplateInterface {
     private static final String ARG_LIST = "list";
     private int page=1;
-    private PopularPostTemplate popularPostTemplate =null;
+    private RecommendTemplate moBan=null;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private NineGridTest2Adapter mAdapter;
@@ -59,6 +59,17 @@ public class PostTemplate_4 extends Fragment implements PostTemplateInterface {
             }
         }
     };
+    private boolean flag;
+    private int tagId;
+    private String url;
+
+    public RecommendTemplate(){}
+    public RecommendTemplate(boolean flag, int tagId, String url) {
+        super();
+        this.flag = flag;
+        this.tagId=tagId;
+        this.url=url;
+    }
     public static void startActivity(Context context, List<NineGridTestModel> list) {
         Intent intent = new Intent(context, PopularPostTemplate.class);
         intent.putExtra(ARG_LIST, (Serializable) list);
@@ -73,7 +84,6 @@ public class PostTemplate_4 extends Fragment implements PostTemplateInterface {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView: ------------");
         view = inflater.inflate(R.layout.mo_ban_1, container, false);
-//        Toast.makeText(getContext(),"gogogo",Toast.LENGTH_SHORT).show();
         initView();
         getPostList(HomeFragment.userData.getToken());
         return view;
@@ -83,13 +93,12 @@ public class PostTemplate_4 extends Fragment implements PostTemplateInterface {
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new NineGridTest2Adapter(getContext());
-        Log.i(TAG, "initView: "+mList.size());
         mAdapter.setList(mList);
         mRecyclerView.setAdapter(mAdapter);
     }
     public void getPostList(String token){
         final Request request = new Request.Builder()
-                .url("http://106.54.134.17/app/getPopularPost?startPage="+page+"&token="+token)
+                .url(handlerUrl(token))
                 .build();
         OkHttpClient okHttpClient = new OkHttpClient();
         okHttpClient.newCall(request).enqueue(new Callback() {
@@ -111,13 +120,15 @@ public class PostTemplate_4 extends Fragment implements PostTemplateInterface {
                     }
                     String dataStr = jsonObject.getString("data");
                     Gson gson = new Gson();
-                    List<Post> posts = gson.fromJson(dataStr, new TypeToken<List<Post>>() {
-                    }.getType());
+                    List<Post> posts = gson.fromJson(dataStr, new TypeToken<List<Post>>() {}.getType());
                     mAdapter.setList(posts);
                     Message message = new Message();
                     message.what = PostTemplateInterface.NOTIFY;
                     handler.sendMessage(message);
                     page++;
+                    for (Post post:posts){
+                        post.getUsername();
+                    }
                     //存放文章内容
 /*
                         setCache(,getContext(),"Text",MODE_PRIVATE);
@@ -126,7 +137,7 @@ public class PostTemplate_4 extends Fragment implements PostTemplateInterface {
                         //存放图片
                         String dir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/ErGaoJi/images/";
                         String state = Environment.getExternalStorageState();
-                        //如果状态不是mounted，无法读写
+                        //如果状态不是mounted，无法读写`
                         if (!state.equals(Environment.MEDIA_MOUNTED)) {
                             return;
                         }
@@ -154,6 +165,9 @@ public class PostTemplate_4 extends Fragment implements PostTemplateInterface {
     @Override
     public void clearList() {
         mList.clear();
+        mList=new ArrayList<>();
+        mAdapter = new NineGridTest2Adapter(getContext());
+        mRecyclerView.setAdapter(mAdapter);
         page=1;
     }
 
@@ -171,5 +185,18 @@ public class PostTemplate_4 extends Fragment implements PostTemplateInterface {
     @Override
     public void updateInfo(Intent intent) {
         mAdapter.updateInfo(intent);
+    }
+
+    public String handlerUrl(String token){
+        String requestUrl=url+"?startPage="+page+"&token="+token;
+        if(flag){
+            requestUrl+="&tagId="+tagId;
+        }
+        return requestUrl;
+    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        page=1;
     }
 }

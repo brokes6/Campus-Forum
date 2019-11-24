@@ -33,7 +33,7 @@ import com.bumptech.glide.Glide;
 import com.example.bottomnavigationabar2.MoBan.PostTemplateInterface;
 import com.example.bottomnavigationabar2.MoBan.PopularPostTemplate;
 import com.example.bottomnavigationabar2.MoBan.NewPostTemplate;
-import com.example.bottomnavigationabar2.MoBan.PostTemplate_3;
+import com.example.bottomnavigationabar2.MoBan.RecommendTemplate;
 import com.example.bottomnavigationabar2.adapter.MainTabFragmentAdapter;
 import com.example.bottomnavigationabar2.adapter.NineGridTest2Adapter;
 import com.example.bottomnavigationabar2.bean.User;
@@ -79,7 +79,7 @@ public class HomeFragment extends Fragment {
     private TabLayout realTabLayout;
     private PopularPostTemplate moban1;
     private NewPostTemplate moban2;
-    private PostTemplate_3 moban3;
+    private RecommendTemplate moban3;
     private String[] tabTxt = {"热门", "最新", "推荐", "关注",};
     //记录上一次位置，防止在同一内容块里滑动 重复定位到tablayout
     private int lastPos = 0;
@@ -142,7 +142,7 @@ public class HomeFragment extends Fragment {
             });
             realTabLayout.setupWithViewPager(viewPager);
             viewPager.setAdapter(mainTabFragmentAdapter);
-            viewPager.setOffscreenPageLimit(1);
+            viewPager.setOffscreenPageLimit(3);
             topLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {

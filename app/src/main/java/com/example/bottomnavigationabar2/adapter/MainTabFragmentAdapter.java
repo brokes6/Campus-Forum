@@ -9,8 +9,8 @@ import android.util.Log;
 import com.example.bottomnavigationabar2.MoBan.PopularPostTemplate;
 import com.example.bottomnavigationabar2.MoBan.NewPostTemplate;
 import com.example.bottomnavigationabar2.MoBan.PostTemplateInterface;
-import com.example.bottomnavigationabar2.MoBan.PostTemplate_3;
-import com.example.bottomnavigationabar2.MoBan.PostTemplate_4;
+import com.example.bottomnavigationabar2.MoBan.RecommendTemplate;
+import com.example.bottomnavigationabar2.MoBan.FollowTemplate;
 
 import java.util.ArrayList;
 
@@ -53,9 +53,9 @@ public class MainTabFragmentAdapter extends FragmentStatePagerAdapter {
         switch (mode){
             case 0:
                 fragments.add(new PopularPostTemplate(flag,tagId,PostTemplateInterface.STANDARD_POPULAR_URL));
-               /* fragments.add(new NewPostTemplate(flag,tagId,PostTemplateInterface.STANDARD_NEW_URL));
-                fragments.add(new PostTemplate_3(flag,tagId,PostTemplateInterface.STANDARD_POPULAR_URL)));
-                fragments.add(new PostTemplate_4(flag,tagId,PostTemplateInterface.STANDARD_NEW_URL));*/
+                fragments.add(new NewPostTemplate(flag,tagId,PostTemplateInterface.STANDARD_NEW_URL));
+                fragments.add(new RecommendTemplate(flag,tagId,PostTemplateInterface.STANDARD_POPULAR_URL));
+                fragments.add(new FollowTemplate(flag,tagId,PostTemplateInterface.STANDARD_NEW_URL));
                break;
             case 1:
 

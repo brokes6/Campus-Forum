@@ -46,6 +46,16 @@ public class NewPostTemplate extends Fragment implements PostTemplateInterface {
     private NineGridTest2Adapter mAdapter;
     private List<Post> mList = new ArrayList<>();
     private View view;
+    private boolean flag;
+    private int tagId;
+    private String url;
+    public NewPostTemplate(){}
+    public NewPostTemplate(boolean flag, int tagId, String url) {
+        super();
+        this.flag = flag;
+        this.tagId=tagId;
+        this.url=url;
+    }
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -88,7 +98,7 @@ public class NewPostTemplate extends Fragment implements PostTemplateInterface {
     public void getPostList(String token){
         Log.i(TAG, "getPostList: page="+page);
         final Request request = new Request.Builder()
-                .url("http://106.54.134.17/app/getNewPost?startPage="+page+"&token="+token)
+                .url(handlerUrl(token))
                 .build();
         OkHttpClient okHttpClient = new OkHttpClient();
         okHttpClient.newCall(request).enqueue(new Callback() {
@@ -175,5 +185,18 @@ public class NewPostTemplate extends Fragment implements PostTemplateInterface {
     @Override
     public void updateInfo(Intent intent) {
         mAdapter.updateInfo(intent);
+    }
+
+    public String handlerUrl(String token){
+        String requestUrl=url+"?startPage="+page+"&token="+token;
+        if(flag){
+            requestUrl+="&tagId="+tagId;
+        }
+        return requestUrl;
+    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        page=1;
     }
 }
