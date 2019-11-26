@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -77,7 +78,11 @@ public class Personal_information extends AppCompatActivity {
                     Toast.makeText(Personal_information.this, msg.obj.toString(), Toast.LENGTH_SHORT).show();
                     break;
                 case SET_USER_IMG:
-                    userImg.setImageURL(msg.obj.toString());
+                    String imgUrl=msg.obj.toString();
+                    userData.setUimg(imgUrl);
+                    userImg.setCacheImageURL(imgUrl);
+
+                    setResult(1,null);
             }
         }
     };
@@ -177,7 +182,7 @@ public class Personal_information extends AppCompatActivity {
     private void initData(){
         userData= FileCacheUtil.getUser(Personal_information.this);
         textView.setText(userData.getUsername());
-        userImg.setImageURL(userData.getUimg());
+        userImg.setCacheImageURL(userData.getUimg());
     }
     @TargetApi(19)
     private void handleImageOnKitKat(Intent data) {

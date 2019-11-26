@@ -50,12 +50,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull List<Object> payloads) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.username.setText(userMessages.get(position).getUsername());
         holder.datetime.setText(DateTimeUtil.handlerDateTime(userMessages.get(position).getCreateTime()));
         holder.content.setText(userMessages.get(position).getContent());

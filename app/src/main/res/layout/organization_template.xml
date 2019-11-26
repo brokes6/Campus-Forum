@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/linerLayout"
+    >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <com.example.bottomnavigationabar2.MyImageView
+                android:id="@+id/organizationImg"
+                android:layout_width="40dp"
+                android:layout_weight="1"
+                android:layout_height="50dp"
+                android:src="@mipmap/ic_launcher"
+                app:civ_border_color="#4CAF50"
+                app:civ_border_width="2dp"
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/organizationName"
+                android:layout_marginTop="3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:text="社团姓名"
+                android:gravity="center_vertical"
+                android:textStyle="bold"
+                android:textSize="16dp">
+            </TextView>
+            <TextView
+                android:id="@+id/introduce"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="不知道写什么东西"
+                android:gravity="center_vertical"
+                android:textSize="12dp">
+            </TextView>
+        </LinearLayout>
+</LinearLayout>

@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 最外层是支持嵌套滑动的CoordinatorLayout -->
+<com.scwang.smartrefresh.layout.SmartRefreshLayout
+    android:id="@+id/refreshLayout"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/baba"
     android:layout_width="match_parent"
@@ -13,7 +25,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tv_gz"
+            android:id="@+id/followText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="关注"
@@ -21,7 +33,7 @@
             android:gravity="center"
             android:layout_gravity="center_vertical"/>
         <TextView
-            android:id="@+id/tv_tj"
+            android:id="@+id/recommendText"
             android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,7 +43,7 @@
             android:layout_gravity="center_vertical"/>
 
         <TextView
-            android:id="@+id/tv_qian"
+            android:id="@+id/sign_in"
             android:layout_marginLeft="230dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -41,12 +53,9 @@
             android:textStyle="bold"/>
     </LinearLayout>
     <android.support.v4.view.ViewPager
-
         android:id="@+id/viewPager"
-
         android:layout_width="match_parent"
-
-        android:layout_height="wrap_content">
-
-    </android.support.v4.view.ViewPager>
+        android:layout_height="wrap_content"></android.support.v4.view.ViewPager>
 </LinearLayout>
+    </android.support.design.widget.CoordinatorLayout>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>

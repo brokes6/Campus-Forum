@@ -1,13 +1,14 @@
 package com.example.bottomnavigationabar2;//这里换成你自己的
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.transition.FragmentTransitionSupport;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -37,7 +38,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     public User userData;
     String user_name;
     int lastSelectedPosition = 0;
-    private String TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = "MainActivity";
     private MyFragment mMyFragment;
     private ScanFragment mScanFragment;
     private HomeFragment mHomeFragment;
@@ -141,10 +142,10 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
      * 设置默认导航栏
      */
     private void setDefaultFragment() {
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction transaction = fm.beginTransaction();
+        FragmentManager manager=getSupportFragmentManager();
+        FragmentTransaction transaction =  manager.beginTransaction();
         mHomeFragment = HomeFragment.newInstance("首页",userData);
-        transaction.replace(R.id.tb, mHomeFragment);
+        transaction.replace(R.id.tb,mHomeFragment);
         transaction.commit();
     }
 
@@ -156,36 +157,35 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     public void onTabSelected(int position) {
         num = position;
         Log.d(TAG, "onTabSelected() called with: " + "position = [" + position + "]");
-        FragmentManager fm = this.getFragmentManager();
+        FragmentManager manager=getSupportFragmentManager();
         //开启事务
-        FragmentTransaction transaction = fm.beginTransaction();
+        FragmentTransaction transaction = manager.beginTransaction();
         switch (position) {
             case 0:
+                Log.i(TAG, "onTabSelected: 我mhome被点击了啊");
                 if (mHomeFragment == null) {
                     Log.i(TAG, "onTabSelected:进入");
                     mHomeFragment = HomeFragment.newInstance("首页",userData);
                 }
-                transaction.replace(R.id.tb, mHomeFragment);
+                transaction.replace(R.id.tb,mHomeFragment);
                 break;
             case 1:
                 if (mScanFragment == null) {
                     mScanFragment = ScanFragment.newInstance("分类");
+                    Log.i(TAG, "onTabSelected: 开始创建mscanfragment");
                 }
-                transaction.replace(R.id.tb, mScanFragment);
+                transaction.replace(R.id.tb,mScanFragment);
                 break;
             case 2:
                 if (mMyFragment == null) {
                     mMyFragment = MyFragment.newInstance("个人");
-
                 }
-                transaction.replace(R.id.tb, mMyFragment);
+                transaction.replace(R.id.tb,mMyFragment);
                 break;
-
             default:
                 break;
         }
-
-        transaction.commit();// 事务提交
+        transaction.commit();
     }
 
     /**
@@ -243,5 +243,20 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                 mHomeFragment.updateInfo(data);
                 break;
         }
+    }
+    private void hideFragment(android.support.v4.app.FragmentTransaction transaction){
+        if(mHomeFragment!=null){
+            Log.i(TAG, "hideFragment: 隐藏home");
+            transaction.hide(mHomeFragment);
+        }
+        if(mScanFragment!=null){
+            Log.i(TAG, "hideFragment: 隐藏scan");
+            transaction.hide(mScanFragment);
+        }
+        if(mMyFragment!=null){
+            Log.i(TAG, "hideFragment: 隐藏my");
+            transaction.hide(mMyFragment);
+        }
+
     }
 }

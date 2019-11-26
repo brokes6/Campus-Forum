@@ -135,7 +135,7 @@ public class Yemian_text extends AppCompatActivity {
 
             }
         });
-        viewPager.setOffscreenPageLimit(3);
+        viewPager.setOffscreenPageLimit(4);
     }
     private void setDefaultFragment() {
         postTemplateInterface = (PostTemplateInterface) mainTabFragmentAdapter.getItem(0);
