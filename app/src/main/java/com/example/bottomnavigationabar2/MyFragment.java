@@ -155,6 +155,14 @@ public class MyFragment extends Fragment {
         LinearLayout history=(LinearLayout)view.findViewById(R.id.history);
         LinearLayout collection=(LinearLayout)view.findViewById(R.id.Collection);
         LinearLayout news = view.findViewById(R.id.news);
+        LinearLayout concern=(LinearLayout)view.findViewById(R.id.my_concern);
+        concern.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getContext(),MyConcern.class);
+                startActivity(intent);
+            }
+        });
         history.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
