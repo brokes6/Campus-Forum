@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.scwang.smartrefresh.layout.SmartRefreshLayout
+<com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:id="@+id/refreshLayout"
     android:fitsSystemWindows="true"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            fab:layout_scrollFlags="scroll|exitUntilCollapsed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -37,8 +36,8 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:src="@mipmap/ic_launcher"
-                app:civ_border_color="#4CAF50"
-                app:civ_border_width="2dp"
+                fab:civ_border_color="#4CAF50"
+                fab:civ_border_width="2dp"
                 android:layout_gravity="center_vertical" />
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -54,11 +53,21 @@
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:text="吧名"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#FFF"
-                        android:text="仲夏夜梦"/>
+                        android:text="负责人："/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#FFF"
+                        android:text="某某人"/>
+                </LinearLayout>
             </LinearLayout>
             <Button
                 android:layout_marginLeft="55dp"
@@ -73,7 +82,6 @@
     <LinearLayout
         android:layout_width="300dp"
         android:layout_height="70dp"
-
         android:layout_marginLeft="55dp"
         android:background="@drawable/border"
         android:orientation="vertical"
@@ -134,11 +142,13 @@
             android:layout_gravity="center_horizontal"
             android:background="#FFFFFF"
             android:visibility="visible"
-            app:tabGravity="fill"
-            app:tabIndicatorColor="@color/colorPrimary"
-            app:tabMode="fixed"
-            app:tabSelectedTextColor="@color/textColor" />
+            fab:tabGravity="fill"
+            fab:tabIndicatorColor="@color/colorPrimary"
+            fab:tabMode="fixed"
+            fab:tabSelectedTextColor="@color/textColor" />
     </android.support.design.widget.AppBarLayout>
+
+
         <android.support.v4.view.ViewPager
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
@@ -147,14 +157,54 @@
             android:paddingTop="10dp"
             android:paddingRight="16dp"
             android:paddingBottom="10dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            fab:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        //悬浮按钮
+        <floatingactionbutton.FloatingActionsMenu
+            android:id="@+id/multiple_actions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="230dp"
+            android:layout_marginTop="350dp"
+            fab:fab_addButtonColorNormal="@color/white"
+            fab:fab_addButtonColorPressed="@color/white_pressed"
+            fab:fab_addButtonPlusIconColor="@color/half_black"
+            fab:fab_labelStyle="@style/menu_labels_style"
+            android:layout_gravity="right|bottom"
+            >
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/fab"
+            <floatingactionbutton.FloatingActionButton
+                android:id="@+id/action_a"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="335dp"
-                android:layout_marginTop="580dp"
-                android:src="@drawable/shape"/>
+                fab:fab_colorNormal="@color/white"
+                fab:fab_title="发表文章"
+                android:src="@drawable/bi_while"
+                android:scaleType="center"
+                fab:fab_colorPressed="@color/white_pressed"/>
+
+            <floatingactionbutton.FloatingActionButton
+                android:id="@+id/action_b"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_colorNormal="@color/white"
+                fab:fab_title="发表视频"
+                fab:fab_colorPressed="@color/white_pressed"/>
+
+            <floatingactionbutton.FloatingActionButton
+                android:id="@+id/action_c"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_colorNormal="@color/white"
+                fab:fab_title="测试"
+                fab:fab_colorPressed="@color/white_pressed"/>
+
+        </floatingactionbutton.FloatingActionsMenu>
+<!--            <android.support.design.widget.FloatingActionButton-->
+<!--                android:id="@+id/fab"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="335dp"-->
+<!--                android:layout_marginTop="580dp"-->
+<!--                android:src="@drawable/shape"/>-->
 </android.support.design.widget.CoordinatorLayout>
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>

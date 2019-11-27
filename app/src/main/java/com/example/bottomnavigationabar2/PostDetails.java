@@ -108,6 +108,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
     private TextView content;
     private TextView message;
     private TextView loveNumStr;
+    private LinearLayout back;
     private TextView commentStr;
     private MyImageView userImg;
     private ImageView loveNum;
@@ -213,12 +214,14 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         userData=FileCacheUtil.getUser(this);
         postId = getPostId();
         initView();
+        click();
         initDetailsLayout();
         initRefreshLayout();
     }
     //初始化
     private void initView() {
         //获取实列
+        back = findViewById(R.id.back);
         userImg=findViewById(R.id.tieze_user_img);
         message = findViewById(R.id.message);
         messageLayout=findViewById(R.id.messageLayout);
@@ -246,6 +249,19 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
             public void onNothingSelected(AdapterView<?> parent) {}
         });
     }
+    private void click(){
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent();
+                intent.putExtra("loveNum",loveNumStr.getText().toString());
+                intent.putExtra("talkNum",commentStr.getText().toString());
+                intent.putExtra("status",status);
+                setResult(HomeFragment.POSTDETAILS,intent);
+                finish();
+            }
+        });
+    }
     private void initRefreshLayout(){
         refreshLayout=findViewById(R.id.refreshLayout);
         refreshLayout.setEnableRefresh(false);
@@ -267,6 +283,20 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
             public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
                 if(childPosition==2) {
                     Log.i(TAG, "onChildClick: 点击查看更多");
+                    String name = adapter.getCommentBeanList().get(groupPosition).getUsername();
+                    String data = adapter.getCommentBeanList().get(groupPosition).getContent();
+                    String time = DateTimeUtil.handlerDateTime(adapter.getCommentBeanList().get(groupPosition).getCcreateTime());
+                    String url = adapter.getCommentBeanList().get(groupPosition).getUimg();
+                    Intent intent = new Intent(PostDetails.this, MoerReply.class);
+                    intent.putExtra("data",data);
+                    intent.putExtra("url",url);
+                    intent.putExtra("time",time);
+                    intent.putExtra("name",name);
+                    Log.d(TAG, "名字为----------------"+name);
+                    Log.d(TAG, "时间为----------------"+time);
+                    Log.d(TAG, "内容为----------------"+data);
+                    Log.d(TAG, "url为----------------"+url);
+                    startActivity(intent);
                     return false;
                 }
                 Toast.makeText(PostDetails.this, "点击了回复", Toast.LENGTH_SHORT).show();

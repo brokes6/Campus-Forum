@@ -35,7 +35,7 @@ import okhttp3.Response;
 
 public class OrganizationRecommendTemplate extends Fragment {
     private static final String TAG = "OrganizatioinFollowTemp";
-    public static final String ORGANIZATION_REQUEST_URL = "http://10.0.2.2:8080/app/getPopularOrganization";
+    public static final String ORGANIZATION_REQUEST_URL = "http://106.54.134.17/app/getPopularOrganization";
     private OrganizationAdapter organizationAdapter;
     private LinearLayoutManager linearLayoutManager;
     private RecyclerView recyclerView;

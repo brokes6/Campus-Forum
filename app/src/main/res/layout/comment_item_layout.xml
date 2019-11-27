@@ -6,7 +6,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:orientation="horizontal"
         android:gravity="center_vertical">
@@ -19,8 +19,8 @@
             android:layout_marginRight="6dp"/>-->
         <com.example.bottomnavigationabar2.MyImageView
             android:id="@+id/comment_item_logo"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/user_logo"
             android:layout_marginLeft="14dp"
             android:layout_marginRight="6dp"/>
@@ -34,15 +34,16 @@
                 android:id="@+id/comment_item_userName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#5B595A"
-                android:textSize="14sp"
+                android:textSize="17sp"
+                android:textColor="#494949"
+                android:textStyle="bold"
                 android:text="沐风" />
             <TextView
                 android:id="@+id/comment_item_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1小时前"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 android:layout_marginTop="3dp"
                 android:textColor="#989898"/>
         </LinearLayout>
@@ -72,13 +73,12 @@
         android:id="@+id/comment_item_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginTop="6dp"
         android:textColor="#484848"
-        android:textSize="14sp"
-        android:layout_marginLeft="52dp"
+        android:textSize="16sp"
+        android:layout_marginLeft="65dp"
         android:layout_marginRight="24dp"
-        android:text="从前有座山，山里有座庙，庙里有个老和尚"/>
+        android:text="测试文字"/>
 
 
 </LinearLayout>

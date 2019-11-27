@@ -24,35 +24,39 @@
             android:id="@+id/tiezi_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="70dp"
+            android:layout_marginLeft="60dp"
             android:layout_marginTop="-45dp"
             android:text="我是名字"
-            android:textColor="@android:color/holo_blue_dark" />
+            android:textSize="17sp"
+            android:textColor="#494949"
+            android:textStyle="bold" />
         <TextView
             android:id="@+id/tiezi_time"
             android:layout_marginLeft="290dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-15dp"
+            android:layout_marginTop="-25dp"
             android:text="我是时间"
             android:transitionName="time"
             />
         <TextView
-            android:layout_marginLeft="71dp"
+            android:layout_marginLeft="60dp"
             android:id="@+id/tieze_felei"
             android:text="-抗压吧-"
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#F44336"
+            android:textColor="#6F6F6F"
             android:textSize="12sp"
             />
 
         <TextView
             android:layout_marginTop="15dp"
             android:layout_marginLeft="5dp"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:id="@+id/tieze_Text"
             android:text="123"
+            android:textColor="#424242"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:transitionName="longtext"

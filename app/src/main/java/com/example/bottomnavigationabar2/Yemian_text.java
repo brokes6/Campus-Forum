@@ -74,17 +74,48 @@ public class Yemian_text extends AppCompatActivity {
         initAppBarLayout();
     }
     private void initView(){
-        //悬浮按钮 点击事件
-        addPostButton=findViewById(R.id.fab);
-        addPostButton.bringToFront();
-        addPostButton.setOnClickListener(new View.OnClickListener() {
+        /*
+        *悬浮按钮 更多按钮
+         */
+
+        final floatingactionbutton.FloatingActionButton actionA =  findViewById(R.id.action_a);
+        actionA.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 Intent intent_addPost = new Intent(Yemian_text.this,addPost.class);
                 overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
                 startActivity(intent_addPost);
             }
         });
+
+        final floatingactionbutton.FloatingActionButton actionB =  findViewById(R.id.action_b);
+        actionB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(Yemian_text.this,"你点击了B",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        final floatingactionbutton.FloatingActionButton actionC =  findViewById(R.id.action_c);
+        actionC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(Yemian_text.this,"你点击了C",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        //悬浮按钮 点击事件
+//        addPostButton=findViewById(R.id.fab);
+//        addPostButton.bringToFront();
+//        addPostButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent_addPost = new Intent(Yemian_text.this,addPost.class);
+//                overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
+//                startActivity(intent_addPost);
+//            }
+//        });
         viewPager=findViewById(R.id.viewPager);
         tabLayout=findViewById(R.id.tabLayout);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

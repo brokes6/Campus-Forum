@@ -42,6 +42,7 @@ public class MyFragment extends Fragment {
     private LinearLayout Set_up;
     private View view;
     private User userData;
+    private TextView user_account;
     private TextView usernameView;
     private MyImageView picture;
     public static final int CHOOSE_PHOTO = 2;
@@ -148,6 +149,7 @@ public class MyFragment extends Fragment {
         }
     }
     private void initView(){
+        user_account = view.findViewById(R.id.user_account);
         usernameView=view.findViewById(R.id.username);
         picture = view.findViewById(R.id.user_head_img);
         LinearLayout history=(LinearLayout)view.findViewById(R.id.history);
@@ -180,6 +182,7 @@ public class MyFragment extends Fragment {
     private void initData(){
         usernameView.setText(userData.getUsername());
         picture.setCacheImageURL(userData.getUimg());
+        user_account.setText(userData.getAccount());
         Log.i(TAG, "initData: 被调用");
     }
     //先暂时弃用
