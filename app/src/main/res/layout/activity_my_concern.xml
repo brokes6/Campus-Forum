@@ -28,23 +28,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-        <ScrollView
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/concern_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:showDividers="end"
-                android:orientation="vertical">
 
-            </LinearLayout>
-        </ScrollView>
+
+        </android.support.v7.widget.RecyclerView>
+
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
-
-
-
-
-
 </LinearLayout>

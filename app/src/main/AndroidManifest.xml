@@ -50,6 +50,7 @@
         <activity android:name=".personalpage.Hobby" />
         <activity android:name=".personalpage.myName" />
         <activity android:name=".Mynews"/>
+        <activity android:name=".MyConcern"/>
         <activity
             android:name=".PostDetails"
             android:windowSoftInputMode="adjustPan" />
