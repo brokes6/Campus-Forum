@@ -3,7 +3,6 @@ package com.example.bottomnavigationabar2;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.ActivityManager;
-import android.app.Fragment;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +17,9 @@ import android.os.Bundle;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,7 @@ import static android.app.Activity.RESULT_OK;
  */
 
 public class MyFragment extends Fragment {
+    private static final String TAG = "MyFragment";
     private LinearLayout Set_up;
     private View view;
     private User userData;
@@ -111,7 +113,7 @@ public class MyFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(getContext(),Personal_information.class);
-                startActivity(intent);
+                startActivityForResult(intent,1);
             }
         });
         return view;
@@ -185,7 +187,20 @@ public class MyFragment extends Fragment {
     }
     private void initData(){
         usernameView.setText(userData.getUsername());
-        picture.setImageURL(userData.getUimg());
+        picture.setCacheImageURL(userData.getUimg());
+        Log.i(TAG, "initData: 被调用");
+    }
+    //先暂时弃用
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode==0){
+            return;
+        }
+        switch (requestCode){
+            case 1:
+                initData();
+                break;
+        }
     }
 }
 

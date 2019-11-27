@@ -20,6 +20,9 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.bottomnavigationabar2.Pictureutils.LocalCacheUtils;
+import com.example.bottomnavigationabar2.Pictureutils.MemoryCacheUtils;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -30,6 +33,8 @@ public class MyImageView extends ImageView {
     public static final int NETWORK_ERROR = 2;
     public static final int SERVER_ERROR = 3;
     private int id;
+    private LocalCacheUtils mLocalCacheUtils=LocalCacheUtils.getInstance();
+    private MemoryCacheUtils mMemoryCacheUtils=MemoryCacheUtils.getInstance();
     private Bitmap bitmap;
     //画笔
     private Paint mPaint;
@@ -175,5 +180,70 @@ public class MyImageView extends ImageView {
     @Override
     public void setOnClickListener(@Nullable OnClickListener l) {
         super.setOnClickListener(l);
+    }
+
+    //设置网络图片（从网络中获取图片）
+    public void setCacheImageURL(final String path) {
+
+        //从本地获取图片
+        //从内存中获取图片；
+        Bitmap memorymbitmap = mMemoryCacheUtils.getBitmapFromMemory(path);
+        if(memorymbitmap==null){
+            Bitmap localbitmap = mLocalCacheUtils.getBitmapFromLocal(path);
+            if(localbitmap==null){
+                new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            //把传过来的路径转成URL
+                            URL url = new URL(path);
+                            //获取连接
+                            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                            //使用GET方法访问网络
+                            connection.setRequestMethod("GET");
+                            //超时时间为10秒
+                            connection.setConnectTimeout(10000);
+                            //获取返回码
+                            int code = connection.getResponseCode();
+                            //当返回码是200，代表获取成功
+                            if (code == 200) {
+                                InputStream inputStream = connection.getInputStream();
+                                //使用工厂把网络的输入流生产Bitmap
+                                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                                //利用Message把图片发给Handler
+                                Message msg = Message.obtain();
+                                msg.obj = bitmap;
+                                msg.what = GET_DATA_SUCCESS;
+                                //--将图片缓存进内存和本地--
+                                mLocalCacheUtils.setBitmapToLocal(path,bitmap);
+                                //将图片缓存进内存
+                                mMemoryCacheUtils.setBitmapToMemory(path, bitmap);
+                                handler.sendMessage(msg);
+                                inputStream.close();
+                            }else {
+                                //服务启发生错误
+                                handler.sendEmptyMessage(SERVER_ERROR);
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            //网络连接错误
+                            handler.sendEmptyMessage(NETWORK_ERROR);
+                        }
+                    }
+                }.start();
+            }else{
+                Message msg = Message.obtain();
+                msg.obj = localbitmap;
+                msg.what = GET_DATA_SUCCESS;
+                handler.sendMessage(msg);
+            }
+        }else{
+            Message msg = Message.obtain();
+            msg.obj = memorymbitmap;
+            msg.what = GET_DATA_SUCCESS;
+            handler.sendMessage(msg);
+        }
+        //开启一个线程用于联网
+
     }
 }

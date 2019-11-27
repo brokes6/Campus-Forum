@@ -1,9 +1,14 @@
 package com.example.bottomnavigationabar2.utils;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 
+import com.example.bottomnavigationabar2.MyImageView;
 import com.example.bottomnavigationabar2.bean.User;
 
 import java.io.File;
@@ -11,10 +16,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import static android.support.constraint.Constraints.TAG;
 
@@ -25,6 +33,20 @@ public class FileCacheUtil {
     public static final int CACHE_SHORT_TIMEOUT=1000 * 60 * 5; // 5 分钟
 
     public static Object userData;
+
+    public static final int GET_DATA_SUCCESS = 1;
+    public static final int NETWORK_ERROR = 2;
+    public static final int SERVER_ERROR = 3;
+
+ /*   private static Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case GET_DATA_SUCCESS:
+
+            }
+        }
+    };*/
     /**设置缓存
      content是要存储的内容，可以是任意格式的，不一定是字符串。
      */
@@ -93,7 +115,7 @@ public class FileCacheUtil {
             file.getParentFile().mkdirs();
         }
         if (file.exists()) {
-            Log.i(TAG, "setCache:"+file.delete());
+            file.delete();
         }
         try {
             file.createNewFile();
@@ -152,4 +174,6 @@ public class FileCacheUtil {
     public static User getUser(Context context){
         return FileCacheUtil.getCache(context,"USERDATA.txt",0, User.class);
     }
+
+
 }

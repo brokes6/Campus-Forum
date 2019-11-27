@@ -2,7 +2,6 @@ package com.example.bottomnavigationabar2;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +9,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -175,6 +175,7 @@ public class HomeFragment extends Fragment {
             initView();
             initRefreshLayout();
             initAppBarLayout();
+            viewPager.setCurrentItem(1);
         }
         mViewBackgroundTop =view.findViewById(R.id.appbar);
         mViewBackgroundBottom =view.findViewById(R.id.viewPager);

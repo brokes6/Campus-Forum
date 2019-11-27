@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/linerLayout"
+        android:layout_width="200dp"
+        android:layout_height="70dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:background="@drawable/border_fenlei">
+        <com.example.bottomnavigationabar2.MyImageView
+            android:id="@+id/organizationImg"
+            android:layout_marginLeft="20dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@mipmap/ic_launcher"
+            app:civ_border_color="#4CAF50"
+            app:civ_border_width="2dp" />
+        <TextView
+            android:id="@+id/organizationName"
+            android:layout_marginLeft="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="抗压"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="16sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/introduce"
+            android:text="111"
+            >
+
+        </TextView>
+</LinearLayout>

@@ -22,177 +22,51 @@
                 <LinearLayout
                     android:id="@+id/anniu1"
                     android:layout_width="0dp"
-                    android:layout_height="240dp"
+                    android:layout_height="70dp"
                     android:layout_weight="1"
-                    android:layout_margin="5dp"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:orientation="vertical"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
                     android:background="@drawable/border_fenlei">
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:src="@mipmap/ic_launcher"
                         app:civ_border_color="#4CAF50"
                         app:civ_border_width="2dp" />
                     <TextView
+                        android:layout_marginLeft="5dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="water"
-                        android:textColor="#010101"
-                        android:textSize="22dp" />
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="2dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="关注"
-                            android:layout_marginRight="3dp"
-                            android:textColor="#5e5e5e"
-                            android:textSize="16dp" />
-
-                        <TextView
-                            android:id="@+id/concern_gz"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="13"
-                            android:layout_marginRight="3dp"
-                            android:textColor="#5e5e5e"
-                            android:textSize="16dp" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="帖子"
-                            android:layout_marginRight="3dp"
-                            android:textColor="#5e5e5e"
-                            android:textSize="16dp" />
-                        <TextView
-                            android:id="@+id/concern_fs"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="13"
-
-                            android:textColor="#5e5e5e"
-                            android:textSize="16dp" />
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="这是一个个性签名"
-                            android:textColor="#424242"
-                            android:textSize="16dp" />
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:gravity="bottom"
-                        android:orientation="vertical">
-                        <TextView
-                            android:layout_width="50dp"
-                            android:layout_height="30dp"
-                            android:gravity="center_horizontal|center_vertical"
-                            android:background="@drawable/tj_gzbutton_border"
-                            android:textColor="#4e86d3"
-                            android:text="关注"/>
-                    </LinearLayout>
+                        android:layout_height="40dp"
+                        android:text="抗压"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:textSize="16sp"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="240dp"
+                    android:layout_height="70dp"
                     android:layout_weight="1"
-                    android:layout_margin="5dp"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:orientation="vertical"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="3dp"
+                    android:orientation="horizontal"
                     android:background="@drawable/border_fenlei">
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:src="@mipmap/ic_launcher"
                         app:civ_border_color="#4CAF50"
                         app:civ_border_width="2dp" />
                     <TextView
+                        android:layout_marginLeft="5dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="water"
-                        android:textColor="#010101"
-                        android:textSize="22dp" />
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="2dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="关注"
-                            android:layout_marginRight="3dp"
-                            android:textColor="#5e5e5e"
-                            android:textSize="16dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="13"
-                            android:layout_marginRight="3dp"
-                            android:textColor="#5e5e5e"
-                            android:textSize="16dp" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="帖子"
-                            android:layout_marginRight="3dp"
-                            android:textColor="#5e5e5e"
-                            android:textSize="16dp" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="13"
-
-                            android:textColor="#5e5e5e"
-                            android:textSize="16dp" />
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="这是一个个性签名"
-                            android:textColor="#424242"
-                            android:textSize="16dp" />
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="bottom"
-                        android:orientation="vertical">
-                        <TextView
-                            android:layout_width="50dp"
-                            android:layout_height="30dp"
-                            android:layout_margin="10dp"
-                            android:gravity="center_horizontal|center_vertical"
-                            android:background="@drawable/tj_gzbutton_border"
-                            android:textColor="#4e86d3"
-                            android:text="关注"/>
-                    </LinearLayout>
+                        android:layout_height="40dp"
+                        android:text="英语社英语社"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:textSize="16sp">
+                    </TextView>
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
@@ -202,174 +76,53 @@
                 android:orientation="horizontal">
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="240dp"
+                    android:layout_height="70dp"
                     android:layout_weight="1"
-                    android:layout_margin="5dp"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:orientation="vertical"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
                     android:background="@drawable/border_fenlei">
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:src="@mipmap/ic_launcher"
                         app:civ_border_color="#4CAF50"
                         app:civ_border_width="2dp" />
                     <TextView
+                        android:layout_marginLeft="5dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="water"
-                        android:textColor="#010101"
-                        android:textSize="22dp" />
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="2dp"
-                        android:orientation="horizontal">
+                        android:layout_height="40dp"
+                        android:text="英语社英语社"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:textSize="16sp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="关注"
-                            android:layout_marginRight="3dp"
-                            android:textColor="#5e5e5e"
-                            android:textSize="16dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="13"
-                            android:layout_marginRight="3dp"
-                            android:textColor="#5e5e5e"
-                            android:textSize="16dp" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="帖子"
-                            android:layout_marginRight="3dp"
-                            android:textColor="#5e5e5e"
-                            android:textSize="16dp" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="13"
-                            android:textColor="#5e5e5e"
-                            android:textSize="16dp" />
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="这是一个个性签名"
-                            android:textColor="#424242"
-                            android:textSize="16dp" />
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:gravity="bottom"
-                        android:orientation="vertical">
-                        <TextView
-                            android:layout_width="50dp"
-                            android:layout_height="30dp"
-                            android:gravity="center_horizontal|center_vertical"
-                            android:background="@drawable/tj_gzbutton_border"
-                            android:textColor="#4e86d3"
-                            android:text="关注"/>
-                    </LinearLayout>
+                    </TextView>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="240dp"
+                    android:layout_height="70dp"
                     android:layout_weight="1"
-                    android:layout_margin="5dp"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:orientation="vertical"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="3dp"
+                    android:orientation="horizontal"
                     android:background="@drawable/border_fenlei">
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:src="@mipmap/ic_launcher"
                         app:civ_border_color="#4CAF50"
                         app:civ_border_width="2dp" />
                     <TextView
+                        android:layout_marginLeft="5dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="water"
-                        android:textColor="#010101"
-                        android:textSize="22dp" />
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="2dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="关注"
-                            android:layout_marginRight="3dp"
-                            android:textColor="#5e5e5e"
-                            android:textSize="16dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="13"
-                            android:layout_marginRight="3dp"
-                            android:textColor="#5e5e5e"
-                            android:textSize="16dp" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="帖子"
-                            android:layout_marginRight="3dp"
-                            android:textColor="#5e5e5e"
-                            android:textSize="16dp" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="13"
-
-                            android:textColor="#5e5e5e"
-                            android:textSize="16dp" />
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="这是一个个性签名"
-                            android:textColor="#424242"
-                            android:textSize="16dp" />
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="bottom"
-                        android:orientation="vertical">
-                        <TextView
-                            android:layout_width="50dp"
-                            android:layout_height="30dp"
-                            android:layout_margin="10dp"
-                            android:gravity="center_horizontal|center_vertical"
-                            android:background="@drawable/tj_gzbutton_border"
-                            android:textColor="#4e86d3"
-                            android:text="关注"/>
-                    </LinearLayout>
+                        android:layout_height="40dp"
+                        android:text="英语社英语社"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:textSize="16sp">
+                    </TextView>
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
@@ -379,178 +132,224 @@
                 android:orientation="horizontal">
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="240dp"
+                    android:layout_height="70dp"
                     android:layout_weight="1"
-                    android:layout_margin="5dp"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:orientation="vertical"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
                     android:background="@drawable/border_fenlei">
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:src="@mipmap/ic_launcher"
                         app:civ_border_color="#4CAF50"
                         app:civ_border_width="2dp" />
                     <TextView
+                        android:layout_marginLeft="5dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="water"
-                        android:textColor="#010101"
-                        android:textSize="22dp" />
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="2dp"
-                        android:orientation="horizontal">
+                        android:layout_height="40dp"
+                        android:text="英语社英语社"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:textSize="16sp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="关注"
-                            android:layout_marginRight="3dp"
-                            android:textColor="#5e5e5e"
-                            android:textSize="16dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="13"
-                            android:layout_marginRight="3dp"
-                            android:textColor="#5e5e5e"
-                            android:textSize="16dp" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="帖子"
-                            android:layout_marginRight="3dp"
-                            android:textColor="#5e5e5e"
-                            android:textSize="16dp" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="13"
-
-                            android:textColor="#5e5e5e"
-                            android:textSize="16dp" />
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="这是一个个性签名"
-                            android:textColor="#424242"
-                            android:textSize="16dp" />
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:gravity="bottom"
-                        android:orientation="vertical">
-                        <TextView
-                            android:layout_width="50dp"
-                            android:layout_height="30dp"
-                            android:gravity="center_horizontal|center_vertical"
-                            android:background="@drawable/tj_gzbutton_border"
-                            android:textColor="#4e86d3"
-                            android:text="关注"/>
-                    </LinearLayout>
+                    </TextView>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="240dp"
+                    android:layout_height="70dp"
                     android:layout_weight="1"
-                    android:layout_margin="5dp"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:orientation="vertical"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="3dp"
+                    android:orientation="horizontal"
                     android:background="@drawable/border_fenlei">
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:src="@mipmap/ic_launcher"
                         app:civ_border_color="#4CAF50"
                         app:civ_border_width="2dp" />
                     <TextView
+                        android:layout_marginLeft="5dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="water"
-                        android:textColor="#010101"
-                        android:textSize="22dp" />
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="2dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="关注"
-                            android:layout_marginRight="3dp"
-                            android:textColor="#5e5e5e"
-                            android:textSize="16dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="13"
-                            android:layout_marginRight="3dp"
-                            android:textColor="#5e5e5e"
-                            android:textSize="16dp" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="帖子"
-                            android:layout_marginRight="3dp"
-                            android:textColor="#5e5e5e"
-                            android:textSize="16dp" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="13"
-
-                            android:textColor="#5e5e5e"
-                            android:textSize="16dp" />
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="这是一个个性签名"
-                            android:textColor="#424242"
-                            android:textSize="16dp" />
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="bottom"
-                        android:orientation="vertical">
-                        <TextView
-                            android:layout_width="50dp"
-                            android:layout_height="30dp"
-                            android:layout_margin="10dp"
-                            android:gravity="center_horizontal|center_vertical"
-                            android:background="@drawable/tj_gzbutton_border"
-                            android:textColor="#4e86d3"
-                            android:text="关注"/>
-                    </LinearLayout>
+                        android:layout_height="40dp"
+                        android:text="英语社英语社"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:textSize="16sp">
+                    </TextView>
                 </LinearLayout>
             </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:background="@drawable/border_fenlei">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_marginLeft="20dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@mipmap/ic_launcher"
+                        app:civ_border_color="#4CAF50"
+                        app:civ_border_width="2dp" />
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:text="英语社英语社"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:textSize="16sp">
 
+                    </TextView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="3dp"
+                    android:orientation="horizontal"
+                    android:background="@drawable/border_fenlei">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_marginLeft="20dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@mipmap/ic_launcher"
+                        app:civ_border_color="#4CAF50"
+                        app:civ_border_width="2dp" />
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:text="英语社英语社"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:textSize="16sp">
+                    </TextView>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:background="@drawable/border_fenlei">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_marginLeft="20dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@mipmap/ic_launcher"
+                        app:civ_border_color="#4CAF50"
+                        app:civ_border_width="2dp" />
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:text="英语社英语社"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:textSize="16sp">
+
+                    </TextView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="3dp"
+                    android:orientation="horizontal"
+                    android:background="@drawable/border_fenlei">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_marginLeft="20dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@mipmap/ic_launcher"
+                        app:civ_border_color="#4CAF50"
+                        app:civ_border_width="2dp" />
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:text="英语社英语社"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:textSize="16sp">
+                    </TextView>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:background="@drawable/border_fenlei">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_marginLeft="20dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@mipmap/ic_launcher"
+                        app:civ_border_color="#4CAF50"
+                        app:civ_border_width="2dp" />
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:text="英语社英语社"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:textSize="16sp">
+
+                    </TextView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="3dp"
+                    android:orientation="horizontal"
+                    android:background="@drawable/border_fenlei">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_marginLeft="20dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@mipmap/ic_launcher"
+                        app:civ_border_color="#4CAF50"
+                        app:civ_border_width="2dp" />
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:text="英语社英语社"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:textSize="16sp">
+                    </TextView>
+                </LinearLayout>
+
+            </LinearLayout>
                     <Button
                         android:id="@+id/Refresh"
                         android:layout_width="200dp"
