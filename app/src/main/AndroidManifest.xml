@@ -39,10 +39,15 @@
         android:resizeableActivity="false"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".activity.OrganizationDetailsActivity"/>
+        <activity android:name=".activity.SearchDetailsActivity"/>
+        <activity android:name=".activity.SearchActivity"/>
         <activity android:name=".MoerReply"></activity>
         <activity android:name=".Set_up"></activity>
         <activity android:name=".UserInformation" />
-        <activity android:name=".LoadActivity"></activity>
+        <activity android:name=".LoadActivity">
+
+        </activity>
         <activity android:name=".personalpage.More" />
         <activity android:name=".Autograph" />
         <activity android:name=".personalpage.Hobby" />
@@ -57,7 +62,7 @@
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".FintoutPasswordActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".Yemian_text" />
+        <activity android:name=".OrganizationActivity" />
         <activity android:name=".MyCollection" />
         <activity android:name=".Personal_information" />
         <activity android:name=".history" />

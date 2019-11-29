@@ -13,7 +13,7 @@ public class Organization {
     private String password;
     private int onum;
     private int ceoId;
-    private Date createTime;
+    private String createTime;
     private String ointroduce;
     private String oimg;
     private int loveNum;
@@ -66,11 +66,11 @@ public class Organization {
         this.ceoId = ceoId;
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 

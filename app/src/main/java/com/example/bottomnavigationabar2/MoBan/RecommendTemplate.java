@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -63,12 +64,14 @@ public class RecommendTemplate extends Fragment implements PostTemplateInterface
     private int tagId;
     private String url;
 
-    public RecommendTemplate(){}
-    public RecommendTemplate(boolean flag, int tagId, String url) {
-        super();
-        this.flag = flag;
-        this.tagId=tagId;
-        this.url=url;
+    public static RecommendTemplate newIntance(boolean flag, int tagId, String url){
+        RecommendTemplate template=new RecommendTemplate();
+        Bundle bundle=new Bundle();
+        bundle.putBoolean("flag",flag);
+        bundle.putInt("tagId",tagId);
+        bundle.putString("url",url);
+        template.setArguments(bundle);
+        return template;
     }
     public static void startActivity(Context context, List<NineGridTestModel> list) {
         Intent intent = new Intent(context, PopularPostTemplate.class);
@@ -79,15 +82,24 @@ public class RecommendTemplate extends Fragment implements PostTemplateInterface
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle args=getArguments();
+        flag=args.getBoolean("flag");
+        tagId=args.getInt("tagId");
+        url=args.getString("url");
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView: ------------");
         view = inflater.inflate(R.layout.mo_ban_1, container, false);
-        initView();
-        getPostList(HomeFragment.userData.getToken());
         return view;
     }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initView();
+    }
+
     private void initView() {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         mLayoutManager = new LinearLayoutManager(getContext());
@@ -96,40 +108,43 @@ public class RecommendTemplate extends Fragment implements PostTemplateInterface
         mAdapter.setList(mList);
         mRecyclerView.setAdapter(mAdapter);
     }
-    public void getPostList(String token){
-        final Request request = new Request.Builder()
-                .url(handlerUrl(token))
-                .build();
-        OkHttpClient okHttpClient = new OkHttpClient();
-        okHttpClient.newCall(request).enqueue(new Callback() {
+    public void getPostList(final String token){
+        new Thread(){
             @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-                Log.d(TAG, "onFailure:失败呃");
-            }
-            @Override
-            public void onResponse(Call call, Response response) {
-                try {
-                    String responseStr = response.body().string();
-                    Log.i(TAG, "onResponse:---"+responseStr);
-                    JSONObject jsonObject = new JSONObject(responseStr);
-                    int code=jsonObject.getInt("code");
-                    if(code==0){
-                        showToast("别搞拉，去看看其他的地方把");
-                        return;
+            public void run() {
+                final Request request = new Request.Builder()
+                        .url(handlerUrl(token))
+                        .build();
+                OkHttpClient okHttpClient = new OkHttpClient();
+                okHttpClient.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                        Log.d(TAG, "onFailure:失败呃");
                     }
-                    String dataStr = jsonObject.getString("data");
-                    Gson gson = new Gson();
-                    List<Post> posts = gson.fromJson(dataStr, new TypeToken<List<Post>>() {}.getType());
-                    mAdapter.setList(posts);
-                    Message message = new Message();
-                    message.what = PostTemplateInterface.NOTIFY;
-                    handler.sendMessage(message);
-                    page++;
-                    for (Post post:posts){
-                        post.getUsername();
-                    }
-                    //存放文章内容
+                    @Override
+                    public void onResponse(Call call, Response response) {
+                        try {
+                            String responseStr = response.body().string();
+                            Log.i(TAG, "onResponse:---"+responseStr);
+                            JSONObject jsonObject = new JSONObject(responseStr);
+                            int code=jsonObject.getInt("code");
+                            if(code==0){
+                                showToast("别搞拉，去看看其他的地方把");
+                                return;
+                            }
+                            String dataStr = jsonObject.getString("data");
+                            Gson gson = new Gson();
+                            List<Post> posts = gson.fromJson(dataStr, new TypeToken<List<Post>>() {}.getType());
+                            mAdapter.setList(posts);
+                            Message message = new Message();
+                            message.what = PostTemplateInterface.NOTIFY;
+                            handler.sendMessage(message);
+                            page++;
+                            for (Post post:posts){
+                                post.getUsername();
+                            }
+                            //存放文章内容
 /*
                         setCache(,getContext(),"Text",MODE_PRIVATE);
                         //存放用户名称
@@ -155,11 +170,13 @@ public class RecommendTemplate extends Fragment implements PostTemplateInterface
                             e.printStackTrace();
                         }
 */
-                }catch(Exception exception){
-                    exception.printStackTrace();
-                }
+                        }catch(Exception exception){
+                            exception.printStackTrace();
+                        }
+                    }
+                });
             }
-        });
+        }.start();
     }
 
     @Override
@@ -198,5 +215,11 @@ public class RecommendTemplate extends Fragment implements PostTemplateInterface
     public void onDestroyView() {
         super.onDestroyView();
         page=1;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getPostList(HomeFragment.userData.getToken());
     }
 }

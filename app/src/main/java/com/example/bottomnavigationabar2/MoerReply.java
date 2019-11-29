@@ -10,6 +10,8 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -24,11 +26,29 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bottomnavigationabar2.adapter.CommentExpandAdapter;
+import com.example.bottomnavigationabar2.adapter.ReplyAdapter;
 import com.example.bottomnavigationabar2.bean.CommentDetailBean;
+import com.example.bottomnavigationabar2.bean.ReplyDetailBean;
 import com.example.bottomnavigationabar2.bean.User;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MoerReply extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "MoerReply";
+    public static final int HANDLER_DATA=1;
+    public static final String REPLY_REQUEST_URL="http://106.54.134.17/app/getNewReplys";
     private CommentExpandAdapter adapter;
     private ProgressBar progressBar;
     private BottomSheetDialog dialog;
@@ -42,11 +62,21 @@ public class MoerReply extends AppCompatActivity implements View.OnClickListener
     private User userData;
     private TextView content;
     private int postId;
+    private int commentId;
     private TextView bt_comment;
+    private RecyclerView recyclerView;
+    private ReplyAdapter replyAdapter;
+    private int startPage=1;
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
-
+            switch (msg.what){
+                case HANDLER_DATA:
+                    Log.i(TAG, "handleMessage: 开始设置咯");
+                    replyAdapter.setReplyDetailBeans((List<ReplyDetailBean>) msg.obj);
+                    replyAdapter.notifyDataSetChanged();
+                    break;
+            }
         }
     };
     @Override
@@ -74,6 +104,7 @@ public class MoerReply extends AppCompatActivity implements View.OnClickListener
         floor = findViewById(R.id.moer_floor);
         Time = findViewById(R.id.more_time);
         back = findViewById(R.id.back);
+        recyclerView=findViewById(R.id.recyclerView);
     }
     private void click(){
         bt_comment.setOnClickListener(this);
@@ -96,10 +127,15 @@ public class MoerReply extends AppCompatActivity implements View.OnClickListener
         String data = intent.getStringExtra("data");
         String time1 = intent.getStringExtra("time");
         String url = intent.getStringExtra("url");
+        commentId=intent.getIntExtra("cid",-1);
         userimg.setImageURL(url);
         username.setText(name);
         text.setText(data);
         Time.setText(time1);
+        replyAdapter=new ReplyAdapter(this);
+        recyclerView.setAdapter(replyAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        getNewsReply();
     }
     @Override
     public void onClick(View view) {
@@ -141,5 +177,42 @@ public class MoerReply extends AppCompatActivity implements View.OnClickListener
         });
         dialog.show();
     }
+    public void getNewsReply(){
+        new Thread(){
+            @Override
+            public void run() {
+                Request request=new Request.Builder()
+                        .url(REPLY_REQUEST_URL+"?startPage="+startPage+"&commentId="+commentId)
+                        .build();
+                OkHttpClient okHttpClient=new OkHttpClient();
+                okHttpClient.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                    }
 
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        String responseData=response.body().string();
+                        Log.i(TAG, "onResponse: "+responseData);
+                        try {
+                            JSONObject jsonObject=new JSONObject(responseData);
+                            int code=jsonObject.getInt("code");
+                            if(code==0){
+                                return;
+                            }
+                            Gson gson=new Gson();
+                            List<ReplyDetailBean> beans=gson.fromJson(jsonObject.getString("data"),new TypeToken<List<ReplyDetailBean>>(){}.getType());
+                            Message message=new Message();
+                            message.what=HANDLER_DATA;
+                            message.obj=beans;
+                            handler.sendMessage(message);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        }.start();
+    }
 }

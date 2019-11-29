@@ -57,8 +57,10 @@ public class ScanFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         System.out.println("我要重新创建？");
-        view = inflater.inflate(R.layout.mscan_fragment, container, false);
-        initView();
+        if(view==null) {
+            view = inflater.inflate(R.layout.mscan_fragment, container, false);
+            initView();
+        }
         return view;
     }
     private void initView(){
@@ -72,6 +74,11 @@ public class ScanFragment extends Fragment{
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
+                if(i==1){
+                    signin.setVisibility(View.GONE);
+                }else {
+                    signin.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
@@ -84,6 +91,7 @@ public class ScanFragment extends Fragment{
             }
         });
         viewPager.setCurrentItem(0);
+        viewPager.setOffscreenPageLimit(2);
 
     }
 
@@ -128,9 +136,13 @@ public class ScanFragment extends Fragment{
     @Override
     public void onStart() {
         super.onStart();
-/*        System.out.println("开始拉");
-        initView();
-        initData();*/
+        System.out.println("开始拉");
     }
+//
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        initView();
+//    }
 }
 

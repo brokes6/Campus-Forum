@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -49,13 +50,15 @@ public class PopularPostTemplate extends Fragment implements PostTemplateInterfa
     private List<Post> mList = new ArrayList<>();
     private View view;
     private String token=FileCacheUtil.getUser(getContext()).getToken();
-    private String url;
-    public PopularPostTemplate(){}
-    public PopularPostTemplate(boolean flag, int tagId, String url) {
-        super();
-        this.flag = flag;
-        this.tagId=tagId;
-        this.url=url;
+    private String url=STANDARD_POPULAR_URL;
+    public static PopularPostTemplate newIntance(boolean flag, int tagId, String url){
+        PopularPostTemplate template=new PopularPostTemplate();
+        Bundle bundle=new Bundle();
+        bundle.putBoolean("flag",flag);
+        bundle.putInt("tagId",tagId);
+        bundle.putString("url",url);
+        template.setArguments(bundle);
+        return template;
     }
 
     private Handler handler=new Handler(){
@@ -74,16 +77,25 @@ public class PopularPostTemplate extends Fragment implements PostTemplateInterfa
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle args=getArguments();
+        flag=args.getBoolean("flag");
+        tagId=args.getInt("tagId");
+        url=args.getString("url");
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView: ------------");
         view = inflater.inflate(R.layout.mo_ban_1, container, false);
-        initView();
-        Log.i(TAG, "onCreateView: token="+token);
-        getPostList(token);
         return view;
     }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initView();
+        Log.i(TAG, "onCreateView: token="+token);
+    }
+
     private void initView() {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         mLayoutManager = new LinearLayoutManager(getContext());
@@ -92,41 +104,44 @@ public class PopularPostTemplate extends Fragment implements PostTemplateInterfa
         mAdapter.setList(mList);
         mRecyclerView.setAdapter(mAdapter);
     }
-    public void getPostList(String token){
-        Log.i(TAG, "getPostList: 你说你page="+page);
-        final Request request = new Request.Builder()
-                .url(handlerUrl(token))
-                .build();
-        OkHttpClient okHttpClient = new OkHttpClient();
-        okHttpClient.newCall(request).enqueue(new Callback() {
+    public void getPostList(final String token){
+        new Thread(){
             @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-                Log.d(TAG, "onFailure:失败呃");
-            }
-            @Override
-            public void onResponse(Call call, Response response) {
-                try {
-                    String responseStr = response.body().string();
-                    Log.i(TAG, "onResponse:---"+responseStr);
-                    JSONObject jsonObject = new JSONObject(responseStr);
-                    int code=jsonObject.getInt("code");
-                    if(code==0){
-                        showToast("别搞拉，去看看其他的地方把");
-                        return;
+            public void run() {
+                Log.i(TAG, "getPostList: 你说你page="+page);
+                final Request request = new Request.Builder()
+                        .url(handlerUrl(token))
+                        .build();
+                OkHttpClient okHttpClient = new OkHttpClient();
+                okHttpClient.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                        Log.d(TAG, "onFailure:失败呃");
                     }
-                    String dataStr = jsonObject.getString("data");
-                    Gson gson = new Gson();
-                    List<Post> posts = gson.fromJson(dataStr, new TypeToken<List<Post>>() {}.getType());
-                    mAdapter.setList(posts);
-                    Message message = new Message();
-                    message.what = PostTemplateInterface.NOTIFY;
-                    handler.sendMessage(message);
-                    page++;
-                    for (Post post:posts){
-                        post.getUsername();
-                    }
-                        //存放文章内容
+                    @Override
+                    public void onResponse(Call call, Response response) {
+                        try {
+                            String responseStr = response.body().string();
+                            Log.i(TAG, "onResponse:---"+responseStr);
+                            JSONObject jsonObject = new JSONObject(responseStr);
+                            int code=jsonObject.getInt("code");
+                            if(code==0){
+                                showToast("别搞拉，去看看其他的地方把");
+                                return;
+                            }
+                            String dataStr = jsonObject.getString("data");
+                            Gson gson = new Gson();
+                            List<Post> posts = gson.fromJson(dataStr, new TypeToken<List<Post>>() {}.getType());
+                            mAdapter.setList(posts);
+                            Message message = new Message();
+                            message.what = PostTemplateInterface.NOTIFY;
+                            handler.sendMessage(message);
+                            page++;
+                            for (Post post:posts){
+                                post.getUsername();
+                            }
+                            //存放文章内容
 /*
                         setCache(,getContext(),"Text",MODE_PRIVATE);
                         //存放用户名称
@@ -152,11 +167,13 @@ public class PopularPostTemplate extends Fragment implements PostTemplateInterfa
                             e.printStackTrace();
                         }
 */
-                }catch(Exception exception){
-                    exception.printStackTrace();
-                }
+                        }catch(Exception exception){
+                            exception.printStackTrace();
+                        }
+                    }
+                });
             }
-        });
+        }.start();
     }
 
     @Override
@@ -197,5 +214,11 @@ public class PopularPostTemplate extends Fragment implements PostTemplateInterfa
     public void onDestroyView() {
         super.onDestroyView();
         page=1;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getPostList(token);
     }
 }

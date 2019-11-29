@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -62,33 +63,42 @@ public class FollowTemplate extends Fragment implements PostTemplateInterface {
     private boolean flag;
     private int tagId;
     private String url;
-
-    public FollowTemplate(){}
-    public FollowTemplate(boolean flag, int tagId, String url) {
-        super();
-        this.flag = flag;
-        this.tagId=tagId;
-        this.url=url;
+    public static FollowTemplate newIntance(boolean flag, int tagId, String url){
+        FollowTemplate followTemplate=new FollowTemplate();
+        Bundle bundle=new Bundle();
+        bundle.putBoolean("flag",flag);
+        bundle.putInt("tagId",tagId);
+        bundle.putString("url",url);
+        followTemplate.setArguments(bundle);
+        return followTemplate;
     }
     public static void startActivity(Context context, List<NineGridTestModel> list) {
         Intent intent = new Intent(context, PopularPostTemplate.class);
         intent.putExtra(ARG_LIST, (Serializable) list);
         context.startActivity(intent);
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle args=getArguments();
+        flag=args.getBoolean("flag");
+        tagId=args.getInt("tagId");
+        url=args.getString("url");
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView: ------------");
         view = inflater.inflate(R.layout.mo_ban_1, container, false);
 //        Toast.makeText(getContext(),"gogogo",Toast.LENGTH_SHORT).show();
-        initView();
-        getPostList(HomeFragment.userData.getToken());
         return view;
     }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initView();
+    }
+
     private void initView() {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         mLayoutManager = new LinearLayoutManager(getContext());
@@ -196,5 +206,11 @@ public class FollowTemplate extends Fragment implements PostTemplateInterface {
     public void onDestroyView() {
         super.onDestroyView();
         page=1;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getPostList(HomeFragment.userData.getToken());
     }
 }

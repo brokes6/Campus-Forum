@@ -182,7 +182,8 @@ public class Personal_information extends AppCompatActivity {
     private void initData(){
         userData= FileCacheUtil.getUser(Personal_information.this);
         textView.setText(userData.getUsername());
-        userImg.setCacheImageURL(userData.getUimg());
+        if(userData.getUimg()!=null)
+            userImg.setCacheImageURL(userData.getUimg());
     }
     @TargetApi(19)
     private void handleImageOnKitKat(Intent data) {

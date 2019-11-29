@@ -73,14 +73,10 @@
                             android:layout_marginTop="20dp"
                             android:layout_marginBottom="25dp"
                             android:orientation="vertical">
-
-                            <com.example.bottomnavigationabar2.view.CommentExpandableListView
-                                android:id="@+id/detail_page_lv_comment"
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/recyclerView"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:divider="@null"
-                                android:listSelector="@android:color/transparent"
-                                android:scrollbars="none" />
+                                android:layout_height="wrap_content"/>
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"

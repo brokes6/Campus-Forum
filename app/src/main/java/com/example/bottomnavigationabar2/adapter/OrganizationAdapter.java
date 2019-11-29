@@ -12,9 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.bottomnavigationabar2.MyImageView;
-import com.example.bottomnavigationabar2.Post;
 import com.example.bottomnavigationabar2.R;
-import com.example.bottomnavigationabar2.Yemian_text;
+import com.example.bottomnavigationabar2.OrganizationActivity;
 import com.example.bottomnavigationabar2.bean.Organization;
 
 import java.util.ArrayList;
@@ -43,7 +42,7 @@ public class OrganizationAdapter extends RecyclerView.Adapter<OrganizationAdapte
     }
 
     public void setOrganizations(List<Organization> organizations) {
-        this.organizations=organizations;
+        this.organizations.addAll(organizations);
         Log.i(TAG, "setOrganizations: 我被设置了啊"+this.organizations.size());
     }
 
@@ -57,7 +56,7 @@ public class OrganizationAdapter extends RecyclerView.Adapter<OrganizationAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
 /*
         viewHolder.myImageView.setCacheImageURL(organizations.get(position).getOimg());
 */
@@ -66,7 +65,11 @@ public class OrganizationAdapter extends RecyclerView.Adapter<OrganizationAdapte
         viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(context, Yemian_text.class);
+                Intent intent=new Intent(context, OrganizationActivity.class);
+                Organization organization=organizations.get(position);
+                intent.putExtra("oid",organization.getOid());
+                intent.putExtra("oname",organization.getOname());
+                intent.putExtra("oimg",organization.getOimg());
                 context.startActivity(intent);
             }
         });

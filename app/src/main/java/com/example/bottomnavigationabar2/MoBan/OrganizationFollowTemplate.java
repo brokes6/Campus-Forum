@@ -35,7 +35,7 @@ import okhttp3.Response;
 
 public class OrganizationFollowTemplate extends Fragment {
     private static final String TAG = "OrganizationFollowTempl";
-    public static final String ORGANIZATION_REQUEST_URL = "http://10.0.2.2:8080/app/getOrganizationByUserId";
+    public static final String ORGANIZATION_REQUEST_URL = "http://106.54.134.17/app/getOrganizationByUserId";
     private OrganizationAdapter organizationAdapter;
     private RecyclerView recyclerView;
     private View convertView;
@@ -59,9 +59,14 @@ public class OrganizationFollowTemplate extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         convertView = inflater.inflate(R.layout.gz_layout, container, false);
+        return convertView;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         initView();
         initData();
-        return convertView;
     }
 
     private void initView() {
@@ -116,5 +121,8 @@ public class OrganizationFollowTemplate extends Fragment {
                 }
             }
         });
+    }
+    public  void setData(List<Organization> list){
+        this.organizationAdapter.setOrganizations(list);
     }
 }

@@ -6,6 +6,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -41,6 +42,7 @@ public class OrganizationRecommendTemplate extends Fragment {
     private RecyclerView recyclerView;
     private View convertView;
     private int startPage=1;
+    private boolean initData=true;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -53,21 +55,41 @@ public class OrganizationRecommendTemplate extends Fragment {
             }
         }
     };
+    public static OrganizationRecommendTemplate newIntance(boolean initData){
+        OrganizationRecommendTemplate template=new OrganizationRecommendTemplate();
+        Bundle bundle=new Bundle();
+        bundle.putBoolean("initData",initData);
+        template.setArguments(bundle);
+        return template;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle bundle=getArguments();
+        if(bundle!=null)
+            initData=bundle.getBoolean("initData");
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         convertView = inflater.inflate(R.layout.tj_layout, container, false);
         initView();
-        initData();
         return convertView;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if(initData)
+            initData();
     }
 
     private void initView() {
         recyclerView=convertView.findViewById(R.id.recyclerView);
-        organizationAdapter = new OrganizationAdapter(getContext(),0);
-        linearLayoutManager=new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
+        organizationAdapter=new OrganizationAdapter(getContext(),0);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
         recyclerView.setAdapter(organizationAdapter);
     }
 
@@ -116,5 +138,9 @@ public class OrganizationRecommendTemplate extends Fragment {
                 }
             }
         });
+    }
+    public void setData(List<Organization>list){
+        this.organizationAdapter.setOrganizations(list);
+        organizationAdapter.notifyDataSetChanged();
     }
 }
