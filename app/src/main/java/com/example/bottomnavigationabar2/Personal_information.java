@@ -81,7 +81,6 @@ public class Personal_information extends AppCompatActivity {
                     String imgUrl=msg.obj.toString();
                     userData.setUimg(imgUrl);
                     userImg.setCacheImageURL(imgUrl);
-
                     setResult(1,null);
             }
         }
@@ -134,17 +133,31 @@ public class Personal_information extends AppCompatActivity {
         myName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(Personal_information.this, com.example.bottomnavigationabar2.personalpage.myName.class);
-                intent.putExtra("token",userData.getToken());
-                startActivityForResult(intent,EDIT_USERNAME);
+                final EditText inputServer = new EditText(Personal_information.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(Personal_information.this);
+                builder.setTitle("你的名字").setIcon(android.R.drawable.ic_dialog_info).setView(inputServer)
+                        .setNegativeButton("取消", null);
+                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        updateUserInfo(inputServer.getText().toString());
+                    }
+                });
+                builder.show();
             }
         });
         Hobby.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(Personal_information.this, com.example.bottomnavigationabar2.personalpage.Hobby.class);
-                intent.putExtra("token",userData.getToken());
-                startActivityForResult(intent,EDIT_USIGN);
+                final EditText inputServer = new EditText(Personal_information.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(Personal_information.this);
+                builder.setTitle("我的兴趣").setIcon(android.R.drawable.ic_dialog_info).setView(inputServer)
+                        .setNegativeButton("取消", null);
+                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        updateUserInfo(inputServer.getText().toString());
+                    }
+                });
+                builder.show();
 
             }
         });
@@ -161,7 +174,6 @@ public class Personal_information extends AppCompatActivity {
                     }
                 });
                 builder.show();
-
             }
         });
         more.setOnClickListener(new View.OnClickListener() {
