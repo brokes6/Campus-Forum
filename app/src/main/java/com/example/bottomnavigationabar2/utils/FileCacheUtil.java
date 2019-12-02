@@ -1,5 +1,6 @@
 package com.example.bottomnavigationabar2.utils;
 
+import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -32,12 +33,11 @@ public class FileCacheUtil {
     //缓存超时时间
     public static final int CACHE_SHORT_TIMEOUT=1000 * 60 * 5; // 5 分钟
 
-    public static Object userData;
+    private static Object data;
 
     public static final int GET_DATA_SUCCESS = 1;
     public static final int NETWORK_ERROR = 2;
     public static final int SERVER_ERROR = 3;
-
  /*   private static Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -148,8 +148,8 @@ public class FileCacheUtil {
         }
     }
     public static <T extends Serializable> T getCache(Context context, String cacheFileName, int mode,Class<T> tClass){
-            if(userData!=null){
-                return (T) userData;
+            if(data!=null){
+                return (T) data;
             }
             FileInputStream fileInputStream=null;
             ObjectInputStream objectInputStream=null;
@@ -159,7 +159,7 @@ public class FileCacheUtil {
                 objectInputStream=new ObjectInputStream(fileInputStream);
                 T t= (T) objectInputStream.readObject();
                 Log.i(TAG, "getCache: t="+t);
-                userData=t;
+                data=t;
                 return t;
             } catch (FileNotFoundException e) {
                 return null;
@@ -175,5 +175,9 @@ public class FileCacheUtil {
         return FileCacheUtil.getCache(context,"USERDATA.txt",0, User.class);
     }
 
+    public static void updateUser(User user,Context context){
+        setCache(user,context,"USERDATA.txt",0);
+        data=null;
+    }
 
 }
