@@ -29,6 +29,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -59,6 +60,7 @@ import com.youth.banner.Transformer;
 import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -99,7 +101,7 @@ public class HomeFragment extends Fragment {
     private ViewPager viewPager;
     private SmartRefreshLayout refreshLayout;
     public static User userData;
-    private SearchView searchView;
+    private LinearLayout searchView;
     private NineGridTest2Adapter.ViewHolder viewHolder;
     private boolean showSearchView=true;
     private int phoneHeight=-1;
@@ -127,11 +129,12 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         if(view==null) {
-            view = inflater.inflate(R.layout.home_fragment, container, false);
-            searchView =view.findViewById(R.id.searchView);
+            view = inflater.inflate(R.layout.home_fragment_text, container, false);
+//            searchView =view.findViewById(R.id.searchView);
             realTabLayout = view.findViewById(R.id.tablayout_real);
             container = view.findViewById(R.id.container);
             topLayout = view.findViewById(R.id.topLayout);
+            searchView = view.findViewById(R.id.search);
             setDefaultFragment();
             //实际的tablayout的点击切换
             viewPager = view.findViewById(R.id.viewPager);
@@ -179,8 +182,8 @@ public class HomeFragment extends Fragment {
 
                 }
             });
-            searchView.setQueryHint("请输入搜索内容");
-            searchView.setIconifiedByDefault(false);
+//            searchView.setQueryHint("请输入搜索内容");
+//            searchView.setIconifiedByDefault(false);
             initData();
             initView();
             initRefreshLayout();
@@ -190,23 +193,14 @@ public class HomeFragment extends Fragment {
         mViewBackgroundTop =view.findViewById(R.id.appbar);
         mViewBackgroundBottom =view.findViewById(R.id.viewPager);
         initTransition();
-        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+        searchView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus) {
-                    Context context = getContext();
-                    Log.i(TAG, "onFocusChange: 聚集");
-                    Intent intent = new Intent(context, SearchActivity.class);
-                    startActivityForResult(intent, SEARCHVIEW);
-                }
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), SearchActivity.class);
+                startActivityForResult(intent, SEARCHVIEW);
             }
         });
-        searchView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return false;
-            }
-        });
+
         return view;
     }
 
@@ -282,9 +276,9 @@ public class HomeFragment extends Fragment {
         imagePath.add(R.mipmap.mao1);
         imagePath.add(R.mipmap.mao2);
         imagePath.add(R.mipmap.mao3);
-        imageTitle.add("我是猫1");
-        imageTitle.add("我是猫2");
-        imageTitle.add("我是猫3");
+        imageTitle.add("图片1");
+        imageTitle.add("图片2");
+        imageTitle.add("图片3");
     }
     private void initView() {
         mMyImageLoader = new MyImageLoader();
@@ -324,6 +318,7 @@ public class HomeFragment extends Fragment {
                     .into(imageView);
         }
     }
+
     private void setDefaultFragment() {
         mainTabFragmentAdapter = new MainTabFragmentAdapter(((AppCompatActivity)getActivity()).getSupportFragmentManager(),getActivity());
         postTemplateInterface = (PostTemplateInterface) mainTabFragmentAdapter.getItem(0);
@@ -423,10 +418,10 @@ public class HomeFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode){
             case POSTDETAILS:break;
-            case SEARCHVIEW:
-                    Log.i(TAG, "onActivityResult: 返回了");
-                    searchView.clearFocus();
-                    searchView.onActionViewCollapsed();
+//            case SEARCHVIEW:
+//                    Log.i(TAG, "onActivityResult: 返回了");
+//                    searchView.clearFocus();
+//                    searchView.onActionViewCollapsed();
         }
     }
 

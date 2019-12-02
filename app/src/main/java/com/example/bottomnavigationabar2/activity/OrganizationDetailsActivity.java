@@ -81,9 +81,9 @@ public class OrganizationDetailsActivity extends AppCompatActivity {
     private void initView(){
         organizationName=findViewById(R.id.organizationName);
         organizationImg=findViewById(R.id.organizationImg);
-        followButton=findViewById(R.id.followButton);
-        followNum=findViewById(R.id.followNum);
-        postNum=findViewById(R.id.postNum);
+//        followButton=findViewById(R.id.followButton);
+//        followNum=findViewById(R.id.followNum);
+//        postNum=findViewById(R.id.postNum);
         introduce=findViewById(R.id.introduce);
 
         followButton.setOnClickListener(new View.OnClickListener() {

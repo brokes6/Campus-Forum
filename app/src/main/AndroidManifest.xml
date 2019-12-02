@@ -50,7 +50,6 @@
         </activity>
         <activity android:name=".personalpage.More" />
         <activity android:name=".Autograph" />
-        <activity android:name=".personalpage.myName" />
         <activity android:name=".Mynews"/>
         <activity android:name=".MyConcern"/>
         <activity

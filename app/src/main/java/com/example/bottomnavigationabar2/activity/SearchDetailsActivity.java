@@ -1,5 +1,6 @@
 package com.example.bottomnavigationabar2.activity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -8,6 +9,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.example.bottomnavigationabar2.MoBan.OrganizationFollowTemplate;
 import com.example.bottomnavigationabar2.MoBan.OrganizationRecommendTemplate;
@@ -40,6 +43,7 @@ public class SearchDetailsActivity extends AppCompatActivity {
     private String queryWord;
     private SearchPostTemplate postTemplate;
     private OrganizationRecommendTemplate recommendTemplate;
+    private ImageView back;
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -55,11 +59,16 @@ public class SearchDetailsActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_details);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            //修改为深色，因为我们把状态栏的背景色修改为主题色白色，默认的文字及图标颜色为白色，导致看不到了。
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
         initView();
         initData();
         getSearchData();
     }
     private void initView(){
+        back = findViewById(R.id.search_details_back);
         viewPager=findViewById(R.id.viewPager);
         tabLayout=findViewById(R.id.tabLayout);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -83,6 +92,12 @@ public class SearchDetailsActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(2);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {

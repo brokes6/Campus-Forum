@@ -5,11 +5,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
     <LinearLayout
+        android:background="#DFE2E4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/search_details_back"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/other_back_gray"/>
         <android.support.v7.widget.SearchView
             android:id="@+id/searchView"
-            android:layout_marginLeft="50dp"
+            android:layout_marginLeft="10dp"
             android:layout_width="250dp"
             android:layout_height="38dp"
             android:layout_marginTop="8dp"
