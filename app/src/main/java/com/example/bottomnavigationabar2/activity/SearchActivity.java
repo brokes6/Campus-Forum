@@ -1,6 +1,7 @@
 package com.example.bottomnavigationabar2.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -41,6 +42,10 @@ public class SearchActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_activity);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            //修改为深色，因为我们把状态栏的背景色修改为主题色白色，默认的文字及图标颜色为白色，导致看不到了。
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
         initView();
         initHistoryRecycler();
         getHistoryList();//得到历史记录数组
@@ -62,8 +67,10 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String queryWord=searchView.getQuery().toString();
-                HistorySearchUtil.getInstance(SearchActivity.this)
-                        .putNewSearch(queryWord);//保存记录到数据库
+                if (queryWord.isEmpty()){
+                    Toast.makeText(SearchActivity.this, "输入不能为空", Toast.LENGTH_SHORT).show();
+                }else{
+                HistorySearchUtil.getInstance(SearchActivity.this).putNewSearch(queryWord);//保存记录到数据库
                 getHistoryList();
                 adapter.notifyDataSetChanged();
                 showViews();
@@ -75,6 +82,7 @@ public class SearchActivity extends AppCompatActivity {
                 Intent intent=new Intent(SearchActivity.this,SearchDetailsActivity.class);
                 intent.putExtra("queryWord",queryWord);
                 startActivityForResult(intent,1);
+                }
             }
         });
     }
@@ -110,13 +118,10 @@ public class SearchActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(new HistorySearchAdapter.OnItemClickListener() {
             @Override
-            public void onItemNameTvClick(View v, String name) {
-            }
-
+            public void onItemNameTvClick(View v, String name) {}
             @Override
             public void onItemDeleteImgClick(View v, String name) {
-                HistorySearchUtil.getInstance(SearchActivity.this)
-                        .deleteHistorySearch(name);
+                HistorySearchUtil.getInstance(SearchActivity.this).deleteHistorySearch(name);
                 getHistoryList();
                 adapter.notifyDataSetChanged();
                 showViews();
@@ -125,8 +130,7 @@ public class SearchActivity extends AppCompatActivity {
 }
     private void getHistoryList(){
         historyList.clear();
-        historyList.addAll(HistorySearchUtil.getInstance(this)
-                .queryHistorySearchList());
+        historyList.addAll(HistorySearchUtil.getInstance(this).queryHistorySearchList());
         System.out.println("历史长度为"+historyList.size());
         adapter.notifyDataSetChanged();
         showViews();

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/gradual_change"
+    android:background="#fff"
     android:orientation="vertical">
     <com.example.bottomnavigationabar2.adapter.Top_Title
         android:layout_width="wrap_content"
