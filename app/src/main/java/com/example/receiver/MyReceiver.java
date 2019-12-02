@@ -31,7 +31,6 @@ public class MyReceiver extends JPushMessageReceiver {
         String extrasInfo =notificationMessage.notificationExtras;
         try {
             JSONObject jsonObject=new JSONObject(extrasInfo);
-            Gson gson =new Gson();
             int type= jsonObject.getInt("type");
             Log.i(TAG, "onNotifyMessageOpened: "+extrasInfo+type);
             switch (type) {
@@ -53,9 +52,10 @@ public class MyReceiver extends JPushMessageReceiver {
                     Intent intent3 = new Intent(context, MoerReply.class);
                     intent3.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
                     intent3.putExtra("cid",jsonObject.getInt("cid"));
-                    intent3.putExtra("name",jsonObject.getString("name"));
+                    intent3.putExtra("name",jsonObject.getString("username"));
                     intent3.putExtra("time","刚刚");
-                    intent3.putExtra("url",jsonObject.getString("url"));
+                    intent3.putExtra("url","");
+                    intent3.putExtra("data",jsonObject.getString("msg"));
                     context.startActivity(intent3);
                     break;
                 default:break;
