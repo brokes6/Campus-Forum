@@ -32,6 +32,8 @@ import com.example.bottomnavigationabar2.bean.ResultBean;
 import com.example.util.JsonTOBeanUtil;
 import com.scwang.smartrefresh.header.material.CircleImageView;
 
+import org.json.JSONObject;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -187,16 +189,14 @@ public class RegisterActivity extends AppCompatActivity {
                     Response shuju_jieshou = client.newCall(request).execute();
                     String responseData = shuju_jieshou.body().string();
                     System.out.println(responseData);
-                    resultBean = JsonTOBeanUtil.getResultBean(responseData);
-                    if(resultBean.getCode()==1){
-/*
-                        Toast.makeText(RegisterActivity.this, "注册成功!", Toast.LENGTH_SHORT).show();
-*/
+                    JSONObject jsonObject=new JSONObject(responseData);
+                    int code=jsonObject.getInt("code");
+                    if(code==1){
+                        JPushInterface.setAlias(RegisterActivity.this,1,jsonObject.getString("data"));
                         Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
                         intent.putExtra("account",account);
                         setResult(1,intent);
                         finish();
-                        /*              overridePendingTransition(R.anim.fade_out,R.anim.fade_in);*/
                     }
                 }catch (Exception e) {
                     e.printStackTrace();

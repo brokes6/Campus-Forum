@@ -174,10 +174,10 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                     for(int i =index; i<commentsList.size()+index; i++){
                         expandableListView.expandGroup(i);
                     }
-                    if(index<6){
+/*                    if(index<6){
                         refreshLayout.setEnableLoadMore(false);
                         Log.i(TAG, "handleMessage: 不能够加载更多");
-                    }
+                    }*/
                     messageLayout.setVisibility(View.VISIBLE);
                     message.setText("暂无更多");
                     message.setTextSize(14);
@@ -292,6 +292,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                     intent.putExtra("url",url);
                     intent.putExtra("time",time);
                     intent.putExtra("name",name);
+                    intent.putExtra("cid",adapter.getCommentBeanList().get(groupPosition).getCid());
                     Log.d(TAG, "名字为----------------"+name);
                     Log.d(TAG, "时间为----------------"+time);
                     Log.d(TAG, "内容为----------------"+data);
@@ -604,7 +605,6 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                         Message message = new Message();
                         commentsList=new ArrayList<>();
                         message.what=NOTIFY_NOCOMMENT;
-
                         handler.sendMessage(message);
                         return;
                     }
@@ -693,7 +693,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 if (mostTimes.get() < 3) {
-
+                    getPopularComments();
                     mostTimes.getAndIncrement();
                 }
                 refreshLayout.finishLoadMore(1000); //这个记得设置，否则一直转圈

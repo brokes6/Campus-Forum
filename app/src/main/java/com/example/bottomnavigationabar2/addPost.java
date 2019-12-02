@@ -525,7 +525,6 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
                 public void onResponse(Call call, Response response) throws IOException {
                     Log.i(TAG, "onResponse: 发帖情况" + response.body().string());
                     showShortToast("发帖成功！");
-                    Toast.makeText(addPost.this,"以返回",Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(addPost.this,MainActivity.class);
                     startActivity(intent);
                     finish();

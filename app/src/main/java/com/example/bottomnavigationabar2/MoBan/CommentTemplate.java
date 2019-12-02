@@ -71,7 +71,7 @@ public class CommentTemplate extends Fragment {
     }
     public void getMessage(String token){
         Request request =new Request.Builder()
-                .url("http://10.0.2.2:8080/app/pushUserMessage?token="+token+"&startPage="+startPage)
+                .url("http://106.54.134.17/app/pushUserMessage?token="+token+"&startPage="+startPage)
                 .build();
         OkHttpClient client=new OkHttpClient();
         client.newCall(request).enqueue(new Callback() {

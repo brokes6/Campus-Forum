@@ -2,6 +2,7 @@ package com.example.bottomnavigationabar2;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,13 +18,17 @@ import android.transition.Explode;
 import android.transition.Slide;
 import android.transition.Transition;
 import android.transition.TransitionSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -34,6 +39,7 @@ import com.example.bottomnavigationabar2.MoBan.PostTemplateInterface;
 import com.example.bottomnavigationabar2.MoBan.PopularPostTemplate;
 import com.example.bottomnavigationabar2.MoBan.NewPostTemplate;
 import com.example.bottomnavigationabar2.MoBan.RecommendTemplate;
+import com.example.bottomnavigationabar2.activity.SearchActivity;
 import com.example.bottomnavigationabar2.adapter.MainTabFragmentAdapter;
 import com.example.bottomnavigationabar2.adapter.NineGridTest2Adapter;
 import com.example.bottomnavigationabar2.bean.User;
@@ -68,6 +74,7 @@ import static com.scwang.smartrefresh.layout.internal.InternalClassics.ID_TEXT_T
 public class HomeFragment extends Fragment {
     private static final String TAG = "HomeFragment";
     public static final int POSTDETAILS=1;
+    public static final int SEARCHVIEW=2;
     private Banner mBanner;
     private MyImageLoader mMyImageLoader;
     private ArrayList<Integer> imagePath;
@@ -92,7 +99,11 @@ public class HomeFragment extends Fragment {
     private ViewPager viewPager;
     private SmartRefreshLayout refreshLayout;
     public static User userData;
+    private SearchView searchView;
     private NineGridTest2Adapter.ViewHolder viewHolder;
+    private boolean showSearchView=true;
+    private int phoneHeight=-1;
+    private ValueAnimator valueAnimator;
     public static HomeFragment newInstance(String param1,User user) {
         HomeFragment fragment = new HomeFragment(user);
         Bundle args = new Bundle();
@@ -117,8 +128,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         if(view==null) {
             view = inflater.inflate(R.layout.home_fragment, container, false);
-            Bundle bundle = getArguments();
-            SearchView searchView = (SearchView) view.findViewById(R.id.searchView);
+            searchView =view.findViewById(R.id.searchView);
             realTabLayout = view.findViewById(R.id.tablayout_real);
             container = view.findViewById(R.id.container);
             topLayout = view.findViewById(R.id.topLayout);
@@ -175,11 +185,28 @@ public class HomeFragment extends Fragment {
             initView();
             initRefreshLayout();
             initAppBarLayout();
-            viewPager.setCurrentItem(1);
+/*            initSearchView();*/
         }
         mViewBackgroundTop =view.findViewById(R.id.appbar);
         mViewBackgroundBottom =view.findViewById(R.id.viewPager);
         initTransition();
+        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus) {
+                    Context context = getContext();
+                    Log.i(TAG, "onFocusChange: 聚集");
+                    Intent intent = new Intent(context, SearchActivity.class);
+                    startActivityForResult(intent, SEARCHVIEW);
+                }
+            }
+        });
+        searchView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return false;
+            }
+        });
         return view;
     }
 
@@ -249,6 +276,7 @@ public class HomeFragment extends Fragment {
     }
     //初始化轮播图
     private void initData() {
+        phoneHeight=new DisplayMetrics().heightPixels;
         imagePath = new ArrayList<>();
         imageTitle = new ArrayList<>();
         imagePath.add(R.mipmap.mao1);
@@ -394,8 +422,11 @@ public class HomeFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode){
-            case POSTDETAILS:
-
+            case POSTDETAILS:break;
+            case SEARCHVIEW:
+                    Log.i(TAG, "onActivityResult: 返回了");
+                    searchView.clearFocus();
+                    searchView.onActionViewCollapsed();
         }
     }
 
@@ -485,6 +516,37 @@ public class HomeFragment extends Fragment {
                 refreshLayout.autoLoadMore();
             }
         });
+    }
+/*    private void initSearchView(){
+        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                    Log.i(TAG, "onClick: 被点击了");
+                    if(showSearchView){
+                        valueAnimator=ValueAnimator.ofInt(0,phoneHeight);
+                    }else {
+                        valueAnimator=ValueAnimator.ofInt(phoneHeight,0);
+                    }
+                    showSearchView=!showSearchView;
+                    valueAnimator.addUpdateListener(new ValueAnimatorUpdateListener());
+                    valueAnimator.setDuration(1000);
+                    valueAnimator.start();
+            }
+        });
+    }*/
+    public class ValueAnimatorUpdateListener implements ValueAnimator.AnimatorUpdateListener {
+        @Override
+        public void onAnimationUpdate(ValueAnimator animation) {
+                int h= (int) animation.getAnimatedValue();
+                searchView.getLayoutParams().height=h;
+                searchView.requestLayout();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG, "onDestroy: 我homefragment被摧毁了");
     }
 }
 

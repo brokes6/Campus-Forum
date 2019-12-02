@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bottomnavigationabar2.MoBan.PostTemplateInterface;
+import com.example.bottomnavigationabar2.activity.OrganizationDetailsActivity;
 import com.example.bottomnavigationabar2.adapter.MainTabFragmentAdapter;
 import com.example.bottomnavigationabar2.bean.User;
 import com.example.bottomnavigationabar2.utils.FileCacheUtil;
@@ -41,8 +42,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static com.scwang.smartrefresh.layout.internal.InternalClassics.ID_IMAGE_PROGRESS;
 import static com.scwang.smartrefresh.layout.internal.InternalClassics.ID_TEXT_TITLE;
 
-public class Yemian_text extends AppCompatActivity {
-    private static final String TAG = "Yemian_text";
+public class OrganizationActivity extends AppCompatActivity {
+    private static final String TAG = "OrganizationActivity";
     private FloatingActionButton addPostButton;
     private ViewPager viewPager;
     private MainTabFragmentAdapter mainTabFragmentAdapter;
@@ -55,6 +56,9 @@ public class Yemian_text extends AppCompatActivity {
     private boolean flag=false;
     private SmartRefreshLayout refreshLayout;
     private long exitTime = 0;
+    private TextView organizationTextView;
+    private MyImageView organizationImg;
+    private int oid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,8 +85,8 @@ public class Yemian_text extends AppCompatActivity {
         final floatingactionbutton.FloatingActionButton actionA =  findViewById(R.id.action_a);
         actionA.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent_addPost = new Intent(Yemian_text.this,addPost.class);
+            public void onClick(View v) {
+                Intent intent_addPost = new Intent(OrganizationActivity.this,addPost.class);
                 overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
                 startActivity(intent_addPost);
             }
@@ -92,7 +96,7 @@ public class Yemian_text extends AppCompatActivity {
         actionB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(Yemian_text.this,"你点击了B",Toast.LENGTH_SHORT).show();
+                Toast.makeText(OrganizationActivity.this,"你点击了B",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -100,10 +104,9 @@ public class Yemian_text extends AppCompatActivity {
         actionC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(Yemian_text.this,"你点击了C",Toast.LENGTH_SHORT).show();
+                Toast.makeText(OrganizationActivity.this,"你点击了C",Toast.LENGTH_SHORT).show();
             }
         });
-
 
         //悬浮按钮 点击事件
 //        addPostButton=findViewById(R.id.fab);
@@ -111,7 +114,7 @@ public class Yemian_text extends AppCompatActivity {
 //        addPostButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                Intent intent_addPost = new Intent(Yemian_text.this,addPost.class);
+//                Intent intent_addPost = new Intent(OrganizationActivity.this,addPost.class);
 //                overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
 //                startActivity(intent_addPost);
 //            }
@@ -135,8 +138,14 @@ public class Yemian_text extends AppCompatActivity {
         });
         topLayout = findViewById(R.id.topLayout);
         appBarLayout = findViewById(R.id.appbar);
+        organizationImg=findViewById(R.id.organizationImg);
+        organizationTextView=findViewById(R.id.organizationName);
     }
     private void initData(){
+        Intent data= getIntent();
+        organizationTextView.setText(data.getStringExtra("oname"));
+        organizationImg.setCacheImageURL(data.getStringExtra("oimg"));
+        oid=data.getIntExtra("oid",oid);
         userData= FileCacheUtil.getUser(this);
         mainTabFragmentAdapter=new MainTabFragmentAdapter(getSupportFragmentManager(),this);
         tabLayout.setupWithViewPager(viewPager);
@@ -164,6 +173,14 @@ public class Yemian_text extends AppCompatActivity {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
+            }
+        });
+        organizationImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(OrganizationActivity.this, OrganizationDetailsActivity.class);
+                intent.putExtra("oid",oid);
+                startActivityForResult(intent,1);
             }
         });
         viewPager.setOffscreenPageLimit(4);

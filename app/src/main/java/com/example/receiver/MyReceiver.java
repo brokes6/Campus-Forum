@@ -1,9 +1,11 @@
 package com.example.receiver;
 
+import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.example.bottomnavigationabar2.MoerReply;
 import com.example.bottomnavigationabar2.PostDetails;
 import com.example.bottomnavigationabar2.message.MessageType;
 import com.google.gson.Gson;
@@ -47,9 +49,12 @@ public class MyReceiver extends JPushMessageReceiver {
                     context.startActivity(intent2);
                     break;
                 case MessageType.REPLY:
-                    Intent intent3 = new Intent(context, PostDetails.class);
+                    Intent intent3 = new Intent(context, MoerReply.class);
                     intent3.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
-                    intent3.putExtra("postId",jsonObject.getInt("pid"));
+                    intent3.putExtra("cid",jsonObject.getInt("cid"));
+                    intent3.putExtra("name",jsonObject.getString("name"));
+                    intent3.putExtra("time","刚刚");
+                    intent3.putExtra("url",jsonObject.getString("url"));
                     context.startActivity(intent3);
                     break;
                 default:break;
@@ -66,4 +71,10 @@ public class MyReceiver extends JPushMessageReceiver {
         super.onConnected(context, b);
     }
 
+    @Override
+    public void onNotifyMessageArrived(Context context, NotificationMessage notificationMessage) {
+        Log.i(TAG, "onNotifyMessageArrived: 接受到消息");
+        String data=notificationMessage.notificationExtras;
+        Log.i(TAG, "onNotifyMessageArrived:"+data);
+    }
 }

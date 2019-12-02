@@ -48,7 +48,10 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
+import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -82,7 +85,14 @@ public class LoginActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case STARTACTIVITY:
-                    FileCacheUtil.setCache(msg.obj,LoginActivity.this,"USERDATA.txt",0);
+                    User user= (User) msg.obj;
+                    JPushInterface.setAlias(LoginActivity.this, String.valueOf(user.getUid()), new TagAliasCallback() {
+                        @Override
+                        public void gotResult(int i, String s, Set<String> set) {
+                            Log.i(TAG, "gotResult: 成功拉");
+                        }
+                    });
+                    FileCacheUtil.setCache(user,LoginActivity.this,"USERDATA.txt",0);
                     ActivityOptions compat = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this);
                     startActivity(new Intent(LoginActivity.this, MainActivity.class), compat.toBundle());
                     finish();
@@ -215,6 +225,8 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                JPushInterface.getAlias(LoginActivity.this,1);
+                Log.i(TAG, "onResponse: 我的alise别名时:");
                 String responseStr = response.body().string();
                 Log.i(TAG, "onResponse: 登录json情况"+responseStr);
                 try {

@@ -189,6 +189,7 @@ public class MyFragment extends Fragment {
     }
     private void initData(){
         usernameView.setText(userData.getUsername());
+        if(userData.getUimg()!=null)
         picture.setCacheImageURL(userData.getUimg());
         user_account.setText(userData.getAccount());
         Log.i(TAG, "initData: 被调用");
