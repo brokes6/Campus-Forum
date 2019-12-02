@@ -49,6 +49,7 @@ public class MyReceiver extends JPushMessageReceiver {
                     context.startActivity(intent2);
                     break;
                 case MessageType.REPLY:
+                    Log.i(TAG, "onNotifyMessageOpened: 跳转啊");
                     Intent intent3 = new Intent(context, MoerReply.class);
                     intent3.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
                     intent3.putExtra("cid",jsonObject.getInt("cid"));

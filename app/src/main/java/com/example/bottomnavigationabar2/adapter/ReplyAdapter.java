@@ -52,7 +52,14 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyAdapter.ViewHolder> 
     public void setReplyDetailBeans(List<ReplyDetailBean> replyDetailBeans) {
         this.replyDetailBeans.addAll(replyDetailBeans);
     }
-
+    public void addReplyDetailsBean(ReplyDetailBean detailBean){
+        if(detailBean!=null){
+            replyDetailBeans.add(0,detailBean);
+            notifyDataSetChanged();
+        }else {
+            throw new IllegalArgumentException("评论数据为空!");
+        }
+    }
     public class ViewHolder extends RecyclerView.ViewHolder{
         MyImageView userImgView;
         TextView usernameView;

@@ -30,6 +30,7 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -84,14 +85,16 @@ import static com.scwang.smartrefresh.layout.internal.InternalClassics.ID_TEXT_T
 
 
 public class PostDetails extends AppCompatActivity implements View.OnClickListener{
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "PostDetails";
     public static final int HANDLER_DATA=1;
     public static final int CANCEL_PROGRESS=2;
     public static final int NOTIFY=3;
     public static final int NOTIFY_NOCOMMENT=4;
     public static final int NOTIFY_COMMENT=5;
+    public static final int NO_NETWORK=6;
     public static final String REQUEST_POST_DETAILS_STR="http://106.54.134.17/app/getPostDetailsById";//mode=1
-    public static final String REQUEST_COMMENT_STR="http://106.54.134.17/app/getPopularComments";//mode=2
+    public static final String REQUEST_COMMENT_POPULAR_STR="http://106.54.134.17/app/getPopularComments";//mode=2
+    public static final String REQUEST_COMMENT_NEW_STR="http://106.54.134.17/app/getNewComments";//mode=2
     public static final String REQUEST_ADD_COMMENT_STR="http://106.54.134.17/app/addComment";//mode=3
     private android.support.v7.widget.Toolbar toolbar;
     private TextView bt_comment;
@@ -110,18 +113,23 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
     private TextView loveNumStr;
     private LinearLayout back;
     private TextView commentStr;
+    private TextView loadTextView;
     private MyImageView userImg;
     private ImageView loveNum;
     private LinearLayout messageLayout;
     private LinearLayout commentLayout;
     private NineGridTestLayout nineGridTestLayout;
     private LinearLayout loveLayout;
+    private LinearLayout loadLayout;
+    private RelativeLayout contentLayout;
     private ProgressBar progressBar;
     private SmartRefreshLayout refreshLayout;
     private NetWorkUtil netWorkUtil;
     private User userData;
     private NiceSpinner niceSpinner;
-    private List<String> spinnerData = new LinkedList<>(Arrays.asList("热度排序", "点赞排序","时间排序"));
+    private boolean commentFlag;
+    private Button loadButton;
+    private List<String> spinnerData = new LinkedList<>(Arrays.asList("时间排序", "点赞排序"));
     private  Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -164,6 +172,8 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                     }else{
                         loveNum.setImageDrawable(getResources().getDrawable(R.drawable.thumbs_up_white));
                     }
+                    contentLayout.setVisibility(View.VISIBLE);
+                    loadLayout.setVisibility(View.GONE);
                     break;
                 case CANCEL_PROGRESS:
                     progressBar.setVisibility(View.GONE);
@@ -194,7 +204,11 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                     progressBar.setVisibility(View.GONE);
                     if(index1>=6)
                         messageLayout.setVisibility(View.GONE);
+                    adapter.notifyDataSetChanged();
                     break;
+                case NO_NETWORK:
+                        loadTextView.setText("网络不稳定，请重新刷新试试");
+                        loadButton.setVisibility(View.VISIBLE);
             }
         }
     };
@@ -217,6 +231,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         click();
         initDetailsLayout();
         initRefreshLayout();
+        initLoadLayout();
     }
     //初始化
     private void initView() {
@@ -225,6 +240,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         userImg=findViewById(R.id.tieze_user_img);
         message = findViewById(R.id.message);
         messageLayout=findViewById(R.id.messageLayout);
+        contentLayout=findViewById(R.id.contentLayout);
         commentLayout=findViewById(R.id.detail_page_comment_container);
         expandableListView = (CommentExpandableListView) findViewById(R.id.detail_page_lv_comment);
         bt_comment = (TextView) findViewById(R.id.detail_page_do_comment);
@@ -234,7 +250,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         //默认展开所有回复
         expandableListView.setAdapter(adapter);
         initExpandableListView();
-        getPopularComments();
+        getComments();
         progressBar=findViewById(R.id.progress);
         Log.i(TAG, "initView: userData="+userData);
         niceSpinner = findViewById(R.id.nice_spinner);
@@ -244,7 +260,22 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         niceSpinner.setTextSize(13);
         niceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { }
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position){
+                    case 0:
+                        adapter.clearAll();
+                        commentFlag=false;
+                        commentPage=1;
+                        getComments();
+                        break;
+                    case 1:
+                        adapter.clearAll();
+                        commentFlag=true;
+                        commentPage=1;
+                        getComments();
+                        break;
+                }
+            }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
         });
@@ -283,11 +314,14 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
             public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
                 if(childPosition==2) {
                     Log.i(TAG, "onChildClick: 点击查看更多");
-                    String name = adapter.getCommentBeanList().get(groupPosition).getUsername();
-                    String data = adapter.getCommentBeanList().get(groupPosition).getContent();
-                    String time = DateTimeUtil.handlerDateTime(adapter.getCommentBeanList().get(groupPosition).getCcreateTime());
-                    String url = adapter.getCommentBeanList().get(groupPosition).getUimg();
+                    CommentDetailBean bean=adapter.getCommentBeanList().get(groupPosition);
+                    String name = bean.getUsername();
+                    String data = bean.getContent();
+                    String time = DateTimeUtil.handlerDateTime(bean.getCcreateTime());
+                    String url = bean.getUimg();
+                    int userId = bean.getUid();
                     Intent intent = new Intent(PostDetails.this, MoerReply.class);
+                    intent.putExtra("userId",userId);
                     intent.putExtra("data",data);
                     intent.putExtra("url",url);
                     intent.putExtra("time",time);
@@ -402,16 +436,15 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         bt_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String token= FileCacheUtil.getCache(PostDetails.this,"token");
                 String replyContent = commentText.getText().toString().trim();
                 if(!TextUtils.isEmpty(replyContent)){
                     dialog.dismiss();
                     Log.i(TAG, "onClick: commentId="+adapter.getCommentBeanList().get(position).getCid());
                     CommentDetailBean commentDetailBean=adapter.getCommentBeanList().get(position);
-                    addReply(replyContent,token,commentDetailBean.getUid(),commentDetailBean.getContent(),commentDetailBean.getCid());
+                    addReply(replyContent,userData.getToken(),commentDetailBean.getUid(),commentDetailBean.getContent(),commentDetailBean.getCid(),userData.getUsername());
                     //等会在搞
                     Log.i(TAG, "onClick: 账号名为:"+userData.getUsername());
-                    ReplyDetailBean detailBean = new ReplyDetailBean(userData.getUsername(),replyContent);
+                    ReplyDetailBean detailBean = new ReplyDetailBean(userData.getUsername(),replyContent,"刚刚");
                     adapter.addTheReplyData(detailBean, position);
                     expandableListView.expandGroup(position);
                     Toast.makeText(PostDetails.this,"回复成功",Toast.LENGTH_SHORT).show();
@@ -448,6 +481,9 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
                 Log.d(TAG, "onFailure:失败呃");
+                Message message=new Message();
+                message.what=NO_NETWORK;
+                handler.sendMessage(message);
             }
             @Override
             public void onResponse(Call call, Response response) throws IOException {
@@ -537,16 +573,17 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
             }
         });
     }
-    private void addReply(String content,String token,int commentUserId,String commentContent,int cid){
+    private void addReply(String content,String token,int commentUserId,String commentContent,int cid,String username){
     //修改回复 设置参数
+        Log.i(TAG, "addReply: 被回复人的用户id为="+commentUserId);
         RequestBody requestBody = new FormBody.Builder()
-                .add("rcid", String.valueOf(commentUserId))
                 .add("content",content)
                 .add("tcuid", String.valueOf(commentUserId))
-                .add("token","HnpMvU%2BV3ZHjrbMhOaOuCA%3D%3D")
+                .add("token",token)
                 .add("pid", String.valueOf(postId))
                 .add("commentContent",commentContent)
                 .add("cid",String.valueOf(cid))
+                .add("username",username)
                 .build();
         final Request request = new Request.Builder()
                 .url("http://106.54.134.17/app/addReply")
@@ -581,7 +618,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
             }
         });
     }
-    private void getPopularComments(){
+    private void getComments(){
         final Request request =new Request.Builder()
                 .url(getRequestStr(2))
                 .build();
@@ -626,8 +663,8 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         switch (mode){
             case 1:urlStr=REQUEST_POST_DETAILS_STR+"?postId="+postId;
                             break;
-            case 2:urlStr=REQUEST_COMMENT_STR+"?startPage="+commentPage+"&postId="+postId;
-                Log.i(TAG, "getRequestStr: postId="+postId);
+            case 2:urlStr=(commentFlag?REQUEST_COMMENT_POPULAR_STR:REQUEST_COMMENT_NEW_STR)+"?startPage="+commentPage+"&postId="+postId;
+                            Log.i(TAG, "getRequestStr: postId="+postId);
                             break;
             default:break;
         }
@@ -635,6 +672,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         if(token==null) {
             return urlStr;
         }
+        Log.i(TAG,urlStr);
         return urlStr+"&token="+token;
     }
 
@@ -693,7 +731,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 if (mostTimes.get() < 3) {
-                    getPopularComments();
+                    getComments();
                     mostTimes.getAndIncrement();
                 }
                 refreshLayout.finishLoadMore(1000); //这个记得设置，否则一直转圈
@@ -724,6 +762,18 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 Log.i(TAG, "onLoadMore: 下拉加载");
                 refreshLayout.autoLoadMore();
+            }
+        });
+    }
+    private void initLoadLayout(){
+        loadLayout=findViewById(R.id.loadLayout);
+        loadTextView=findViewById(R.id.loadTextView);
+        loadButton=findViewById(R.id.loadButton);
+        loadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getPostById();
+                getComments();
             }
         });
     }

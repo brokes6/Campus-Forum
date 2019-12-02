@@ -104,7 +104,7 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(final int groupPosition, boolean isExpand, View convertView, ViewGroup viewGroup) {
         final GroupHolder groupHolder;
-
+        final CommentDetailBean bean=commentBeanList.get(groupPosition);
         if(convertView == null){
             convertView = LayoutInflater.from(context).inflate(R.layout.comment_item_layout, viewGroup, false);
             groupHolder = new GroupHolder(convertView);
@@ -112,19 +112,14 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
         }else {
             groupHolder = (GroupHolder) convertView.getTag();
         }
-//        Glide.with(context).load(R.drawable.user_other)
-//               .diskCacheStrategy(DiskCacheStrategy.RESULT)
-//                .error(R.mipmap.ic_launcher)
-//                .centerCrop()
-//                .into(groupHolder.logo);
-        Log.i(TAG, "getGroupView: token="+token);
-        groupHolder.logo.setImageURL(commentBeanList.get(groupPosition).getUimg());
-        groupHolder.tv_name.setText(commentBeanList.get(groupPosition).getUsername());
-        groupHolder.tv_time.setText(DateTimeUtil.handlerDateTime(commentBeanList.get(groupPosition).getCcreateTime()));
-        groupHolder.tv_content.setText(commentBeanList.get(groupPosition).getContent());
-        groupHolder.status=commentBeanList.get(groupPosition).getStatus();
-        groupHolder.loveNum.setText(String.valueOf(commentBeanList.get(groupPosition).getLove_count()));
+        groupHolder.logo.setImageURL(bean.getUimg());
+        groupHolder.tv_name.setText(bean.getUsername());
+        groupHolder.tv_time.setText(DateTimeUtil.handlerDateTime(bean.getCcreateTime()));
+        groupHolder.tv_content.setText(bean.getContent());
+        groupHolder.status=bean.getStatus();
+        groupHolder.loveNum.setText(String.valueOf(bean.getLove_count()));
         groupHolder.position=groupPosition;
+        groupHolder.floorTextView.setText("第"+bean.getFloor()+"层");
         if(groupHolder.status==1){
             groupHolder.iv_like.setColorFilter(Color.parseColor("#FF5C5C"));
         }
@@ -145,7 +140,7 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
                     groupHolder.iv_like.setColorFilter(Color.parseColor("#FF5C5C"));
                     groupHolder.loveNum.setText(String.valueOf(Integer.valueOf(groupHolder.loveNum.getText().toString())+1));
                 }
-                updateCommentLove(commentBeanList.get(groupPosition).getCid());
+                updateCommentLove(bean.getCid());
             }
 
         });
@@ -183,7 +178,7 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
 
     private class GroupHolder{
         private MyImageView logo;
-        private TextView tv_name, tv_content, tv_time,loveNum;
+        private TextView tv_name, tv_content, tv_time,loveNum,floorTextView;
         private ImageView iv_like;
         private int status;
         private int position;
@@ -194,6 +189,7 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
             tv_time = (TextView) view.findViewById(R.id.comment_item_time);
             iv_like = (ImageView) view.findViewById(R.id.comment_item_like);
             loveNum=view.findViewById(R.id.loveNum);
+            floorTextView=view.findViewById(R.id.comment_item_floor);
         }
 
     }
@@ -292,5 +288,10 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
                 }
             }
         });
+    }
+    public void clearAll(){
+        commentBeanList.clear();
+        Log.i(TAG, "clearAll: 数据长度"+commentBeanList.size());
+        notifyDataSetChanged();
     }
 }

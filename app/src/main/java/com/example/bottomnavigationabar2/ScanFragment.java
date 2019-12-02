@@ -21,6 +21,9 @@ import com.example.bottomnavigationabar2.MoBan.OrganizationRecommendTemplate;
 import com.example.bottomnavigationabar2.MoBan.PostTemplateInterface;
 import com.example.bottomnavigationabar2.adapter.MainTabFragmentAdapter;
 import com.example.bottomnavigationabar2.adapter.OrganizationTabFragmentAdapter;
+import com.scwang.smartrefresh.header.MaterialHeader;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 
 import java.util.ArrayList;
 
@@ -37,6 +40,7 @@ public class ScanFragment extends Fragment{
     private TextView signin;
     private int offset = 0;
     private View view;
+    private SmartRefreshLayout refreshLayout;
     public static ScanFragment newInstance(String param1) {
         ScanFragment fragment = new ScanFragment();
         Bundle args = new Bundle();
@@ -92,7 +96,7 @@ public class ScanFragment extends Fragment{
         });
         viewPager.setCurrentItem(0);
         viewPager.setOffscreenPageLimit(2);
-
+        initRefreshLayout();
     }
 
 /*    public class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
@@ -137,6 +141,13 @@ public class ScanFragment extends Fragment{
     public void onStart() {
         super.onStart();
         System.out.println("开始拉");
+    }
+    private void initRefreshLayout(){
+        refreshLayout = view.findViewById(R.id.refreshLayout);
+        refreshLayout.setRefreshHeader(new MaterialHeader(getContext()));
+        refreshLayout.setRefreshFooter(new ClassicsFooter(getContext()));
+        refreshLayout.setEnableLoadMore(false);
+        refreshLayout.setEnableRefresh(false);
     }
 //
 //    @Override

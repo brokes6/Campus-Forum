@@ -57,9 +57,7 @@ public class OrganizationAdapter extends RecyclerView.Adapter<OrganizationAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
-/*
         viewHolder.myImageView.setCacheImageURL(organizations.get(position).getOimg());
-*/
         viewHolder.organizationName.setText(organizations.get(position).getOname());
         viewHolder.introduce.setText(organizations.get(position).getOintroduce());
         viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
