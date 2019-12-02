@@ -11,4 +11,5 @@
     <color name="white_pressed">#f1f1f1</color>
     <color name="white">#f1f1f1</color>
     <color name="half_black">#808080</color>
+    <color name="gray_two">#F0F0F0</color>
 </resources>
