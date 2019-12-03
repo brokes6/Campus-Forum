@@ -112,7 +112,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="请输入（密码）:"
-            android:maxLength="25"
+            android:maxLength="15"
             android:maxLines="1"/>
     </android.support.design.widget.TextInputLayout>
     </LinearLayout>

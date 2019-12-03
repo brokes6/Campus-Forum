@@ -191,8 +191,7 @@ public class RegisterActivity extends AppCompatActivity {
                     System.out.println(responseData);
                     JSONObject jsonObject=new JSONObject(responseData);
                     int code=jsonObject.getInt("code");
-                    if(code==1){
-                        JPushInterface.setAlias(RegisterActivity.this,1,jsonObject.getString("data"));
+                    if(code==1){ ;
                         Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
                         intent.putExtra("account",account);
                         setResult(1,intent);
