@@ -41,6 +41,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -82,6 +83,8 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
     private StringBuilder builder = new StringBuilder();
     List<LoadFileVo> fileList = new ArrayList<>();
     LoadPicAdapter adapter = null;
+    private LinearLayout loadLayout;
+    private TextView loadTextView;
     RecyclerView rvPic;
     private Button sendButton;
     TextView tvNum;
@@ -166,6 +169,7 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
                     TextView view = (TextView) msg.obj;
                     String num = msg.arg1 + "/9";
                     view.setText(num);
+                    loadLayout.setVisibility(View.GONE);
                     break;
                 case SHOW_TOAST:
                     Toast.makeText(addPost.this, msg.obj.toString(), Toast.LENGTH_SHORT).show();
@@ -213,9 +217,11 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
                 dialog.show();
             }
         });
-        rvPic = (RecyclerView) findViewById(R.id.rvPic);
-        tvNum = (TextView) findViewById(R.id.tvNum);
+        rvPic = findViewById(R.id.rvPic);
+        tvNum = findViewById(R.id.tvNum);
         sendButton = findViewById(R.id.sendPost);
+        loadLayout=findViewById(R.id.loadLayout);
+        loadTextView=findViewById(R.id.loadTextView);
         //发送的点击事件
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -413,6 +419,7 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
     }
     //一张张图片轮流上传
     public void netUploadImg(){
+        loadLayout.setVisibility(View.VISIBLE);
         try {
             MediaType type =MediaType.parse("image/*");
             RequestBody body=new MultipartBody.Builder()
