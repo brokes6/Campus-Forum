@@ -19,10 +19,11 @@ public class CommentDetailBean {
     private int floor;
     private List<ReplyDetailBean> replyVoList;
 
-    public CommentDetailBean(String username, String content, String ccreateTime) {
+    public CommentDetailBean(String username, String content, String ccreateTime,String uimg) {
         this.username = username;
         this.content = content;
         this.ccreateTime = ccreateTime;
+        this.uimg=uimg;
     }
 
     public int getFloor() {

@@ -199,6 +199,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                     messageLayout.setVisibility(View.VISIBLE);
                     break;
                 case NOTIFY_COMMENT:
+                    Log.i(TAG, "handleMessage: 评论处理");
                     int index1=adapter.getCommentBeanList().size();
                     commentStr.setText(String.valueOf(Integer.valueOf(commentStr.getText().toString())+1));
                     progressBar.setVisibility(View.GONE);
@@ -209,6 +210,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                 case NO_NETWORK:
                         loadTextView.setText("网络不稳定，请重新刷新试试");
                         loadButton.setVisibility(View.VISIBLE);
+                        loadButton.setClickable(true);
             }
         }
     };
@@ -221,10 +223,10 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
             //修改为深色，因为我们把状态栏的背景色修改为主题色白色，默认的文字及图标颜色为白色，导致看不到了。
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
-        ActionBar actionbar = getSupportActionBar();
+/*        ActionBar actionbar = getSupportActionBar();
         if (actionbar != null) {
             actionbar.hide();
-        }
+        }*/
         userData=FileCacheUtil.getUser(this);
         postId = getPostId();
         initView();
@@ -387,7 +389,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                     progressBar.setVisibility(View.VISIBLE);
                     addComment(commentContent,userData.getUsername(),content.getText().toString(),postId);
                     dialog.dismiss();
-                    CommentDetailBean detailBean = new CommentDetailBean(userData.getUsername(), commentContent,"刚刚");
+                    CommentDetailBean detailBean = new CommentDetailBean(userData.getUsername(), commentContent,"刚刚",userData.getUimg());
                     adapter.addTheCommentData(detailBean);
                     Toast.makeText(PostDetails.this,"评论成功",Toast.LENGTH_SHORT).show();
 
@@ -775,6 +777,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
             public void onClick(View v) {
                 getPostById();
                 getComments();
+                loadButton.setClickable(false);
             }
         });
     }

@@ -24,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -85,6 +86,8 @@ public class MoerReply extends AppCompatActivity implements View.OnClickListener
     private RecyclerView recyclerView;
     private ReplyAdapter replyAdapter;
     private SmartRefreshLayout refreshLayout;
+    private LinearLayout loadLayout;
+    private RelativeLayout contentLayout;
     private AtomicInteger startPage=new AtomicInteger(1);
     private final AtomicBoolean hasMore = new AtomicBoolean(true);
     private Handler handler=new Handler(){
@@ -92,6 +95,8 @@ public class MoerReply extends AppCompatActivity implements View.OnClickListener
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case HANDLER_DATA:
+                    loadLayout.setVisibility(View.GONE);
+                    contentLayout.setVisibility(View.VISIBLE);
                     Log.i(TAG, "handleMessage: 开始设置咯");
                     replyAdapter.setReplyDetailBeans((List<ReplyDetailBean>) msg.obj);
                     replyAdapter.notifyDataSetChanged();
@@ -119,7 +124,7 @@ public class MoerReply extends AppCompatActivity implements View.OnClickListener
     }
     private void initView() {
         see = findViewById(R.id.tiezi_see);
-        bt_comment = (TextView) findViewById(R.id.detail_page_do_comment);
+        bt_comment = findViewById(R.id.detail_page_do_comment);
         userimg = findViewById(R.id.moer_user_img);
         username = findViewById(R.id.moer_username);
         text = findViewById(R.id.moer_Text);
@@ -128,6 +133,8 @@ public class MoerReply extends AppCompatActivity implements View.OnClickListener
         back = findViewById(R.id.back);
         recyclerView=findViewById(R.id.recyclerView);
         progressBar=findViewById(R.id.progress);
+        loadLayout=findViewById(R.id.loadLayout);
+        contentLayout=findViewById(R.id.contentLayout);
         initRefreshLayout();
     }
     private void click(){

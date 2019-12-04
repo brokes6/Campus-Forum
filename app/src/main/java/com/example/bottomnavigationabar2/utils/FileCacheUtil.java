@@ -179,5 +179,7 @@ public class FileCacheUtil {
         setCache(user,context,"USERDATA.txt",0);
         data=null;
     }
-
+    public static void clearData(){
+        data=null;
+    }
 }

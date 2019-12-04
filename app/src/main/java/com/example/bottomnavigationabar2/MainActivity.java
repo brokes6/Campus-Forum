@@ -144,7 +144,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     private void setDefaultFragment() {
         FragmentManager manager=getSupportFragmentManager();
         FragmentTransaction transaction =  manager.beginTransaction();
-        mHomeFragment = HomeFragment.newInstance("首页",userData);
+        mHomeFragment = HomeFragment.newInstance();
         transaction.replace(R.id.tb,mHomeFragment);
         transaction.commit();
     }
@@ -165,7 +165,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                 Log.i(TAG, "onTabSelected: 我mhome被点击了啊");
                 if (mHomeFragment == null) {
                     Log.i(TAG, "onTabSelected:进入");
-                    mHomeFragment = HomeFragment.newInstance("首页",userData);
+                    mHomeFragment = HomeFragment.newInstance();
                 }
                 transaction.replace(R.id.tb,mHomeFragment);
                 break;

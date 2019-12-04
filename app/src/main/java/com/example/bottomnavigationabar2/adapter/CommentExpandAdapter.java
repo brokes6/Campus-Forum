@@ -112,7 +112,10 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
         }else {
             groupHolder = (GroupHolder) convertView.getTag();
         }
-        groupHolder.logo.setImageURL(bean.getUimg());
+        String uimg=bean.getUimg();
+        if(!(uimg==null)&&!uimg.trim().equals("")){
+            groupHolder.logo.setCacheImageURL(bean.getUimg());
+        }
         groupHolder.tv_name.setText(bean.getUsername());
         groupHolder.tv_time.setText(DateTimeUtil.handlerDateTime(bean.getCcreateTime()));
         groupHolder.tv_content.setText(bean.getContent());

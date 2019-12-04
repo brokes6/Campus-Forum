@@ -14,6 +14,8 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -26,6 +28,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.bottomnavigationabar2.bean.ResultBean;
@@ -34,12 +37,6 @@ import com.scwang.smartrefresh.header.material.CircleImageView;
 
 import org.json.JSONObject;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 import cn.jpush.android.api.JPushInterface;
 import okhttp3.FormBody;
@@ -53,20 +50,38 @@ import okhttp3.Response;
 *
 */
 public class RegisterActivity extends AppCompatActivity {
-    private de.hdodenhof.circleimageview.CircleImageView userimg;
-    String data_user =null;
-    ResultBean resultBean;
+    private MyImageView userimg;
+    private LinearLayout loadLayout;
     private EditText usernameEdit;
     private EditText accountEdit;
     private EditText passwordEdit;
     private EditText emailEdit;
+    private Button loginButton;
     public static final int PICK_PHOTO = 102;
-    private Uri imageUri;
-    private Context mContext;
-    private Activity mActivity;
+    public static final int REGISTER_SUCCESS=1;
+    public static final int REGISTER_FAILED=2;
     private static final String TAG = "RegisterActivity";
-    String regex1 = "[a-zA-Z0-9_]*@[a-zA-Z0-9]+[.][a-zA-Z0-9]+";
-    String Data;
+    private String regex1 = "[a-zA-Z0-9_]*@[a-zA-Z0-9]+[.][a-zA-Z0-9]+";
+    private Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case REGISTER_SUCCESS:
+                    loadLayout.setVisibility(View.GONE);
+                    Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
+                    intent.putExtra("account",msg.obj.toString());
+                    setResult(1,intent);
+                    finish();
+                case REGISTER_FAILED:
+                    Toast.makeText(RegisterActivity.this, "注册失败，请检查输入", Toast.LENGTH_SHORT).show();
+                    accountEdit.setText("");
+                    usernameEdit.setText("");
+                    passwordEdit.setText("");
+                    emailEdit.setText("");
+                    loginButton.setClickable(true);
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -192,11 +207,10 @@ public class RegisterActivity extends AppCompatActivity {
                     JSONObject jsonObject=new JSONObject(responseData);
                     int code=jsonObject.getInt("code");
                     if(code==1){
-                        JPushInterface.setAlias(RegisterActivity.this,1,jsonObject.getString("data"));
-                        Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
-                        intent.putExtra("account",account);
-                        setResult(1,intent);
-                        finish();
+                        Message message=new Message();
+                        message.what=REGISTER_SUCCESS;
+                        message.obj=account;
+                        handler.sendMessage(message);
                     }
                 }catch (Exception e) {
                     e.printStackTrace();
@@ -205,6 +219,7 @@ public class RegisterActivity extends AppCompatActivity {
         }).start();
     }
     private void initView(){
+        loadLayout=findViewById(R.id.loadLayout);
         usernameEdit=findViewById(R.id.username);
         emailEdit=findViewById(R.id.email);
         accountEdit=findViewById(R.id.account);
@@ -226,16 +241,19 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
-        Button button_denglu = (Button)findViewById(R.id.button_denglu);
-        button_denglu.setOnClickListener(new View.OnClickListener() {
+        loginButton = (Button)findViewById(R.id.button_denglu);
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loginButton.setClickable(false);
                 String account=accountEdit.getText().toString();
                 String username=usernameEdit.getText().toString();
                 String password=passwordEdit.getText().toString();
                 String email=emailEdit.getText().toString();
                 boolean flag=checkInput(account,password,username,email);
                 if(flag){
+                    Toast.makeText(RegisterActivity.this, "正在注册", Toast.LENGTH_SHORT).show();
+                    loadLayout.setVisibility(View.VISIBLE);
                     register(account,password,username,email);
                 }
             }

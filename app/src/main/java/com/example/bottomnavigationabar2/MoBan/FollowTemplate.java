@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.bottomnavigationabar2.HomeFragment;
@@ -45,6 +46,7 @@ public class FollowTemplate extends Fragment implements PostTemplateInterface {
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private NineGridTest2Adapter mAdapter;
+    private LinearLayout loadLayout;
     private List<Post> mList = new ArrayList<>();
     private View view;
     private Handler handler=new Handler(){
@@ -53,6 +55,8 @@ public class FollowTemplate extends Fragment implements PostTemplateInterface {
             switch (msg.what){
                 case PostTemplateInterface.NOTIFY:
                     mAdapter.notifyDataSetChanged();
+                    loadLayout.setVisibility(View.GONE);
+                    mRecyclerView.setVisibility(View.VISIBLE);
                     break;
                 case PostTemplateInterface.SHOWTOAST:
                     Toast.makeText(getContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
@@ -107,6 +111,7 @@ public class FollowTemplate extends Fragment implements PostTemplateInterface {
         Log.i(TAG, "initView: "+mList.size());
         mAdapter.setList(mList);
         mRecyclerView.setAdapter(mAdapter);
+        loadLayout=view.findViewById(R.id.loadLayout);
     }
     public void getPostList(String token){
         Log.i(TAG, "getPostList: 你说你page="+page);
