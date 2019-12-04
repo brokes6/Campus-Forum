@@ -36,8 +36,8 @@ public class OrganizationDetailsActivity extends AppCompatActivity {
     private static final int HANDLER_DATA=1;
     private static final int FOLLOW=2;
     private static final String TAG = "OrganizationDetailsActi";
-    public static final String ORGANIZATION_DETAILS_URL="http://10.0.2.2:8080/app/findOrganizationById";
-    public static final String FOLLOW_URL="http://10.0.2.2:8080/app/follow";
+    public static final String ORGANIZATION_DETAILS_URL="http://106.54.134.17/app/findOrganizationById";
+    public static final String FOLLOW_URL="http://106.54.134.17/app/follow";
     private RecyclerView recyclerView;
     private TextView organizationName;
     private MyImageView organizationImg;
@@ -81,9 +81,9 @@ public class OrganizationDetailsActivity extends AppCompatActivity {
     private void initView(){
         organizationName=findViewById(R.id.organizationName);
         organizationImg=findViewById(R.id.organizationImg);
-//        followButton=findViewById(R.id.followButton);
-//        followNum=findViewById(R.id.followNum);
-//        postNum=findViewById(R.id.postNum);
+        followButton=findViewById(R.id.followButton);
+        followNum=findViewById(R.id.followNum);
+        postNum=findViewById(R.id.postNum);
         introduce=findViewById(R.id.introduce);
 
         followButton.setOnClickListener(new View.OnClickListener() {

@@ -12,9 +12,10 @@ public class ReplyDetailBean {
     private String content;
     private int love_count;
 
-    public ReplyDetailBean(String username, String content) {
+    public ReplyDetailBean(String username, String content,String rcreateTime) {
         this.username = username;
         this.content = content;
+        this.rcreateTime=rcreateTime;
     }
 
     public String getUsername() {

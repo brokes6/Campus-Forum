@@ -55,7 +55,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
         holder.datetime.setText(DateTimeUtil.handlerDateTime(userMessages.get(position).getCreateTime()));
         holder.content.setText(userMessages.get(position).getContent());
         holder.postContent.setText(userMessages.get(position).getRepliesContent());
-        holder.userImg.setCacheImageURL(userMessages.get(position).getUimg());
+        String uimg=userMessages.get(position).getUimg();
+        if(uimg!=null&&!uimg.trim().equals(""))
+            holder.userImg.setCacheImageURL(uimg);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

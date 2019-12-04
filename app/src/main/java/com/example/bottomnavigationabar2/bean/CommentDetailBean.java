@@ -16,12 +16,21 @@ public class CommentDetailBean {
     private int replyTotal;//不错 暂定 后期可以添加回复总数
     private String ccreateTime;
     private int status;
+    private int floor;
     private List<ReplyDetailBean> replyVoList;
 
     public CommentDetailBean(String username, String content, String ccreateTime) {
         this.username = username;
         this.content = content;
         this.ccreateTime = ccreateTime;
+    }
+
+    public int getFloor() {
+        return floor;
+    }
+
+    public void setFloor(int floor) {
+        this.floor = floor;
     }
 
     public int getUid() {
