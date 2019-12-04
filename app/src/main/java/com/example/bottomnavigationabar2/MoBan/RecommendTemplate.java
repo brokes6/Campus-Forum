@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.bottomnavigationabar2.HomeFragment;
@@ -43,6 +44,7 @@ public class RecommendTemplate extends Fragment implements PostTemplateInterface
     private int page=1;
     private RecommendTemplate moBan=null;
     private RecyclerView mRecyclerView;
+    private LinearLayout loadLayout;
     private RecyclerView.LayoutManager mLayoutManager;
     private NineGridTest2Adapter mAdapter;
     private List<Post> mList = new ArrayList<>();
@@ -53,6 +55,8 @@ public class RecommendTemplate extends Fragment implements PostTemplateInterface
             switch (msg.what){
                 case PostTemplateInterface.NOTIFY:
                     mAdapter.notifyDataSetChanged();
+                    loadLayout.setVisibility(View.GONE);
+                    mRecyclerView.setVisibility(View.VISIBLE);
                     break;
                 case PostTemplateInterface.SHOWTOAST:
                     Toast.makeText(getContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
@@ -107,6 +111,7 @@ public class RecommendTemplate extends Fragment implements PostTemplateInterface
         mAdapter = new NineGridTest2Adapter(getContext());
         mAdapter.setList(mList);
         mRecyclerView.setAdapter(mAdapter);
+        loadLayout=view.findViewById(R.id.loadLayout);
     }
     public void getPostList(final String token){
         new Thread(){

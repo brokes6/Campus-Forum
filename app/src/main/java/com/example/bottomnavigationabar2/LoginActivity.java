@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -22,6 +23,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +34,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,8 +69,11 @@ import static java.security.AccessController.getContext;
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     public static final int STARTACTIVITY=1;
+    public static final int LOGIN_FAILED=2;
+    public static final int NO_NETWORK=3;
     private EditText usernameEdit;
     private EditText passwordEdit;
+    private LinearLayout loadLayout;
     String user = null;
     User userData;
     String pass = null;
@@ -80,11 +86,16 @@ public class LoginActivity extends AppCompatActivity {
     private SharedPreferences sp;
     private HandlerUtil handlerUtil;
     private Boolean key;
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            "android.permission.READ_EXTERNAL_STORAGE",
+            "android.permission.WRITE_EXTERNAL_STORAGE" };
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case STARTACTIVITY:
+                    loadLayout.setVisibility(View.GONE);
                     User user= (User) msg.obj;
                     JPushInterface.setAlias(LoginActivity.this, String.valueOf(user.getUid()), new TagAliasCallback() {
                         @Override
@@ -92,10 +103,18 @@ public class LoginActivity extends AppCompatActivity {
                             Log.i(TAG, "gotResult: 成功拉");
                         }
                     });
+                    FileCacheUtil.clearData();
                     FileCacheUtil.setCache(user,LoginActivity.this,"USERDATA.txt",0);
                     ActivityOptions compat = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this);
                     startActivity(new Intent(LoginActivity.this, MainActivity.class), compat.toBundle());
                     finish();
+                    break;
+                case LOGIN_FAILED:
+                    Toast.makeText(LoginActivity.this, "用户名或密码输入错误，请重试", Toast.LENGTH_SHORT).show();
+                    break;
+                case NO_NETWORK:
+                    Toast.makeText(LoginActivity.this, "网络连接失败，请检查网络连接", Toast.LENGTH_SHORT).show();
+                    loadLayout.setVisibility(View.GONE);
                     break;
             }
         }
@@ -104,6 +123,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        verifyStoragePermissions(this);
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             //修改为深色，因为我们把状态栏的背景色修改为主题色白色，默认的文字及图标颜色为白色，导致看不到了。
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
@@ -114,6 +134,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         key = getIntent().getBooleanExtra("key",false);
         //过度效果(没写)
+        loadLayout=findViewById(R.id.loadLayout);
         intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         networkChangeReceiver = new NetworkChangeReceiver();
@@ -207,6 +228,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
     private void login(final String username, final String password){
+        loadLayout.setVisibility(View.VISIBLE);
         RequestBody requestBody = new FormBody.Builder()
                 .add("username",username)
                 .add("password",password)
@@ -220,7 +242,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.i(TAG, "onFailure: 登录失败");
-                handlerUtil.sendToast("服务器出现异常，请稍后再试");
+                Message message=new Message();
+                message.what=NO_NETWORK;
+                handler.sendMessage(message);
             }
 
             @Override
@@ -237,7 +261,9 @@ public class LoginActivity extends AppCompatActivity {
                     Gson gson =new Gson();
                     User user=gson.fromJson(jsonObject.getString("data"),User.class);
                     if(code==0){
-                        handlerUtil.sendToast(msg);
+                        Message message=new Message();
+                        message.what=LOGIN_FAILED;
+                        handler.sendMessage(message);
                         return;
                     }
                     if( checkbox == true){
@@ -288,6 +314,20 @@ public class LoginActivity extends AppCompatActivity {
             case 1:String account=data.getStringExtra("account");
                    usernameEdit.setText(account);
                    break;
+        }
+    }
+    public static void verifyStoragePermissions(Activity activity) {
+
+        try {
+            //检测是否有写的权限
+            int permission = ActivityCompat.checkSelfPermission(activity,
+                    "android.permission.WRITE_EXTERNAL_STORAGE");
+            if (permission != PackageManager.PERMISSION_GRANTED) {
+                // 没有写的权限，去申请写的权限，会弹出对话框
+                ActivityCompat.requestPermissions(activity, PERMISSIONS_STORAGE,REQUEST_EXTERNAL_STORAGE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

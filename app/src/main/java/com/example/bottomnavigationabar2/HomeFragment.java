@@ -44,6 +44,7 @@ import com.example.bottomnavigationabar2.activity.SearchActivity;
 import com.example.bottomnavigationabar2.adapter.MainTabFragmentAdapter;
 import com.example.bottomnavigationabar2.adapter.NineGridTest2Adapter;
 import com.example.bottomnavigationabar2.bean.User;
+import com.example.bottomnavigationabar2.utils.FileCacheUtil;
 import com.example.bottomnavigationabar2.utils.NetWorkUtil;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -106,24 +107,17 @@ public class HomeFragment extends Fragment {
     private boolean showSearchView=true;
     private int phoneHeight=-1;
     private ValueAnimator valueAnimator;
-    public static HomeFragment newInstance(String param1,User user) {
-        HomeFragment fragment = new HomeFragment(user);
+    public static HomeFragment newInstance() {
+        HomeFragment fragment=new HomeFragment();
         Bundle args = new Bundle();
-        args.putString("agrs1", param1);
         fragment.setArguments(args);
         return fragment;
-    }
-    public HomeFragment(User user) {
-        userData=user;
-    }
-
-    public HomeFragment() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        userData= FileCacheUtil.getUser(getContext());
     }
 
     @Override
@@ -390,11 +384,16 @@ public class HomeFragment extends Fragment {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                Log.i(TAG, "onRefresh: 上拉刷新");
-                refreshLayout.autoRefresh();
-                postTemplateInterface.clearList();
-                postTemplateInterface.getPostList(userData.getToken());
-                refreshLayout.finishRefresh();
+                if(NetWorkUtil.isNetworkConnected(getContext())) {
+                    Log.i(TAG, "onRefresh: 上拉刷新");
+                    refreshLayout.autoRefresh();
+                    postTemplateInterface.clearList();
+                    postTemplateInterface.getPostList(userData.getToken());
+                    refreshLayout.finishRefresh();
+                }else{
+                    Toast.makeText(getContext(), "网络连接失败，请检查网络", Toast.LENGTH_SHORT).show();
+                    refreshLayout.finishRefresh();
+                }
             }
         });
     }

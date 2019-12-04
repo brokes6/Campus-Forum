@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.bottomnavigationabar2.Post;
@@ -51,6 +52,7 @@ public class PopularPostTemplate extends Fragment implements PostTemplateInterfa
     private View view;
     private String token=FileCacheUtil.getUser(getContext()).getToken();
     private String url=STANDARD_POPULAR_URL;
+    private LinearLayout loadLayout;
     public static PopularPostTemplate newIntance(boolean flag, int tagId, String url){
         PopularPostTemplate template=new PopularPostTemplate();
         Bundle bundle=new Bundle();
@@ -66,7 +68,10 @@ public class PopularPostTemplate extends Fragment implements PostTemplateInterfa
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case PostTemplateInterface.NOTIFY:
+                    Log.i(TAG, "handleMessage: 取消啊");
                         mAdapter.notifyDataSetChanged();
+                        loadLayout.setVisibility(View.GONE);
+                        mRecyclerView.setVisibility(View.VISIBLE);
                         break;
                 case PostTemplateInterface.SHOWTOAST:
                     Toast.makeText(getContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
@@ -103,6 +108,7 @@ public class PopularPostTemplate extends Fragment implements PostTemplateInterfa
         mAdapter = new NineGridTest2Adapter(getContext());
         mAdapter.setList(mList);
         mRecyclerView.setAdapter(mAdapter);
+        loadLayout=view.findViewById(R.id.loadLayout);
     }
     public void getPostList(final String token){
         new Thread(){
