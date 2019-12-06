@@ -213,7 +213,7 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
      */
     public void addTheCommentData(CommentDetailBean commentDetailBean){
         if(commentDetailBean!=null){
-            commentBeanList.add(0,commentDetailBean);
+            commentBeanList.add(commentDetailBean);
             notifyDataSetChanged();
         }else {
             throw new IllegalArgumentException("评论数据为空!");

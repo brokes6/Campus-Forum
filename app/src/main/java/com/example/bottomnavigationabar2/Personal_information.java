@@ -81,6 +81,7 @@ public class Personal_information extends AppCompatActivity {
                     String imgUrl=msg.obj.toString();
                     userData.setUimg(imgUrl);
                     userImg.setCacheImageURL(imgUrl);
+                    FileCacheUtil.updateUser(userData,Personal_information.this);
                     setResult(1,null);
             }
         }

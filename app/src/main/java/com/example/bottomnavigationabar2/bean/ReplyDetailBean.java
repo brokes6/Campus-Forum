@@ -5,17 +5,34 @@ package com.example.bottomnavigationabar2.bean;
  * create by czj 2019/10/23
  */
 public class ReplyDetailBean {
+    private int rid;
     private String username;
     private String uimg;
     private int uid;
     private String rcreateTime;
     private String content;
-    private int love_count;
-
+    private int loveCount;
+    private int status;
     public ReplyDetailBean(String username, String content,String rcreateTime) {
         this.username = username;
         this.content = content;
         this.rcreateTime=rcreateTime;
+    }
+
+    public int getRid() {
+        return rid;
+    }
+
+    public void setRid(int rid) {
+        this.rid = rid;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public String getUsername() {
@@ -58,11 +75,11 @@ public class ReplyDetailBean {
         this.content = content;
     }
 
-    public int getLove_count() {
-        return love_count;
+    public int getLoveCount() {
+        return loveCount;
     }
 
-    public void setLove_count(int love_count) {
-        this.love_count = love_count;
+    public void setLoveCount(int loveCount) {
+        this.loveCount = loveCount;
     }
 }

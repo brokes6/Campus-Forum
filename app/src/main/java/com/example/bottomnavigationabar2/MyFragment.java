@@ -84,7 +84,7 @@ public class MyFragment extends Fragment {
         history.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getContext(),history.class);
+                Intent intent=new Intent(getContext(),MyHistory.class);
                 getActivity().overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
                 startActivity(intent);
             }
@@ -166,7 +166,7 @@ public class MyFragment extends Fragment {
         history.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getContext(),history.class);
+                Intent intent=new Intent(getContext(),MyHistory.class);
                 getActivity().overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
                 startActivity(intent);
             }

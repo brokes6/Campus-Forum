@@ -182,4 +182,33 @@ public class FileCacheUtil {
     public static void clearData(){
         data=null;
     }
+
+ /*   public static void setHistory(byte []b,String cacheFileName){
+        FileOutputStream fileOutputStream=null;
+        FileInputStream fileInputStream=null;
+        File file=null;
+        try {
+             file=new File(Environment.getExternalStorageDirectory().toString() + File.separator+cacheFileName);
+             fileOutputStream=new FileOutputStream(file);
+             if(!file.exists())
+                 file.createNewFile();
+             fileOutputStream.write(b,0,b.length);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if(fileOutputStream!=null){
+                try {
+                    fileOutputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                ;
+            }
+        }
+    }
+    public static void setHistory(int postId){
+
+    }*/
 }

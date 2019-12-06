@@ -43,6 +43,7 @@ import com.example.bottomnavigationabar2.bean.User;
 import com.example.bottomnavigationabar2.model.NineGridTestModel;
 import com.example.bottomnavigationabar2.utils.FileCacheUtil;
 import com.example.bottomnavigationabar2.utils.NetWorkUtil;
+import com.example.bottomnavigationabar2.utils.PostHitoryUtil;
 import com.example.bottomnavigationabar2.view.CommentExpandableListView;
 import com.example.bottomnavigationabar2.view.NineGridTestLayout;
 import com.example.util.DateTimeUtil;
@@ -129,14 +130,17 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
     private NiceSpinner niceSpinner;
     private boolean commentFlag;
     private Button loadButton;
+    private int postUserId;
     private List<String> spinnerData = new LinkedList<>(Arrays.asList("时间排序", "点赞排序"));
     private  Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            final Post post = (Post) msg.obj;
             switch (msg.what){
                 case HANDLER_DATA:
+                    Post post = (Post) msg.obj;
                     String str=Html.fromHtml(post.getContent()).toString();
+                    postUserId=post.getPuid();
+                    Log.i(TAG, "handleMessage: postUserId="+postUserId);
                     String imgUrls=post.getImgUrl();
                     username.setText(post.getUsername());
                     userImg.setImageURL(post.getUimg());
@@ -174,6 +178,8 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                     }
                     contentLayout.setVisibility(View.VISIBLE);
                     loadLayout.setVisibility(View.GONE);
+                    PostHitoryUtil.saveSearchHistory(String.valueOf(postId),PostDetails.this);
+                    Log.e(TAG, "handleMessage:值来啦"+PostHitoryUtil.getSearchHistory(PostDetails.this));
                     break;
                 case CANCEL_PROGRESS:
                     progressBar.setVisibility(View.GONE);
@@ -199,6 +205,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                     messageLayout.setVisibility(View.VISIBLE);
                     break;
                 case NOTIFY_COMMENT:
+                    adapter.addTheCommentData((CommentDetailBean) msg.obj);
                     Log.i(TAG, "handleMessage: 评论处理");
                     int index1=adapter.getCommentBeanList().size();
                     commentStr.setText(String.valueOf(Integer.valueOf(commentStr.getText().toString())+1));
@@ -387,10 +394,8 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                 //后期需要检查token的值 查看是否被更改了喔
                 if(!TextUtils.isEmpty(commentContent)){
                     progressBar.setVisibility(View.VISIBLE);
-                    addComment(commentContent,userData.getUsername(),content.getText().toString(),postId);
+                    addComment(commentContent,userData.getUsername(),content.getText().toString(),postUserId);
                     dialog.dismiss();
-                    CommentDetailBean detailBean = new CommentDetailBean(userData.getUsername(), commentContent,"刚刚",userData.getUimg());
-                    adapter.addTheCommentData(detailBean);
                     Toast.makeText(PostDetails.this,"评论成功",Toast.LENGTH_SHORT).show();
 
                 }else {
@@ -535,7 +540,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         message.obj=post;
         handler.sendMessage(message);
     }
-    private void addComment(String content,String username,String postContent,int puid){
+    private void addComment(final String content, String username, String postContent, int puid){
         RequestBody requestBody = new FormBody.Builder()
                 .add("cpid", String.valueOf(postId))
                 .add("content",content)
@@ -567,8 +572,10 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                         Log.i(TAG, "onResponse:失败咯");
                         return;
                     }
+                    CommentDetailBean detailBean = new CommentDetailBean(userData.getUsername(), content,"刚刚",userData.getUimg());
                     Message message=new Message();
                     message.what=NOTIFY_COMMENT;
+                    message.obj=detailBean;
                     handler.sendMessage(message);
                 } catch (JSONException e) {
                     e.printStackTrace();

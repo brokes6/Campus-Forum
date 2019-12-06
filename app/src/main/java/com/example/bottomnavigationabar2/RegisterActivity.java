@@ -35,10 +35,15 @@ import com.example.bottomnavigationabar2.bean.ResultBean;
 import com.example.util.JsonTOBeanUtil;
 import com.scwang.smartrefresh.header.material.CircleImageView;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 
+import java.io.IOException;
+
 import cn.jpush.android.api.JPushInterface;
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -60,8 +65,11 @@ public class RegisterActivity extends AppCompatActivity {
     public static final int PICK_PHOTO = 102;
     public static final int REGISTER_SUCCESS=1;
     public static final int REGISTER_FAILED=2;
+    public static final int HAS_ACCOUNT=3;
+    public static final int HASN_ACCOUNT=4;
     private static final String TAG = "RegisterActivity";
     private String regex1 = "[a-zA-Z0-9_]*@[a-zA-Z0-9]+[.][a-zA-Z0-9]+";
+    private boolean hasInput;
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -72,6 +80,7 @@ public class RegisterActivity extends AppCompatActivity {
                     intent.putExtra("account",msg.obj.toString());
                     setResult(1,intent);
                     finish();
+                    break;
                 case REGISTER_FAILED:
                     Toast.makeText(RegisterActivity.this, "注册失败，请检查输入", Toast.LENGTH_SHORT).show();
                     accountEdit.setText("");
@@ -79,6 +88,14 @@ public class RegisterActivity extends AppCompatActivity {
                     passwordEdit.setText("");
                     emailEdit.setText("");
                     loginButton.setClickable(true);
+                    break;
+                case HAS_ACCOUNT:
+                    Toast.makeText(RegisterActivity.this, "该用户名已经被注册", Toast.LENGTH_SHORT).show();
+                    accountEdit.setError("该用户名已经被注册");
+                    break;
+                case HASN_ACCOUNT:
+                    Toast.makeText(RegisterActivity.this, "该用户名可以使用", Toast.LENGTH_SHORT).show();
+                    break;
             }
         }
     };
@@ -258,6 +275,16 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
+        accountEdit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                String str=accountEdit.getText().toString();
+                Log.i(TAG, "onFocusChange: "+str+hasFocus);
+                if(!str.trim().equals("")&&!hasFocus){
+                    checkAccount(str);
+                }
+            }
+        });
     }
     private boolean checkInput(String account,String password,String username,String email){
         boolean flag=true;
@@ -282,5 +309,37 @@ public class RegisterActivity extends AppCompatActivity {
             flag=false;
         }
         return flag;
+    }
+    private void checkAccount(String str){
+        Request request=new Request.Builder()
+                .url("http://106.54.134.17/app/checkAccount?account="+str)
+                .build();
+        OkHttpClient client=new OkHttpClient();
+        final Message message=new Message();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String responseStr=response.body().string();
+                Log.i(TAG, "onResponse: "+responseStr);
+                try {
+                    JSONObject jsonObject=new JSONObject(responseStr);
+                    if(jsonObject.getInt("code")==0){
+                        message.what=HAS_ACCOUNT;
+                        handler.sendMessage(message);
+                        return;
+                    }
+                    message.what=HASN_ACCOUNT;
+                    handler.sendMessage(message);
+                    return;
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }
