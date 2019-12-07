@@ -40,12 +40,36 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp">
+        android:layout_height="wrap_content"
+        android:minHeight="70dp"
+        android:background="@drawable/bt_top">
+        //使用展示文字开源库-----ExpandableTextView
+        //设置文本内容时候我们用的是ExpandableTextView 而不是Textview。
+        <com.ms.square.android.expandabletextview.ExpandableTextView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/expand_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            expandableTextView:maxCollapsedLines="4"
+            expandableTextView:animDuration="200">
+            //必须使用 android:id="@id/expandable_text"
             <TextView
-                android:id="@+id/picture_text"
-                android:padding="10dp"
-                android:text="图片文字内容"
+                android:id="@id/expandable_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textSize="16sp"
+                android:textColor="#666666" />
+            //必须使用 android:id="@id/expand_collapse"
+            <ImageButton
+                android:id="@id/expand_collapse"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:layout_gravity="right|bottom"
+                android:background="@android:color/transparent"/>
+        </com.ms.square.android.expandabletextview.ExpandableTextView>
     </LinearLayout>
 </LinearLayout>

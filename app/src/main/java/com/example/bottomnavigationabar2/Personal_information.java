@@ -67,6 +67,7 @@ public class Personal_information extends AppCompatActivity {
     private LinearLayout myHead;
     private LinearLayout myName;
     private LinearLayout Hobby;
+    private TextView account;
     private LinearLayout autograph;
     private LinearLayout more;
     private MyImageView userImg;
@@ -117,6 +118,7 @@ public class Personal_information extends AppCompatActivity {
         }
     }
     private void initView(){
+        account=findViewById(R.id.accountnum);
         circleImageView=(CircleImageView) findViewById(R.id.personal_return);
         myHead=(LinearLayout)findViewById(R.id.myHead);
         myName=(LinearLayout)findViewById(R.id.myName);
@@ -194,6 +196,7 @@ public class Personal_information extends AppCompatActivity {
     }
     private void initData(){
         userData= FileCacheUtil.getUser(Personal_information.this);
+        account.setText(userData.getAccount());
         textView.setText(userData.getUsername());
         if(userData.getUimg()!=null)
             userImg.setCacheImageURL(userData.getUimg());
