@@ -74,7 +74,7 @@ import okhttp3.Response;
 
 public class addPost extends AppCompatActivity implements View.OnClickListener {
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "addPost";
     public static final int SHOW_TOAST=3;
     public static final int CHOOSE_PHOTO = 2;
     public static final int SET_OK = 1;
@@ -232,7 +232,6 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 };
-                finish();
             }
         });
         initAdapter();

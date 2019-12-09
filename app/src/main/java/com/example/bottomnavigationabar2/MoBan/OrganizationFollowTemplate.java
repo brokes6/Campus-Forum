@@ -12,6 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.bottomnavigationabar2.R;
 import com.example.bottomnavigationabar2.adapter.OrganizationAdapter;
@@ -38,6 +41,9 @@ public class OrganizationFollowTemplate extends Fragment {
     public static final String ORGANIZATION_REQUEST_URL = "http://106.54.134.17/app/getOrganizationByUserId";
     private OrganizationAdapter organizationAdapter;
     private RecyclerView recyclerView;
+    private LinearLayout loadLayout;
+    private TextView loadTextView;
+    private ProgressBar progressBar;
     private View convertView;
     private int startPage=1;
     private String token= FileCacheUtil.getUser(getContext()).getToken();
@@ -45,12 +51,12 @@ public class OrganizationFollowTemplate extends Fragment {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case 1:
-                    Log.i(TAG, "handleMessage: 为什么没有设置呢");
-                    organizationAdapter.notifyDataSetChanged();
+                case RequestStatus.HANDLER_DATA:
                     organizationAdapter.notifyDataSetChanged();
                     break;
-
+                case RequestStatus.NO_RESOURCE:
+                    handlerNoResource();
+                    break;
             }
         }
     };
@@ -70,6 +76,9 @@ public class OrganizationFollowTemplate extends Fragment {
     }
 
     private void initView() {
+        progressBar=convertView.findViewById(R.id.loading);
+        loadTextView=convertView.findViewById(R.id.loadTextView);
+        loadLayout=convertView.findViewById(R.id.loadLayout);
         recyclerView=convertView.findViewById(R.id.recyclerView);
         organizationAdapter = new OrganizationAdapter(getContext(),1);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -104,7 +113,10 @@ public class OrganizationFollowTemplate extends Fragment {
                 try {
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
-                        Log.i(TAG, "onResponse: 失败了");
+                        Message message=new Message();
+                        message.what=RequestStatus.NO_RESOURCE;
+                        handler.sendMessage(message);
+                        return;
                     }
                     Gson gson = new Gson();
                     String data = jsonObject.getString("data");
@@ -124,5 +136,10 @@ public class OrganizationFollowTemplate extends Fragment {
     }
     public  void setData(List<Organization> list){
         this.organizationAdapter.setOrganizations(list);
+    }
+    private void handlerNoResource(){
+        progressBar.setVisibility(View.GONE);
+        loadTextView.setText("你暂时还没有关注的社团喔，快去关注社团吧!");
+        loadTextView.setTextSize(16);
     }
 }

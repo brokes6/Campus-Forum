@@ -9,27 +9,18 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.example.bottomnavigationabar2.R;
 import com.example.bottomnavigationabar2.adapter.HistorySearchAdapter;
 import com.example.bottomnavigationabar2.utils.HistorySearchUtil;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class SearchActivity extends AppCompatActivity {
     private static final String TAG = "SearchActivity";
@@ -87,7 +78,6 @@ public class SearchActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
                 searchView.setQuery("",false);
                 searchView.clearFocus();
-                searchView.onActionViewCollapsed();
                 Intent intent=new Intent(SearchActivity.this,SearchDetailsActivity.class);
                 intent.putExtra("queryWord",queryWord);
                 startActivityForResult(intent,1);

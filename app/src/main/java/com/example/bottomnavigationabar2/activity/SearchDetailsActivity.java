@@ -1,5 +1,6 @@
 package com.example.bottomnavigationabar2.activity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,9 +9,12 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.bottomnavigationabar2.MoBan.OrganizationFollowTemplate;
 import com.example.bottomnavigationabar2.MoBan.OrganizationRecommendTemplate;
@@ -19,6 +23,7 @@ import com.example.bottomnavigationabar2.MoBan.SearchPostTemplate;
 import com.example.bottomnavigationabar2.R;
 import com.example.bottomnavigationabar2.adapter.MainTabFragmentAdapter;
 import com.example.bottomnavigationabar2.bean.SearchDto;
+import com.example.bottomnavigationabar2.utils.HistorySearchUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -35,12 +40,14 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class SearchDetailsActivity extends AppCompatActivity {
-    public static final String SEARCH_REQUEST_URL="http://10.0.2.2:8080/app/search";
+    public static final String SEARCH_REQUEST_URL="http://106.54.134.17/app/search";
     private static final String TAG = "SearchDetailsActivity";
     private MainTabFragmentAdapter adapter;
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private String queryWord;
+    private SearchView searchView;
+    private Button searchButton;
     private SearchPostTemplate postTemplate;
     private OrganizationRecommendTemplate recommendTemplate;
     private ImageView back;
@@ -68,6 +75,8 @@ public class SearchDetailsActivity extends AppCompatActivity {
         getSearchData();
     }
     private void initView(){
+        searchButton=findViewById(R.id.button);
+        searchView=findViewById(R.id.searchView);
         back = findViewById(R.id.search_details_back);
         viewPager=findViewById(R.id.viewPager);
         tabLayout=findViewById(R.id.tabLayout);
@@ -85,6 +94,9 @@ public class SearchDetailsActivity extends AppCompatActivity {
             public void onPageScrollStateChanged(int i) {
             }
         });
+        searchView.setQueryHint("请输入搜索内容");
+        searchView.setIconifiedByDefault(false);
+        setSearchTvListener();
     }
     private void initData(){
         queryWord=getIntent().getStringExtra("queryWord");
@@ -144,7 +156,6 @@ public class SearchDetailsActivity extends AppCompatActivity {
                             }
                             Gson gson=new Gson();
                             SearchDto searchDto=gson.fromJson(jsonObject.getString("data"),new TypeToken<SearchDto>(){}.getType());
-                            Log.i(TAG, "onResponse: 没脑子为什么那么块？");
                             Message message=new Message();
                             message.what=1;
                             message.obj=searchDto;
@@ -156,5 +167,27 @@ public class SearchDetailsActivity extends AppCompatActivity {
                 });
             }
         }.start();
+    }
+    private void setSearchTvListener() {
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                queryWord=searchView.getQuery().toString();
+                if (queryWord.isEmpty()){
+                    Toast.makeText(SearchDetailsActivity.this, "输入不能为空", Toast.LENGTH_SHORT).show();
+                }else{
+                    HistorySearchUtil.getInstance(SearchDetailsActivity.this).putNewSearch(queryWord);//保存记录到数据库
+                    adapter.notifyDataSetChanged();
+                    searchView.setQuery("",false);
+                    searchView.clearFocus();
+                    clear();
+                    getSearchData();
+                }
+            }
+        });
+    }
+    private void clear(){
+        recommendTemplate.clear();
+        postTemplate.clear();
     }
 }
