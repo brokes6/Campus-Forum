@@ -68,6 +68,7 @@ public class Personal_information extends AppCompatActivity {
     private LinearLayout myName;
     private TextView Account;
     private LinearLayout Hobby;
+    private TextView account;
     private LinearLayout autograph;
     private LinearLayout more;
     private MyImageView userImg;
@@ -82,6 +83,7 @@ public class Personal_information extends AppCompatActivity {
                     String imgUrl=msg.obj.toString();
                     userData.setUimg(imgUrl);
                     userImg.setCacheImageURL(imgUrl);
+                    FileCacheUtil.updateUser(userData,Personal_information.this);
                     setResult(1,null);
             }
         }
@@ -117,6 +119,7 @@ public class Personal_information extends AppCompatActivity {
         }
     }
     private void initView(){
+        account=findViewById(R.id.accountnum);
         circleImageView=(CircleImageView) findViewById(R.id.personal_return);
         myHead=(LinearLayout)findViewById(R.id.myHead);
         myName=(LinearLayout)findViewById(R.id.myName);
@@ -195,6 +198,7 @@ public class Personal_information extends AppCompatActivity {
     }
     private void initData(){
         userData= FileCacheUtil.getUser(Personal_information.this);
+        account.setText(userData.getAccount());
         textView.setText(userData.getUsername());
         Account.setText(userData.getAccount());
         if(userData.getUimg()!=null)

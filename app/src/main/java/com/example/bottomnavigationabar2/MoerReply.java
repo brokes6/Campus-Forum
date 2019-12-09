@@ -221,7 +221,7 @@ public class MoerReply extends AppCompatActivity implements View.OnClickListener
             @Override
             public void run() {
                 Request request=new Request.Builder()
-                        .url(REPLY_REQUEST_URL+"?startPage="+startPage+"&commentId="+commentId)
+                        .url(REPLY_REQUEST_URL+"?startPage="+startPage+"&commentId="+commentId+"&token="+userData.getToken())
                         .build();
                 OkHttpClient okHttpClient=new OkHttpClient();
                 okHttpClient.newCall(request).enqueue(new Callback() {

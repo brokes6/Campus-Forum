@@ -29,7 +29,8 @@
                     android:id="@+id/user_head_img"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:src="@mipmap/ic_launcher"/>
+                    android:src="@mipmap/defaultuserimg"
+                    />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -43,7 +44,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="35dp"
                     android:textColor="#000"
-                    android:text="南霸天"/>
+                    android:text="暂无姓名"/>
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -58,7 +59,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="20dp"
-                        android:text="1313131313"/>
+                        android:text="暂无账号"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

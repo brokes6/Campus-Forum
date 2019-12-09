@@ -150,9 +150,9 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
     public class ViewHolder extends RecyclerView.ViewHolder {
         View view;
         NineGridTestLayout layout;
-        LinearLayout loveLayout,collectionLayout;
+        LinearLayout loveLayout,disagreeLayout;
         MyImageView uimg;
-        TextView datetime,content,username,loveNumStr,collectionStr,talkNumStr;
+        TextView datetime,content,username,loveNumStr,disagreeNum,talkNumStr;
         ImageView loveNum,collection;
         int postId,loveStatus,collectionStatus;
         public ViewHolder(View itemView) {
@@ -168,10 +168,10 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
             loveNum=itemView.findViewById(R.id.loveNum);
             collection=itemView.findViewById(R.id.collection);
             loveNumStr=itemView.findViewById(R.id.loveNumStr);
-            collectionStr=itemView.findViewById(R.id.collectionStr);
+            disagreeNum=itemView.findViewById(R.id.disagreeNum);
             talkNumStr=itemView.findViewById(R.id.talkNumStr);
             loveLayout=itemView.findViewById(R.id.loveLayout);
-            collectionLayout=itemView.findViewById(R.id.collectionLayout);
+            disagreeLayout=itemView.findViewById(R.id.disagreeLayout);
         }
 
     }

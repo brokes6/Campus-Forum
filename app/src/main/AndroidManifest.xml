@@ -59,7 +59,7 @@
         <activity android:name=".OrganizationActivity" />
         <activity android:name=".MyCollection" />
         <activity android:name=".Personal_information" />
-        <activity android:name=".history" />
+        <activity android:name=".MyHistory" />
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait" >

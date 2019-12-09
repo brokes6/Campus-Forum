@@ -32,6 +32,8 @@ import com.example.bottomnavigationabar2.Post;
 import com.example.bottomnavigationabar2.R;
 import com.example.bottomnavigationabar2.adapter.NineGridTest2Adapter;
 import com.example.bottomnavigationabar2.adapter.ShowImageAdapter;
+import com.ms.square.android.expandabletextview.ExpandableTextView;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -67,6 +69,7 @@ public class ShowImageActivity extends AppCompatActivity {
     private ArrayList<String> urls =null;
     private ArrayList<Boolean> booleans;
     private int position,total;
+    private ExpandableTextView expTv1;
     //子线程不能操作UI，通过Handler设置图片
     private Handler handler = new Handler() {
         @Override
@@ -134,10 +137,11 @@ public class ShowImageActivity extends AppCompatActivity {
         initData();
     }
     private void initView(){
+        expTv1 = findViewById(R.id.expand_text_view);
         viewPager =findViewById(R.id.show_view_pager);
         //将设置好的动画指定给它
         viewPager.setPageTransformer(true, new DepthPageTransformer());
-        picture_text = findViewById(R.id.picture_text);
+//        picture_text = findViewById(R.id.picture_text);
         picture_num=findViewById(R.id.picture_num);
     }
     private void initData(){
@@ -146,7 +150,8 @@ public class ShowImageActivity extends AppCompatActivity {
         listViews=new ArrayList<>();
         position=bundle.getInt("id",0);
         picture_num.setText(position+1+"/"+total);
-        picture_text.setText(bundle.getString("content","没有文字喔"));
+//        picture_text.setText(bundle.getString("content","没有文字喔"));
+        expTv1.setText(bundle.getString("content","没有文字喔"));
         Log.i(TAG, "initData: postition="+position);
     }
     private void inint() {

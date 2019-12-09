@@ -53,7 +53,7 @@
             android:layout_height="55dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="225dp"
-            android:src="@drawable/user_other"/>
+            android:src="@mipmap/defaultuserimg"/>
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -149,7 +149,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/account"
+                android:id="@+id/accountnum"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
                 android:layout_gravity="right"
