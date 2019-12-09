@@ -1,6 +1,7 @@
 package com.example.bottomnavigationabar2.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.RecyclerView;
@@ -8,16 +9,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.bottomnavigationabar2.MoerReply;
 import com.example.bottomnavigationabar2.MyImageView;
+import com.example.bottomnavigationabar2.PostDetails;
 import com.example.bottomnavigationabar2.R;
 import com.example.bottomnavigationabar2.bean.UserMessage;
 import com.example.bottomnavigationabar2.dto.CommentDto;
 import com.example.util.DateTimeUtil;
+import com.example.util.MessageUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -51,10 +57,32 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.username.setText(userMessages.get(position).getUsername());
-        holder.datetime.setText(DateTimeUtil.handlerDateTime(userMessages.get(position).getCreateTime()));
-        holder.content.setText(userMessages.get(position).getContent());
-        holder.postContent.setText(userMessages.get(position).getRepliesContent());
+        final UserMessage userMessage=userMessages.get(position);
+        final int action=userMessage.getAction();
+        final Map<String,Integer>map= MessageUtil.convertReplyMap(userMessage.getMapId());
+        holder.username.setText(userMessage.getUsername());
+        holder.datetime.setText(DateTimeUtil.handlerDateTime(userMessage.getCreateTime()));
+        holder.content.setText(userMessage.getContent());
+        holder.postContent.setText(userMessage.getRepliesContent());
+        holder.postLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "onClick: 被点击了");
+                Intent intent=null;
+                switch (action){
+                    case 1:
+                        intent=new Intent(mcontext, PostDetails.class);
+                        intent.putExtra("postId",map.get("postId"));
+                        break;
+                    case 2:
+                        intent=new Intent(mcontext, MoerReply.class);
+                        intent.putExtra("postId",map.get("postId"));
+                        intent.putExtra("cid",map.get("commentId"));
+                        break;
+                }
+                mcontext.startActivity(intent);
+            }
+        });
         String uimg=userMessages.get(position).getUimg();
         if(uimg!=null&&!uimg.trim().equals(""))
             holder.userImg.setCacheImageURL(uimg);
@@ -67,7 +95,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
         TextView datetime;
         TextView content;
         TextView postContent;
-
+        LinearLayout postLayout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.view=itemView;
@@ -76,6 +104,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
             datetime=itemView.findViewById(R.id.news_time);
             content=itemView.findViewById(R.id.news_user_text);
             postContent=itemView.findViewById(R.id.postContent);
+            postLayout=itemView.findViewById(R.id.postLayout);
         }
     }
 }

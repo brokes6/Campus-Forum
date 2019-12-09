@@ -79,7 +79,7 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
         holder.talkNumStr.setText(String.valueOf(mList.get(position).getCommentCount()));
         holder.loveNumStr.setText(String.valueOf(mList.get(position).getLoveCount()));
         if (imgUrls==null||imgUrls.trim().equals("")){
-            Log.i(TAG, "onBindViewHolder: 我被执行了没有图片喔");
+
             holder.layout.setVisibility(View.GONE);
         }else {
             holder.layout.setUrlList(Arrays.asList(imgUrls.split(",")));
@@ -150,9 +150,9 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
     public class ViewHolder extends RecyclerView.ViewHolder {
         View view;
         NineGridTestLayout layout;
-        LinearLayout loveLayout,disagreeLayout;
+        LinearLayout loveLayout,collectionLayout;
         MyImageView uimg;
-        TextView datetime,content,username,loveNumStr,disagreeNum,talkNumStr;
+        TextView datetime,content,username,loveNumStr,collectionStr,talkNumStr;
         ImageView loveNum,collection;
         int postId,loveStatus,collectionStatus;
         public ViewHolder(View itemView) {
@@ -168,10 +168,11 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
             loveNum=itemView.findViewById(R.id.loveNum);
             collection=itemView.findViewById(R.id.collection);
             loveNumStr=itemView.findViewById(R.id.loveNumStr);
-            disagreeNum=itemView.findViewById(R.id.disagreeNum);
+            collectionStr=itemView.findViewById(R.id.collectionStr);
             talkNumStr=itemView.findViewById(R.id.talkNumStr);
             loveLayout=itemView.findViewById(R.id.loveLayout);
-            disagreeLayout=itemView.findViewById(R.id.disagreeLayout);
+            collectionStr=itemView.findViewById(R.id.collectionStr);
+            collectionLayout=itemView.findViewById(R.id.collectionLayout);
         }
 
     }

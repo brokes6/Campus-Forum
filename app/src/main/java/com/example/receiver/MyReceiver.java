@@ -51,6 +51,7 @@ public class MyReceiver extends JPushMessageReceiver {
                     Log.i(TAG, "onNotifyMessageOpened: 跳转啊");
                     Intent intent3 = new Intent(context, MoerReply.class);
                     intent3.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
+                    intent3.putExtra("userId",jsonObject.getInt("tcuid"));
                     intent3.putExtra("cid",jsonObject.getInt("cid"));
                     intent3.putExtra("name",jsonObject.getString("username"));
                     intent3.putExtra("time","刚刚");

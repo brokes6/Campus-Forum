@@ -97,30 +97,26 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
     public static final String REQUEST_COMMENT_POPULAR_STR="http://106.54.134.17/app/getPopularComments";//mode=2
     public static final String REQUEST_COMMENT_NEW_STR="http://106.54.134.17/app/getNewComments";//mode=2
     public static final String REQUEST_ADD_COMMENT_STR="http://106.54.134.17/app/addComment";//mode=3
-    private android.support.v7.widget.Toolbar toolbar;
+    public static final String REQUEST_ADD_COLLECTION="http://106.54.134.17/app/addCollection";
+    public static final String REQUEST_DELETE_COLLECTION="http://106.54.134.17/app/deleteCollection";
     private TextView bt_comment;
     private CommentExpandableListView expandableListView;
     private CommentExpandAdapter adapter;
     private int postId;
     private int commentPage=1;
-    private int status=0;
+    private int loveStatus=0,collectionStatus=0;
     private CommentBean commentBean;
     private List<CommentDetailBean> commentsList=new ArrayList<>();
     private BottomSheetDialog dialog;
-    private TextView username;
-    private TextView dateTime;
-    private TextView content;
-    private TextView message;
-    private TextView loveNumStr;
+    private TextView username,dateTime,content,message,loveNumStr,commentStr,loadTextView,collectionStr;
     private LinearLayout back;
-    private TextView commentStr;
-    private TextView loadTextView;
     private MyImageView userImg;
-    private ImageView loveNum;
+    private ImageView loveNum,collection;
     private LinearLayout messageLayout;
     private LinearLayout commentLayout;
     private NineGridTestLayout nineGridTestLayout;
     private LinearLayout loveLayout;
+    private LinearLayout collectionLayout;
     private LinearLayout loadLayout;
     private RelativeLayout contentLayout;
     private ProgressBar progressBar;
@@ -139,9 +135,11 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                 case HANDLER_DATA:
                     Post post = (Post) msg.obj;
                     String str=Html.fromHtml(post.getContent()).toString();
-                    postUserId=post.getPuid();
-                    Log.i(TAG, "handleMessage: postUserId="+postUserId);
+                    postUserId=post.getUid();
+                    Log.i(TAG, "handleMessage:  postUserId="+postUserId);
                     String imgUrls=post.getImgUrl();
+                    loveStatus=post.getStatus();
+                    collectionStatus=post.getCollection();
                     username.setText(post.getUsername());
                     userImg.setImageURL(post.getUimg());
                     dateTime.setText(DateTimeUtil.handlerDateTime(post.getPcreateTime()));
@@ -154,27 +152,48 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                         nineGridTestLayout.setIsShowAll(post.isShowAll());
                     }
                     nineGridTestLayout.setContent(str);
-                    status=post.getStatus();
                     loveNumStr.setText(String.valueOf(post.getLoveCount()));
                     loveLayout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (status==1){
+                            if (loveStatus==1){
                                 loveNum.setImageDrawable(getResources().getDrawable(R.drawable.thumbs_up_white));
-                                status=0;
+                                loveStatus=0;
                                 loveNumStr.setText(String.valueOf(Integer.valueOf(loveNumStr.getText().toString())-1));
                             }else{
                                 loveNum.setImageDrawable(getResources().getDrawable(R.drawable.thumbs_up_complete));
-                                status=1;
+                                loveStatus=1;
                                 loveNumStr.setText(String.valueOf(Integer.valueOf(loveNumStr.getText().toString())+1));
                             }
                             netWorkUtil.updatePostLove(postId,userData.getToken());
                         }
                     });
-                    if(status==1){
+                    collectionLayout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            handlerCollection();
+                            if (collectionStatus==1){
+                                collection.setImageDrawable(getResources().getDrawable(R.drawable.shocang_text));
+                                collectionStatus=0;
+                                collectionStr.setText("未收藏");
+                            }else{
+                                collection.setImageDrawable(getResources().getDrawable(R.drawable.shocangwanc));
+                                collectionStatus=1;
+                                collectionStr.setText("已收藏");
+                            }
+                        }
+                    });
+                    if(loveStatus==1){
                         loveNum.setImageDrawable(getResources().getDrawable(R.drawable.thumbs_up_complete));
                     }else{
                         loveNum.setImageDrawable(getResources().getDrawable(R.drawable.thumbs_up_white));
+                    }
+                    if(collectionStatus==1){
+                        collection.setImageDrawable(getResources().getDrawable(R.drawable.shocangwanc));
+                        collectionStr.setText("已收藏");
+                    }else{
+                        collection.setImageDrawable(getResources().getDrawable(R.drawable.shocang_text));
+                        collectionStr.setText("未收藏");
                     }
                     contentLayout.setVisibility(View.VISIBLE);
                     loadLayout.setVisibility(View.GONE);
@@ -210,8 +229,8 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                     int index1=adapter.getCommentBeanList().size();
                     commentStr.setText(String.valueOf(Integer.valueOf(commentStr.getText().toString())+1));
                     progressBar.setVisibility(View.GONE);
-                    if(index1>=6)
-                        messageLayout.setVisibility(View.GONE);
+//                    if(index1>=6)
+//                        messageLayout.setVisibility(View.GONE);
                     adapter.notifyDataSetChanged();
                     break;
                 case NO_NETWORK:
@@ -251,6 +270,9 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         messageLayout=findViewById(R.id.messageLayout);
         contentLayout=findViewById(R.id.contentLayout);
         commentLayout=findViewById(R.id.detail_page_comment_container);
+        collectionLayout=findViewById(R.id.collectionLayout);
+        collectionStr=findViewById(R.id.collectionStr);
+        collection=findViewById(R.id.collection);
         expandableListView = (CommentExpandableListView) findViewById(R.id.detail_page_lv_comment);
         bt_comment = (TextView) findViewById(R.id.detail_page_do_comment);
         bt_comment.setOnClickListener(this);
@@ -296,7 +318,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                 Intent intent=new Intent();
                 intent.putExtra("loveNum",loveNumStr.getText().toString());
                 intent.putExtra("talkNum",commentStr.getText().toString());
-                intent.putExtra("status",status);
+                intent.putExtra("status",loveStatus);
                 setResult(HomeFragment.POSTDETAILS,intent);
                 finish();
             }
@@ -563,7 +585,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String dataStr = response.body().string();
-                Log.i(TAG, "onResponse:select");
+                Log.i(TAG, "onResponse:"+dataStr);
                 JSONObject jsonObject = null;
                 try {
                     jsonObject = new JSONObject(dataStr);
@@ -572,7 +594,9 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                         Log.i(TAG, "onResponse:失败咯");
                         return;
                     }
+                    int floor =jsonObject.getInt("data");
                     CommentDetailBean detailBean = new CommentDetailBean(userData.getUsername(), content,"刚刚",userData.getUimg());
+                    detailBean.setFloor(floor);
                     Message message=new Message();
                     message.what=NOTIFY_COMMENT;
                     message.obj=detailBean;
@@ -667,6 +691,41 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
             }
         });
     }
+    private void handlerCollection(){
+        RequestBody requestBody=new FormBody.Builder()
+                .add("postId", String.valueOf(postId))
+                .add("token",userData.getToken())
+                .build();
+        Request request=new Request.Builder()
+                .post(requestBody)
+                .url(getRequestStr(3))
+                .build();
+        OkHttpClient client=new OkHttpClient();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String responseData =response.body().string();
+                Log.i(TAG, "onResponse: "+responseData);
+                JSONObject jsonObject= null;
+                try {
+                    jsonObject = new JSONObject(responseData);
+                    int code =jsonObject.getInt("code");
+                    String msg=jsonObject.getString("msg");
+                    if(code==0){
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+    }
     private String getRequestStr(int mode){
         String urlStr=null;
         String token=null;
@@ -676,6 +735,8 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
             case 2:urlStr=(commentFlag?REQUEST_COMMENT_POPULAR_STR:REQUEST_COMMENT_NEW_STR)+"?startPage="+commentPage+"&postId="+postId;
                             Log.i(TAG, "getRequestStr: postId="+postId);
                             break;
+            case 3:urlStr=(collectionStatus==1?REQUEST_DELETE_COLLECTION:REQUEST_ADD_COLLECTION);
+                            return urlStr;
             default:break;
         }
         token=userData.getToken();
@@ -691,7 +752,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         Intent intent=new Intent();
         intent.putExtra("loveNum",loveNumStr.getText().toString());
         intent.putExtra("talkNum",commentStr.getText().toString());
-        intent.putExtra("status",status);
+        intent.putExtra("status",loveStatus);
         setResult(HomeFragment.POSTDETAILS,intent);
         finish();
     }

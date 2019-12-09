@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.example.bottomnavigationabar2.HomeFragment;
 import com.example.bottomnavigationabar2.Post;
@@ -41,6 +42,7 @@ public class CommentTemplate extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private PostAdapter postAdapter;
+    private LinearLayout loadLayout;
     private List<UserMessage> userMessages = new ArrayList<>();
     private View view;
     private int startPage=1;
@@ -49,6 +51,8 @@ public class CommentTemplate extends Fragment {
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case 1:
+                    loadLayout.setVisibility(View.GONE);
+                    mRecyclerView.setVisibility(View.VISIBLE);
                     postAdapter.notifyDataSetChanged();
                     break;
             }
@@ -68,6 +72,7 @@ public class CommentTemplate extends Fragment {
         postAdapter = new PostAdapter(getContext());
         postAdapter.setUserMessages(userMessages);
         mRecyclerView.setAdapter(postAdapter);
+        loadLayout=view.findViewById(R.id.loadLayout);
     }
     public void getMessage(String token){
         Request request =new Request.Builder()

@@ -35,6 +35,7 @@ import com.example.bottomnavigationabar2.bean.ReplyDetailBean;
 import com.example.bottomnavigationabar2.bean.User;
 import com.example.bottomnavigationabar2.utils.FileCacheUtil;
 import com.example.bottomnavigationabar2.utils.NetWorkUtil;
+import com.example.util.DateTimeUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -67,6 +68,7 @@ import static com.scwang.smartrefresh.layout.internal.InternalClassics.ID_TEXT_T
 public class MoerReply extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "MoerReply";
     public static final int HANDLER_DATA=1;
+    public static final int HANDLER_DATA_COMMENT=3;
     public static final String REPLY_REQUEST_URL="http://106.54.134.17/app/getNewReplys";
     private ProgressBar progressBar;
     private BottomSheetDialog dialog;
@@ -103,6 +105,19 @@ public class MoerReply extends AppCompatActivity implements View.OnClickListener
                     break;
                 case PostDetails.CANCEL_PROGRESS:
                     progressBar.setVisibility(View.GONE);
+                    break;
+                case HANDLER_DATA_COMMENT:
+                    loadLayout.setVisibility(View.GONE);
+                    contentLayout.setVisibility(View.VISIBLE);
+                    CommentDetailBean bean= (CommentDetailBean) msg.obj;
+                    username.setText(bean.getUsername());
+                    userimg.setCacheImageURL(bean.getUimg());
+                    text.setText(bean.getContent());
+                    Time.setText(DateTimeUtil.handlerDateTime(bean.getCcreateTime()));
+                    floor.setText(String.valueOf(bean.getFloor()));
+                    replyAdapter.setReplyDetailBeans(bean.getReplyVoList());
+                    replyAdapter.notifyDataSetChanged();
+                    break;
             }
         }
     };
@@ -153,22 +168,29 @@ public class MoerReply extends AppCompatActivity implements View.OnClickListener
         });
     }
     private void initdata(){
-        Intent intent = getIntent();
-        String name = intent.getStringExtra("name");
-        String data = intent.getStringExtra("data");
-        String time1 = intent.getStringExtra("time");
-        String url = intent.getStringExtra("url");
-        userId=intent.getIntExtra("userId",-1);
-        commentId=intent.getIntExtra("cid",-1);
-        userData= FileCacheUtil.getUser(this);
-        userimg.setImageURL(url);
-        username.setText(name);
-        text.setText(data);
-        Time.setText(time1);
+        initIntentData();
         replyAdapter=new ReplyAdapter(this);
         recyclerView.setAdapter(replyAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        getNewsReply();
+    }
+    private void initIntentData(){
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("name");
+        commentId = intent.getIntExtra("cid", -1);
+        if(name==null) {
+            getCommentDetails();
+        }else {
+            String data = intent.getStringExtra("data");
+            String time1 = intent.getStringExtra("time");
+            String url = intent.getStringExtra("url");
+            userId = intent.getIntExtra("userId", -1);
+            userData = FileCacheUtil.getUser(this);
+            userimg.setImageURL(url);
+            username.setText(name);
+            text.setText(data);
+            Time.setText(time1);
+            getNewsReply();
+        }
     }
     @Override
     public void onClick(View view) {
@@ -215,6 +237,39 @@ public class MoerReply extends AppCompatActivity implements View.OnClickListener
             }
         });
         dialog.show();
+    }
+    public void getCommentDetails(){
+        Request request=new Request.Builder()
+                .url("http://106.54.134.17/app/findCommentById?commentId="+commentId)
+                .build();
+        OkHttpClient client=new OkHttpClient();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String responseData=response.body().string();
+                Log.i(TAG, "onResponse: "+responseData);
+                try {
+                    JSONObject jsonObject=new JSONObject(responseData);
+                    int code=jsonObject.getInt("code");
+                    if(code==0){
+                        return;
+                    }
+                    Gson gson=new Gson();
+                    CommentDetailBean bean=gson.fromJson(jsonObject.getString("data"),new TypeToken<CommentDetailBean>(){}.getType());
+                    Message message=new Message();
+                    message.what=HANDLER_DATA_COMMENT;
+                    message.obj=bean;
+                    handler.sendMessage(message);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
     public void getNewsReply(){
         new Thread(){

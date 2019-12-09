@@ -17,18 +17,18 @@
             android:id="@+id/tieze_user_img"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_launcher_round" />
-        <!--        <de.hdodenhof.circleimageview.CircleImageView-->
-        <!--            android:id="@+id/tieze_user_img"-->
-        <!--            android:layout_width="50dp"-->
-        <!--            android:layout_height="50dp"-->
-        <!--            android:layout_centerInParent="true"-->
-        <!--            android:layout_marginTop="80dp"-->
-        <!--            android:src="@mipmap/ic_launcher"-->
-        <!--            app:civ_border_color="#4CAF50"-->
-        <!--            app:civ_border_width="2dp"-->
-        <!--            android:layout_gravity="center_horizontal"/>-->
+            android:src="@drawable/ic_launcher_round"
+            android:scaleType="centerCrop" />
+<!--        <de.hdodenhof.circleimageview.CircleImageView-->
+<!--            android:id="@+id/tieze_user_img"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            android:layout_marginTop="80dp"-->
+<!--            android:src="@mipmap/ic_launcher"-->
+<!--            app:civ_border_color="#4CAF50"-->
+<!--            app:civ_border_width="2dp"-->
+<!--            android:layout_gravity="center_horizontal"/>-->
 
         <TextView
             android:id="@+id/tiezi_username"
@@ -37,41 +37,42 @@
             android:layout_marginLeft="60dp"
             android:layout_marginTop="-45dp"
             android:text="我是名字"
-            android:textColor="#494949"
             android:textSize="17sp"
+            android:textColor="#494949"
             android:textStyle="bold"
-            android:transitionName="username" />
-
+            android:transitionName="username"/>
         <TextView
             android:id="@+id/tiezi_time"
+            android:layout_marginLeft="290dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="290dp"
             android:layout_marginTop="-25dp"
             android:text="我是时间"
             android:textColor="#6F6F6F"
-            android:transitionName="time" />
-
+            android:transitionName="time"
+            />
         <TextView
-            android:id="@+id/tieze_felei"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="60dp"
             android:layout_marginTop="10dp"
+            android:layout_marginLeft="60dp"
+            android:id="@+id/tieze_felei"
             android:text="-抗压吧-"
-            android:textColor="#6F6F6F"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/tieze_Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:textColor="#6F6F6F"
+            android:textSize="12sp"
+            />
+
+        <TextView
             android:layout_marginTop="15dp"
+            android:layout_marginLeft="5dp"
+            android:textSize="18sp"
+            android:id="@+id/tieze_Text"
             android:text="123"
             android:textColor="#424242"
-            android:textSize="18sp"
-            android:transitionName="longtext" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:transitionName="longtext"
+            />
 
         <com.example.bottomnavigationabar2.view.NineGridTestLayout
 
@@ -80,11 +81,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:transitionName="image"
-            app:sapcing="4dp" />
+            app:sapcing="4dp"
+            android:transitionName="image"/>
 
         <LinearLayout
-            android:layout_marginBottom="-10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -94,98 +94,93 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
 
-                <LinearLayout
-                    android:id="@+id/Lin_Collection"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="25dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/talkNum"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:background="@drawable/comment_white" />
-
-                    <TextView
-                        android:id="@+id/talkNumStr"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="5dp"
-                        android:text="0"
-                        android:textColor="#090808"
-                        android:textSize="16sp" />
-                </LinearLayout>
             </LinearLayout>
-
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:orientation="vertical">
-
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
                     android:layout_marginRight="20dp"
-                    android:gravity="right">
-
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal">
                     <LinearLayout
-                        android:id="@+id/loveLayout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
                         android:layout_marginLeft="30dp"
+                        android:id="@+id/loveLayout"
                         android:layout_marginTop="25dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
 
                         <ImageView
                             android:id="@+id/loveNum"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:src="@drawable/thumbs_up_white" />
-
                         <TextView
                             android:id="@+id/loveNumStr"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="5dp"
                             android:text="0"
                             android:textColor="#000000"
-                            android:textSize="16sp" />
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"/>
                     </LinearLayout>
-
                     <LinearLayout
-                        android:id="@+id/disagreeLayout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="100dp"
+                        android:layout_marginRight="90dp"
+                        android:id="@+id/collectionLayout"
                         android:layout_marginTop="25dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
 
                         <ImageView
-                            android:id="@+id/disagree"
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:background="@drawable/disagree" />
-
+                            android:id="@+id/collection"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/shocang_text" />
                         <TextView
-                            android:id="@+id/disagreeNum"
+                            android:layout_marginLeft="5dp"
+                            android:id="@+id/collectionStr"
+                            android:text="0"
+                            android:textColor="#090808"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
+                            android:textSize="16sp"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/Lin_Collection"
+                        android:layout_marginTop="25dp"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/talkNum"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/comment_white" />
+                        <TextView
                             android:layout_marginLeft="5dp"
+                            android:id="@+id/talkNumStr"
                             android:text="0"
                             android:textColor="#090808"
-                            android:textSize="16sp" />
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:textSize="16sp"/>
                     </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
+        </LinearLayout>
         </LinearLayout>
 
+        </LinearLayout>
+
+
+
+
+
     </LinearLayout>
-
-
-</LinearLayout>

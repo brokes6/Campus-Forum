@@ -52,6 +52,7 @@
                     android:textSize="21sp"
                     android:textColor="#1F1F1F"/>
                 <LinearLayout
+                    android:id="@+id/postLayout"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:background="@drawable/bt_shape_gray"

@@ -148,10 +148,10 @@ public class AssociationAdapter extends RecyclerView.Adapter<AssociationAdapter.
             loveNum=itemView.findViewById(R.id.loveNum);
             collection=itemView.findViewById(R.id.collection);
             loveNumStr=itemView.findViewById(R.id.loveNumStr);
-            disagreeNum=itemView.findViewById(R.id.disagreeNum);
+//            disagreeNum=itemView.findViewById(R.id.disagreeNum);
             talkNumStr=itemView.findViewById(R.id.talkNumStr);
             loveLayout=itemView.findViewById(R.id.loveLayout);
-            disagreeLayout=itemView.findViewById(R.id.disagreeLayout);
+//            disagreeLayout=itemView.findViewById(R.id.disagreeLayout);
         }
 
     }

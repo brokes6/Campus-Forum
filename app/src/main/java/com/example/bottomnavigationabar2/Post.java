@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public class Post {
     private Integer pid;
-    private Integer puid;
+    private Integer uid;
     private String pcreateTime;
     //现在觉得不合适 后期修改 应该改为string
     private Integer ptag;
@@ -22,6 +22,15 @@ public class Post {
     private boolean isShowAll = false;
     private int status;
     private int commentCount;
+    private int collection;
+
+    public int getCollection() {
+        return collection;
+    }
+
+    public void setCollection(int collection) {
+        this.collection = collection;
+    }
 
     public int getCommentCount() {
         return commentCount;
@@ -47,12 +56,12 @@ public class Post {
         this.pid = pid;
     }
 
-    public Integer getPuid() {
-        return puid;
+    public Integer getUid() {
+        return uid;
     }
 
-    public void setPuid(Integer puid) {
-        this.puid = puid;
+    public void setUid(Integer uid) {
+        this.uid = uid;
     }
 
     public String getPcreateTime() {

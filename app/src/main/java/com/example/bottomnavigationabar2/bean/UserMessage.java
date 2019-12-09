@@ -17,6 +17,15 @@ public class UserMessage {
     private int status;
     private String uimg;
     private String username;
+    private String mapId;
+
+    public String getMapId() {
+        return mapId;
+    }
+
+    public void setMapId(String mapId) {
+        this.mapId = mapId;
+    }
 
     public String getUimg() {
         return uimg;
