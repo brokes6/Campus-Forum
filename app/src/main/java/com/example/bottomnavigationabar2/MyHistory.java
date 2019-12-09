@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.bottomnavigationabar2.adapter.HistoryAdapter;
@@ -40,6 +41,7 @@ public class MyHistory extends AppCompatActivity {
     private SmartRefreshLayout refreshLayout;
     private static final String TAG = "MyHistory";
     private User userData;
+    private ImageView historyback;
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -72,6 +74,13 @@ public class MyHistory extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         refreshLayout= findViewById(R.id.refreshLayout);
         refreshLayout.setEnableRefresh(false);
+        historyback=findViewById(R.id.history_back);
+        historyback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
     private void initData(){
         userData= FileCacheUtil.getUser(MyHistory.this);

@@ -69,6 +69,7 @@ public class ShowImageActivity extends AppCompatActivity {
     private ArrayList<String> urls =null;
     private ArrayList<Boolean> booleans;
     private int position,total;
+    private LinearLayout bottom_text;
     private ExpandableTextView expTv1;
     //子线程不能操作UI，通过Handler设置图片
     private Handler handler = new Handler() {
@@ -117,7 +118,9 @@ public class ShowImageActivity extends AppCompatActivity {
             actionbar.hide();
         }
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.show_image_layout);
+        setContentView(R.layout.show_image_layout_text);
+        initView();
+        initData();
         back = findViewById(R.id.title_back);
         lin = findViewById(R.id.lin_go);
         viewp = findViewById(R.id.show_view_pager);
@@ -133,10 +136,9 @@ public class ShowImageActivity extends AppCompatActivity {
         });
         mMemoryCacheUtils = MemoryCacheUtils.getInstance();
         mLocalCacheUtils = LocalCacheUtils.getInstance();
-        initView();
-        initData();
     }
     private void initView(){
+        bottom_text = findViewById(R.id.bottom_text);
         expTv1 = findViewById(R.id.expand_text_view);
         viewPager =findViewById(R.id.show_view_pager);
         //将设置好的动画指定给它
@@ -145,6 +147,7 @@ public class ShowImageActivity extends AppCompatActivity {
         picture_num=findViewById(R.id.picture_num);
     }
     private void initData(){
+        bottom_text.getBackground().mutate().setAlpha(100);
         Bundle bundle=getIntent().getExtras();
         total=bundle.getInt("total",0);
         listViews=new ArrayList<>();
