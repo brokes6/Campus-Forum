@@ -9,22 +9,47 @@
         android:background="#fff"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <ImageView
-            android:id="@+id/history_back"
-            android:paddingLeft="10dp"
-            android:layout_width="34dp"
-            android:layout_height="34dp"
-            android:layout_gravity="center"
-            android:layout_margin="5dp"
-            android:background="#FFFFFF"
-            android:src="@drawable/other_back" />
-        <TextView
-            android:paddingLeft="15dp"
-            android:layout_gravity="center_vertical"
-            android:textSize="24sp"
-            android:text="浏览历史"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <ImageView
+                android:id="@+id/history_back"
+                android:paddingLeft="10dp"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_gravity="left"
+                android:layout_margin="5dp"
+                android:background="#FFFFFF"
+                android:src="@drawable/other_back" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:layout_weight="5">
+            <TextView
+                android:textSize="24sp"
+                android:text="浏览历史"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="right|center_vertical"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/lajitong"/>
+
+            
+        </LinearLayout>
 
     </LinearLayout>
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
