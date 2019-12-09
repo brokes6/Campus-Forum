@@ -45,7 +45,6 @@
         <activity android:name=".UserInformation" />
         <activity android:name=".LoadActivity"></activity>
         <activity android:name=".personalpage.More" />
-        <activity android:name=".Autograph" />
         <activity android:name=".Mynews" />
         <activity android:name=".MyConcern" />
         <activity

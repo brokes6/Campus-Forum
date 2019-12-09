@@ -1,5 +1,6 @@
 package com.example.bottomnavigationabar2;
 
+import android.media.Image;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
@@ -144,6 +145,7 @@ public class Mynews extends AppCompatActivity implements View.OnClickListener{
         TwoLayout = (TextView)findViewById(R.id.tv_two);
         te1_blue = findViewById(R.id.te1_blue);
         te2_blue = findViewById(R.id.te2_blue);
+        ImageView newreturn=findViewById(R.id.news_return);
         OneLayout.setOnClickListener(this);
         TwoLayout.setOnClickListener(this);
         messageTabFragementAdapter=new MessageTabFragementAdapter(this.getSupportFragmentManager(),this);
@@ -153,6 +155,13 @@ public class Mynews extends AppCompatActivity implements View.OnClickListener{
         viewPager.setCurrentItem(0);
         //添加切换界面的监听器
         viewPager.addOnPageChangeListener(new MyOnPageChangeListener());
+        newreturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
     }
     private void initRefreshLayout(){
         refreshLayout=findViewById(R.id.refreshLayout);

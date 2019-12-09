@@ -139,7 +139,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                 case HANDLER_DATA:
                     Post post = (Post) msg.obj;
                     String str=Html.fromHtml(post.getContent()).toString();
-                    postUserId=post.getPuid();
+                    postUserId=post.getUid();
                     Log.i(TAG, "handleMessage: postUserId="+postUserId);
                     String imgUrls=post.getImgUrl();
                     username.setText(post.getUsername());

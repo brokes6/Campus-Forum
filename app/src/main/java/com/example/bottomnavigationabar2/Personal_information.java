@@ -66,7 +66,6 @@ public class Personal_information extends AppCompatActivity {
     private CircleImageView circleImageView;
     private LinearLayout myHead;
     private LinearLayout myName;
-    private TextView Account;
     private LinearLayout Hobby;
     private TextView account;
     private LinearLayout autograph;
@@ -128,7 +127,6 @@ public class Personal_information extends AppCompatActivity {
         more=(LinearLayout)findViewById(R.id.more);
         userImg=findViewById(R.id.userImg);
         textView=findViewById(R.id.username);
-        Account = findViewById(R.id.account);
         myHead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -200,7 +198,6 @@ public class Personal_information extends AppCompatActivity {
         userData= FileCacheUtil.getUser(Personal_information.this);
         account.setText(userData.getAccount());
         textView.setText(userData.getUsername());
-        Account.setText(userData.getAccount());
         if(userData.getUimg()!=null)
             userImg.setCacheImageURL(userData.getUimg());
     }

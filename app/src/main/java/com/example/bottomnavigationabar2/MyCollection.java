@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -31,7 +32,7 @@ public class MyCollection extends AppCompatActivity {
         if (actionBar!=null){
             actionBar.hide();
         }
-        CircleImageView imageView=findViewById(R.id.history_return);
+        ImageView imageView=findViewById(R.id.history_return);
         smartRefreshLayout1= (SmartRefreshLayout) findViewById(R.id.refreshLayout1);
         smartRefreshLayout1.setEnableRefresh(false);
 
