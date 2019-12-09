@@ -3,10 +3,10 @@
     <item>
         <shape>
             //边框颜色
-            <solid android:color="#B4B1B1"/>
+            <solid android:color="#EBEBEB"/>
         </shape>
     </item>
-    <item android:bottom="3px">
+    <item android:bottom="30px">
         <shape>
             //内容颜色
             <solid android:color="#FFFFFF"/>
