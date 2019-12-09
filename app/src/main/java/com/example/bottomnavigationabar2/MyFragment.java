@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.example.bottomnavigationabar2.bean.User;
 import com.example.bottomnavigationabar2.utils.FileCacheUtil;
+import com.example.bottomnavigationabar2.view.about_us;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -156,6 +157,7 @@ public class MyFragment extends Fragment {
         LinearLayout collection=(LinearLayout)view.findViewById(R.id.Collection);
         LinearLayout news = view.findViewById(R.id.news);
         LinearLayout concern=(LinearLayout)view.findViewById(R.id.my_concern);
+        LinearLayout about=(LinearLayout)view.findViewById(R.id.about_us);
         concern.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -183,6 +185,13 @@ public class MyFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(),Mynews.class);
+                startActivity(intent);
+            }
+        });
+        about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getContext(), about_us.class);
                 startActivity(intent);
             }
         });
