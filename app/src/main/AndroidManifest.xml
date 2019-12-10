@@ -167,6 +167,7 @@
                 <action android:name="cn.jpush.android.intent.JNotifyActivity" />
 
                 <category android:name="${applicationId}" />
+
             </intent-filter>
         </activity>
 
