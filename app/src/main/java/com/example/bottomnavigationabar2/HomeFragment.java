@@ -187,7 +187,6 @@ public class HomeFragment extends Fragment {
             });
 //            searchView.setQueryHint("请输入搜索内容");
 //            searchView.setIconifiedByDefault(false);
-            behavior = ((CoordinatorLayout.LayoutParams) mAppBarLayout.getLayoutParams()).getBehavior();
 
             initData();
             initView();
@@ -316,14 +315,9 @@ public class HomeFragment extends Fragment {
         Return_top.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                scrollToTop(true);
                 Toast.makeText(getContext(),"点击成功",Toast.LENGTH_SHORT).show();
-                if (behavior instanceof AppBarLayout.Behavior) {
-                    AppBarLayout.Behavior appBarLayoutBehavior = (AppBarLayout.Behavior) behavior;
-                    int topAndBottomOffset = appBarLayoutBehavior.getTopAndBottomOffset();
-                    if (topAndBottomOffset != 0) {
-                        appBarLayoutBehavior.setTopAndBottomOffset(0);
-                    }
-                }
+                Log.d(TAG, "hight为--------------------"+mAppBarLayout.getHeight());
             }
         });
 
@@ -336,6 +330,29 @@ public class HomeFragment extends Fragment {
                     .into(imageView);
         }
     }
+//    public void scrollToTop() {
+//        CoordinatorLayout.Behavior behavior = ((CoordinatorLayout.LayoutParams) mAppBarLayout.getLayoutParams()).getBehavior();
+//        if (behavior instanceof AppBarLayout.Behavior) {
+//            AppBarLayout.Behavior appBarLayoutBehavior = (AppBarLayout.Behavior) behavior;
+//            int topAndBottomOffset = appBarLayoutBehavior.getTopAndBottomOffset();
+//            if (topAndBottomOffset != 0) {
+//                appBarLayoutBehavior.setTopAndBottomOffset(0);
+//            }
+//        }
+//    }
+public  void  scrollToTop( boolean flag){
+    CoordinatorLayout.Behavior behavior = ((CoordinatorLayout.LayoutParams) mAppBarLayout.getLayoutParams()).getBehavior();
+    if (behavior instanceof AppBarLayout.Behavior) {
+        AppBarLayout.Behavior appBarLayoutBehavior = (AppBarLayout.Behavior) behavior;
+        if(true){
+            appBarLayoutBehavior.setTopAndBottomOffset(0); //快熟滑动到顶部
+        }else {
+            int hight= mAppBarLayout.getHeight();
+            Log.d(TAG, "hight为--------------------"+hight);
+            appBarLayoutBehavior.setTopAndBottomOffset(-hight);//快速滑动实现吸顶效果
+        }
+    }
+}
 
     private void setDefaultFragment() {
         mainTabFragmentAdapter = new MainTabFragmentAdapter(((AppCompatActivity)getActivity()).getSupportFragmentManager(),getActivity());
