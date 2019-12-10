@@ -1,32 +1,23 @@
 package com.example.bottomnavigationabar2;//这里换成你自己的
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.transition.FragmentTransitionSupport;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.DisplayCutout;
 import android.view.KeyEvent;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
-import com.example.bottomnavigationabar2.ScreenAdaptation.DisplayCutoutDemo;
 import com.example.bottomnavigationabar2.activity.BaseActivity;
 import com.example.bottomnavigationabar2.bean.User;
 import com.example.bottomnavigationabar2.utils.FileCacheUtil;
-import com.example.util.ScreenAdapterUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-
-import java.io.File;
 
 /**
  * Created by 武当山道士 on 2017/8/16.
