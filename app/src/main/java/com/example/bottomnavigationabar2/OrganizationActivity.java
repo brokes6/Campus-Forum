@@ -326,18 +326,15 @@ public class OrganizationActivity extends AppCompatActivity {
             }
         });
     }
-
+    //返回键判断
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK
                 && event.getAction() == KeyEvent.ACTION_DOWN) {
-            if ((System .currentTimeMillis() - exitTime) > 2000) {
-                //弹出提示，可以有多种方式
-                Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
                 exitTime = System.currentTimeMillis();
                 if (flag) {
                     exit();
-                }
+
 
             } else {
                 //如果不需要拉出顶部的header，直接关闭当前的界面

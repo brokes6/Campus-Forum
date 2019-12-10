@@ -9,7 +9,8 @@
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/layout_top"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
         <android.support.design.widget.AppBarLayout
             android:background="#FAFAFA"
             android:id="@+id/appbar"
@@ -32,28 +33,7 @@
 
 
                 </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/search"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginLeft="6dp"
-                    android:layout_marginRight="6dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="38dp"
-                    android:gravity="center"
-                    android:paddingLeft="10dp"
-                    android:background="@drawable/biankuang">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/search_gray"/>
-                    <TextView
-                        android:paddingLeft="10dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="请输入搜索内容"/>
 
-                </LinearLayout>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -179,20 +159,46 @@
                     android:layout_width="match_parent"
                     android:layout_height="10dp"
                     android:background="#EBEBEB"/>
-                
-                
-<!--                <android.support.v7.widget.SearchView-->
-<!--                    android:layout_marginTop="8dp"-->
-<!--                    android:layout_marginBottom="8dp"-->
-<!--                    android:layout_marginLeft="6dp"-->
-<!--                    android:layout_marginRight="6dp"-->
-<!--                    android:paddingLeft="60dp"-->
-<!--                    android:gravity="center"-->
-<!--                    android:id="@+id/searchView"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="38dp"-->
-<!--                    android:background="@drawable/biankuang"/>-->
+
+
+                <!--                <android.support.v7.widget.SearchView-->
+                <!--                    android:layout_marginTop="8dp"-->
+                <!--                    android:layout_marginBottom="8dp"-->
+                <!--                    android:layout_marginLeft="6dp"-->
+                <!--                    android:layout_marginRight="6dp"-->
+                <!--                    android:paddingLeft="60dp"-->
+                <!--                    android:gravity="center"-->
+                <!--                    android:id="@+id/searchView"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="38dp"-->
+                <!--                    android:background="@drawable/biankuang"/>-->
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/search"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:background="@drawable/biankuang">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/search_gray"/>
+                <TextView
+                    android:paddingLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="请输入搜索内容"/>
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="#EBEBEB"/>
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tablayout_real"
@@ -214,26 +220,26 @@
             android:paddingTop="10dp"
             android:paddingBottom="50dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-<!--        <android.support.design.widget.FloatingActionButton-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:scaleType="fitXY"-->
-<!--            android:layout_gravity="bottom|right"-->
-<!--            android:layout_alignParentBottom="true"-->
-<!--            android:layout_alignParentRight="true"-->
-<!--            android:layout_margin="16dp"-->
-<!--            android:src="@drawable/top"-->
-<!--            app:backgroundTint="#FFFFFF"-->
-<!--            app:elevation="0dp"-->
-<!--            android:visibility="visible"-->
-<!--            app:fabSize="mini"-->
-<!--            />-->
-            <ImageView
-                android:id="@+id/Return_top"
-                android:layout_gravity="bottom|right"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_margin="16dp"
-                android:src="@drawable/top"/>
+        <!--        <android.support.design.widget.FloatingActionButton-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:scaleType="fitXY"-->
+        <!--            android:layout_gravity="bottom|right"-->
+        <!--            android:layout_alignParentBottom="true"-->
+        <!--            android:layout_alignParentRight="true"-->
+        <!--            android:layout_margin="16dp"-->
+        <!--            android:src="@drawable/top"-->
+        <!--            app:backgroundTint="#FFFFFF"-->
+        <!--            app:elevation="0dp"-->
+        <!--            android:visibility="visible"-->
+        <!--            app:fabSize="mini"-->
+        <!--            />-->
+        <ImageView
+            android:id="@+id/Return_top"
+            android:layout_gravity="bottom|right"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_margin="16dp"
+            android:src="@drawable/top"/>
     </android.support.design.widget.CoordinatorLayout>
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>
