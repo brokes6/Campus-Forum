@@ -7,6 +7,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/layout_top"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -116,19 +117,26 @@
             android:paddingTop="10dp"
             android:paddingBottom="50dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-        <android.support.design.widget.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="fitXY"
-            android:layout_gravity="bottom|right"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_margin="16dp"
-            android:src="@drawable/top"
-            app:backgroundTint="#FFFFFF"
-            app:elevation="0dp"
-            android:visibility="visible"
-            app:fabSize="mini"
-            />
+<!--        <android.support.design.widget.FloatingActionButton-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:scaleType="fitXY"-->
+<!--            android:layout_gravity="bottom|right"-->
+<!--            android:layout_alignParentBottom="true"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:layout_margin="16dp"-->
+<!--            android:src="@drawable/top"-->
+<!--            app:backgroundTint="#FFFFFF"-->
+<!--            app:elevation="0dp"-->
+<!--            android:visibility="visible"-->
+<!--            app:fabSize="mini"-->
+<!--            />-->
+            <ImageView
+                android:id="@+id/Return_top"
+                android:layout_gravity="bottom|right"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_margin="16dp"
+                android:src="@drawable/top"/>
     </android.support.design.widget.CoordinatorLayout>
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>

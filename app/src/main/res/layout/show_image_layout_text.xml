@@ -52,39 +52,15 @@
         </LinearLayout>
     </LinearLayout>
 
-    <android.support.v4.view.ViewPager
-        android:layout_below="@id/top"
-        android:id="@+id/show_view_pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#474545"
-        android:visibility="visible">
-    </android.support.v4.view.ViewPager>
-    <LinearLayout
-        android:orientation="vertical"
-        android:id="@+id/lin_go"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#474545"
-        android:layout_weight="1"
-        android:visibility="gone">
-        <ProgressBar
-            android:id="@+id/loading"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="160dp"
-            android:indeterminateBehavior="repeat"
-            android:indeterminateDrawable="@drawable/anim" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dp"
-            android:textColor="#fff"
-            android:text="加载中..." />
+        <android.support.v4.view.ViewPager
+            android:layout_below="@id/top"
+            android:id="@+id/show_view_pager"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#474545"
+            android:visibility="visible">
+        </android.support.v4.view.ViewPager>
 
-    </LinearLayout>
     <LinearLayout
         android:id="@+id/bottom_text"
         android:layout_width="match_parent"
@@ -124,5 +100,30 @@
                 android:layout_gravity="right|bottom"
                 android:background="@android:color/transparent"/>
         </com.ms.square.android.expandabletextview.ExpandableTextView>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/lin_go"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#474545"
+        android:layout_weight="1"
+        android:visibility="gone">
+        <ProgressBar
+            android:id="@+id/loading"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="160dp"
+            android:indeterminateBehavior="repeat"
+            android:indeterminateDrawable="@drawable/anim" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:textColor="#fff"
+            android:text="加载中..." />
+
     </LinearLayout>
 </RelativeLayout>

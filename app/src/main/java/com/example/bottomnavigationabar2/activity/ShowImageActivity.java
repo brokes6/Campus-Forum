@@ -32,6 +32,7 @@ import com.example.bottomnavigationabar2.Post;
 import com.example.bottomnavigationabar2.R;
 import com.example.bottomnavigationabar2.adapter.NineGridTest2Adapter;
 import com.example.bottomnavigationabar2.adapter.ShowImageAdapter;
+import com.example.bottomnavigationabar2.rewrite.ZoomImageView;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -80,18 +81,12 @@ public class ShowImageActivity extends AppCompatActivity {
                     Bitmap bitmap= (Bitmap) msg.obj;
                     SubsamplingScaleImageView iv = (SubsamplingScaleImageView) listViews.get(msg.arg1).findViewById(R.id.view_image);//绑定布局中的id/
                     iv.setImage(ImageSource.bitmap(bitmap));
+//                    ZoomImageView iv = (ZoomImageView) listViews.get(msg.arg1).findViewById(R.id.view_image);//绑定布局中的id/
+//                    iv.setImageBitmap(bitmap);
                     //取消加载动画
                     viewp.setVisibility(View.VISIBLE);
                     lin.setVisibility(View.GONE);
                     //
-                    iv.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            //弹出提示，提示内容为当前的图片位置
-                            Toast.makeText(ShowImageActivity.this, "这是第" + (index + 1) + "图片", Toast.LENGTH_SHORT).show();
-                            return false;
-                        }
-                    });
                     break;
                 case NETWORK_ERROR:
                     Toast.makeText(ShowImageActivity.this,"网络连接失败", Toast.LENGTH_SHORT).show();

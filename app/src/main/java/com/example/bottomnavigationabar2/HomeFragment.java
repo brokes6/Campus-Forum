@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -32,6 +33,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -98,6 +100,7 @@ public class HomeFragment extends Fragment {
     private int realTabLayoutHeight=-1;
     private AppBarLayout appBarLayout;
     private int topLayoutHeight=-1;
+    private CoordinatorLayout layout_top;
     private MainTabFragmentAdapter mainTabFragmentAdapter;
     private ViewPager viewPager;
     private SmartRefreshLayout refreshLayout;
@@ -105,6 +108,9 @@ public class HomeFragment extends Fragment {
     private LinearLayout searchView;
     private NineGridTest2Adapter.ViewHolder viewHolder;
     private boolean showSearchView=true;
+    private ImageView Return_top;
+    private AppBarLayout mAppBarLayout;
+    private CoordinatorLayout.Behavior behavior;
     private int phoneHeight=-1;
     private ValueAnimator valueAnimator;
     public static HomeFragment newInstance() {
@@ -128,7 +134,10 @@ public class HomeFragment extends Fragment {
             realTabLayout = view.findViewById(R.id.tablayout_real);
             container = view.findViewById(R.id.container);
             topLayout = view.findViewById(R.id.topLayout);
+            Return_top = view.findViewById(R.id.Return_top);
             searchView = view.findViewById(R.id.search);
+            layout_top = view.findViewById(R.id.layout_top);
+            mAppBarLayout = view.findViewById(R.id.appbar);
             setDefaultFragment();
             //实际的tablayout的点击切换
             viewPager = view.findViewById(R.id.viewPager);
@@ -178,6 +187,8 @@ public class HomeFragment extends Fragment {
             });
 //            searchView.setQueryHint("请输入搜索内容");
 //            searchView.setIconifiedByDefault(false);
+            behavior = ((CoordinatorLayout.LayoutParams) mAppBarLayout.getLayoutParams()).getBehavior();
+
             initData();
             initView();
             initRefreshLayout();
@@ -302,6 +313,19 @@ public class HomeFragment extends Fragment {
                 })
                 //开始调用的方法，启动轮播图。
                 .start();
+        Return_top.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(),"点击成功",Toast.LENGTH_SHORT).show();
+                if (behavior instanceof AppBarLayout.Behavior) {
+                    AppBarLayout.Behavior appBarLayoutBehavior = (AppBarLayout.Behavior) behavior;
+                    int topAndBottomOffset = appBarLayoutBehavior.getTopAndBottomOffset();
+                    if (topAndBottomOffset != 0) {
+                        appBarLayoutBehavior.setTopAndBottomOffset(0);
+                    }
+                }
+            }
+        });
 
     }
     private class MyImageLoader extends ImageLoader {
