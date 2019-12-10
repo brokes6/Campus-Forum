@@ -159,10 +159,7 @@
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="16dp"
             android:paddingTop="10dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="10dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
         <floatingactionbutton.FloatingActionsMenu
             android:id="@+id/multiple_actions"

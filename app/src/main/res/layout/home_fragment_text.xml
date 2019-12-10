@@ -92,7 +92,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="10dp"
                     android:background="#EBEBEB"/>
+                //五个按钮的位置
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
+
+
+                </LinearLayout>
 
 
             </LinearLayout>
