@@ -63,6 +63,10 @@ public class SearchPostTemplate extends Fragment {
         loadTextView.setText("没有找到相关数据");
         loadTextView.setTextSize(20);
     }
+    public void handlerNoNetwork(){
+        progressBar.setVisibility(View.GONE);
+        loadTextView.setText("网络连接失败，请重新尝试。。。");
+    }
     public void clear(){
         if(posts!=null) {
             posts.clear();

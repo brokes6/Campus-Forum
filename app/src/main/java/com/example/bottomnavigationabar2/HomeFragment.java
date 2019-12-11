@@ -68,6 +68,7 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
+
 import static com.scwang.smartrefresh.layout.internal.InternalClassics.ID_IMAGE_PROGRESS;
 import static com.scwang.smartrefresh.layout.internal.InternalClassics.ID_TEXT_TITLE;
 
@@ -322,6 +323,8 @@ public class HomeFragment extends Fragment {
         });
 
     }
+
+
     private class MyImageLoader extends ImageLoader {
         @Override
         public void displayImage(Context context, Object path, ImageView imageView) {

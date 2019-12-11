@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -42,6 +43,7 @@ public class OrganizationFollowTemplate extends Fragment {
     private OrganizationAdapter organizationAdapter;
     private RecyclerView recyclerView;
     private LinearLayout loadLayout;
+    private Button loadButton;
     private TextView loadTextView;
     private ProgressBar progressBar;
     private View convertView;
@@ -57,6 +59,8 @@ public class OrganizationFollowTemplate extends Fragment {
                 case RequestStatus.NO_RESOURCE:
                     handlerNoResource();
                     break;
+                case RequestStatus.NO_NETWORK:
+                    handlerNoNetWork();
             }
         }
     };
@@ -76,6 +80,7 @@ public class OrganizationFollowTemplate extends Fragment {
     }
 
     private void initView() {
+        loadButton=convertView.findViewById(R.id.loadButton);
         progressBar=convertView.findViewById(R.id.loading);
         loadTextView=convertView.findViewById(R.id.loadTextView);
         loadLayout=convertView.findViewById(R.id.loadLayout);
@@ -84,6 +89,15 @@ public class OrganizationFollowTemplate extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         Log.i(TAG, "initView: recyclerView="+recyclerView.getLayoutManager());
         recyclerView.setAdapter(organizationAdapter);
+        loadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadTextView.setText("正在努力加载中");
+                progressBar.setVisibility(View.VISIBLE);
+                loadButton.setVisibility(View.GONE);
+                findFollowOrganization(token);
+            }
+        });
     }
 
     private void initData() {
@@ -97,7 +111,10 @@ public class OrganizationFollowTemplate extends Fragment {
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
+                Message message=new Message();
+                message.what= RequestStatus.NO_NETWORK;
+                handler.sendMessage(message);
+                return;
             }
 
             @Override
@@ -141,5 +158,11 @@ public class OrganizationFollowTemplate extends Fragment {
         progressBar.setVisibility(View.GONE);
         loadTextView.setText("你暂时还没有关注的社团喔，快去关注社团吧!");
         loadTextView.setTextSize(16);
+    }
+    private void handlerNoNetWork(){
+        progressBar.setVisibility(View.GONE);
+        loadTextView.setText("网络连接失败，请重新尝试");
+        loadTextView.setTextSize(16);
+        loadButton.setVisibility(View.VISIBLE);
     }
 }
