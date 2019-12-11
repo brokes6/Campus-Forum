@@ -122,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.login_text2);
         verifyStoragePermissions(this);
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             //修改为深色，因为我们把状态栏的背景色修改为主题色白色，默认的文字及图标颜色为白色，导致看不到了。
@@ -317,9 +317,10 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         switch (requestCode){
-            case 1:String account=data.getStringExtra("account");
-                   usernameEdit.setText(account);
-                   break;
+            case 1:if(data!=null) {
+                String account = data.getStringExtra("account");
+            }
+            break;
         }
     }
     public static void verifyStoragePermissions(Activity activity) {

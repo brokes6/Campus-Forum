@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"/>
     <android.support.design.widget.TextInputLayout
         android:layout_gravity="center"
-        android:id="@+id/re_password"
+        android:id="@+id/re_username"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:textColorHint="#2B2A2A"
@@ -108,7 +108,7 @@
     </android.support.design.widget.TextInputLayout>
     <android.support.design.widget.TextInputLayout
         android:layout_gravity="center"
-        android:id="@+id/re_username"
+        android:id="@+id/re_password"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"

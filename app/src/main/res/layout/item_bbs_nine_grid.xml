@@ -14,7 +14,14 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:orientation="vertical">
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
         <com.example.bottomnavigationabar2.MyImageView
             android:id="@+id/tieze_user_img"
             android:layout_width="50dp"
@@ -31,38 +38,40 @@
 <!--            app:civ_border_color="#4CAF50"-->
 <!--            app:civ_border_width="2dp"-->
 <!--            android:layout_gravity="center_horizontal"/>-->
-
-        <TextView
-            android:id="@+id/tiezi_username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="60dp"
-            android:layout_marginTop="-45dp"
-            android:text="我是名字"
-            android:textSize="17sp"
-            android:textColor="#494949"
-            android:textStyle="bold"
-            android:transitionName="username"/>
-        <TextView
-            android:id="@+id/tiezi_time"
-            android:layout_marginLeft="290dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-25dp"
-            android:text="我是时间"
-            android:textColor="#6F6F6F"
-            android:transitionName="time"
-            />
-        <TextView
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="60dp"
-            android:id="@+id/tieze_felei"
-            android:text="-抗压吧-"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#6F6F6F"
-            android:textSize="12sp"
-            />
+                <TextView
+                    android:id="@+id/tiezi_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="60dp"
+                    android:text="我是名字"
+                    android:textSize="17sp"
+                    android:textColor="#494949"
+                    android:textStyle="bold"
+                    android:transitionName="username"/>
+                <TextView
+                    android:id="@+id/tiezi_time"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentTop="true"
+                    android:text="我是时间"
+                    android:textColor="#6F6F6F"
+                    android:transitionName="time"
+                    />
+                <TextView
+                    android:layout_marginLeft="60dp"
+                    android:id="@+id/tieze_felei"
+                    android:layout_below="@+id/tiezi_username"
+                    android:text="-抗压吧-"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#6F6F6F"
+                    android:textSize="12sp"
+                    />
+        </RelativeLayout>
+        </LinearLayout>
 
         <TextView
             android:layout_marginTop="15dp"
@@ -71,8 +80,8 @@
             android:id="@+id/tieze_Text"
             android:text="123"
             android:textColor="#424242"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:transitionName="longtext"
             />
 
@@ -98,20 +107,22 @@
 
             </LinearLayout>
             <LinearLayout
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <LinearLayout
-                    android:layout_marginRight="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal">
                     <LinearLayout
-                        android:layout_marginLeft="30dp"
+                        android:gravity="center_horizontal"
+                        android:layout_gravity="center_horizontal"
                         android:id="@+id/loveLayout"
                         android:layout_marginTop="25dp"
                         android:orientation="horizontal"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="match_parent">
 
                         <ImageView
@@ -130,12 +141,13 @@
                             android:textSize="16sp"/>
                     </LinearLayout>
                     <LinearLayout
-                        android:layout_marginLeft="100dp"
-                        android:layout_marginRight="90dp"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
                         android:id="@+id/collectionLayout"
                         android:layout_marginTop="25dp"
                         android:orientation="horizontal"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="match_parent">
 
                         <ImageView
@@ -154,10 +166,13 @@
                             android:textSize="16sp"/>
                     </LinearLayout>
                     <LinearLayout
+                        android:gravity="center_horizontal"
+                        android:layout_gravity="center_horizontal"
                         android:id="@+id/Lin_Collection"
                         android:layout_marginTop="25dp"
                         android:orientation="horizontal"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="match_parent">
 
                         <ImageView
