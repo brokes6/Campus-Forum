@@ -1,5 +1,7 @@
 package com.example.bottomnavigationabar2.activity;
 
+import android.animation.AnimatorSet;
+import android.animation.LayoutTransition;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
@@ -14,11 +16,15 @@ import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.Window;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,8 +68,9 @@ public class ShowImageActivity extends AppCompatActivity {
     private android.support.v4.view.ViewPager  viewp;
     private List<View>  listViews =null;
     private int index=0;
-    private ImageView back;
+    private ImageView back,button_images;
     private Bitmap localbitmap;
+    private LinearLayout bottom;
     private Bitmap memorymbitmap;
     private ShowImageAdapter imageAdapter;
     private List<Post> mList=new ArrayList<>();
@@ -71,7 +78,12 @@ public class ShowImageActivity extends AppCompatActivity {
     private ArrayList<Boolean> booleans;
     private int position,total;
     private LinearLayout bottom_text;
-    private ExpandableTextView expTv1;
+    private LinearLayout Open_and_Retract;
+    private TextView Picture_text,button_text;
+    private ScrollView Picture_text_main;
+    private Boolean Picture_key;
+    private RelativeLayout.LayoutParams linearParams;
+    private LayoutTransition transition;
     //子线程不能操作UI，通过Handler设置图片
     private Handler handler = new Handler() {
         @Override
@@ -133,8 +145,18 @@ public class ShowImageActivity extends AppCompatActivity {
         mLocalCacheUtils = LocalCacheUtils.getInstance();
     }
     private void initView(){
-        bottom_text = findViewById(R.id.bottom_text);
-        expTv1 = findViewById(R.id.expand_text_view);
+        Picture_key=false;
+        ViewGroup container = (ViewGroup) findViewById(R.id.container);
+        transition = new LayoutTransition();
+        container.setLayoutTransition(transition);
+        transition = container.getLayoutTransition();
+        transition.enableTransitionType(LayoutTransition.CHANGING);
+        Picture_text_main = findViewById(R.id.Picture_text_main);
+        button_images = findViewById(R.id.button_images);
+        button_text = findViewById(R.id.button_text);
+        bottom = findViewById(R.id.bottom);
+        Picture_text = findViewById(R.id.Picture_text);
+        Open_and_Retract = findViewById(R.id.Open_and_Retract);
         viewPager =findViewById(R.id.show_view_pager);
         //将设置好的动画指定给它
         viewPager.setPageTransformer(true, new DepthPageTransformer());
@@ -142,15 +164,38 @@ public class ShowImageActivity extends AppCompatActivity {
         picture_num=findViewById(R.id.picture_num);
     }
     private void initData(){
-        bottom_text.getBackground().mutate().setAlpha(100);
+        Picture_text_main.getBackground().mutate().setAlpha(100);
+        bottom.getBackground().mutate().setAlpha(100);
         Bundle bundle=getIntent().getExtras();
         total=bundle.getInt("total",0);
         listViews=new ArrayList<>();
         position=bundle.getInt("id",0);
         picture_num.setText(position+1+"/"+total);
-//        picture_text.setText(bundle.getString("content","没有文字喔"));
-        expTv1.setText(bundle.getString("content","没有文字喔"));
+//      picture_text.setText(bundle.getString("content","没有文字喔"));
+//      expTv1.setText(bundle.getString("content","没有文字喔"));
+        Picture_text.setText(bundle.getString("content","没有文字喔"));
         Log.i(TAG, "initData: postition="+position);
+        Open_and_Retract.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Picture_key==true){
+                    button_text.setText("收起");
+                    button_images.setImageResource(R.drawable.retract);
+                    linearParams =(RelativeLayout.LayoutParams) Picture_text_main.getLayoutParams();
+                    linearParams.height=520;
+                    Picture_text_main.setLayoutParams(linearParams);
+                    Picture_key=false;
+                }else{
+                    button_text.setText("展开");
+                    button_images.setImageResource(R.drawable.open);
+                    linearParams =(RelativeLayout.LayoutParams) Picture_text_main.getLayoutParams();
+                    linearParams.height=0;
+                    Picture_text_main.setLayoutParams(linearParams);
+                    Picture_key=true;
+                }
+
+            }
+        });
     }
     private void inint() {
         if (urls != null && urls.size() > 0){
