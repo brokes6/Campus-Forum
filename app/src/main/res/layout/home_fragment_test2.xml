@@ -9,8 +9,7 @@
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/layout_top"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
         <android.support.design.widget.AppBarLayout
             android:background="#FAFAFA"
             android:id="@+id/appbar"
@@ -33,12 +32,11 @@
 
 
                 </LinearLayout>
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="#CBCFCB"/>
-
+                //轮播图
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -51,6 +49,33 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toTopOf="parent"/>
                 </LinearLayout>
+                //搜索框
+                <LinearLayout
+                    android:id="@+id/search"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:background="@drawable/biankuang">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/search_gray"/>
+                    <TextView
+                        android:paddingLeft="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="请输入搜索内容"/>
+
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="#EBEBEB"/>
                 //五个按钮的位置
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -155,12 +180,6 @@
 
                 </LinearLayout>
                 //以前的更多公告
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"
-                    android:background="#EBEBEB"/>
-
-
                 <!--                <android.support.v7.widget.SearchView-->
                 <!--                    android:layout_marginTop="8dp"-->
                 <!--                    android:layout_marginBottom="8dp"-->
@@ -173,32 +192,6 @@
                 <!--                    android:layout_height="38dp"-->
                 <!--                    android:background="@drawable/biankuang"/>-->
             </LinearLayout>
-            <LinearLayout
-                android:id="@+id/search"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"
-                android:layout_width="match_parent"
-                android:layout_height="38dp"
-                android:gravity="center"
-                android:paddingLeft="10dp"
-                android:background="@drawable/biankuang">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/search_gray"/>
-                <TextView
-                    android:paddingLeft="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="请输入搜索内容"/>
-
-            </LinearLayout>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="#EBEBEB"/>
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tablayout_real"
@@ -212,7 +205,7 @@
                 app:tabMode="fixed"
                 app:tabSelectedTextColor="@color/textColor" />
         </android.support.design.widget.AppBarLayout>
-
+        //适配器
         <android.support.v4.view.ViewPager
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
