@@ -1,10 +1,12 @@
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#f7f7f7">
     <LinearLayout
+        android:id="@+id/topLayout"
+        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
         android:background="#fff"
         android:layout_height="wrap_content"
@@ -44,6 +46,7 @@
             android:orientation="vertical"
             android:layout_weight="1">
             <ImageView
+                android:id="@+id/delete"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_marginRight="8dp"
@@ -55,6 +58,7 @@
 
     </LinearLayout>
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:layout_below="@id/topLayout"
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -62,12 +66,49 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <android.support.v7.widget.RecyclerView
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/recyclerView"
-                >
-
+                android:id="@+id/recyclerView">
             </android.support.v7.widget.RecyclerView>
         </android.support.design.widget.CoordinatorLayout>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-</LinearLayout>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:id="@+id/loadLayout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_vertical">
+            <ProgressBar
+                android:id="@+id/loading"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="1dp"
+                android:indeterminateBehavior="repeat"
+                android:indeterminateDrawable="@drawable/anim" />
+            <TextView
+                android:id="@+id/loadTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:textColor="#242424"
+                android:text="网络波动...加载中..." />
+            <Button
+                android:visibility="gone"
+                android:id="@+id/loadButton"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="重新刷新"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

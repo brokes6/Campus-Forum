@@ -82,6 +82,7 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
     private String imgString = "";
     private StringBuilder builder = new StringBuilder();
     List<LoadFileVo> fileList = new ArrayList<>();
+    private int tagId;
     LoadPicAdapter adapter = null;
     private LinearLayout loadLayout;
     private TextView loadTextView;
@@ -192,50 +193,8 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
         if (actionbar != null) {
             actionbar.hide();
         }
-        ImageView back = findViewById(R.id.title_back);
-        back.setOnClickListener(new View.OnClickListener() {
-                @Override
-            public void onClick(View v) {
-                // super.onBackPressed();//注释掉这行,back键不退出activity
-                AlertDialog.Builder dialog = new AlertDialog.Builder(addPost.this);
-                dialog.setTitle("提醒");
-                dialog.setMessage("是否保存");
-                dialog.setCancelable(false);
-                dialog.setPositiveButton("是", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(addPost.this,"已保存",Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
-                });
-                dialog.setNegativeButton("否", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                });
-                dialog.show();
-            }
-        });
-        rvPic = findViewById(R.id.rvPic);
-        tvNum = findViewById(R.id.tvNum);
-        sendButton = findViewById(R.id.sendPost);
-        loadLayout=findViewById(R.id.loadLayout);
-        loadTextView=findViewById(R.id.loadTextView);
-        //发送的点击事件
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //跳转完成后，需要调用重新刷新
-                try {
-                    netUploadPost(token);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                };
-            }
-        });
-        initAdapter();
         initView();
+        initAdapter();
         initData();
         initClickListener();
     }
@@ -515,6 +474,7 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
                     .add("content", mEditor.getHtml())
                     .add("imgUrl",imgUrl)
                     .add("token", token)
+                    .add("tagId", String.valueOf(tagId))
                     .build();
             final Request request = new Request.Builder()
                     .url("http://106.54.134.17/app/post").post(body)
@@ -547,6 +507,48 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
      * 初始化View
      */
     private void initView() {
+        ImageView back = findViewById(R.id.title_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // super.onBackPressed();//注释掉这行,back键不退出activity
+                AlertDialog.Builder dialog = new AlertDialog.Builder(addPost.this);
+                dialog.setTitle("提醒");
+                dialog.setMessage("是否保存");
+                dialog.setCancelable(false);
+                dialog.setPositiveButton("是", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(addPost.this,"已保存",Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                });
+                dialog.setNegativeButton("否", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+                dialog.show();
+            }
+        });
+        rvPic = findViewById(R.id.rvPic);
+        tvNum = findViewById(R.id.tvNum);
+        sendButton = findViewById(R.id.sendPost);
+        loadLayout=findViewById(R.id.loadLayout);
+        loadTextView=findViewById(R.id.loadTextView);
+        //发送的点击事件
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //跳转完成后，需要调用重新刷新
+                try {
+                    netUploadPost(token);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                };
+            }
+        });
         initEditor();
         initMenu();
         initColorPicker();
@@ -907,5 +909,6 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
     }
     private void initData(){
         token= FileCacheUtil.getUser(this).getToken();
+        tagId=getIntent().getIntExtra("oid",-1);
     }
 }

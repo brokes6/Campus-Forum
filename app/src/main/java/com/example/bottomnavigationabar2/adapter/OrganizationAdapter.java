@@ -57,20 +57,24 @@ public class OrganizationAdapter extends RecyclerView.Adapter<OrganizationAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
-        viewHolder.myImageView.setCacheImageURL(organizations.get(position).getOimg());
-        viewHolder.organizationName.setText(organizations.get(position).getOname());
-        viewHolder.introduce.setText(organizations.get(position).getOintroduce());
+        final Organization organization=organizations.get(position);
+        viewHolder.myImageView.setCacheImageURL(organization.getOimg());
+        viewHolder.organizationName.setText(organization.getOname());
+        viewHolder.introduce.setText(organization.getOintroduce());
         viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(context, OrganizationActivity.class);
-                Organization organization=organizations.get(position);
                 intent.putExtra("oid",organization.getOid());
                 intent.putExtra("oname",organization.getOname());
                 intent.putExtra("oimg",organization.getOimg());
                 context.startActivity(intent);
             }
         });
+        if(layoutId==R.layout.organization_recommend_template){
+            viewHolder.followNum.setText(String.valueOf(organization.getLoveNum()));
+            viewHolder.postNum.setText(String.valueOf(organization.getPostNum()));
+        }
     }
 
     @Override
@@ -83,14 +87,15 @@ public class OrganizationAdapter extends RecyclerView.Adapter<OrganizationAdapte
     public class ViewHolder extends RecyclerView.ViewHolder{
         LinearLayout linearLayout;
         MyImageView myImageView;
-        TextView organizationName;
-        TextView introduce;
+        TextView organizationName,introduce,postNum,followNum;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             linearLayout=itemView.findViewById(R.id.linerLayout);
             myImageView=itemView.findViewById(R.id.organizationImg);
             organizationName=itemView.findViewById(R.id.organizationName);
             introduce=itemView.findViewById(R.id.introduce);
+            postNum=itemView.findViewById(R.id.postNum);
+            followNum=itemView.findViewById(R.id.followNum);
         }
     }
     private int getListSize(List<Organization> list) {

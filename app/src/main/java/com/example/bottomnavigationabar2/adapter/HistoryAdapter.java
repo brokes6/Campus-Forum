@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +43,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     public void onBindViewHolder(@NonNull HistoryAdapter.ViewHolder viewHolder, final int i) {
         final Post post=posts.get(i);
         viewHolder.datetimeView.setText(DateTimeUtil.handlerDateTime(post.getPcreateTime()));
-        viewHolder.contentView.setText(post.getContent());
+        viewHolder.contentView.setText(Html.fromHtml(post.getContent()));
+        viewHolder.contentView.setMaxLines(1);
         viewHolder.usernameView.setText(post.getUsername());
         String userImg=post.getUimg();
         if(userImg!=null&&!userImg.trim().equals(""))

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,10 +61,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
         final UserMessage userMessage=userMessages.get(position);
         final int action=userMessage.getAction();
         final Map<String,Integer>map= MessageUtil.convertReplyMap(userMessage.getMapId());
+        handlerIntroduce(holder.introduce,action);
         holder.username.setText(userMessage.getUsername());
         holder.datetime.setText(DateTimeUtil.handlerDateTime(userMessage.getCreateTime()));
         holder.content.setText(userMessage.getContent());
-        holder.postContent.setText(userMessage.getRepliesContent());
+        holder.postContent.setText(Html.fromHtml(userMessage.getRepliesContent()));
+        holder.postContent.setMaxLines(1);
         holder.postLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,10 +94,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
     public class ViewHolder extends RecyclerView.ViewHolder{
         View view;
         MyImageView userImg;
-        TextView username;
-        TextView datetime;
-        TextView content;
-        TextView postContent;
+        TextView username,datetime,content,postContent,introduce;
         LinearLayout postLayout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -105,6 +105,19 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
             content=itemView.findViewById(R.id.news_user_text);
             postContent=itemView.findViewById(R.id.postContent);
             postLayout=itemView.findViewById(R.id.postLayout);
+            introduce=itemView.findViewById(R.id.introduce);
+        }
+    }
+    private void handlerIntroduce(TextView introduce,int action){
+        switch (action){
+            case 1:
+                introduce.setText("评论我的帖子");
+                break;
+            case 2:
+                introduce.setText("回复我的评论");
+                break;
+            default:
+                break;
         }
     }
 }

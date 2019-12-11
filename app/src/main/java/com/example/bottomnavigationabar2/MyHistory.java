@@ -12,8 +12,12 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bottomnavigationabar2.MoBan.RequestStatus;
 import com.example.bottomnavigationabar2.adapter.HistoryAdapter;
 import com.example.bottomnavigationabar2.bean.User;
 import com.example.bottomnavigationabar2.utils.FileCacheUtil;
@@ -35,21 +39,32 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class MyHistory extends AppCompatActivity {
-    public static final int HANDLER_DATA=1;
     private RecyclerView recyclerView;
     private HistoryAdapter adapter;
     private SmartRefreshLayout refreshLayout;
     private static final String TAG = "MyHistory";
     private User userData;
     private ImageView historyback;
+    private ImageView deleteView;
+    private LinearLayout loadLayout;
+    private TextView loadingTextView;
+    private ProgressBar progressBar;
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what){
-                case HANDLER_DATA:
+                case RequestStatus.HANDLER_DATA:
+                    loadLayout.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
                     adapter.notifyDataSetChanged();
                     break;
-
+                case RequestStatus.NO_RESOURCE:
+                    loadLayout.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.GONE);
+                    loadingTextView.setText("你暂时还没有浏览的历史记录~");
+                    loadingTextView.setTextSize(18);
+                    break;
             }
         }
     };
@@ -70,6 +85,10 @@ public class MyHistory extends AppCompatActivity {
 
     }
     private void initView(){
+        loadingTextView=findViewById(R.id.loadTextView);
+        progressBar=findViewById(R.id.loading);
+        loadLayout=findViewById(R.id.loadLayout);
+        deleteView=findViewById(R.id.delete);
         recyclerView=findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         refreshLayout= findViewById(R.id.refreshLayout);
@@ -79,6 +98,16 @@ public class MyHistory extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+        deleteView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recyclerView.setAdapter(null);
+                PostHitoryUtil.deleteAllHistory(MyHistory.this);
+                Message message=new Message();
+                message.what=RequestStatus.NO_RESOURCE;
+                handler.sendMessage(message);
             }
         });
     }
@@ -92,6 +121,9 @@ public class MyHistory extends AppCompatActivity {
         String data= PostHitoryUtil.getSearchHistory(MyHistory.this);
         if(data.trim().equals("")){
             Toast.makeText(this, "你还没有浏览历史喔", Toast.LENGTH_SHORT).show();
+            Message message=new Message();
+            message.what=RequestStatus.NO_RESOURCE;
+            handler.sendMessage(message);
             return;
         }
         Request request=new Request.Builder()
@@ -112,13 +144,16 @@ public class MyHistory extends AppCompatActivity {
                     JSONObject jsonObject=new JSONObject(responseData);
                     int code=jsonObject.getInt("code");
                     if(code==0){
+                        Message message=new Message();
+                        message.what=RequestStatus.NO_RESOURCE;
+                        handler.sendMessage(message);
                         return;
                     }
                     Gson gson=new Gson();
                     List<Post> posts=gson.fromJson(jsonObject.getString("data"),new TypeToken<List<Post>>(){}.getType());
                     adapter.setPosts(posts);
                     Message message=new Message();
-                    message.what=HANDLER_DATA;
+                    message.what=RequestStatus.HANDLER_DATA;
                     handler.sendMessage(message);
                 } catch (JSONException e) {
                     e.printStackTrace();

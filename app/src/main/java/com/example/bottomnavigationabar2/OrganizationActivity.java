@@ -87,6 +87,7 @@ public class OrganizationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent_addPost = new Intent(OrganizationActivity.this,addPost.class);
+                intent_addPost.putExtra("oid",oid);
                 overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
                 startActivity(intent_addPost);
             }

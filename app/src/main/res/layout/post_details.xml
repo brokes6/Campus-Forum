@@ -36,7 +36,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/contentLayout"
-        android:visibility="gone"
         tools:context="com.example.bottomnavigationabar2.PostDetails">
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
             xmlns:tools="http://schemas.android.com/tools"
@@ -56,132 +55,13 @@
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true">
                 //详细页面的布局
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/linearlayou_broder"
-                        android:orientation="vertical">
-                        <LinearLayout
-                            android:padding="10dp"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:orientation="vertical">
-
-                            <com.example.bottomnavigationabar2.MyImageView
-                                android:id="@+id/tieze_user_img"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:layout_centerInParent="true"
-                                android:scaleType="centerCrop"
-                                android:background="@mipmap/ic_launcher" />
-
-                            <TextView
-                                android:id="@+id/tiezi_username"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="60dp"
-                                android:layout_marginTop="-45dp"
-                                android:text="我是名字"
-                                android:textSize="17sp"
-                                android:textColor="#494949"
-                                android:textStyle="bold" />
-                            <TextView
-                                android:id="@+id/tiezi_time"
-                                android:layout_marginLeft="290dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="-25dp"
-                                android:text="我是时间"
-                                android:transitionName="time"
-                                />
-                            <TextView
-                                android:layout_marginLeft="60dp"
-                                android:id="@+id/tieze_felei"
-                                android:text="-抗压吧-"
-                                android:layout_marginTop="10dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="#6F6F6F"
-                                android:textSize="12sp"
-                                />
-
-                            <TextView
-                                android:layout_marginTop="15dp"
-                                android:layout_marginLeft="5dp"
-                                android:textSize="18sp"
-                                android:id="@+id/tieze_Text"
-                                android:text="123"
-                                android:textColor="#424242"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:transitionName="longtext"
-                                />
-
-                            <com.example.bottomnavigationabar2.view.NineGridTestLayout
-
-                                xmlns:app="http://schemas.android.com/apk/res-auto"
-                                android:id="@+id/layout_nine_grid"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                app:sapcing="4dp"
-                                android:transitionName="image"/>
-
-
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="48dp"
-                            android:layout_gravity="bottom"
-                            android:background="#ECECEC"
-                            android:orientation="horizontal">
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:orientation="horizontal">
-                                <TextView
-                                    android:layout_marginLeft="20dp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="回复"
-                                    android:textSize="13sp"
-                                    android:textColor="#777777"
-                                    android:layout_gravity="center"/>
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:orientation="vertical"
-                                >
-                                <org.angmarch.views.NiceSpinner
-                                    android:id="@+id/nice_spinner"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    app:arrowTint="#444444"
-                                    app:textTint="#363636"
-                                    android:layout_marginEnd="12dp"
-                                    android:layout_marginRight="12dp"
-                                    android:layout_gravity="right|center"/>
-
-
-                            </LinearLayout>
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <!--详细页组件-->
-<!--                <include-->
-<!--                    android:id="@+id/detail_page_above_container"-->
-<!--                    layout="@layout/item_inside" />-->
+                <include
+                    android:id="@+id/detail_page_above_container"
+                    layout="@layout/item_inside" />
                 <!--评论组件-->
                 <LinearLayout
                     android:id="@+id/detail_page_comment_container"

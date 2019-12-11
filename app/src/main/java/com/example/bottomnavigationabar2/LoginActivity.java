@@ -297,13 +297,19 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
     private void login(){
+        boolean flag=false;
         String usernamee =usernameEdit.getText().toString();
         String password=passwordEdit.getText().toString();
         if(TextUtils.isEmpty(usernamee)){
             usernameEdit.setError("账号不能为空");
+            flag=true;
         }
         if(TextUtils.isEmpty(password)){
             passwordEdit.setError("密码不能为空");
+            flag=true;
+        }
+        if(flag){
+            return;
         }
         login(usernamee,password);
     }

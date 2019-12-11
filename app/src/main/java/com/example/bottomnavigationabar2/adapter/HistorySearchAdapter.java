@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.bottomnavigationabar2.R;
@@ -14,7 +16,7 @@ import com.example.bottomnavigationabar2.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HistorySearchAdapter extends RecyclerView.Adapter<HistorySearchAdapter.ViewHolder> implements View.OnClickListener {
+public class HistorySearchAdapter extends RecyclerView.Adapter<HistorySearchAdapter.ViewHolder> {
     private View view;
     private static final String TAG = "HistorySearchAdapter";
     private Context context;
@@ -35,30 +37,30 @@ public class HistorySearchAdapter extends RecyclerView.Adapter<HistorySearchAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HistorySearchAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull HistorySearchAdapter.ViewHolder viewHolder, final int i) {
         viewHolder.name.setText(historys.get(i));
+        viewHolder.contentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mOnItemClickListener != null) {
+                    mOnItemClickListener.onItemNameTvClick(v,historys.get(i));
+                }
+            }
+        });
+        viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mOnItemClickListener != null) {
+                    mOnItemClickListener.onItemDeleteImgClick(v,historys.get(i));
+                }
+            }
+        });
         Log.i(TAG, "onBindViewHolder: 开始绑定"+historys.get(i));
     }
 
     @Override
     public int getItemCount() {
         return historys.size();
-    }
-
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.name://点击历史纪录名称时调用
-                if (mOnItemClickListener != null) {
-                    mOnItemClickListener.onItemNameTvClick(v, (String) v.getTag());
-                }
-                break;
-/*            case R.id.search_history_item_img://点击删除按钮时调用
-                if (mOnItemClickListener != null) {
-                    mOnItemClickListener.onItemDeleteImgClick(v, (String) v.getTag());
-                }
-                break;*/
-            default:
-        }
     }
 
 
@@ -72,9 +74,13 @@ public class HistorySearchAdapter extends RecyclerView.Adapter<HistorySearchAdap
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         private TextView name;
+        private ImageView imageView;
+        private LinearLayout contentLayout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name=itemView.findViewById(R.id.name);
+            imageView=itemView.findViewById(R.id.search_history_item_img);
+            contentLayout=itemView.findViewById(R.id.contentLayout);
         }
     }
     /**

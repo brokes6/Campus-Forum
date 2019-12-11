@@ -75,6 +75,7 @@ public class Mynews extends AppCompatActivity implements View.OnClickListener{
     private List<UserMessage> userMessages=new ArrayList<>();
     private User userData;
     private int startPage=1;
+    private boolean flag=true;
     private SmartRefreshLayout refreshLayout;
     private CommentTemplate template;
     private MessageTabFragementAdapter messageTabFragementAdapter;
@@ -213,9 +214,8 @@ public class Mynews extends AppCompatActivity implements View.OnClickListener{
              */
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                if (mostTimes.get() < 3) {
+                if (template.flag) {
                     template.getMessage(userData.getToken());
-                    mostTimes.getAndIncrement();
                 }
                 refreshLayout.finishLoadMore(1000); //这个记得设置，否则一直转圈
             }
@@ -230,13 +230,10 @@ public class Mynews extends AppCompatActivity implements View.OnClickListener{
                 super.onFooterFinish(footer, success);
                 if (net.get() == false) {
                     tv.setText("请检查网络设置");
-                } else if (mostTimes.get() >= 3) {
+                } else if (!template.flag) {
                     tv.setText("没有更多消息拉");
                 } else {
                     tv.setText("加载完成");
-                    if (mostTimes.get() == 2) {
-                        mostTimes.getAndIncrement();
-                    }
                 }
             }
         });

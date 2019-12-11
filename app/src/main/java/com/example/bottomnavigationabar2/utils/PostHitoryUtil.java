@@ -61,4 +61,9 @@ public class PostHitoryUtil {
         SharedPreferences sharedPreferences=context.getSharedPreferences(PREFERENCE_NAME,Context.MODE_PRIVATE);
         return sharedPreferences.getString(SEARCH_HISTORY,"");
     }
+    public static boolean deleteAllHistory(Context context){
+        SharedPreferences sharedPreferences=context.getSharedPreferences(PREFERENCE_NAME,Context.MODE_PRIVATE);
+        sharedPreferences.edit().clear().commit();
+        return true;
+    }
 }

@@ -44,6 +44,7 @@ public class OrganizationDetailsActivity extends AppCompatActivity {
     private TextView followNum;
     private TextView postNum;
     private TextView introduce;
+    private int type;
     private Button followButton;
     private int organizationId;
     private User userData;

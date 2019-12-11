@@ -117,11 +117,17 @@ public class SearchActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(new HistorySearchAdapter.OnItemClickListener() {
             @Override
-            public void onItemNameTvClick(View v, String name) {}
+            public void onItemNameTvClick(View v, String name) {
+                HistorySearchUtil.getInstance(SearchActivity.this).putNewSearch(name);//保存记录到数据库
+                Intent intent=new Intent(SearchActivity.this,SearchDetailsActivity.class);
+                intent.putExtra("queryWord",name);
+                startActivity(intent);
+            }
             @Override
             public void onItemDeleteImgClick(View v, String name) {
+                Log.i(TAG, "onItemDeleteImgClick: "+name);
+                historyList.remove(name);
                 HistorySearchUtil.getInstance(SearchActivity.this).deleteHistorySearch(name);
-                getHistoryList();
                 adapter.notifyDataSetChanged();
                 showViews();
             }

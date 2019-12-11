@@ -20,8 +20,10 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DisplayCutoutDemo displayCutoutDemo = new DisplayCutoutDemo(this);
-        displayCutoutDemo.openFullScreenModel();
+        if(Build.VERSION.SDK_INT>=28) {
+            DisplayCutoutDemo displayCutoutDemo = new DisplayCutoutDemo(this);
+            displayCutoutDemo.openFullScreenModel();
+        }
         getStatusBarHeight(this);
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             //修改为深色，因为我们把状态栏的背景色修改为主题色白色，默认的文字及图标颜色为白色，导致看不到了。

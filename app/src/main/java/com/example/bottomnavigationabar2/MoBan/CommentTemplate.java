@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.bottomnavigationabar2.HomeFragment;
 import com.example.bottomnavigationabar2.Post;
@@ -43,17 +45,24 @@ public class CommentTemplate extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private PostAdapter postAdapter;
     private LinearLayout loadLayout;
+    private ProgressBar progressBar;
+    private TextView loadTextView;
     private List<UserMessage> userMessages = new ArrayList<>();
     private View view;
     private int startPage=1;
+    public volatile static boolean flag=true;
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what){
-                case 1:
+                case RequestStatus.HANDLER_DATA:
                     loadLayout.setVisibility(View.GONE);
                     mRecyclerView.setVisibility(View.VISIBLE);
                     postAdapter.notifyDataSetChanged();
+                    break;
+                case RequestStatus.NO_RESOURCE:
+                    loadTextView.setText("你暂时还没有消息喔~");
+                    loadTextView.setTextSize(18);
                     break;
             }
         }
@@ -66,13 +75,15 @@ public class CommentTemplate extends Fragment {
         return view;
     }
     private void initView() {
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        mRecyclerView =view.findViewById(R.id.recyclerView);
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         postAdapter = new PostAdapter(getContext());
         postAdapter.setUserMessages(userMessages);
         mRecyclerView.setAdapter(postAdapter);
         loadLayout=view.findViewById(R.id.loadLayout);
+        loadTextView=view.findViewById(R.id.loadTextView);
+        progressBar=view.findViewById(R.id.loading);
     }
     public void getMessage(String token){
         Request request =new Request.Builder()
@@ -92,15 +103,18 @@ public class CommentTemplate extends Fragment {
                 try {
                     JSONObject jsonObject=new JSONObject(reponseData);
                     int code = jsonObject.getInt("code");
-                    if(code==1){
-                        Gson gson=new Gson();
-                        userMessages=gson.fromJson(jsonObject.getString("data"),new TypeToken<List<UserMessage>>(){}.getType());
-                        postAdapter.setUserMessages(userMessages);
+                    if(code==0){
                         Message message=new Message();
-                        message.what=1;
-                        startPage++;
+                        message.what=RequestStatus.NO_RESOURCE;
                         handler.sendMessage(message);
                     }
+                    Gson gson=new Gson();
+                    userMessages=gson.fromJson(jsonObject.getString("data"),new TypeToken<List<UserMessage>>(){}.getType());
+                    postAdapter.setUserMessages(userMessages);
+                    Message message=new Message();
+                    message.what=RequestStatus.HANDLER_DATA;
+                    startPage++;
+                    handler.sendMessage(message);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

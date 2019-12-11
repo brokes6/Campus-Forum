@@ -17,6 +17,14 @@ public class Organization {
     private String ointroduce;
     private String oimg;
     private int loveNum;
+    private int postNum;
+    public int getPostNum() {
+        return postNum;
+    }
+
+    public void setPostNum(int postNum) {
+        this.postNum = postNum;
+    }
 
     public int getOid() {
         return oid;
