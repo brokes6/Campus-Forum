@@ -62,7 +62,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         /** 导航基础设置 包括按钮选中效果 导航栏背景色等 */
         bottomNavigationBar
                 .setTabSelectedListener(this)
-                .setMode(BottomNavigationBar.MODE_FIXED)
+                .setMode(BottomNavigationBar.MODE_SHIFTING)
                 /**
                  *  setMode() 内的参数有三种模式类型：
                  *  MODE_DEFAULT 自动模式：导航栏Item的个数<=3 用 MODE_FIXED 模式，否则用 MODE_SHIFTING 模式
@@ -78,7 +78,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                  *  BACKGROUND_STYLE_STATIC: 静态样式 点击无波纹效果
                  *  BACKGROUND_STYLE_RIPPLE: 波纹样式 点击有波纹效果
                  */
-
                 .setActiveColor("#000000") //选中颜色
                 .setInActiveColor("#6D6969") //未选中颜色
                 .setBarBackgroundColor("#FFFFFF");//导航栏背景色
@@ -87,7 +86,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         bottomNavigationBar
                 .addItem(new BottomNavigationItem(R.mipmap.home, "首页"))
                 .addItem(new BottomNavigationItem(R.mipmap.fenlei, "分类"))
-                .addItem(new BottomNavigationItem(R.mipmap.personal, "个人设置"))
+                .addItem(new BottomNavigationItem(R.drawable.personal, "个人设置"))
                 .setFirstSelectedPosition(lastSelectedPosition)
                 .initialise(); //initialise 一定要放在 所有设置的最后一项
 
