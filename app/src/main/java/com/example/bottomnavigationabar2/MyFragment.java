@@ -66,7 +66,7 @@ public class MyFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.my_fragment, container, false);
+        view = inflater.inflate(R.layout.my_fragment_test, container, false);
         userData=FileCacheUtil.getUser(getContext());
         Bundle bundle = getArguments();
         initView();

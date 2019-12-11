@@ -36,19 +36,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="#CBCFCB"/>
-                //轮播图
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <com.youth.banner.Banner
-                        android:layout_marginRight="2dp"
-                        android:layout_marginLeft="2dp"
-                        android:id="@+id/banner"
-                        android:layout_width="match_parent"
-                        android:layout_height="190dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
-                </LinearLayout>
                 //搜索框
                 <LinearLayout
                     android:id="@+id/search"
@@ -72,14 +59,25 @@
                         android:text="请输入搜索内容"/>
 
                 </LinearLayout>
-                <TextView
+                //轮播图
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="10dp"
-                    android:background="#EBEBEB"/>
+                    android:layout_height="wrap_content">
+                    <com.youth.banner.Banner
+                        android:layout_marginRight="2dp"
+                        android:layout_marginLeft="2dp"
+                        android:id="@+id/banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="190dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+                </LinearLayout>
+
                 //五个按钮的位置
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="#FFF"
                     android:orientation="horizontal">
                     <LinearLayout
                         android:layout_width="0dp"
@@ -88,16 +86,16 @@
                         android:gravity="center_vertical|center_horizontal"
                         android:layout_weight="1">
                         <de.hdodenhof.circleimageview.CircleImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:src="@mipmap/ic_launcher"/>
+                            android:layout_width="50sp"
+                            android:layout_height="50sp"
+                            android:src="@drawable/guanzhu2"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:textColor="#000"
                             android:textSize="16dp"
-                            android:text="呵呵"/>
+                            android:text="关注"/>
 
                     </LinearLayout>
                     <LinearLayout
@@ -107,16 +105,16 @@
                         android:gravity="center_vertical|center_horizontal"
                         android:layout_weight="1">
                         <de.hdodenhof.circleimageview.CircleImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:src="@mipmap/ic_launcher"/>
+                            android:layout_width="50sp"
+                            android:layout_height="50sp"
+                            android:src="@drawable/toupiao1"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:textColor="#000"
                             android:textSize="16dp"
-                            android:text="呵呵"/>
+                            android:text="投票"/>
 
                     </LinearLayout>
                     <LinearLayout
@@ -126,16 +124,16 @@
                         android:gravity="center_vertical|center_horizontal"
                         android:layout_weight="1">
                         <de.hdodenhof.circleimageview.CircleImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:src="@mipmap/ic_launcher"/>
+                            android:layout_width="50sp"
+                            android:layout_height="50sp"
+                            android:src="@drawable/lishi1"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:textColor="#000"
                             android:textSize="16dp"
-                            android:text="呵呵"/>
+                            android:text="历史"/>
 
                     </LinearLayout>
                     <LinearLayout
@@ -145,16 +143,16 @@
                         android:gravity="center_vertical|center_horizontal"
                         android:layout_weight="1">
                         <de.hdodenhof.circleimageview.CircleImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:src="@mipmap/ic_launcher"/>
+                            android:layout_width="50sp"
+                            android:layout_height="50sp"
+                            android:src="@drawable/xiaoxi"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:textColor="#000"
                             android:textSize="16dp"
-                            android:text="呵呵"/>
+                            android:text="消息"/>
 
                     </LinearLayout>
                     <LinearLayout
@@ -164,21 +162,25 @@
                         android:gravity="center_vertical|center_horizontal"
                         android:layout_weight="1">
                         <de.hdodenhof.circleimageview.CircleImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:src="@mipmap/ic_launcher"/>
+                            android:layout_width="50sp"
+                            android:layout_height="50sp"
+                            android:src="@drawable/pinglun2"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:textColor="#000"
                             android:textSize="16dp"
-                            android:text="呵呵"/>
+                            android:text="评论"/>
 
                     </LinearLayout>
 
 
                 </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="#EBEBEB"/>
                 //以前的更多公告
                 <!--                <android.support.v7.widget.SearchView-->
                 <!--                    android:layout_marginTop="8dp"-->
