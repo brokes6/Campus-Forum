@@ -277,12 +277,14 @@ public class HomeFragment extends Fragment {
         phoneHeight=new DisplayMetrics().heightPixels;
         imagePath = new ArrayList<>();
         imageTitle = new ArrayList<>();
-        imagePath.add(R.mipmap.mao1);
-        imagePath.add(R.mipmap.mao2);
-        imagePath.add(R.mipmap.mao3);
-        imageTitle.add("图片1");
-        imageTitle.add("图片2");
-        imageTitle.add("图片3");
+        imagePath.add(R.drawable.english_club);
+        imagePath.add(R.drawable.english_club1);
+        imagePath.add(R.drawable.english_club2);
+        imagePath.add(R.drawable.english_club3);
+        imageTitle.add("英语俱乐部合照");
+        imageTitle.add("英语俱乐部合照");
+        imageTitle.add("英语俱乐部合照");
+        imageTitle.add("英语俱乐部合照");
     }
     private void initView() {
         mMyImageLoader = new MyImageLoader();
