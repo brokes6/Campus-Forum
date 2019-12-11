@@ -129,7 +129,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         if(view==null) {
-            view = inflater.inflate(R.layout.home_fragment_text, container, false);
+            view = inflater.inflate(R.layout.home_fragment_test2, container, false);
 //            searchView =view.findViewById(R.id.searchView);
             realTabLayout = view.findViewById(R.id.tablayout_real);
             container = view.findViewById(R.id.container);
