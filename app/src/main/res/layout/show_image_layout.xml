@@ -3,9 +3,6 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    //-----
-    //普通版show_image_layout
-    //-----
     <include layout="@layout/picture_closes" />
 
     <android.support.v4.view.ViewPager

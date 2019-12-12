@@ -17,13 +17,23 @@ public class Organization {
     private String ointroduce;
     private String oimg;
     private int loveNum;
-    private int postNum;
-    public int getPostNum() {
-        return postNum;
+    private int pnum;
+    private int collection;
+
+    public int getCollection() {
+        return collection;
     }
 
-    public void setPostNum(int postNum) {
-        this.postNum = postNum;
+    public void setCollection(int collection) {
+        this.collection = collection;
+    }
+
+    public int getPnum() {
+        return pnum;
+    }
+
+    public void setPnum(int pnum) {
+        this.pnum = pnum;
     }
 
     public int getOid() {

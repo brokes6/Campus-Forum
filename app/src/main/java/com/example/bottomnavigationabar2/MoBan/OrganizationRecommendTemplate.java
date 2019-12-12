@@ -187,7 +187,9 @@ public class OrganizationRecommendTemplate extends Fragment {
     }
     public void handlerNoResource(){
         recyclerView.setVisibility(View.GONE);
-        this.organizations.clear();
+        if(this.organizations!=null) {
+            this.organizations.clear();
+        }
         progressBar.setVisibility(View.GONE);
         loadTextView.setText("没有找到相关数据");
         loadTextView.setTextSize(20);

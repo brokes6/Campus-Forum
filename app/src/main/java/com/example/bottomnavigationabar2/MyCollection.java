@@ -120,11 +120,6 @@ public class MyCollection extends AppCompatActivity {
         findHistoryIdDetails();
     }
     private void findHistoryIdDetails(){
-        String data= PostHitoryUtil.getSearchHistory(this);
-        if(data.trim().equals("")){
-            Toast.makeText(this, "你还没有浏览历史喔", Toast.LENGTH_SHORT).show();
-            return;
-        }
         final Request request=new Request.Builder()
                 .url("http://106.54.134.17/app/findCollection?token="+userData.getToken())
                 .build();

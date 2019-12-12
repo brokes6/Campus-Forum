@@ -29,7 +29,7 @@ public class MainTabFragmentAdapter extends FragmentStatePagerAdapter {
         super(fm);
         Log.i(TAG, "MainTabFragmentAdapter: 我没事被调用了？");
         mContext = context;
-        initFragments(false,tagId,mode);
+        initFragments(flag,tagId,mode);
         Log.i(TAG, "MainTabFragmentAdapter: 又要初始化？");
     }
     public MainTabFragmentAdapter(FragmentManager fm) {
@@ -62,7 +62,15 @@ public class MainTabFragmentAdapter extends FragmentStatePagerAdapter {
                 fragments.add(RecommendTemplate.newIntance(flag,tagId,PostTemplateInterface.STANDARD_POPULAR_URL));
                 fragments.add(FollowTemplate.newIntance(flag,tagId,PostTemplateInterface.STANDARD_NEW_URL));
                 break;
-            case 1:break;
+            case 1:
+                titles = new String[]{
+                        "热门", "最新", "推荐", "关注"
+                };
+                fragments.add(PopularPostTemplate.newIntance(flag,tagId,PostTemplateInterface.TAG_POPULAR_URL));
+                fragments.add(NewPostTemplate.newIntance(flag,tagId,PostTemplateInterface.TAG_NEW_URL));
+                fragments.add(RecommendTemplate.newIntance(flag,tagId,PostTemplateInterface.STANDARD_POPULAR_URL));
+                fragments.add(FollowTemplate.newIntance(flag,tagId,PostTemplateInterface.STANDARD_NEW_URL));
+                break;
             case 2:
                 Log.i(TAG, "initFragments: fragementsize="+fragments.size());
                 Log.i(TAG, "initFragments: 初始化2啊");

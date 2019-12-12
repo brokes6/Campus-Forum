@@ -2,10 +2,12 @@ package com.example.bottomnavigationabar2.activity;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -22,10 +24,20 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.gif.GifDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.CustomViewTarget;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.example.bottomnavigationabar2.Animation.DepthPageTransformer;
 import com.example.bottomnavigationabar2.Animation.ZoomOutPageTransformer;
+import com.example.bottomnavigationabar2.MyImageView;
 import com.example.bottomnavigationabar2.Pictureutils.LocalCacheUtils;
 import com.example.bottomnavigationabar2.Pictureutils.MemoryCacheUtils;
 import com.example.bottomnavigationabar2.Post;
@@ -33,6 +45,7 @@ import com.example.bottomnavigationabar2.R;
 import com.example.bottomnavigationabar2.adapter.NineGridTest2Adapter;
 import com.example.bottomnavigationabar2.adapter.ShowImageAdapter;
 import com.example.bottomnavigationabar2.rewrite.ZoomImageView;
+import com.example.util.ImageUtils;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -77,17 +90,9 @@ public class ShowImageActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what){
-                case GET_DATA_SUCCESS:
-                    Bitmap bitmap= (Bitmap) msg.obj;
-                    SubsamplingScaleImageView iv = (SubsamplingScaleImageView) listViews.get(msg.arg1).findViewById(R.id.view_image);//绑定布局中的id/
-                    iv.setImage(ImageSource.bitmap(bitmap));
-//                    ZoomImageView iv = (ZoomImageView) listViews.get(msg.arg1).findViewById(R.id.view_image);//绑定布局中的id/
-//                    iv.setImageBitmap(bitmap);
-                    //取消加载动画
-                    viewp.setVisibility(View.VISIBLE);
-                    lin.setVisibility(View.GONE);
-                    //
-                    break;
+//                case GET_DATA_SUCCESS:
+//                    Bitmap bitmap= (Bitmap) msg.obj;
+//                    break;
                 case NETWORK_ERROR:
                     Toast.makeText(ShowImageActivity.this,"网络连接失败", Toast.LENGTH_SHORT).show();
                     break;
@@ -120,8 +125,6 @@ public class ShowImageActivity extends AppCompatActivity {
         lin = findViewById(R.id.lin_go);
         viewp = findViewById(R.id.show_view_pager);
         //设置加载动画
-        viewp.setVisibility(View.GONE);
-        lin.setVisibility(View.VISIBLE);
         //
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,7 +153,6 @@ public class ShowImageActivity extends AppCompatActivity {
         picture_num.setText(position+1+"/"+total);
 //        picture_text.setText(bundle.getString("content","没有文字喔"));
         expTv1.setText(bundle.getString("content","没有文字喔"));
-        Log.i(TAG, "initData: postition="+position);
     }
     private void inint() {
         if (urls != null && urls.size() > 0){
@@ -159,11 +161,16 @@ public class ShowImageActivity extends AppCompatActivity {
                         R.layout.view_pager_item, null);   //绑定viewpager的item布局文件
 //                ImageView iv = (ImageView) view.findViewById(R.id.view_image);   //绑定布局中的id
 //                iv.setImageBitmap(urls.get(i));   //设置当前点击的图片
-                setImageURL(urls.get(i),i);
                 listViews.add(view);
-                /**
-                 * 图片的长按监听
-                 * */
+                String path=urls.get(i);
+                switch (ImageUtils.handlerImagePath(path)){
+                    case ImageUtils.JPEG:
+                        setImageURL(path,i);
+                        break;
+                    case ImageUtils.GIF:
+                        setGifUrl(path,i);
+                        break;
+                }
             }
             imageAdapter = new ShowImageAdapter(listViews);
             viewPager.setAdapter(imageAdapter);
@@ -218,70 +225,32 @@ public class ShowImageActivity extends AppCompatActivity {
 
     }
     //设置网络图片（从网络中获取图片）
-    public void setImageURL(final String path, final int index) {
-        //从本地获取图片
-        //从内存中获取图片；
-        memorymbitmap = mMemoryCacheUtils.getBitmapFromMemory(path);
-        if(memorymbitmap==null){
-            localbitmap = mLocalCacheUtils.getBitmapFromLocal(path);
-            if(localbitmap==null){
-                new Thread() {
-                    @Override
-                    public void run() {
-                        try {
-                            //把传过来的路径转成URL
-                            URL url = new URL(path);
-                            //获取连接
-                            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                            //使用GET方法访问网络
-                            connection.setRequestMethod("GET");
-                            //超时时间为10秒
-                            connection.setConnectTimeout(10000);
-                            //获取返回码
-                            int code = connection.getResponseCode();
-                            //当返回码是200，代表获取成功
-                            if (code == 200) {
-                                InputStream inputStream = connection.getInputStream();
-                                //使用工厂把网络的输入流生产Bitmap
-                                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                                //利用Message把图片发给Handler
-                                Message msg = Message.obtain();
-                                msg.obj = bitmap;
-                                msg.what = GET_DATA_SUCCESS;
-                                msg.arg1=index;
-                                //--将图片缓存进内存和本地--
-                                mLocalCacheUtils.setBitmapToLocal(path,bitmap);
-                                //将图片缓存进内存
-                                mMemoryCacheUtils.setBitmapToMemory(path, bitmap);
-                                handler.sendMessage(msg);
-                                inputStream.close();
-                            }else {
-                                //服务启发生错误
-                                handler.sendEmptyMessage(SERVER_ERROR);
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                            //网络连接错误
-                            handler.sendEmptyMessage(NETWORK_ERROR);
-                        }
-                    }
-                }.start();
-            }else{
-                Message msg = Message.obtain();
-                msg.obj = localbitmap;
-                msg.what = GET_DATA_SUCCESS;
-                msg.arg1=index;
-                handler.sendMessage(msg);
+    public void setImageURL(String path,int index) {
+        Log.i(TAG, "setImageURL: path="+path);
+        final SubsamplingScaleImageView imageView =listViews.get(index).findViewById(R.id.view_image);//绑定布局中的id/
+        Glide.with(ShowImageActivity.this).load(path).into(new CustomViewTarget<SubsamplingScaleImageView,Drawable>(imageView) {
+            @Override
+            protected void onResourceCleared(@Nullable Drawable placeholder) {
+
             }
-        }else{
-            Message msg = Message.obtain();
-            msg.obj = memorymbitmap;
-            msg.what = GET_DATA_SUCCESS;
-            msg.arg1=index;
-            handler.sendMessage(msg);
-        }
-        //开启一个线程用于联网
 
+            @Override
+            public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                Log.i(TAG, "onLoadFailed: 图片加载失败"+errorDrawable.toString());
+            }
+
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                Log.i(TAG, "onResourceReady: 加载成功！");
+                imageView.setImage(ImageSource.bitmap(ImageUtils.drawableToBitmap(resource)));
+                viewp.setVisibility(View.VISIBLE);
+                lin.setVisibility(View.GONE);
+            }
+        });
     }
-
+    private void setGifUrl(String path,int index){
+        Log.i(TAG, "setGifURL: path="+path);
+        final ImageView imageView =listViews.get(index).findViewById(R.id.gifView);//绑定布局中的id/
+        Glide.with(ShowImageActivity.this).asGif().load(path).into(imageView);
+    }
 }

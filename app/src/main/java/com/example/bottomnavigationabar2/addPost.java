@@ -380,9 +380,12 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
         loadLayout.setVisibility(View.VISIBLE);
         try {
             MediaType type =MediaType.parse("image/*");
+            String name=file.getName();
+            Log.i(TAG, "netUploadImg: "+name);
+            name=name.substring(name.lastIndexOf(".")+1);
             RequestBody body=new MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
-                    .addFormDataPart("file",file.getName(),RequestBody.create(MediaType.parse("application/octet-stream"),file))
+                    .addFormDataPart("file",name,RequestBody.create(MediaType.parse("application/octet-stream"),file))
                     .build();
             final Request request = new Request.Builder()
                     .url("http://106.54.134.17/app/addPostImg")
@@ -399,6 +402,7 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     String urls = response.body().string();
+                    Log.i(TAG, "onResponse:urls"+urls);
                     int index1 = urls.indexOf("http");
                     int index2 = urls.lastIndexOf("\"");
                     urls = (String) urls.subSequence(index1, index2);
