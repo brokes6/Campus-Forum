@@ -146,11 +146,13 @@ public class ShowImageActivity extends AppCompatActivity {
     }
     private void initView(){
         Picture_key=false;
+        //容器内的子view的layout发生变化时也播放动画
         ViewGroup container = (ViewGroup) findViewById(R.id.container);
         transition = new LayoutTransition();
         container.setLayoutTransition(transition);
         transition = container.getLayoutTransition();
         transition.enableTransitionType(LayoutTransition.CHANGING);
+        //结束
         Picture_text_main = findViewById(R.id.Picture_text_main);
         button_images = findViewById(R.id.button_images);
         button_text = findViewById(R.id.button_text);
@@ -182,7 +184,7 @@ public class ShowImageActivity extends AppCompatActivity {
                     button_text.setText("收起");
                     button_images.setImageResource(R.drawable.retract);
                     linearParams =(RelativeLayout.LayoutParams) Picture_text_main.getLayoutParams();
-                    linearParams.height=520;
+                    linearParams.height=500;
                     Picture_text_main.setLayoutParams(linearParams);
                     Picture_key=false;
                 }else{

@@ -70,7 +70,7 @@
                 android:visibility="visible"
                 android:padding="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="520px"
+                android:layout_height="500px"
                 android:layout_above="@id/bottom"
                 android:background="@drawable/bt_top">
                     <TextView
@@ -84,10 +84,11 @@
             <LinearLayout
                 android:id="@+id/bottom"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="5dp"
                 android:layout_width="match_parent"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
                 android:background="@drawable/bt_top"
-                android:layout_height="40dp"
+                android:layout_height="43dp"
                 android:orientation="horizontal">
                     <LinearLayout
                         android:id="@+id/Open_and_Retract"

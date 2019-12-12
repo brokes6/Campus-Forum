@@ -2,6 +2,7 @@ package com.example.bottomnavigationabar2;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
+import android.animation.LayoutTransition;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;

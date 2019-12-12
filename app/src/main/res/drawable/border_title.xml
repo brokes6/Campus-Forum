@@ -4,12 +4,12 @@
     <solid android:color="#FFFFFF" />
 
     <stroke
-        android:width="2px"
+        android:width="0px"
         android:color="#777474" />
 
     <padding
-        android:bottom="1px"
-        android:left="1px"
-        android:right="1px"
-        android:top="1px" />
+        android:bottom="2px"
+        android:left="2px"
+        android:right="2px"
+        android:top="2px" />
 </shape>

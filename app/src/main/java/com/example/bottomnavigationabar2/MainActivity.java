@@ -62,7 +62,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         /** 导航基础设置 包括按钮选中效果 导航栏背景色等 */
         bottomNavigationBar
                 .setTabSelectedListener(this)
-                .setMode(BottomNavigationBar.MODE_SHIFTING)
+                .setMode(BottomNavigationBar.MODE_FIXED)
                 /**
                  *  setMode() 内的参数有三种模式类型：
                  *  MODE_DEFAULT 自动模式：导航栏Item的个数<=3 用 MODE_FIXED 模式，否则用 MODE_SHIFTING 模式
