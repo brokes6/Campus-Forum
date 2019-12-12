@@ -9,7 +9,7 @@
     <item android:top="10px">
         <shape>
             <!--内容颜色-->
-            <solid android:color="#FFFFFF"/>
+            <solid android:color="#3F3F3F"/>
         </shape>
     </item>
 </layer-list>
