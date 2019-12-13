@@ -59,9 +59,19 @@ public class SearchPostTemplate extends Fragment {
         }
     }
     public void handlerNoResource(){
+        if(posts!=null){
+            posts.clear();
+            mAdapter.notifyDataSetChanged();
+            mRecyclerView.setAdapter(null);
+        }
+        loadLayout.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
         loadTextView.setText("没有找到相关数据");
         loadTextView.setTextSize(20);
+    }
+    public void handlerNoNetwork(){
+        progressBar.setVisibility(View.GONE);
+        loadTextView.setText("网络连接失败，请重新尝试。。。");
     }
     public void clear(){
         if(posts!=null) {

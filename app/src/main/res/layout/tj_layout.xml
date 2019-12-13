@@ -23,7 +23,7 @@
         android:layout_marginTop="40dp"
         android:layout_gravity="center"
         android:layout_height="wrap_content"
-        android:text="点击查看跟多"
+        android:text="换一批"
         android:background="@drawable/border_fenlei"/>
     </LinearLayout>
     <LinearLayout

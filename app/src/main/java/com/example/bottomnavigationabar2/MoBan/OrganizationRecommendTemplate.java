@@ -66,7 +66,8 @@ public class OrganizationRecommendTemplate extends Fragment {
                         handlerNoResource();
                         break;
                 case RequestStatus.NO_NETWORK:
-
+                        handlerNoNetwork();
+                        break;
             }
         }
     };
@@ -111,6 +112,16 @@ public class OrganizationRecommendTemplate extends Fragment {
         contentLayout=convertView.findViewById(R.id.contentLayout);
         loadTextView=convertView.findViewById(R.id.loadTextView);
         progressBar=convertView.findViewById(R.id.loading);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadTextView.setText("正在努力加载中");
+                progressBar.setVisibility(View.VISIBLE);
+                button.setVisibility(View.GONE);
+                loadTextView.setText("正在努力加载中...");
+                findRecommendOrganization();
+            }
+        });
     }
 
     private void initData() {
@@ -174,16 +185,23 @@ public class OrganizationRecommendTemplate extends Fragment {
             handlerNoResource();
         }
     }
-    private void handlerNoResource(){
+    public void handlerNoResource(){
+        recyclerView.setVisibility(View.GONE);
+        if(this.organizations!=null) {
+            this.organizations.clear();
+        }
         progressBar.setVisibility(View.GONE);
         loadTextView.setText("没有找到相关数据");
         loadTextView.setTextSize(20);
     }
-    private void handlerNoNetwork(){
+    public void handlerNoNetwork(){
+        progressBar.setVisibility(View.GONE);
         button.setVisibility(View.VISIBLE);
+        loadTextView.setText("网络连接失败，请重新尝试。。。");
     }
     public void clear(){
         if(organizations!=null) {
+            Log.i(TAG, "clear: 开始清空");
             organizations.clear();
             organizationAdapter.notifyDataSetChanged();
         }

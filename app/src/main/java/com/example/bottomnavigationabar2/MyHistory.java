@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -49,6 +50,7 @@ public class MyHistory extends AppCompatActivity {
     private LinearLayout loadLayout;
     private TextView loadingTextView;
     private ProgressBar progressBar;
+    private Button loadButton;
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -65,6 +67,11 @@ public class MyHistory extends AppCompatActivity {
                     loadingTextView.setText("你暂时还没有浏览的历史记录~");
                     loadingTextView.setTextSize(18);
                     break;
+                case RequestStatus.NO_NETWORK:
+                    progressBar.setVisibility(View.GONE );
+                    loadButton.setVisibility(View.VISIBLE);
+                    loadingTextView.setText("网络连接失败，请重新尝试");
+                    loadingTextView.setTextSize(18);
             }
         }
     };
@@ -85,6 +92,7 @@ public class MyHistory extends AppCompatActivity {
 
     }
     private void initView(){
+        loadButton=findViewById(R.id.loadButton);
         loadingTextView=findViewById(R.id.loadTextView);
         progressBar=findViewById(R.id.loading);
         loadLayout=findViewById(R.id.loadLayout);
@@ -110,6 +118,15 @@ public class MyHistory extends AppCompatActivity {
                 handler.sendMessage(message);
             }
         });
+        loadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadingTextView.setText("正在努力加载中");
+                progressBar.setVisibility(View.VISIBLE);
+                loadButton.setVisibility(View.GONE);
+                findHistoryIdDetails();
+            }
+        });
     }
     private void initData(){
         userData= FileCacheUtil.getUser(MyHistory.this);
@@ -133,7 +150,9 @@ public class MyHistory extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
+                Message message=new Message();
+                message.what=RequestStatus.NO_NETWORK;
+                handler.sendMessage(message);
             }
 
             @Override

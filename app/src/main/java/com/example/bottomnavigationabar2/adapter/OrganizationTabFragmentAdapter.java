@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class OrganizationTabFragmentAdapter extends FragmentStatePagerAdapter {
     private ArrayList<Fragment> fragments;
     private String[] titles = new String[]{
-            "热门", "最新", "推荐", "关注"
+            "推荐", "关注"
     };
     public OrganizationTabFragmentAdapter(FragmentManager fm) {
         super(fm);
@@ -24,7 +24,6 @@ public class OrganizationTabFragmentAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
-        System.out.println("11111111111111111111111111你说我又被调用？？？"+i);
         return fragments.get(i);
     }
 

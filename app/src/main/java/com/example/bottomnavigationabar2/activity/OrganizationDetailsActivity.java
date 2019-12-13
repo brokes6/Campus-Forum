@@ -1,5 +1,6 @@
 package com.example.bottomnavigationabar2.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -55,20 +56,32 @@ public class OrganizationDetailsActivity extends AppCompatActivity {
             switch (msg.what){
                 case HANDLER_DATA:
                     Organization organization= (Organization) msg.obj;
+                    //后面修改
+//                    type=organization.getCollection();
                     organizationName.setText(organization.getOname());
                     organizationImg.setImageURL(organization.getOimg());
                     followNum.setText(String.valueOf(organization.getLoveNum()));
                     Log.i(TAG, "handleMessage: 我设置了啊");
+                    switch (type){
+                        case 0:followButton.setText("未关注");
+                                break;
+                        case 1:followButton.setText("已关注");
+                                break;
+                        default:break;
+                    }
                     break;
                 case FOLLOW:
-                    int code=msg.arg1;
-                    if(code==1){
-                        Toast.makeText(OrganizationDetailsActivity.this, "关注成功!", Toast.LENGTH_SHORT).show();
-                        followButton.setText("已关注");
-                    }else {
-                        Toast.makeText(OrganizationDetailsActivity.this, "遇到未知原因关注失败!", Toast.LENGTH_SHORT).show();
-
+                    Toast.makeText(OrganizationDetailsActivity.this, msg.obj.toString(), Toast.LENGTH_SHORT).show();
+                    type=type==0?1:0;
+                    switch (type){
+                        case 0:followButton.setText("未关注");
+                            break;
+                        case 1:followButton.setText("已关注");
+                            break;
+                        default:break;
                     }
+                    break;
+                default:break;
             }
         }
     };
@@ -90,13 +103,15 @@ public class OrganizationDetailsActivity extends AppCompatActivity {
         followButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                follow(userData.getToken(),organizationId);
+                follow(userData.getToken(),organizationId,type);
             }
         });
     }
     private void initData(){
         userData= FileCacheUtil.getUser(this);
-        organizationId=getIntent().getIntExtra("oid",-1);
+        Intent data=getIntent();
+        organizationId=data.getIntExtra("oid",-1);
+        type=data.getIntExtra("type",0);
         getOrganizationDetails();
     }
     public void getOrganizationDetails(){
@@ -144,12 +159,12 @@ public class OrganizationDetailsActivity extends AppCompatActivity {
         }.start();
         
     }
-    public void follow(final String token, final int id){
+    public void follow(final String token, final int id, final int type){
         new Thread(){
             @Override
             public void run() {
                 final Request request = new Request.Builder()
-                        .url(FOLLOW_URL + "?token=" +token+"&tid="+id)
+                        .url(FOLLOW_URL + "?token=" +token+"&tid="+id+"&type="+type)
                         .build();
                 OkHttpClient okHttpClient=new OkHttpClient();
                 okHttpClient.newCall(request).enqueue(new Callback() {

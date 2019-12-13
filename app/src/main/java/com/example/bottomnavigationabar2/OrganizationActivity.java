@@ -59,6 +59,7 @@ public class OrganizationActivity extends AppCompatActivity {
     private TextView organizationTextView;
     private MyImageView organizationImg;
     private int oid;
+    private int type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,7 +149,7 @@ public class OrganizationActivity extends AppCompatActivity {
         organizationImg.setCacheImageURL(data.getStringExtra("oimg"));
         oid=data.getIntExtra("oid",oid);
         userData= FileCacheUtil.getUser(this);
-        mainTabFragmentAdapter=new MainTabFragmentAdapter(getSupportFragmentManager(),this);
+        mainTabFragmentAdapter=new MainTabFragmentAdapter(getSupportFragmentManager(),this,true,oid,1);
         tabLayout.setupWithViewPager(viewPager);
         viewPager.setAdapter(mainTabFragmentAdapter);
         viewPager.setOffscreenPageLimit(1);

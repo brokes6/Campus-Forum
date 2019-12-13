@@ -12,7 +12,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bottomnavigationabar2.Post;
@@ -48,6 +51,9 @@ public class PopularPostTemplate extends Fragment implements PostTemplateInterfa
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private NineGridTest2Adapter mAdapter;
+    private TextView loadTextView;
+    private Button loadButton;
+    private ProgressBar progressBar;
     private List<Post> mList = new ArrayList<>();
     private View view;
     private String token=FileCacheUtil.getUser(getContext()).getToken();
@@ -55,6 +61,9 @@ public class PopularPostTemplate extends Fragment implements PostTemplateInterfa
     private LinearLayout loadLayout;
     public static PopularPostTemplate newIntance(boolean flag, int tagId, String url){
         PopularPostTemplate template=new PopularPostTemplate();
+        template.flag=flag;
+        template.tagId=tagId;
+        template.url=url;
         Bundle bundle=new Bundle();
         bundle.putBoolean("flag",flag);
         bundle.putInt("tagId",tagId);
@@ -75,7 +84,12 @@ public class PopularPostTemplate extends Fragment implements PostTemplateInterfa
                         break;
                 case PostTemplateInterface.SHOWTOAST:
                     Toast.makeText(getContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
-
+                    break;
+                case RequestStatus.NO_NETWORK:
+                    progressBar.setVisibility(View.GONE);
+                    loadTextView.setText("加载失败，请检查网络后重新尝试!");
+                    loadButton.setVisibility(View.VISIBLE);
+                    break;
             }
         }
     };
@@ -102,13 +116,25 @@ public class PopularPostTemplate extends Fragment implements PostTemplateInterfa
     }
 
     private void initView() {
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        mRecyclerView =view.findViewById(R.id.recyclerView);
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new NineGridTest2Adapter(getContext());
         mAdapter.setList(mList);
         mRecyclerView.setAdapter(mAdapter);
         loadLayout=view.findViewById(R.id.loadLayout);
+        loadTextView=view.findViewById(R.id.loadTextView);
+        loadButton=view.findViewById(R.id.loadButton);
+        progressBar=view.findViewById(R.id.loading);
+        loadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
+                loadTextView.setText("正在努力加载中");
+                loadButton.setVisibility(View.GONE);
+                getPostList(token);
+            }
+        });
     }
     public void getPostList(final String token){
         new Thread(){
@@ -122,8 +148,10 @@ public class PopularPostTemplate extends Fragment implements PostTemplateInterfa
                 okHttpClient.newCall(request).enqueue(new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
-                        e.printStackTrace();
-                        Log.d(TAG, "onFailure:失败呃");
+                        Message message=new Message();
+                        message.what=RequestStatus.NO_NETWORK;
+                        handler.sendMessage(message);
+                        return;
                     }
                     @Override
                     public void onResponse(Call call, Response response) {
@@ -147,32 +175,6 @@ public class PopularPostTemplate extends Fragment implements PostTemplateInterfa
                             for (Post post:posts){
                                 post.getUsername();
                             }
-                            //存放文章内容
-/*
-                        setCache(,getContext(),"Text",MODE_PRIVATE);
-                        //存放用户名称
-                        setCache(User_name,getContext(),"username",MODE_PRIVATE);
-                        //存放图片
-                        String dir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/ErGaoJi/images/";
-                        String state = Environment.getExternalStorageState();
-                        //如果状态不是mounted，无法读写`
-                        if (!state.equals(Environment.MEDIA_MOUNTED)) {
-                            return;
-                        }
-                        //通过时间来命名
-                        Calendar now = new GregorianCalendar();
-                        SimpleDateFormat simpleDate = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault());
-                        String fileName = simpleDate.format(now.getTime());
-                        try {
-                            File file = new File(dir + fileName + ".jpg");
-                            FileOutputStream out = new FileOutputStream(file);
-                            //mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-                            out.flush();
-                            out.close();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-*/
                         }catch(Exception exception){
                             exception.printStackTrace();
                         }
@@ -213,6 +215,7 @@ public class PopularPostTemplate extends Fragment implements PostTemplateInterfa
         if(flag){
             requestUrl+="&tagId="+tagId;
         }
+        Log.i(TAG, "handlerUrl:"+requestUrl);
         return requestUrl;
     }
 

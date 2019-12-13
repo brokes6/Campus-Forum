@@ -80,8 +80,12 @@ public class ScanFragment extends Fragment{
             public void onPageScrolled(int i, float v, int i1) {
                 if(i==1){
                     signin.setVisibility(View.GONE);
+                    recommendText.setTextSize(16);
+                    followText.setTextSize(20);
                 }else {
                     signin.setVisibility(View.VISIBLE);
+                    recommendText.setTextSize(20);
+                    followText.setTextSize(16);
                 }
             }
 

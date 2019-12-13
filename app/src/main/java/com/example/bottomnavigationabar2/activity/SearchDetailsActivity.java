@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.bottomnavigationabar2.MoBan.OrganizationFollowTemplate;
 import com.example.bottomnavigationabar2.MoBan.OrganizationRecommendTemplate;
 import com.example.bottomnavigationabar2.MoBan.PostTemplateInterface;
+import com.example.bottomnavigationabar2.MoBan.RequestStatus;
 import com.example.bottomnavigationabar2.MoBan.SearchPostTemplate;
 import com.example.bottomnavigationabar2.R;
 import com.example.bottomnavigationabar2.adapter.MainTabFragmentAdapter;
@@ -55,10 +56,15 @@ public class SearchDetailsActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what){
-                case 1:
+                case RequestStatus.HANDLER_DATA:
                     SearchDto searchDto= (SearchDto) msg.obj;
                     recommendTemplate.setData(searchDto.getOrganizationList());
                     postTemplate.setData(searchDto.getPostList());
+                    break;
+                case RequestStatus.NO_RESOURCE:
+                    break;
+                case RequestStatus.NO_NETWORK:
+                    break;
             }
         }
     };
@@ -141,7 +147,10 @@ public class SearchDetailsActivity extends AppCompatActivity {
                 okHttpClient.newCall(request).enqueue(new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
-                        e.printStackTrace();
+                        Message message=new Message();
+                        message.what= RequestStatus.NO_NETWORK;
+                        handler.sendMessage(message);
+                        return;
                     }
 
                     @Override
@@ -157,7 +166,7 @@ public class SearchDetailsActivity extends AppCompatActivity {
                             Gson gson=new Gson();
                             SearchDto searchDto=gson.fromJson(jsonObject.getString("data"),new TypeToken<SearchDto>(){}.getType());
                             Message message=new Message();
-                            message.what=1;
+                            message.what=RequestStatus.HANDLER_DATA;
                             message.obj=searchDto;
                             handler.sendMessage(message);
                         } catch (JSONException e) {

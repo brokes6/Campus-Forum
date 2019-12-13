@@ -33,6 +33,7 @@
             android:orientation="vertical"
             android:layout_weight="5">
             <TextView
+                android:id="@+id/titleTextView"
                 android:textSize="24sp"
                 android:text="浏览历史"
                 android:layout_width="wrap_content"

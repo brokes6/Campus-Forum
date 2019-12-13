@@ -27,7 +27,6 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
-
         android:name="com.application.AppApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -41,10 +40,10 @@
         <activity android:name=".LoginLoad">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.about_us"/>
         <activity android:name=".activity.OrganizationDetailsActivity" />
         <activity android:name=".activity.SearchDetailsActivity" />
         <activity android:name=".activity.SearchActivity" />

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -47,6 +48,7 @@ public class CommentTemplate extends Fragment {
     private LinearLayout loadLayout;
     private ProgressBar progressBar;
     private TextView loadTextView;
+    private Button loadButton;
     private List<UserMessage> userMessages = new ArrayList<>();
     private View view;
     private int startPage=1;
@@ -64,6 +66,12 @@ public class CommentTemplate extends Fragment {
                     loadTextView.setText("你暂时还没有消息喔~");
                     loadTextView.setTextSize(18);
                     break;
+                case RequestStatus.NO_NETWORK:
+                    progressBar.setVisibility(View.GONE);
+                    loadTextView.setText("网络连接失败，请重新尝试!");
+                    loadTextView.setTextSize(18);
+                    loadButton.setVisibility(View.VISIBLE);
+                    break;
             }
         }
     };
@@ -75,6 +83,7 @@ public class CommentTemplate extends Fragment {
         return view;
     }
     private void initView() {
+        loadButton=view.findViewById(R.id.loadButton);
         mRecyclerView =view.findViewById(R.id.recyclerView);
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -84,6 +93,14 @@ public class CommentTemplate extends Fragment {
         loadLayout=view.findViewById(R.id.loadLayout);
         loadTextView=view.findViewById(R.id.loadTextView);
         progressBar=view.findViewById(R.id.loading);
+        loadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
+                loadButton.setVisibility(View.GONE);
+                getMessage(HomeFragment.userData.getToken());
+            }
+        });
     }
     public void getMessage(String token){
         Request request =new Request.Builder()
@@ -93,7 +110,10 @@ public class CommentTemplate extends Fragment {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
+                Message message=new Message();
+                message.what= RequestStatus.NO_NETWORK;
+                handler.sendMessage(message);
+                return;
             }
 
             @Override

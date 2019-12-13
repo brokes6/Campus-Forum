@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +42,7 @@ public class NineGridTestLayout extends NineGridLayout {
     }
 
     @Override
-    protected boolean displayOneImage(final RatioImageView imageView, String url, final int parentWidth) {
+    protected boolean displayOneImage(final ImageView imageView, String url, final int parentWidth) {
 
         ImageLoaderUtil.displayImage(mContext, imageView, url, ImageLoaderUtil.getPhotoImageOption(), new ImageLoadingListener() {
             @Override
@@ -85,7 +86,7 @@ public class NineGridTestLayout extends NineGridLayout {
     }
 
     @Override
-    protected void displayImage(RatioImageView imageView, String url) {
+    protected void displayImage(ImageView imageView, String url) {
         ImageLoaderUtil.getImageLoader(mContext).displayImage(url, imageView, ImageLoaderUtil.getPhotoImageOption());
     }
 

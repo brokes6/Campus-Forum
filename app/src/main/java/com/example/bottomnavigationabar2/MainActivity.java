@@ -19,11 +19,12 @@ import com.example.bottomnavigationabar2.bean.User;
 import com.example.bottomnavigationabar2.utils.FileCacheUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
+
 /**
  * Created by 武当山道士 on 2017/8/16.
  */
 
-public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
+public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener{
 
     private BottomNavigationBar bottomNavigationBar;
     public User userData;
@@ -249,4 +250,5 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         }
 
     }
+
 }

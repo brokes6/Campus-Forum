@@ -1,21 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     //-----
-    //普通版show_image_layout
+    //作用：基于普通的show_image_layout的改版
+    //将下面的文字至于顶部，不会影响中间的图片
     //-----
-    <include layout="@layout/picture_closes" />
+    <LinearLayout
+        android:id="@+id/top"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/title_back"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_gravity="center"
+                android:src="@drawable/close"
+                android:paddingRight="10dp"
+                android:paddingLeft="20dp"/>
+            <TextView
+                android:layout_marginTop="9dp"
+                android:text="图片"
+                android:textSize="26sp"
+                android:layout_marginLeft="120dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/picture_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:text="1/9"
+                android:textColor="#F44336"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+    </LinearLayout>
 
     <android.support.v4.view.ViewPager
+        android:layout_below="@id/top"
         android:id="@+id/show_view_pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#474545"
-        android:layout_weight="1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#4D4D4D"
         android:visibility="visible">
     </android.support.v4.view.ViewPager>
+
+
+    //使用展示文字开源库-----ExpandableTextView
+    //设置文本内容时候我们用的是ExpandableTextView 而不是Textview。
+    <ScrollView
+        android:id="@+id/Picture_text_main"
+        android:visibility="visible"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="500px"
+        android:layout_above="@id/bottom"
+        android:background="@drawable/bt_top">
+        <TextView
+            android:id="@+id/Picture_text"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="暂时没用文字哦！"
+            android:textColor="#fff"
+            android:textSize="18sp" />
+    </ScrollView>
+    <LinearLayout
+        android:id="@+id/bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:background="@drawable/bt_top_while"
+        android:layout_height="43dp"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:id="@+id/Open_and_Retract"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/button_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="收起"
+                android:textColor="#313131"
+                android:textSize="20sp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"/>
+            <ImageView
+                android:id="@+id/button_images"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/retract_gray"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/loveNum"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/thumbs_up_good" />
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:id="@+id/loveNumStr"
+                    android:text="0"
+                    android:textColor="#313131"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/collection"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/shocang_good" />
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:id="@+id/collectionNum"
+                    android:text="0"
+                    android:textColor="#313131"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/talk"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/comment_good" />
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:id="@+id/talkNum"
+                    android:text="0"
+                    android:textColor="#313131"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
     <LinearLayout
         android:orientation="vertical"
         android:id="@+id/lin_go"
@@ -41,38 +207,4 @@
             android:text="加载中..." />
 
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="70dp"
-        android:background="@drawable/bt_top">
-        //使用展示文字开源库-----ExpandableTextView
-        //设置文本内容时候我们用的是ExpandableTextView 而不是Textview。
-        <com.ms.square.android.expandabletextview.ExpandableTextView
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/expand_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            expandableTextView:maxCollapsedLines="4"
-            expandableTextView:animDuration="200">
-            //必须使用 android:id="@id/expandable_text"
-            <TextView
-                android:id="@id/expandable_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:textSize="16sp"
-                android:textColor="#666666" />
-            //必须使用 android:id="@id/expand_collapse"
-            <ImageButton
-                android:id="@id/expand_collapse"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:layout_gravity="right|bottom"
-                android:background="@android:color/transparent"/>
-        </com.ms.square.android.expandabletextview.ExpandableTextView>
-    </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

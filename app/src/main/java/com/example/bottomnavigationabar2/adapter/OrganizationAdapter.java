@@ -73,7 +73,7 @@ public class OrganizationAdapter extends RecyclerView.Adapter<OrganizationAdapte
         });
         if(layoutId==R.layout.organization_recommend_template){
             viewHolder.followNum.setText(String.valueOf(organization.getLoveNum()));
-            viewHolder.postNum.setText(String.valueOf(organization.getPostNum()));
+            viewHolder.postNum.setText(String.valueOf(organization.getPnum()));
         }
     }
 
