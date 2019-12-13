@@ -29,6 +29,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class MyImageView extends ImageView {
+    private boolean isGif = false;
+    private static Bitmap gifbmp = null;
+    private static Paint paint;
     public static final int GET_DATA_SUCCESS = 1;
     public static final int NETWORK_ERROR = 2;
     public static final int SERVER_ERROR = 3;

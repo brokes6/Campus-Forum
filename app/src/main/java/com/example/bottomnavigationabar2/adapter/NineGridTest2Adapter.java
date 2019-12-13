@@ -79,7 +79,6 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
         holder.talkNumStr.setText(String.valueOf(mList.get(position).getCommentCount()));
         holder.loveNumStr.setText(String.valueOf(mList.get(position).getLoveCount()));
         if (imgUrls==null||imgUrls.trim().equals("")){
-
             holder.layout.setVisibility(View.GONE);
         }else {
             holder.layout.setUrlList(Arrays.asList(imgUrls.split(",")));

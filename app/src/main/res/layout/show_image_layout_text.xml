@@ -86,7 +86,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="5dp"
                 android:layout_width="match_parent"
-                android:background="@drawable/bt_top"
+                android:background="@drawable/bt_top_while"
                 android:layout_height="40dp"
                 android:orientation="horizontal">
                     <LinearLayout
@@ -100,7 +100,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="收起"
-                                android:textColor="#fff"
+                                android:textColor="#313131"
                                 android:textSize="20sp"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="10dp"/>
@@ -109,7 +109,7 @@
                                 android:layout_gravity="center_vertical"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/retract"/>
+                                android:src="@drawable/retract_gray"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="0dp"
@@ -131,7 +131,7 @@
                                             android:layout_marginLeft="5dp"
                                             android:id="@+id/loveNumStr"
                                             android:text="0"
-                                            android:textColor="#FFFFFF"
+                                            android:textColor="#313131"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center_vertical"
@@ -152,7 +152,7 @@
                                         android:layout_marginLeft="5dp"
                                         android:id="@+id/collectionNum"
                                         android:text="0"
-                                        android:textColor="#FFFFFF"
+                                        android:textColor="#313131"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center_vertical"
@@ -173,7 +173,7 @@
                                         android:layout_marginLeft="5dp"
                                         android:id="@+id/talkNum"
                                         android:text="0"
-                                        android:textColor="#FFFFFF"
+                                        android:textColor="#313131"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center_vertical"
