@@ -114,6 +114,12 @@ public class HomeFragment extends Fragment {
     private CoordinatorLayout.Behavior behavior;
     private int phoneHeight=-1;
     private ValueAnimator valueAnimator;
+    //按钮链接
+    private ImageView guanzhu;
+    private ImageView shoucang;
+    private ImageView lishi;
+    private ImageView xiaoxi;
+    private ImageView shezhi;
     public static HomeFragment newInstance() {
         HomeFragment fragment=new HomeFragment();
         Bundle args = new Bundle();
@@ -288,6 +294,47 @@ public class HomeFragment extends Fragment {
         imageTitle.add("英语俱乐部合照");
     }
     private void initView() {
+        //按钮链接获取id
+        guanzhu=view.findViewById(R.id.guanzhu);
+        shoucang=view.findViewById(R.id.shoucang);
+        lishi=view.findViewById(R.id.lishi);
+        xiaoxi=view.findViewById(R.id.xiaoxi);
+        shezhi=view.findViewById(R.id.shezhi);
+        guanzhu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getContext(),MyConcern.class);
+                startActivity(intent);
+            }
+        });
+        shoucang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getContext(),MyCollection.class);
+                startActivity(intent);
+            }
+        });
+        lishi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getContext(),MyHistory.class);
+                startActivity(intent);
+            }
+        });
+        xiaoxi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getContext(),Mynews.class);
+                startActivity(intent);
+            }
+        });
+        shezhi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getContext(),Set_up.class);
+                startActivity(intent);
+            }
+        });
         mMyImageLoader = new MyImageLoader();
         mBanner =view.findViewById(R.id.banner);
         //设置样式，里面有很多种样式可以自己都看看效果

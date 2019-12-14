@@ -37,6 +37,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".Error"></activity>
         <activity android:name=".LoginLoad">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -69,11 +70,14 @@
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait">
-            <!--<intent-filter>
+
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".WebDataActivity" />
@@ -167,7 +171,6 @@
                 <action android:name="cn.jpush.android.intent.JNotifyActivity" />
 
                 <category android:name="${applicationId}" />
-
             </intent-filter>
         </activity>
 

@@ -86,6 +86,7 @@
                         android:gravity="center_vertical|center_horizontal"
                         android:layout_weight="1">
                         <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/guanzhu"
                             android:layout_width="50sp"
                             android:layout_height="50sp"
                             android:src="@drawable/guanzhu2"/>
@@ -105,16 +106,17 @@
                         android:gravity="center_vertical|center_horizontal"
                         android:layout_weight="1">
                         <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/shoucang"
                             android:layout_width="50sp"
                             android:layout_height="50sp"
-                            android:src="@drawable/toupiao1"/>
+                            android:src="@drawable/shoucang1"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:textColor="#000"
                             android:textSize="16dp"
-                            android:text="投票"/>
+                            android:text="收藏"/>
 
                     </LinearLayout>
                     <LinearLayout
@@ -124,6 +126,7 @@
                         android:gravity="center_vertical|center_horizontal"
                         android:layout_weight="1">
                         <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/lishi"
                             android:layout_width="50sp"
                             android:layout_height="50sp"
                             android:src="@drawable/lishi1"/>
@@ -143,6 +146,7 @@
                         android:gravity="center_vertical|center_horizontal"
                         android:layout_weight="1">
                         <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/xiaoxi"
                             android:layout_width="50sp"
                             android:layout_height="50sp"
                             android:src="@drawable/xiaoxi"/>
@@ -162,17 +166,18 @@
                         android:gravity="center_vertical|center_horizontal"
                         android:layout_weight="1">
                         <de.hdodenhof.circleimageview.CircleImageView
-                            android:layout_width="50sp"
-                            android:layout_height="50sp"
-                            android:src="@drawable/pinglun2"/>
+                            android:id="@+id/shezhi"
+                            android:layout_width="52sp"
+                            android:layout_height="52sp"
+                            android:src="@drawable/shizhi1"/>
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="4dp"
+                            android:text="设置"
                             android:textColor="#000"
-                            android:textSize="16dp"
-                            android:text="评论"/>
-
+                            android:textSize="16dp" />
                     </LinearLayout>
 
 
