@@ -105,7 +105,6 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
     private int postId;
     private int commentPage=1;
     private int loveStatus=0,collectionStatus=0;
-    private CommentBean commentBean;
     private List<CommentDetailBean> commentsList=new ArrayList<>();
     private BottomSheetDialog dialog;
     private TextView username,dateTime,content,message,loveNumStr,commentStr,loadTextView,collectionStr;
@@ -151,7 +150,6 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                         nineGridTestLayout.setUrlList(Arrays.asList(imgUrls.split(",")));
                         nineGridTestLayout.setIsShowAll(post.isShowAll());
                     }
-                    nineGridTestLayout.setContent(str);
                     loveNumStr.setText(String.valueOf(post.getLoveCount()));
                     loveLayout.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -197,9 +195,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                     }
                     contentLayout.setVisibility(View.VISIBLE);
                     loadLayout.setVisibility(View.GONE);
-                    PostHitoryUtil.saveSearchHistory(String.valueOf(postId),PostDetails.this);
-                    Log.e(TAG, "handleMessage:值来啦"+PostHitoryUtil.getSearchHistory(PostDetails.this));
-                    break;
+                    PostHitoryUtil.saveSearchHistory(String.valueOf(postId),PostDetails.this);break;
                 case CANCEL_PROGRESS:
                     progressBar.setVisibility(View.GONE);
                     break;
@@ -724,7 +720,6 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                 }
             }
         });
-
     }
     private String getRequestStr(int mode){
         String urlStr=null;

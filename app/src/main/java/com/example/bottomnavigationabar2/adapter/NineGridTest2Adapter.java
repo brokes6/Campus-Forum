@@ -42,6 +42,7 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
     private NetWorkUtil netWorkUtil;
     private String token;
     private ViewHolder nowViewHolder;
+    private int nowPosition;
     public NineGridTest2Adapter(Context context) {
         this.mContext = context;
         inflater = LayoutInflater.from(context);
@@ -66,25 +67,25 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
     @Override
     //将从服务器获取的值设置上去
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        Log.i(TAG, "onBindViewHolder: 开始创建"+position);
-        String content=Html.fromHtml(mList.get(position).getContent()).toString();
-        String imgUrls=mList.get(position).getImgUrl();
+        Post post=mList.get(position);
+        String content=Html.fromHtml(post.getContent()).toString();
+        String imgUrls=post.getImgUrl();
         Log.i(TAG, "onBindViewHolder: imgUrls="+imgUrls);
         holder.content.setText(content);
-        holder.datetime.setText(DateTimeUtil.handlerDateTime(mList.get(position).getPcreateTime()));
-        holder.uimg.setImageURL(mList.get(position).getUimg());
-        holder.username.setText(mList.get(position).getUsername());
-        holder.postId=mList.get(position).getPid();
-        holder.loveStatus=mList.get(position).getStatus();
-        holder.talkNumStr.setText(String.valueOf(mList.get(position).getCommentCount()));
-        holder.loveNumStr.setText(String.valueOf(mList.get(position).getLoveCount()));
+        holder.datetime.setText(DateTimeUtil.handlerDateTime(post.getPcreateTime()));
+        holder.uimg.setImageURL(post.getUimg());
+        holder.username.setText(post.getUsername());
+        holder.postId=post.getPid();
+        holder.loveStatus=post.getStatus();
+        holder.talkNumStr.setText(String.valueOf(post.getCommentCount()));
+        holder.loveNumStr.setText(String.valueOf(post.getLoveCount()));
         if (imgUrls==null||imgUrls.trim().equals("")){
             holder.layout.setVisibility(View.GONE);
         }else {
             holder.layout.setUrlList(Arrays.asList(imgUrls.split(",")));
             holder.layout.setIsShowAll(mList.get(position).isShowAll());
         }
-        holder.layout.setContent(content);
+//        holder.layout.setContent(content);
         holder.loveLayout.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -137,7 +138,14 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
                 mContext.startActivity(intent);
             }
         });
-
+        holder.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nowViewHolder=holder;
+                nowPosition=position;
+            }
+        });
+        holder.layout.setInfo(post.getContent(),String.valueOf(post.getLoveCount()),String.valueOf(post.getCommentCount()),post.getStatus(),0,post.getPid(),null);
     }
 
     @Override
@@ -188,17 +196,18 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
     }
     public void updateInfo(Intent intent){
         Log.i(TAG, "updateInfo: intent="+intent);
+        Log.i(TAG, "updateInfo: nowHolder="+nowViewHolder.content.getText().toString());
         String loveNum=intent.getStringExtra("loveNum");
         String talkNum=intent.getStringExtra("talkNum");
         int status=intent.getIntExtra("status",0);
-        nowViewHolder.loveNumStr.setText(loveNum);
-        nowViewHolder.talkNumStr.setText(talkNum);
-        if(status==1){
-            nowViewHolder.loveNum.setImageDrawable(mContext.getResources().getDrawable(R.drawable.thumbs_up_complete));
-            nowViewHolder.loveStatus=0;
-        }else{
-            nowViewHolder.loveNum.setImageDrawable(mContext.getResources().getDrawable(R.drawable.thumbs_up_white));
-            nowViewHolder.loveStatus=1;
-        }
+        Log.i(TAG, "updateInfo: loveNum="+loveNum);
+        Post post=mList.get(nowPosition);
+        post.setLoveCount(Integer.valueOf(loveNum));
+        post.setCommentCount(Integer.parseInt(talkNum));
+        post.setStatus(status);
+    }
+
+    public void setNowViewHolder(ViewHolder nowViewHolder) {
+        this.nowViewHolder = nowViewHolder;
     }
 }

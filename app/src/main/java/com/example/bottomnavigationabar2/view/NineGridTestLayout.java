@@ -3,6 +3,8 @@ package com.example.bottomnavigationabar2.view;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -10,14 +12,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bottomnavigationabar2.HomeFragment;
 import com.example.bottomnavigationabar2.MyImageView;
 import com.example.bottomnavigationabar2.activity.ShowImageActivity;
+import com.example.bottomnavigationabar2.adapter.NineGridTest2Adapter;
 import com.example.bottomnavigationabar2.utils.ImageLoaderUtil;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +37,9 @@ public class NineGridTestLayout extends NineGridLayout {
     private static final String TAG = "NineGridTestLayout";
     protected static final int MAX_W_H_RATIO = 3;
     private List<String> detailsImgUrls;
-    private String content;
+    private ShowImageInfo info;
+    private NineGridTest2Adapter.ViewHolder viewHolder;
+    private OnClickListener listener;
     public NineGridTestLayout(Context context) {
         super(context);
     }
@@ -101,15 +108,67 @@ public class NineGridTestLayout extends NineGridLayout {
                 detailsImgUrls.add(str);
             }
         }
+        Log.i(TAG, "onClickImage: info"+info);
         EventBus.getDefault().postSticky(detailsImgUrls);
         Intent intent = new Intent(getContext(), ShowImageActivity.class);
         intent.putExtra("id",i);   //将当前点击的位置传递过去
-        intent.putExtra("content",content);
+        intent.putExtra("info",info);
         intent.putExtra("total",urlList.size());
-        getContext().startActivity(intent);     //启动Activity
+        ((AppCompatActivity)getContext()).startActivityForResult(intent, HomeFragment.SHOWIMAGEACTIVITY); //启动Activity
+
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setInfo(String content, String loveNum, String talkNum, int loveStatus, int collectionStatus, int postId, NineGridTest2Adapter.ViewHolder viewHolder) {
+        info=new ShowImageInfo(content,loveNum,talkNum,loveStatus,collectionStatus,postId);
+        this.viewHolder=viewHolder;
+    }
+
+    @Override
+    public void onClick(View v) {
+        listener.onClick(v);
+    }
+
+    @Override
+    public void setOnClickListener(@Nullable OnClickListener l) {
+        super.setOnClickListener(l);
+        this.listener=l;
+    }
+
+    public static class ShowImageInfo implements Serializable{
+        private String content,loveNum,talkNum;
+        private int loveStatus,collectionStatus,postId;
+
+        private ShowImageInfo(String content, String loveNum, String talkNum, int loveStatus, int collectionStatus,int postId) {
+            this.content = content;
+            this.loveNum = loveNum;
+            this.talkNum = talkNum;
+            this.loveStatus = loveStatus;
+            this.collectionStatus = collectionStatus;
+            this.postId=postId;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public String getLoveNum() {
+            return loveNum;
+        }
+
+        public String getTalkNum() {
+            return talkNum;
+        }
+
+        public int getLoveStatus() {
+            return loveStatus;
+        }
+
+        public int getCollectionStatus() {
+            return collectionStatus;
+        }
+
+        public int getPostId() {
+            return postId;
+        }
     }
 }

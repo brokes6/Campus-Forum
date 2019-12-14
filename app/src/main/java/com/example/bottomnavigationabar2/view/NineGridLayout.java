@@ -25,7 +25,7 @@ import java.util.TimerTask;
  * 作者：HMY
  * 时间：2016/5/10
  */
-public abstract class NineGridLayout extends ViewGroup {
+public abstract class NineGridLayout extends ViewGroup implements View.OnClickListener {
 
     private static final String TAG = "NineGridLayout";
     private static final float DEFUALT_SPACING = 3f;
@@ -190,6 +190,7 @@ public abstract class NineGridLayout extends ViewGroup {
                 imageView.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        NineGridLayout.this.onClick(v);
                         onClickImage(i, url, mUrlList);
                     }
                 });
@@ -200,6 +201,7 @@ public abstract class NineGridLayout extends ViewGroup {
                 gifImageView.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        NineGridLayout.this.onClick(v);
                         onClickImage(i,url,mUrlList);
                     }
                 });
@@ -326,4 +328,5 @@ public abstract class NineGridLayout extends ViewGroup {
     protected abstract void displayImage(ImageView imageView, String url);
 
     protected abstract void onClickImage(int position, String url, List<String> urlList);
+
 }

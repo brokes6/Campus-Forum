@@ -87,7 +87,6 @@ public class AssociationAdapter extends RecyclerView.Adapter<AssociationAdapter.
         holder.layout.setIsShowAll(mList.get(position).isShowAll());
         holder.loveNumStr.setText(String.valueOf(mList.get(position).getLoveCount()));
         holder.layout.setUrlList(Arrays.asList(mList.get(position).getImgUrl().split(",")));
-        holder.layout.setContent(content);
         holder.loveLayout.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {

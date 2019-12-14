@@ -113,10 +113,11 @@
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_weight="1"
+                        android:layout_weight="2"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
                                 <LinearLayout
+                                    android:id="@+id/loveLayout"
                                     android:gravity="center_vertical"
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
@@ -138,6 +139,7 @@
                                             android:textSize="16sp"/>
                                 </LinearLayout>
                                 <LinearLayout
+                                    android:id="@+id/collectionLayout"
                                     android:gravity="center_vertical"
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
@@ -151,7 +153,7 @@
                                     <TextView
                                         android:layout_marginLeft="5dp"
                                         android:id="@+id/collectionNum"
-                                        android:text="0"
+                                        android:text="未收藏"
                                         android:textColor="#313131"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"

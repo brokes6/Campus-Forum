@@ -233,6 +233,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                 Log.i(TAG, "onActivityResult: 开始了");
                 mHomeFragment.updateInfo(data);
                 break;
+            case HomeFragment.SHOWIMAGEACTIVITY:
+                mHomeFragment.updateInfo(data);
+                break;
         }
     }
     private void hideFragment(android.support.v4.app.FragmentTransaction transaction){

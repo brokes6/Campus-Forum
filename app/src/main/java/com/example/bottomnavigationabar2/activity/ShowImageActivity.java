@@ -1,6 +1,7 @@
 package com.example.bottomnavigationabar2.activity;
 
 import android.animation.LayoutTransition;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -8,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.service.autofill.UserData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
@@ -41,6 +43,7 @@ import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.example.bottomnavigationabar2.Animation.DepthPageTransformer;
 import com.example.bottomnavigationabar2.Animation.ZoomOutPageTransformer;
+import com.example.bottomnavigationabar2.HomeFragment;
 import com.example.bottomnavigationabar2.MyImageView;
 import com.example.bottomnavigationabar2.Pictureutils.LocalCacheUtils;
 import com.example.bottomnavigationabar2.Pictureutils.MemoryCacheUtils;
@@ -48,13 +51,19 @@ import com.example.bottomnavigationabar2.Post;
 import com.example.bottomnavigationabar2.R;
 import com.example.bottomnavigationabar2.adapter.NineGridTest2Adapter;
 import com.example.bottomnavigationabar2.adapter.ShowImageAdapter;
+import com.example.bottomnavigationabar2.bean.User;
 import com.example.bottomnavigationabar2.rewrite.ZoomImageView;
+import com.example.bottomnavigationabar2.utils.FileCacheUtil;
+import com.example.bottomnavigationabar2.utils.NetWorkUtil;
+import com.example.bottomnavigationabar2.view.NineGridTestLayout;
 import com.example.util.ImageUtils;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -62,6 +71,17 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+import static com.example.bottomnavigationabar2.PostDetails.REQUEST_ADD_COLLECTION;
+import static com.example.bottomnavigationabar2.PostDetails.REQUEST_DELETE_COLLECTION;
 
 public class ShowImageActivity extends AppCompatActivity {
     public static final int GET_DATA_SUCCESS = 1;
@@ -77,7 +97,7 @@ public class ShowImageActivity extends AppCompatActivity {
     private TextView picture_num;
     private LinearLayout lin;
     private android.support.v4.view.ViewPager  viewp;
-    private List<View>  listViews =null;
+    private List<View>  listViews =new ArrayList<>();
     private int index=0;
     private ImageView back,button_images;
     private ShowImageAdapter imageAdapter;
@@ -85,14 +105,20 @@ public class ShowImageActivity extends AppCompatActivity {
     private ArrayList<String> urls =null;
     private ArrayList<Boolean> booleans;
     private int position,total;
-    private LinearLayout bottom;
-    private LinearLayout bottom_text;
+    private LinearLayout bottom,bottom_text;
     private LinearLayout Open_and_Retract;
-    private TextView Picture_text,button_text;
+    private LinearLayout loveLayout,collectionLayout;
+    private ImageView loveImageView,collectionImageView;
+    private TextView Picture_text,button_text,loveStr,talkStr,collectionStr;
     private ScrollView Picture_text_main;
     private Boolean Picture_key;
     private RelativeLayout.LayoutParams linearParams;
     private LayoutTransition transition;
+    private NineGridTestLayout.ShowImageInfo info;
+    private String content,loveNum,talkNum;
+    private int collectionStatus,loveStatus;
+    private NetWorkUtil netWorkUtil;
+    private User userData;
     //子线程不能操作UI，通过Handler设置图片
     private Handler handler = new Handler() {
         @Override
@@ -151,7 +177,6 @@ public class ShowImageActivity extends AppCompatActivity {
         container.setLayoutTransition(transition);
         transition = container.getLayoutTransition();
         transition.enableTransitionType(LayoutTransition.CHANGING);
-        //结束
         Picture_text_main = findViewById(R.id.Picture_text_main);
         button_images = findViewById(R.id.button_images);
         button_text = findViewById(R.id.button_text);
@@ -161,18 +186,16 @@ public class ShowImageActivity extends AppCompatActivity {
         viewPager =findViewById(R.id.show_view_pager);
         //将设置好的动画指定给它
         viewPager.setPageTransformer(true, new DepthPageTransformer());
-//        picture_text = findViewById(R.id.picture_text);
         picture_num=findViewById(R.id.picture_num);
-    }
-    private void initData(){
+        //先写死把
+        loveLayout=findViewById(R.id.loveLayout);
+        loveImageView=findViewById(R.id.loveNum);
+        loveStr=findViewById(R.id.loveNumStr);
+        collectionLayout=findViewById(R.id.collectionLayout);
+        collectionImageView=findViewById(R.id.collection);
+        collectionStr=findViewById(R.id.collectionNum);
+        talkStr=findViewById(R.id.talkNum);
         Picture_text_main.getBackground().mutate().setAlpha(100);
-        Bundle bundle=getIntent().getExtras();
-        total=bundle.getInt("total",0);
-        listViews=new ArrayList<>();
-        position=bundle.getInt("id",0);
-        picture_num.setText(position+1+"/"+total);
-        Picture_text.setText(bundle.getString("content","没有文字喔"));
-        Log.i(TAG, "initData: postition="+position);
         Open_and_Retract.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -194,6 +217,17 @@ public class ShowImageActivity extends AppCompatActivity {
 
             }
         });
+    }
+    private void initData(){
+        userData= FileCacheUtil.getUser(this);
+        netWorkUtil=new NetWorkUtil(this);
+        Bundle bundle=getIntent().getExtras();
+        total=bundle.getInt("total",0);
+        position=bundle.getInt("id",0);
+        info= (NineGridTestLayout.ShowImageInfo) bundle.getSerializable("info");
+        picture_num.setText(position+1+"/"+total);
+        Picture_text.setText(info.getContent());
+        initStatus();
     }
     private void inint() {
         if (urls != null && urls.size() > 0){
@@ -293,5 +327,105 @@ public class ShowImageActivity extends AppCompatActivity {
         Log.i(TAG, "setGifURL: path="+path);
         final ImageView imageView =listViews.get(index).findViewById(R.id.gifView);//绑定布局中的id/
         Glide.with(ShowImageActivity.this).asGif().load(path).into(imageView);
+    }
+    private void initStatus(){
+        Log.i(TAG, "initStatus: loveNum="+info.getContent());
+        loveStr.setText(info.getLoveNum());
+        talkStr.setText(info.getTalkNum());
+        loveStatus=info.getLoveStatus();
+        collectionStatus=info.getCollectionStatus();
+        content=info.getContent();
+        if(loveStatus==1){
+            loveImageView.setImageDrawable(getResources().getDrawable(R.drawable.thumbs_up_complete));
+        }else{
+            loveImageView.setImageDrawable(getResources().getDrawable(R.drawable.thumbs_up_white));
+        }
+        loveLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (loveStatus==1){
+                    loveImageView.setImageDrawable(getResources().getDrawable(R.drawable.thumbs_up_white));
+                    loveStatus=0;
+                    //加加
+                    loveStr.setText(String.valueOf(Integer.valueOf(loveStr.getText().toString())-1));
+
+                }else{
+                    loveImageView.setImageDrawable(getResources().getDrawable(R.drawable.thumbs_up_complete));
+                    loveStatus=1;
+                    //减减
+                    loveStr.setText(String.valueOf(Integer.valueOf(loveStr.getText().toString())+1));
+                }
+                netWorkUtil.updatePostLove(info.getPostId(),userData.getToken());
+            }
+        });
+        if(collectionStatus==1){
+            collectionImageView.setImageDrawable(getResources().getDrawable(R.drawable.shocangwanc));
+            collectionStr.setText("已收藏");
+        }else {
+            collectionImageView.setImageDrawable(getResources().getDrawable(R.drawable.shocang_text));
+            collectionStr.setText("未收藏");
+        }
+        collectionLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handlerCollection();
+                if (collectionStatus==1){
+                    collectionImageView.setImageDrawable(getResources().getDrawable(R.drawable.shocang_text));
+                    collectionStatus=0;
+                    collectionStr.setText("未收藏");
+
+                }else{
+                    collectionImageView.setImageDrawable(getResources().getDrawable(R.drawable.shocangwanc));
+                    collectionStatus=1;
+                    collectionStr.setText("已收藏");
+                }
+            }
+        });
+    }
+    private void handlerCollection(){
+        RequestBody requestBody=new FormBody.Builder()
+                .add("postId", String.valueOf(info.getPostId()))
+                .add("token",userData.getToken())
+                .build();
+        Request request=new Request.Builder()
+                .post(requestBody)
+                .url(getRequestUrl())
+                .build();
+        OkHttpClient client=new OkHttpClient();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String responseData =response.body().string();
+                Log.i(TAG, "onResponse: "+responseData);
+                JSONObject jsonObject= null;
+                try {
+                    jsonObject = new JSONObject(responseData);
+                    int code =jsonObject.getInt("code");
+                    String msg=jsonObject.getString("msg");
+                    if(code==0){
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+    private String getRequestUrl(){
+        return (collectionStatus==1?REQUEST_DELETE_COLLECTION:REQUEST_ADD_COLLECTION);
+    }
+    public void onBackPressed() {
+        Log.i(TAG, "onBackPressed: 放回了啊");
+        Intent intent=new Intent();
+        intent.putExtra("loveNum",loveStr.getText().toString());
+        intent.putExtra("talkNum",talkStr.getText().toString());
+        intent.putExtra("status",loveStatus);
+        setResult(HomeFragment.SHOWIMAGEACTIVITY,intent);
+        finish();
     }
 }

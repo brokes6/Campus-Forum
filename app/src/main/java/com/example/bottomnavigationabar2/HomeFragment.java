@@ -81,6 +81,7 @@ public class HomeFragment extends Fragment {
     private static final String TAG = "HomeFragment";
     public static final int POSTDETAILS=1;
     public static final int SEARCHVIEW=2;
+    public static final int SHOWIMAGEACTIVITY=3;
     private Banner mBanner;
     private MyImageLoader mMyImageLoader;
     private ArrayList<Integer> imagePath;
