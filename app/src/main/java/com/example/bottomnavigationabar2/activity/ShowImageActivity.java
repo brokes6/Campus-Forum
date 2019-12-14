@@ -1,5 +1,6 @@
 package com.example.bottomnavigationabar2.activity;
 
+import android.animation.AnimatorSet;
 import android.animation.LayoutTransition;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -80,12 +81,14 @@ public class ShowImageActivity extends AppCompatActivity {
     private List<View>  listViews =null;
     private int index=0;
     private ImageView back,button_images;
+    private Bitmap localbitmap;
+    private LinearLayout bottom;
+    private Bitmap memorymbitmap;
     private ShowImageAdapter imageAdapter;
     private List<Post> mList=new ArrayList<>();
     private ArrayList<String> urls =null;
     private ArrayList<Boolean> booleans;
     private int position,total;
-    private LinearLayout bottom;
     private LinearLayout bottom_text;
     private LinearLayout Open_and_Retract;
     private TextView Picture_text,button_text;
