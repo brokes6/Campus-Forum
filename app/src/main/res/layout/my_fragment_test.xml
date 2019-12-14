@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        android:layout_weight="3"
+        android:layout_weight="4"
         android:background="#FFF"
         android:gravity="center_vertical|center_horizontal">
         <LinearLayout
@@ -79,12 +79,12 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="1.5"
         android:background="#FFF">
         <ImageView
             android:layout_marginLeft="20dp"
             android:layout_width="28dp"
-            android:layout_weight="1"
+            android:layout_weight="1.5"
             android:layout_height="28dp"
             android:src="@drawable/guanzhu"
             android:layout_gravity="center_vertical" />
@@ -121,7 +121,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="1.5"
         android:background="#FFF">
         <ImageView
             android:layout_marginLeft="20dp"
@@ -159,7 +159,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="1.5"
         android:background="#FFF">
         <ImageView
             android:layout_marginLeft="20dp"
@@ -198,7 +198,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="1.5"
         android:background="#FFF">
         <ImageView
             android:layout_marginLeft="20dp"
@@ -236,7 +236,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="1.5"
         android:background="#FFF">
         <ImageView
             android:layout_marginLeft="22dp"
@@ -274,7 +274,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="1.5"
         android:background="#FFF">
         <ImageView
             android:layout_marginLeft="22dp"
@@ -318,7 +318,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="1.5"
         android:background="#FFF">
         <ImageView
             android:layout_marginLeft="20dp"
