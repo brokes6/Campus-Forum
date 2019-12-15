@@ -20,14 +20,30 @@ import com.example.bottomnavigationabar2.Post;
 import com.example.bottomnavigationabar2.PostDetails;
 import com.example.bottomnavigationabar2.R;
 import com.example.bottomnavigationabar2.UserInformation;
+import com.example.bottomnavigationabar2.bean.User;
 import com.example.bottomnavigationabar2.utils.FileCacheUtil;
 import com.example.bottomnavigationabar2.utils.NetWorkUtil;
 import com.example.bottomnavigationabar2.view.NineGridTestLayout;
 import com.example.util.DateTimeUtil;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+import static com.example.bottomnavigationabar2.PostDetails.REQUEST_ADD_COLLECTION;
+import static com.example.bottomnavigationabar2.PostDetails.REQUEST_DELETE_COLLECTION;
 
 /**
  * Created by HMY on 2016/8/6
@@ -67,7 +83,7 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
     @Override
     //将从服务器获取的值设置上去
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        Post post=mList.get(position);
+        final Post post=mList.get(position);
         String content=Html.fromHtml(post.getContent()).toString();
         String imgUrls=post.getImgUrl();
         Log.i(TAG, "onBindViewHolder: imgUrls="+imgUrls);
@@ -77,6 +93,7 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
         holder.username.setText(post.getUsername());
         holder.postId=post.getPid();
         holder.loveStatus=post.getStatus();
+        holder.collectionStatus=post.getCollection();
         holder.talkNumStr.setText(String.valueOf(post.getCommentCount()));
         holder.loveNumStr.setText(String.valueOf(post.getLoveCount()));
         if (imgUrls==null||imgUrls.trim().equals("")){
@@ -101,13 +118,40 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
                     //减减
                     holder.loveNumStr.setText(String.valueOf(Integer.valueOf(holder.loveNumStr.getText().toString())+1));
                 }
+
+                post.setStatus(holder.loveStatus);
+                post.setLoveCount(Integer.valueOf(holder.loveNumStr.getText().toString()));
                netWorkUtil.updatePostLove(holder.postId,token);
+            }
+        });
+        holder.collectionLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handlerCollection(post.getPid(),token,holder.collectionStatus);
+                if(holder.collectionStatus==1){
+                    holder.collection.setImageDrawable(mContext.getResources().getDrawable(R.drawable.shocang_text));
+                    holder.collectionStatus=0;
+                    holder.collectionStr.setText("未收藏");
+                }else {
+                    holder.collection.setImageDrawable(mContext.getResources().getDrawable(R.drawable.shocangwanc));
+                    holder.collectionStatus=1;
+                    holder.collectionStr.setText("已收藏");
+                }
+                post.setCollection(holder.collectionStatus);
+                Log.i(TAG, "onClick: 收藏的值未:"+post.getCollection());
             }
         });
         if(holder.loveStatus==1){
             holder.loveNum.setImageDrawable(mContext.getResources().getDrawable(R.drawable.thumbs_up_complete));
         }else{
             holder.loveNum.setImageDrawable(mContext.getResources().getDrawable(R.drawable.thumbs_up_white));
+        }
+        if(holder.collectionStatus==1){
+            holder.collection.setImageDrawable(mContext.getResources().getDrawable(R.drawable.shocangwanc));
+            holder.collectionStr.setText("已收藏");
+        }else {
+            holder.collection.setImageDrawable(mContext.getResources().getDrawable(R.drawable.shocang_text));
+            holder.collectionStr.setText("未收藏");
         }
         //这里还没搞收藏的点击事件
         holder.view.setOnClickListener(new View.OnClickListener() {
@@ -145,7 +189,7 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
                 nowPosition=position;
             }
         });
-        holder.layout.setInfo(post.getContent(),String.valueOf(post.getLoveCount()),String.valueOf(post.getCommentCount()),post.getStatus(),0,post.getPid(),null);
+        holder.layout.setInfo(post.getContent(),String.valueOf(post.getLoveCount()),String.valueOf(post.getCommentCount()),post.getStatus(),post.getCollection(),post.getPid(),null);
     }
 
     @Override
@@ -200,14 +244,55 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
         String loveNum=intent.getStringExtra("loveNum");
         String talkNum=intent.getStringExtra("talkNum");
         int status=intent.getIntExtra("status",0);
+        int collectionStatus=intent.getIntExtra("collectionStatus",0);
         Log.i(TAG, "updateInfo: loveNum="+loveNum);
         Post post=mList.get(nowPosition);
         post.setLoveCount(Integer.valueOf(loveNum));
         post.setCommentCount(Integer.parseInt(talkNum));
         post.setStatus(status);
+        Log.i(TAG, "updateInfo: 收藏的值未"+collectionStatus);
+        post.setCollection(collectionStatus);
+        notifyDataSetChanged();
     }
 
     public void setNowViewHolder(ViewHolder nowViewHolder) {
         this.nowViewHolder = nowViewHolder;
+    }
+    public void handlerCollection(int postId,String token,int status){
+        RequestBody requestBody=new FormBody.Builder()
+                .add("postId", String.valueOf(postId))
+                .add("token",token)
+                .build();
+        Request request=new Request.Builder()
+                .post(requestBody)
+                .url(getRequestUrl(status))
+                .build();
+        OkHttpClient client=new OkHttpClient();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String responseData =response.body().string();
+                Log.i(TAG, "onResponse: "+responseData);
+                JSONObject jsonObject= null;
+                try {
+                    jsonObject = new JSONObject(responseData);
+                    int code =jsonObject.getInt("code");
+                    String msg=jsonObject.getString("msg");
+                    if(code==0){
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+    private String getRequestUrl(int status){
+        return (status==1?REQUEST_DELETE_COLLECTION:REQUEST_ADD_COLLECTION);
     }
 }

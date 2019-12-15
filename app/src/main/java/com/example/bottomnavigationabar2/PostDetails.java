@@ -748,6 +748,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         intent.putExtra("loveNum",loveNumStr.getText().toString());
         intent.putExtra("talkNum",commentStr.getText().toString());
         intent.putExtra("status",loveStatus);
+        intent.putExtra("collectionStatus",collectionStatus);
         setResult(HomeFragment.POSTDETAILS,intent);
         finish();
     }

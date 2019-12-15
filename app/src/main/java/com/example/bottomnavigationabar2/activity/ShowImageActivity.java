@@ -226,7 +226,7 @@ public class ShowImageActivity extends AppCompatActivity {
         position=bundle.getInt("id",0);
         info= (NineGridTestLayout.ShowImageInfo) bundle.getSerializable("info");
         picture_num.setText(position+1+"/"+total);
-        Picture_text.setText(info.getContent());
+        Picture_text.setText(Html.fromHtml(info.getContent()));
         initStatus();
     }
     private void inint() {
@@ -425,6 +425,7 @@ public class ShowImageActivity extends AppCompatActivity {
         intent.putExtra("loveNum",loveStr.getText().toString());
         intent.putExtra("talkNum",talkStr.getText().toString());
         intent.putExtra("status",loveStatus);
+        intent.putExtra("collectionStatus",collectionStatus);
         setResult(HomeFragment.SHOWIMAGEACTIVITY,intent);
         finish();
     }
