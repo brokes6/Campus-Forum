@@ -35,6 +35,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bottomnavigationabar2.MoBan.RequestStatus;
 import com.example.bottomnavigationabar2.R;
 import com.example.bottomnavigationabar2.adapter.CommentExpandAdapter;
 import com.example.bottomnavigationabar2.bean.CommentBean;
@@ -242,6 +243,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                         loadTextView.setText("网络不稳定，请重新刷新试试");
                         loadButton.setVisibility(View.VISIBLE);
                         loadButton.setClickable(true);
+                        break;
                 case NOTIFY_REPLY:
                     Toast.makeText(PostDetails.this,"回复成功",Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
@@ -634,8 +636,10 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-                Log.d(TAG, "onFailure:失败呃");
+                Message message=new Message();
+                message.what= RequestStatus.NO_NETWORK;
+                handler.sendMessage(message);
+                return;
             }
             @Override
             public void onResponse(Call call, Response response) throws IOException {

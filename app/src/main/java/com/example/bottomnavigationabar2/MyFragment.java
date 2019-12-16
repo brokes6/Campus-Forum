@@ -206,6 +206,7 @@ public class MyFragment extends Fragment {
     //先暂时弃用
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.i(TAG, "onActivityResult: 进来啦"+requestCode+"---"+resultCode);
         if(resultCode==0){
             return;
         }

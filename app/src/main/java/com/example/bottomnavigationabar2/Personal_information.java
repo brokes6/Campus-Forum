@@ -83,7 +83,6 @@ public class Personal_information extends AppCompatActivity {
                     userData.setUimg(imgUrl);
                     userImg.setCacheImageURL(imgUrl);
                     FileCacheUtil.updateUser(userData,Personal_information.this);
-                    setResult(1,null);
             }
         }
     };
@@ -190,7 +189,7 @@ public class Personal_information extends AppCompatActivity {
         circleImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                onBackPressed();
             }
         });
     }
@@ -427,6 +426,13 @@ public class Personal_information extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.i(TAG, "onBackPressed: 被摧毁拉");
+        setResult(1,null);
+        finish();
     }
 
 }

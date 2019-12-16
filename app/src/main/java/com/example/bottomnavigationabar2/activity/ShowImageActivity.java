@@ -353,25 +353,20 @@ public class ShowImageActivity extends AppCompatActivity {
                 setImageURL(path,index);
             }
         });
-        Glide.with(ShowImageActivity.this).asGif().load(path).into(new CustomViewTarget<ImageView,GifDrawable>(imageView) {
-
+        Glide.with(ShowImageActivity.this).asGif().load(path).addListener(new RequestListener<GifDrawable>() {
             @Override
-            public void onLoadFailed(@Nullable Drawable errorDrawable) {
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<GifDrawable> target, boolean isFirstResource) {
                 loadButton.setVisibility(View.VISIBLE);
                 loadTextView.setText("加载图片失败请重试");
+                return false;
             }
 
             @Override
-            public void onResourceReady(@NonNull GifDrawable resource, @Nullable Transition<? super GifDrawable> transition) {
-                imageView.setImageDrawable(resource);
+            public boolean onResourceReady(GifDrawable resource, Object model, Target<GifDrawable> target, DataSource dataSource, boolean isFirstResource) {
                 loadLayout.setVisibility(View.GONE);
+                return  false;
             }
-
-            @Override
-            protected void onResourceCleared(@Nullable Drawable placeholder) {
-
-            }
-        });
+        }).into(imageView);
     }
     private void initStatus(){
         Log.i(TAG, "initStatus: loveNum="+info.getContent());
