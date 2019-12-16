@@ -75,6 +75,18 @@ public class ScanFragment extends Fragment{
         viewPager.setAdapter(adapter);
         System.out.println("viewpager"+viewPager);
         signin=view.findViewById(R.id.sign_in);
+        followText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewPager.setCurrentItem(1);
+            }
+        });
+        recommendText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewPager.setCurrentItem(0);
+            }
+        });
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
