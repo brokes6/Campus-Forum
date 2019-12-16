@@ -55,6 +55,7 @@ public class OrganizationFollowTemplate extends Fragment {
             switch (msg.what) {
                 case RequestStatus.HANDLER_DATA:
                     organizationAdapter.notifyDataSetChanged();
+                    loadLayout.setVisibility(View.GONE);
                     break;
                 case RequestStatus.NO_RESOURCE:
                     handlerNoResource();
@@ -142,7 +143,7 @@ public class OrganizationFollowTemplate extends Fragment {
                     organizationAdapter.setOrganizations(organizations);
                     startPage++;
                     Message message = new Message();
-                    message.what = 1;
+                    message.what = RequestStatus.HANDLER_DATA;
                     message.obj = organizations;
                     handler.sendMessage(message);
                 } catch (JSONException e) {

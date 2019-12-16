@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bottomnavigationabar2.MyImageView;
+import com.example.bottomnavigationabar2.OrganizationActivity;
 import com.example.bottomnavigationabar2.R;
 import com.example.bottomnavigationabar2.bean.Organization;
 import com.example.bottomnavigationabar2.bean.User;
@@ -46,7 +47,7 @@ public class OrganizationDetailsActivity extends AppCompatActivity {
     private TextView postNum;
     private TextView introduce;
     private int type;
-    private Button followButton;
+    private Button followButton,enter;
     private int organizationId;
     private User userData;
     private Handler handler=new Handler(){
@@ -55,13 +56,16 @@ public class OrganizationDetailsActivity extends AppCompatActivity {
             Log.i(TAG, "handleMessage: 我设置了啊");
             switch (msg.what){
                 case HANDLER_DATA:
-                    Organization organization= (Organization) msg.obj;
+                    final Organization organization= (Organization) msg.obj;
                     //后面修改
 //                    type=organization.getCollection();
                     organizationName.setText(organization.getOname());
                     organizationImg.setImageURL(organization.getOimg());
                     followNum.setText(String.valueOf(organization.getLoveNum()));
+                    postNum.setText(String.valueOf(organization.getPnum()));
+                    introduce.setText(organization.getOintroduce());
                     Log.i(TAG, "handleMessage: 我设置了啊");
+                    type=organization.getCollection();
                     switch (type){
                         case 0:followButton.setText("未关注");
                                 break;
@@ -69,10 +73,20 @@ public class OrganizationDetailsActivity extends AppCompatActivity {
                                 break;
                         default:break;
                     }
+                    enter.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent=new Intent(OrganizationDetailsActivity.this,OrganizationActivity.class);
+                            intent.putExtra("oid",organization.getOid());
+                            intent.putExtra("oname",organization.getOname());
+                            intent.putExtra("oimg",organization.getOimg());
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
                     break;
                 case FOLLOW:
                     Toast.makeText(OrganizationDetailsActivity.this, msg.obj.toString(), Toast.LENGTH_SHORT).show();
-                    type=type==0?1:0;
                     switch (type){
                         case 0:followButton.setText("未关注");
                             break;
@@ -99,10 +113,11 @@ public class OrganizationDetailsActivity extends AppCompatActivity {
         followNum=findViewById(R.id.followNum);
         postNum=findViewById(R.id.postNum);
         introduce=findViewById(R.id.introduce);
-
+        enter=findViewById(R.id.enter);
         followButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                type=type==0?1:0;
                 follow(userData.getToken(),organizationId,type);
             }
         });
@@ -111,7 +126,6 @@ public class OrganizationDetailsActivity extends AppCompatActivity {
         userData= FileCacheUtil.getUser(this);
         Intent data=getIntent();
         organizationId=data.getIntExtra("oid",-1);
-        type=data.getIntExtra("type",0);
         getOrganizationDetails();
     }
     public void getOrganizationDetails(){
@@ -119,7 +133,7 @@ public class OrganizationDetailsActivity extends AppCompatActivity {
             @Override
             public void run() {
                 final Request request = new Request.Builder()
-                        .url(ORGANIZATION_DETAILS_URL + "?organizationId=" + organizationId)
+                        .url(ORGANIZATION_DETAILS_URL + "?organizationId=" + organizationId+"&token="+userData.getToken())
                         .build();
                 final OkHttpClient okHttpClient=new OkHttpClient();
                 okHttpClient.newCall(request).enqueue(new Callback() {
