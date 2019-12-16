@@ -205,6 +205,19 @@ public class ShowImageActivity extends AppCompatActivity {
         collectionStr=findViewById(R.id.collectionNum);
         talkStr=findViewById(R.id.talkNum);
         Picture_text_main.getBackground().mutate().setAlpha(100);
+        Picture_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Picture_key==false){
+                    button_text.setText("展开");
+                    button_images.setImageResource(R.drawable.open_gray);
+                    linearParams =(RelativeLayout.LayoutParams) Picture_text_main.getLayoutParams();
+                    linearParams.height=0;
+                    Picture_text_main.setLayoutParams(linearParams);
+                    Picture_key=true;
+                }
+            }
+        });
         Open_and_Retract.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -212,7 +225,7 @@ public class ShowImageActivity extends AppCompatActivity {
                     button_text.setText("收起");
                     button_images.setImageResource(R.drawable.retract_gray);
                     linearParams =(RelativeLayout.LayoutParams) Picture_text_main.getLayoutParams();
-                    linearParams.height=500;
+                    linearParams.height=420;
                     Picture_text_main.setLayoutParams(linearParams);
                     Picture_key=false;
                 }else{

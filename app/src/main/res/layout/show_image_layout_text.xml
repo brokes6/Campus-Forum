@@ -70,7 +70,7 @@
                 android:visibility="visible"
                 android:padding="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="500px"
+                android:layout_height="420px"
                 android:layout_above="@id/bottom"
                 android:background="@drawable/bt_shape_black">
                     <TextView
