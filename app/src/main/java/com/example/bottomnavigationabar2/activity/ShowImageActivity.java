@@ -165,7 +165,12 @@ public class ShowImageActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent=new Intent();
+                intent.putExtra("loveNum",loveStr.getText().toString());
+                intent.putExtra("talkNum",talkStr.getText().toString());
+                intent.putExtra("status",loveStatus);
+                intent.putExtra("collectionStatus",collectionStatus);
+                setResult(HomeFragment.SHOWIMAGEACTIVITY,intent);
                 finish();
             }
         });

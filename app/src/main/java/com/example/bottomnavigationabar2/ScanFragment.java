@@ -1,5 +1,6 @@
 package com.example.bottomnavigationabar2;
 
+import android.animation.LayoutTransition;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -68,23 +69,23 @@ public class ScanFragment extends Fragment{
         return view;
     }
     private void initView(){
+
+
         followText=view.findViewById(R.id.followText);
         recommendText=view.findViewById(R.id.recommendText);
         viewPager=view.findViewById(R.id.viewPager);
         OrganizationTabFragmentAdapter adapter=new OrganizationTabFragmentAdapter(((MainActivity)getContext()).getSupportFragmentManager());
         viewPager.setAdapter(adapter);
         System.out.println("viewpager"+viewPager);
-        signin=view.findViewById(R.id.sign_in);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
                 if(i==1){
-                    signin.setVisibility(View.GONE);
+//                    recommendText.setBackground(R.drawable.scalebig);
                     recommendText.setTextSize(16);
-                    followText.setTextSize(20);
+                    followText.setTextSize(22);
                 }else {
-                    signin.setVisibility(View.VISIBLE);
-                    recommendText.setTextSize(20);
+                    recommendText.setTextSize(22);
                     followText.setTextSize(16);
                 }
             }
