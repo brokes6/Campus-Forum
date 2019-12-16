@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -109,7 +110,7 @@ public class ShowImageActivity extends AppCompatActivity {
     private LinearLayout Open_and_Retract;
     private LinearLayout loveLayout,collectionLayout;
     private ImageView loveImageView,collectionImageView;
-    private TextView Picture_text,button_text,loveStr,talkStr,collectionStr;
+    private TextView Picture_text,button_text,loveStr,talkStr,collectionStr,loadTextView;
     private ScrollView Picture_text_main;
     private Boolean Picture_key;
     private RelativeLayout.LayoutParams linearParams;
@@ -189,6 +190,7 @@ public class ShowImageActivity extends AppCompatActivity {
         picture_num=findViewById(R.id.picture_num);
         //先写死把
         loveLayout=findViewById(R.id.loveLayout);
+        loadTextView=findViewById(R.id.loadTextView);
         loveImageView=findViewById(R.id.loveNum);
         loveStr=findViewById(R.id.loveNumStr);
         collectionLayout=findViewById(R.id.collectionLayout);
@@ -300,9 +302,21 @@ public class ShowImageActivity extends AppCompatActivity {
 
     }
     //设置网络图片（从网络中获取图片）
-    public void setImageURL(String path,int index) {
+    public void setImageURL(final String path, final int index) {
         Log.i(TAG, "setImageURL: path="+path);
-        final SubsamplingScaleImageView imageView =listViews.get(index).findViewById(R.id.view_image);//绑定布局中的id/
+        View view=listViews.get(index);
+        final SubsamplingScaleImageView imageView =view.findViewById(R.id.view_image);//绑定布局中的id/
+        final LinearLayout loadLayout = view.findViewById(R.id.loadLayout);
+        final Button loadButton = view.findViewById(R.id.loadButton);
+        final TextView loadTextView=view.findViewById(R.id.loadTextView);
+        loadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadTextView.setText("努力加载图片中...");
+                loadButton.setVisibility(View.GONE);
+                setImageURL(path,index);
+            }
+        });
         Glide.with(ShowImageActivity.this).load(path).into(new CustomViewTarget<SubsamplingScaleImageView,Drawable>(imageView) {
             @Override
             protected void onResourceCleared(@Nullable Drawable placeholder) {
@@ -312,21 +326,52 @@ public class ShowImageActivity extends AppCompatActivity {
             @Override
             public void onLoadFailed(@Nullable Drawable errorDrawable) {
                 Log.i(TAG, "onLoadFailed: 图片加载失败"+errorDrawable.toString());
+                loadButton.setVisibility(View.VISIBLE);
+                loadTextView.setText("加载图片失败请重试");
             }
 
             @Override
             public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
                 Log.i(TAG, "onResourceReady: 加载成功！");
+                loadLayout.setVisibility(View.GONE);
                 imageView.setImage(ImageSource.bitmap(ImageUtils.drawableToBitmap(resource)));
-                viewp.setVisibility(View.VISIBLE);
-                lin.setVisibility(View.GONE);
             }
         });
     }
-    private void setGifUrl(String path,int index){
+    private void setGifUrl(final String path, final int index){
         Log.i(TAG, "setGifURL: path="+path);
-        final ImageView imageView =listViews.get(index).findViewById(R.id.gifView);//绑定布局中的id/
-        Glide.with(ShowImageActivity.this).asGif().load(path).into(imageView);
+        View view=listViews.get(index);
+        final ImageView imageView =view.findViewById(R.id.gifView);//绑定布局中的id/
+        final LinearLayout loadLayout = view.findViewById(R.id.loadLayout);
+        final Button loadButton = view.findViewById(R.id.loadButton);
+        final TextView loadTextView=view.findViewById(R.id.loadTextView);
+        loadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadTextView.setText("努力加载图片中...");
+                loadButton.setVisibility(View.GONE);
+                setImageURL(path,index);
+            }
+        });
+        Glide.with(ShowImageActivity.this).asGif().load(path).into(new CustomViewTarget<ImageView,GifDrawable>(imageView) {
+
+            @Override
+            public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                loadButton.setVisibility(View.VISIBLE);
+                loadTextView.setText("加载图片失败请重试");
+            }
+
+            @Override
+            public void onResourceReady(@NonNull GifDrawable resource, @Nullable Transition<? super GifDrawable> transition) {
+                imageView.setImageDrawable(resource);
+                loadLayout.setVisibility(View.GONE);
+            }
+
+            @Override
+            protected void onResourceCleared(@Nullable Drawable placeholder) {
+
+            }
+        });
     }
     private void initStatus(){
         Log.i(TAG, "initStatus: loveNum="+info.getContent());

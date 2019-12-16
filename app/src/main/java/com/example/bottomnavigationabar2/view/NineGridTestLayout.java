@@ -125,7 +125,9 @@ public class NineGridTestLayout extends NineGridLayout {
 
     @Override
     public void onClick(View v) {
-        listener.onClick(v);
+        if(listener!=null) {
+            listener.onClick(v);
+        }
     }
 
     @Override

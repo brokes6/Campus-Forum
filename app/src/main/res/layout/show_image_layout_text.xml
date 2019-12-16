@@ -184,29 +184,30 @@
                                 </LinearLayout>
                     </LinearLayout>
             </LinearLayout>
-    <LinearLayout
-        android:orientation="vertical"
-        android:id="@+id/lin_go"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#474545"
-        android:layout_weight="1"
-        android:visibility="gone">
-        <ProgressBar
-            android:id="@+id/loading"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="160dp"
-            android:indeterminateBehavior="repeat"
-            android:indeterminateDrawable="@drawable/anim" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dp"
-            android:textColor="#fff"
-            android:text="加载中..." />
+<!--    <LinearLayout-->
+<!--        android:orientation="vertical"-->
+<!--        android:id="@+id/loadLayout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="#474545"-->
+<!--        android:layout_weight="1"-->
+<!--        >-->
+<!--        <ProgressBar-->
+<!--            android:id="@+id/loading"-->
+<!--            android:layout_width="30dp"-->
+<!--            android:layout_height="30dp"-->
+<!--            android:layout_gravity="center_horizontal"-->
+<!--            android:layout_marginTop="160dp"-->
+<!--            android:indeterminateBehavior="repeat"-->
+<!--            android:indeterminateDrawable="@drawable/anim" />-->
+<!--        <TextView-->
+<!--            android:id="@+id/loadTextView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center_horizontal"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:textColor="#fff"-->
+<!--            android:text="加载中..." />-->
 
-    </LinearLayout>
+<!--    </LinearLayout>-->
 </RelativeLayout>

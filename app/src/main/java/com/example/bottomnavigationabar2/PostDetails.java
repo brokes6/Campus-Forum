@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.ActionBar;
@@ -93,6 +94,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
     public static final int NOTIFY_NOCOMMENT=4;
     public static final int NOTIFY_COMMENT=5;
     public static final int NO_NETWORK=6;
+    public static final int NOTIFY_REPLY=7;
     public static final String REQUEST_POST_DETAILS_STR="http://106.54.134.17/app/getPostDetailsById";//mode=1
     public static final String REQUEST_COMMENT_POPULAR_STR="http://106.54.134.17/app/getPopularComments";//mode=2
     public static final String REQUEST_COMMENT_NEW_STR="http://106.54.134.17/app/getNewComments";//mode=2
@@ -132,7 +134,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case HANDLER_DATA:
-                    Post post = (Post) msg.obj;
+                    final Post post = (Post) msg.obj;
                     String str=Html.fromHtml(post.getContent()).toString();
                     postUserId=post.getUid();
                     Log.i(TAG, "handleMessage:  postUserId="+postUserId);
@@ -195,6 +197,12 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                     }
                     contentLayout.setVisibility(View.VISIBLE);
                     loadLayout.setVisibility(View.GONE);
+                    nineGridTestLayout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            nineGridTestLayout.setInfo(post.getContent(),String.valueOf(post.getLoveCount()),String.valueOf(post.getCommentCount()),post.getStatus(),post.getCollection(),post.getPid(),null);
+                        }
+                    });
                     PostHitoryUtil.saveSearchHistory(String.valueOf(postId),PostDetails.this);break;
                 case CANCEL_PROGRESS:
                     progressBar.setVisibility(View.GONE);
@@ -220,6 +228,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                     messageLayout.setVisibility(View.VISIBLE);
                     break;
                 case NOTIFY_COMMENT:
+                    Toast.makeText(PostDetails.this,"评论成功",Toast.LENGTH_SHORT).show();
                     adapter.addTheCommentData((CommentDetailBean) msg.obj);
                     Log.i(TAG, "handleMessage: 评论处理");
                     int index1=adapter.getCommentBeanList().size();
@@ -233,6 +242,15 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                         loadTextView.setText("网络不稳定，请重新刷新试试");
                         loadButton.setVisibility(View.VISIBLE);
                         loadButton.setClickable(true);
+                case NOTIFY_REPLY:
+                    Toast.makeText(PostDetails.this,"回复成功",Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
+                    ReplyDetailBean detailBean= (ReplyDetailBean) msg.obj;
+                    int position=msg.arg1;
+                    adapter.addTheReplyData(detailBean, position);
+                    expandableListView.expandGroup(position);
+                    break;
+
             }
         }
     };
@@ -414,8 +432,6 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                     progressBar.setVisibility(View.VISIBLE);
                     addComment(commentContent,userData.getUsername(),content.getText().toString(),postUserId);
                     dialog.dismiss();
-                    Toast.makeText(PostDetails.this,"评论成功",Toast.LENGTH_SHORT).show();
-
                 }else {
                     Toast.makeText(PostDetails.this,"评论内容不能为空",Toast.LENGTH_SHORT).show();
                 }
@@ -466,13 +482,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                     dialog.dismiss();
                     Log.i(TAG, "onClick: commentId="+adapter.getCommentBeanList().get(position).getCid());
                     CommentDetailBean commentDetailBean=adapter.getCommentBeanList().get(position);
-                    addReply(replyContent,userData.getToken(),commentDetailBean.getUid(),commentDetailBean.getContent(),commentDetailBean.getCid(),userData.getUsername());
-                    //等会在搞
-                    Log.i(TAG, "onClick: 账号名为:"+userData.getUsername());
-                    ReplyDetailBean detailBean = new ReplyDetailBean(userData.getUsername(),replyContent,"刚刚");
-                    adapter.addTheReplyData(detailBean, position);
-                    expandableListView.expandGroup(position);
-                    Toast.makeText(PostDetails.this,"回复成功",Toast.LENGTH_SHORT).show();
+                    addReply(replyContent,userData.getToken(),commentDetailBean.getUid(),commentDetailBean.getContent(),commentDetailBean.getCid(),userData.getUsername(),position);
                 }else {
                     Toast.makeText(PostDetails.this,"回复内容不能为空",Toast.LENGTH_SHORT).show();
                 }
@@ -559,6 +569,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         handler.sendMessage(message);
     }
     private void addComment(final String content, String username, String postContent, int puid){
+        postContent=postContent.substring(0,30);
         RequestBody requestBody = new FormBody.Builder()
                 .add("cpid", String.valueOf(postId))
                 .add("content",content)
@@ -603,7 +614,7 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
             }
         });
     }
-    private void addReply(String content,String token,int commentUserId,String commentContent,int cid,String username){
+    private void addReply(final String content, String token, int commentUserId, final String commentContent, int cid, String username, final int position){
     //修改回复 设置参数
         Log.i(TAG, "addReply: 被回复人的用户id为="+commentUserId);
         RequestBody requestBody = new FormBody.Builder()
@@ -639,8 +650,11 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                         return;
                     }
                     Log.i(TAG, "onResponse:信息"+jsonObject.getString("msg"));
+                    ReplyDetailBean detailBean = new ReplyDetailBean(userData.getUsername(),content,"刚刚");
                     Message message=new Message();
-                    message.what=CANCEL_PROGRESS;
+                    message.what=NOTIFY_REPLY;
+                    message.obj=detailBean;
+                    message.arg1=position;
                     handler.sendMessage(message);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -844,5 +858,32 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
                 loadButton.setClickable(false);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        switch (requestCode){
+            case HomeFragment.SHOWIMAGEACTIVITY:
+                String loveData=data.getStringExtra("loveNum");
+                String talkNumStr=data.getStringExtra("talkNum");
+                int status=data.getIntExtra("status",0);
+                int collectionStatus=data.getIntExtra("collectionStatus",0);
+                loveNumStr.setText(loveData);
+                commentStr.setText(talkNumStr);
+                loveStatus=status;
+                this.collectionStatus=collectionStatus;
+                if(loveStatus==1){
+                    loveNum.setImageDrawable(getResources().getDrawable(R.drawable.thumbs_up_complete));
+                }else{
+                    loveNum.setImageDrawable(getResources().getDrawable(R.drawable.thumbs_up_white));
+                }
+                if(collectionStatus==1){
+                    collection.setImageDrawable(getResources().getDrawable(R.drawable.shocangwanc));
+                    collectionStr.setText("已收藏");
+                }else{
+                    collection.setImageDrawable(getResources().getDrawable(R.drawable.shocang_text));
+                    collectionStr.setText("未收藏");
+                }
+        }
     }
 }
