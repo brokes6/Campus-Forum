@@ -178,10 +178,12 @@ public class PostDetails extends BaseActivity implements View.OnClickListener{
                                 collection.setImageDrawable(getResources().getDrawable(R.drawable.shocang_text));
                                 collectionStatus=0;
                                 collectionStr.setText("未收藏");
+                                Toast.makeText(PostDetails.this, "取消收藏成功！", Toast.LENGTH_SHORT).show();
                             }else{
                                 collection.setImageDrawable(getResources().getDrawable(R.drawable.shocangwanc));
                                 collectionStatus=1;
                                 collectionStr.setText("已收藏");
+                                Toast.makeText(PostDetails.this, "收藏成功！", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -353,7 +355,7 @@ public class PostDetails extends BaseActivity implements View.OnClickListener{
             public boolean onGroupClick(ExpandableListView expandableListView, View view, int groupPosition, long l) {
                 boolean isExpanded = expandableListView.isGroupExpanded(groupPosition);
                 Log.e(TAG, "onGroupClick: 当前的评论id>>>"+adapter.getCommentBeanList().get(groupPosition).getCid());
-                showReplyDialog(groupPosition);
+                showReplyDialog(groupPosition,-1);
                 return true;
             }
         });
@@ -382,9 +384,8 @@ public class PostDetails extends BaseActivity implements View.OnClickListener{
                     startActivity(intent);
                     return false;
                 }
-                Toast.makeText(PostDetails.this, "点击了回复", Toast.LENGTH_SHORT).show();
                 Log.e(TAG, "onGroupClick: -----当前的评论id>>>" + adapter.getCommentBeanList().get(groupPosition).getCid());
-                showReplyDialog(groupPosition);
+                showReplyDialog(groupPosition,childPosition);
                 return false;
             }
         });
@@ -465,27 +466,47 @@ public class PostDetails extends BaseActivity implements View.OnClickListener{
          * by   czj 2019/10/23
          * 方法:弹出回复框
          */
-    private void showReplyDialog(final int position){
+    private void showReplyDialog(final int groupPosition,final int childPosition){
+        String commentContent=null;
+        String username=null;
+        int commentUserId=0;
+        int cid=0;
+        if(childPosition==-1){
+            CommentDetailBean detailBean=adapter.getCommentBeanList().get(groupPosition);
+            commentContent=detailBean.getContent();
+            commentUserId=detailBean.getUid();
+            username=detailBean.getUsername();
+            cid=detailBean.getCid();
+        }else {
+            CommentDetailBean commentDetailBean=adapter.getCommentBeanList().get(groupPosition);
+            ReplyDetailBean detailBean=commentDetailBean.getReplyVoList().get(childPosition);
+            commentContent=detailBean.getContent();
+            commentUserId=detailBean.getUid();
+            username=detailBean.getUsername();
+            cid=commentDetailBean.getCid();
+        }
         dialog = new BottomSheetDialog(this,R.style.BottomSheetEdit);
         View commentView = LayoutInflater.from(this).inflate(R.layout.comment_dialog_layout,null);
         Log.i(TAG, "showReplyDialog: view="+commentView);
-        final EditText commentText = (EditText) commentView.findViewById(R.id.dialog_comment_et);
-        final Button bt_comment = (Button) commentView.findViewById(R.id.dialog_comment_bt);
-        commentText.setHint("回复 " +adapter.getCommentBeanList().get(position).getUsername() + " 的评论:");
+        final EditText commentText = commentView.findViewById(R.id.dialog_comment_et);
+        final Button bt_comment =commentView.findViewById(R.id.dialog_comment_bt);
+        commentText.setHint("回复 " + username+ " 的评论:");
         dialog.setContentView(commentView);
         View parent = (View) commentView.getParent();
         BottomSheetBehavior behavior = BottomSheetBehavior.from(parent);
         commentView.measure(0,0);
         behavior.setPeekHeight(commentView.getMeasuredHeight());
+        final int finalCommentUserId = commentUserId;
+        final String finalCommentContent = commentContent;
+        final int finalCid = cid;
         bt_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String replyContent = commentText.getText().toString().trim();
+                String replyContent =commentText.getText().toString();
+                Log.i(TAG, "onClick:"+replyContent);
                 if(!TextUtils.isEmpty(replyContent)){
                     dialog.dismiss();
-                    Log.i(TAG, "onClick: commentId="+adapter.getCommentBeanList().get(position).getCid());
-                    CommentDetailBean commentDetailBean=adapter.getCommentBeanList().get(position);
-                    addReply(replyContent,userData.getToken(),commentDetailBean.getUid(),commentDetailBean.getContent(),commentDetailBean.getCid(),userData.getUsername(),position);
+                    addReply(replyContent,userData.getToken(), finalCommentUserId, finalCommentContent, finalCid,userData.getUsername(),groupPosition);
                 }else {
                     Toast.makeText(PostDetails.this,"回复内容不能为空",Toast.LENGTH_SHORT).show();
                 }

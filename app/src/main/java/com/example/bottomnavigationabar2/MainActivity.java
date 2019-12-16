@@ -52,7 +52,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         }
         Intent intent = getIntent();
         user_name = intent.getStringExtra("username");
-        Toast.makeText(this, "账号" + user_name, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "欢迎你"+user_name, Toast.LENGTH_SHORT).show();
         userData=FileCacheUtil.getCache(this,"USERDATA.txt",0, User.class);
         /**
          * bottomNavigation 设置

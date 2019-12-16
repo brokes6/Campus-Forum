@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.bottomnavigationabar2.HomeFragment;
 import com.example.bottomnavigationabar2.MyImageView;
@@ -121,7 +122,7 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
 
                 post.setStatus(holder.loveStatus);
                 post.setLoveCount(Integer.valueOf(holder.loveNumStr.getText().toString()));
-               netWorkUtil.updatePostLove(holder.postId,token);
+                netWorkUtil.updatePostLove(holder.postId,token);
             }
         });
         holder.collectionLayout.setOnClickListener(new View.OnClickListener() {
@@ -132,10 +133,13 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
                     holder.collection.setImageDrawable(mContext.getResources().getDrawable(R.drawable.shocang_text));
                     holder.collectionStatus=0;
                     holder.collectionStr.setText("未收藏");
+                    Toast.makeText(mContext, "取消收藏成功！", Toast.LENGTH_SHORT).show();
                 }else {
                     holder.collection.setImageDrawable(mContext.getResources().getDrawable(R.drawable.shocangwanc));
                     holder.collectionStatus=1;
                     holder.collectionStr.setText("已收藏");
+                    Toast.makeText(mContext, "收藏成功！", Toast.LENGTH_SHORT).show();
+
                 }
                 post.setCollection(holder.collectionStatus);
                 Log.i(TAG, "onClick: 收藏的值未:"+post.getCollection());

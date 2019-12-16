@@ -106,7 +106,9 @@ public class LoginActivity extends AppCompatActivity {
                     FileCacheUtil.clearData();
                     FileCacheUtil.setCache(user,LoginActivity.this,"USERDATA.txt",0);
                     ActivityOptions compat = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this);
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class), compat.toBundle());
+                    Intent intent=new Intent(LoginActivity.this, MainActivity.class);
+                    intent.putExtra("username",user.getUsername());
+                    startActivity(intent, compat.toBundle());
                     finish();
                     break;
                 case LOGIN_FAILED:
@@ -165,10 +167,10 @@ public class LoginActivity extends AppCompatActivity {
         Log.i(TAG, "onCreate: chose="+choseRemember);
         boolean choseAutoLogin =sp.getBoolean("autologin", false);
         //如果上次选了记住密码，那进入登录页面也自动勾选记住密码，并填上用户名和密码
- /*       if(choseAutoLogin){
+        if(choseAutoLogin){
             Intent intent =new Intent(LoginActivity.this,MainActivity.class);
             startActivity(intent);
-        }*/
+        }
         if(choseRemember){
             usernameEdit.setText(name);
             passwordEdit.setText(pass);

@@ -51,6 +51,7 @@ public class OrganizationRecommendTemplate extends Fragment {
     private RecyclerView recyclerView;
     private View convertView;
     private Button button;
+    private Button refreshButton;
     private int startPage=1;
     private boolean initData=true;
     private Handler handler = new Handler() {
@@ -112,6 +113,7 @@ public class OrganizationRecommendTemplate extends Fragment {
         contentLayout=convertView.findViewById(R.id.contentLayout);
         loadTextView=convertView.findViewById(R.id.loadTextView);
         progressBar=convertView.findViewById(R.id.loading);
+        refreshButton=convertView.findViewById(R.id.refresh);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,6 +121,12 @@ public class OrganizationRecommendTemplate extends Fragment {
                 progressBar.setVisibility(View.VISIBLE);
                 button.setVisibility(View.GONE);
                 loadTextView.setText("正在努力加载中...");
+                findRecommendOrganization();
+            }
+        });
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 findRecommendOrganization();
             }
         });

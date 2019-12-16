@@ -81,6 +81,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
                         intent=new Intent(mcontext, MoerReply.class);
                         intent.putExtra("postId",map.get("postId"));
                         intent.putExtra("cid",map.get("commentId"));
+                        intent.putExtra("new",true);
                         break;
                 }
                 mcontext.startActivity(intent);

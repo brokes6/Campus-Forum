@@ -87,6 +87,7 @@ public class MoerReply extends AppCompatActivity implements View.OnClickListener
     private int postId;
     private int commentId;
     private int userId;
+    private boolean createNew;
     private TextView bt_comment;
     private RecyclerView recyclerView;
     private ReplyAdapter replyAdapter;
@@ -166,7 +167,16 @@ public class MoerReply extends AppCompatActivity implements View.OnClickListener
         see.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                if(createNew){
+                    Log.i(TAG, "onClick: ccc");
+                    Intent intent=new Intent(MoerReply.this,PostDetails.class);
+                    intent.putExtra("postId",postId);
+                    startActivity(intent);
+                    finish();
+                }else {
+                    finish();
+                }
+
             }
         });
         back.setOnClickListener(new View.OnClickListener() {
@@ -193,7 +203,10 @@ public class MoerReply extends AppCompatActivity implements View.OnClickListener
     private void initIntentData(){
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
+        createNew=intent.getBooleanExtra("new",false);
+        Log.i(TAG, "initIntentData: 获得值"+createNew);
         commentId = intent.getIntExtra("cid", -1);
+        postId=intent.getIntExtra("postId",-1);
         if(name==null) {
             getCommentDetails();
         }else {
