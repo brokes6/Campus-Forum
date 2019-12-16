@@ -69,23 +69,32 @@ public class ScanFragment extends Fragment{
         return view;
     }
     private void initView(){
-
-
         followText=view.findViewById(R.id.followText);
         recommendText=view.findViewById(R.id.recommendText);
         viewPager=view.findViewById(R.id.viewPager);
         OrganizationTabFragmentAdapter adapter=new OrganizationTabFragmentAdapter(((MainActivity)getContext()).getSupportFragmentManager());
         viewPager.setAdapter(adapter);
         System.out.println("viewpager"+viewPager);
+        followText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewPager.setCurrentItem(1);
+            }
+        });
+        recommendText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewPager.setCurrentItem(0);
+            }
+        });
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
                 if(i==1){
-//                    recommendText.setBackground(R.drawable.scalebig);
                     recommendText.setTextSize(16);
-                    followText.setTextSize(22);
+                    followText.setTextSize(20);
                 }else {
-                    recommendText.setTextSize(22);
+                    recommendText.setTextSize(20);
                     followText.setTextSize(16);
                 }
             }
