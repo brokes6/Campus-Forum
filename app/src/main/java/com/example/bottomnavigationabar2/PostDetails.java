@@ -37,6 +37,7 @@ import android.widget.Toast;
 
 import com.example.bottomnavigationabar2.MoBan.RequestStatus;
 import com.example.bottomnavigationabar2.R;
+import com.example.bottomnavigationabar2.activity.BaseActivity;
 import com.example.bottomnavigationabar2.adapter.CommentExpandAdapter;
 import com.example.bottomnavigationabar2.bean.CommentBean;
 import com.example.bottomnavigationabar2.bean.CommentDetailBean;
@@ -87,7 +88,7 @@ import static com.scwang.smartrefresh.layout.internal.InternalClassics.ID_IMAGE_
 import static com.scwang.smartrefresh.layout.internal.InternalClassics.ID_TEXT_TITLE;
 
 
-public class PostDetails extends AppCompatActivity implements View.OnClickListener{
+public class PostDetails extends BaseActivity implements View.OnClickListener{
     private static final String TAG = "PostDetails";
     public static final int HANDLER_DATA=1;
     public static final int CANCEL_PROGRESS=2;
@@ -265,10 +266,10 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
             //修改为深色，因为我们把状态栏的背景色修改为主题色白色，默认的文字及图标颜色为白色，导致看不到了。
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
-/*        ActionBar actionbar = getSupportActionBar();
+        ActionBar actionbar = getSupportActionBar();
         if (actionbar != null) {
             actionbar.hide();
-        }*/
+        }
         userData=FileCacheUtil.getUser(this);
         postId = getPostId();
         initView();
@@ -289,8 +290,8 @@ public class PostDetails extends AppCompatActivity implements View.OnClickListen
         collectionLayout=findViewById(R.id.collectionLayout);
         collectionStr=findViewById(R.id.collectionStr);
         collection=findViewById(R.id.collection);
-        expandableListView = (CommentExpandableListView) findViewById(R.id.detail_page_lv_comment);
-        bt_comment = (TextView) findViewById(R.id.detail_page_do_comment);
+        expandableListView =findViewById(R.id.detail_page_lv_comment);
+        bt_comment =findViewById(R.id.detail_page_do_comment);
         bt_comment.setOnClickListener(this);
         adapter = new CommentExpandAdapter(this,commentsList,userData.getToken());
         expandableListView.setGroupIndicator(null);

@@ -32,7 +32,7 @@
 
     </LinearLayout>
     <RelativeLayout
-        android:visibility="gone"
+
         android:layout_below="@id/back"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -54,7 +54,7 @@
                 android:id="@+id/main_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:fitsSystemWindows="true">
+               >
                 //详细页面的布局
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -189,7 +189,8 @@
         android:visibility="gone"
         android:id="@+id/progress"
         />
-</RelativeLayout>
+</RelativeLayout
+      >
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
