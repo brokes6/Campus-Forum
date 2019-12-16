@@ -158,10 +158,18 @@ public class MyFragment extends Fragment {
         LinearLayout news = view.findViewById(R.id.news);
         LinearLayout concern=(LinearLayout)view.findViewById(R.id.my_concern);
         LinearLayout about=(LinearLayout)view.findViewById(R.id.about_us);
+        LinearLayout pinglun=(LinearLayout)view.findViewById(R.id.pinglun);
         concern.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getContext(),MyConcern.class);
+                Intent intent=new Intent(getContext(),Error.class);
+                startActivity(intent);
+            }
+        });
+        pinglun.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getContext(),Error.class);
                 startActivity(intent);
             }
         });
