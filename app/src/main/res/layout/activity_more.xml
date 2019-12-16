@@ -63,7 +63,7 @@
             android:layout_height="55dp"
             android:layout_gravity="right"
             android:textColor="#818181"
-            android:text="我是陈巨魔芋的爹"
+            android:text="暂无"
             android:textSize="18dp"
             android:gravity="center_vertical"/>
     </LinearLayout>
@@ -112,7 +112,7 @@
                 android:layout_height="55dp"
                 android:layout_gravity="right"
                 android:textColor="#818181"
-                android:text="我是陈巨魔芋的爹"
+                android:text="暂无"
                 android:textSize="18dp"
                 android:gravity="center_vertical"/>
         </LinearLayout>
@@ -161,7 +161,7 @@
                 android:layout_height="55dp"
                 android:layout_gravity="right"
                 android:textColor="#818181"
-                android:text="我是陈巨魔芋的爹"
+                android:text="暂无"
                 android:textSize="18dp"
                 android:gravity="center_vertical"/>
         </LinearLayout>

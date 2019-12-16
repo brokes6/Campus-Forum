@@ -33,6 +33,7 @@
         android:layout_height="8dp"/>
     //部分1
     <LinearLayout
+        android:id="@+id/message_tishi"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -66,6 +67,7 @@
     </LinearLayout>
     //部分2
     <LinearLayout
+        android:id="@+id/image_model"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -103,6 +105,7 @@
         android:layout_height="8dp"/>
     //部分3
     <LinearLayout
+        android:id="@+id/clear"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -136,6 +139,7 @@
     </LinearLayout>
     //部分4
     <LinearLayout
+        android:id="@+id/help"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -169,6 +173,7 @@
     </LinearLayout>
     //部分5
     <LinearLayout
+        android:id="@+id/user_agreement"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -202,6 +207,7 @@
     </LinearLayout>
     //部分6
     <LinearLayout
+        android:id="@+id/privacy"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

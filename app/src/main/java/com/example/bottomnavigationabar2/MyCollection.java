@@ -54,6 +54,7 @@ public class MyCollection extends AppCompatActivity {
     private TextView loadingTextView;
     private ProgressBar progressBar;
     private Button loadButton;
+    private LinearLayout Back;
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -93,6 +94,7 @@ public class MyCollection extends AppCompatActivity {
         initData();
     }
     private void initView(){
+        Back=findViewById(R.id.back);
         loadButton=findViewById(R.id.loadButton);
         loadingTextView=findViewById(R.id.loadTextView);
         progressBar=findViewById(R.id.loading);
@@ -118,6 +120,12 @@ public class MyCollection extends AppCompatActivity {
         adapter=new HistoryAdapter(this);
         recyclerView.setAdapter(adapter);
         findHistoryIdDetails();
+        Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
     private void findHistoryIdDetails(){
         final Request request=new Request.Builder()

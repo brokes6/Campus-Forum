@@ -88,8 +88,7 @@
         android:layout_marginTop="-75dp"
         android:layout_alignTop="@+id/top"
         android:src="@drawable/logo"
-        app:civ_border_color="#4CAF50"
-        app:civ_border_width="2dp" />
+        />
     <Button
         android:id="@+id/denglu"
         android:layout_width="280dp"

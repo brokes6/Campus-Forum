@@ -9,12 +9,11 @@
 
     <LinearLayout
         android:id="@+id/back"
-        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_alignParentTop="true"
+        android:layout_marginTop="15dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
         <ImageView
             android:layout_marginLeft="5dp"
@@ -56,6 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true">
+                //详细页面的布局
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">

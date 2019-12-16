@@ -117,11 +117,11 @@ public class HomeFragment extends Fragment {
     private int phoneHeight=-1;
     private ValueAnimator valueAnimator;
     //按钮链接
-    private ImageView guanzhu;
-    private ImageView shoucang;
-    private ImageView lishi;
-    private ImageView xiaoxi;
-    private ImageView shezhi;
+    private LinearLayout guanzhu;
+    private LinearLayout shoucang;
+    private LinearLayout lishi;
+    private LinearLayout xiaoxi;
+    private LinearLayout shezhi;
     public static HomeFragment newInstance() {
         HomeFragment fragment=new HomeFragment();
         Bundle args = new Bundle();
@@ -305,7 +305,7 @@ public class HomeFragment extends Fragment {
         guanzhu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getContext(),MyConcern.class);
+                Intent intent=new Intent(getContext(),Error.class);
                 startActivity(intent);
             }
         });
@@ -364,12 +364,6 @@ public class HomeFragment extends Fragment {
                 })
                 //开始调用的方法，启动轮播图。
                 .start();
-        Return_top.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                    exit();
-            }
-        });
 
     }
 
@@ -441,6 +435,12 @@ public  void  scrollToTop( boolean flag){
             }
         });
     }
+    /**
+    *
+    *   返回顶部按钮
+     *    无法使用
+    *
+     */
     public void exit(){
         flag=false;
         postTemplateInterface.getRecycler().scrollToPosition(0);
@@ -453,7 +453,6 @@ public  void  scrollToTop( boolean flag){
                 topLayout.setLayoutParams(mParams);
                 refreshLayout.setEnableLoadMore(false);
                 refreshLayout.setEnableRefresh(false);
-
             }
         },10);
     }
