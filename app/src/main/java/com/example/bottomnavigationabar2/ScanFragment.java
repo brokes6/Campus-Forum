@@ -1,5 +1,6 @@
 package com.example.bottomnavigationabar2;
 
+import android.animation.LayoutTransition;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
