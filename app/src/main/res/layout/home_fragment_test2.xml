@@ -234,12 +234,6 @@
         <!--            android:visibility="visible"-->
         <!--            app:fabSize="mini"-->
         <!--            />-->
-        <ImageView
-            android:id="@+id/Return_top"
-            android:layout_gravity="bottom|right"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_margin="16dp"
-            android:src="@drawable/top"/>
+
     </android.support.design.widget.CoordinatorLayout>
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>

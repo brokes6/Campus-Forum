@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <LinearLayout
+            android:id="@+id/back"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:orientation="vertical"

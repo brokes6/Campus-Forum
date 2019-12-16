@@ -297,6 +297,9 @@ public class RegisterActivity extends AppCompatActivity {
             accountEdit.setError("用户名输入不能空");
             flag=false;
         }
+        if(password.length()<6){
+            passwordEdit.setError("输入密码不能小于6位数");
+        }
         if(TextUtils.isEmpty(username)){
             usernameEdit.setError("账号输入不能空");
             flag=false;

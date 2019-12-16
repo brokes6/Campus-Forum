@@ -364,12 +364,6 @@ public class HomeFragment extends Fragment {
                 })
                 //开始调用的方法，启动轮播图。
                 .start();
-        Return_top.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                    exit();
-            }
-        });
 
     }
 
@@ -441,6 +435,12 @@ public  void  scrollToTop( boolean flag){
             }
         });
     }
+    /**
+    *
+    *   返回顶部按钮
+     *    无法使用
+    *
+     */
     public void exit(){
         flag=false;
         postTemplateInterface.getRecycler().scrollToPosition(0);
@@ -453,7 +453,6 @@ public  void  scrollToTop( boolean flag){
                 topLayout.setLayoutParams(mParams);
                 refreshLayout.setEnableLoadMore(false);
                 refreshLayout.setEnableRefresh(false);
-
             }
         },10);
     }
