@@ -75,7 +75,6 @@ public class ScanFragment extends Fragment{
         OrganizationTabFragmentAdapter adapter=new OrganizationTabFragmentAdapter(((MainActivity)getContext()).getSupportFragmentManager());
         viewPager.setAdapter(adapter);
         System.out.println("viewpager"+viewPager);
-        signin=view.findViewById(R.id.sign_in);
         followText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,11 +91,9 @@ public class ScanFragment extends Fragment{
             @Override
             public void onPageScrolled(int i, float v, int i1) {
                 if(i==1){
-                    signin.setVisibility(View.GONE);
                     recommendText.setTextSize(16);
                     followText.setTextSize(20);
                 }else {
-                    signin.setVisibility(View.VISIBLE);
                     recommendText.setTextSize(20);
                     followText.setTextSize(16);
                 }
