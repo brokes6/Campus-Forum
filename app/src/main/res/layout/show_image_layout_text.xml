@@ -72,7 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="500px"
                 android:layout_above="@id/bottom"
-                android:background="@drawable/bt_top">
+                android:background="@drawable/bt_shape_black">
                     <TextView
                         android:id="@+id/Picture_text"
                         android:layout_width="match_parent"
@@ -88,7 +88,7 @@
                 android:paddingTop="5dp"
                 android:layout_width="match_parent"
                 android:background="@drawable/bt_top_while"
-                android:layout_height="40dp"
+                android:layout_height="45dp"
                 android:orientation="horizontal">
                     <LinearLayout
                         android:id="@+id/Open_and_Retract"
@@ -119,7 +119,7 @@
                         android:orientation="horizontal">
                                 <LinearLayout
                                     android:id="@+id/loveLayout"
-                                    android:gravity="center_vertical"
+                                    android:gravity="center_horizontal"
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
                                     android:layout_height="match_parent"

@@ -58,6 +58,7 @@ import com.example.bottomnavigationabar2.utils.NetWorkUtil;
 import com.example.bottomnavigationabar2.view.NineGridTestLayout;
 import com.example.util.ImageUtils;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -163,6 +164,7 @@ public class ShowImageActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 finish();
             }
         });
