@@ -367,9 +367,7 @@ public class HomeFragment extends Fragment {
         Return_top.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scrollToTop(true);
-                Toast.makeText(getContext(),"点击成功",Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "hight为--------------------"+mAppBarLayout.getHeight());
+                    exit();
             }
         });
 
