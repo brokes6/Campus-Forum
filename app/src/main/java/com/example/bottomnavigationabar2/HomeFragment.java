@@ -117,11 +117,11 @@ public class HomeFragment extends Fragment {
     private int phoneHeight=-1;
     private ValueAnimator valueAnimator;
     //按钮链接
-    private ImageView guanzhu;
-    private ImageView shoucang;
-    private ImageView lishi;
-    private ImageView xiaoxi;
-    private ImageView shezhi;
+    private LinearLayout guanzhu;
+    private LinearLayout shoucang;
+    private LinearLayout lishi;
+    private LinearLayout xiaoxi;
+    private LinearLayout shezhi;
     public static HomeFragment newInstance() {
         HomeFragment fragment=new HomeFragment();
         Bundle args = new Bundle();
@@ -305,7 +305,7 @@ public class HomeFragment extends Fragment {
         guanzhu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getContext(),MyConcern.class);
+                Intent intent=new Intent(getContext(),Error.class);
                 startActivity(intent);
             }
         });

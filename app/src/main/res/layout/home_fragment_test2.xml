@@ -80,13 +80,13 @@
                     android:background="#FFF"
                     android:orientation="horizontal">
                     <LinearLayout
+                        android:id="@+id/guanzhu"
                         android:layout_width="0dp"
                         android:layout_height="100dp"
                         android:orientation="vertical"
                         android:gravity="center_vertical|center_horizontal"
                         android:layout_weight="1">
                         <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/guanzhu"
                             android:layout_width="50sp"
                             android:layout_height="50sp"
                             android:src="@drawable/guanzhu2"/>
@@ -100,13 +100,14 @@
 
                     </LinearLayout>
                     <LinearLayout
+                        android:id="@+id/shoucang"
                         android:layout_width="0dp"
                         android:layout_height="100dp"
                         android:orientation="vertical"
                         android:gravity="center_vertical|center_horizontal"
                         android:layout_weight="1">
                         <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/shoucang"
+
                             android:layout_width="50sp"
                             android:layout_height="50sp"
                             android:src="@drawable/shoucang1"/>
@@ -120,13 +121,14 @@
 
                     </LinearLayout>
                     <LinearLayout
+                        android:id="@+id/lishi"
                         android:layout_width="0dp"
                         android:layout_height="100dp"
                         android:orientation="vertical"
                         android:gravity="center_vertical|center_horizontal"
                         android:layout_weight="1">
                         <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/lishi"
+
                             android:layout_width="50sp"
                             android:layout_height="50sp"
                             android:src="@drawable/lishi1"/>
@@ -140,13 +142,14 @@
 
                     </LinearLayout>
                     <LinearLayout
+                        android:id="@+id/xiaoxi"
                         android:layout_width="0dp"
                         android:layout_height="100dp"
                         android:orientation="vertical"
                         android:gravity="center_vertical|center_horizontal"
                         android:layout_weight="1">
                         <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/xiaoxi"
+
                             android:layout_width="50sp"
                             android:layout_height="50sp"
                             android:src="@drawable/xiaoxi"/>
@@ -160,13 +163,14 @@
 
                     </LinearLayout>
                     <LinearLayout
+                        android:id="@+id/shezhi"
                         android:layout_width="0dp"
                         android:layout_height="100dp"
                         android:orientation="vertical"
                         android:gravity="center_vertical|center_horizontal"
                         android:layout_weight="1">
                         <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/shezhi"
+
                             android:layout_width="52sp"
                             android:layout_height="52sp"
                             android:src="@drawable/shizhi1"/>
