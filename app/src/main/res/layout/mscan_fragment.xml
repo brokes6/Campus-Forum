@@ -8,6 +8,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -43,15 +44,7 @@
             android:gravity="center"
             android:layout_gravity="center_vertical"/>
 
-        <TextView
-            android:id="@+id/sign_in"
-            android:layout_marginLeft="230dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="签"
-            android:textSize="20sp"
-            android:layout_gravity="center_vertical"
-            android:textStyle="bold"/>
+
     </LinearLayout>
     <android.support.v4.view.ViewPager
         android:layout_gravity="center"
