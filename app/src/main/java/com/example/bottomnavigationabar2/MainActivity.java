@@ -41,7 +41,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     float y1 = 0;
     float y2 = 0;
     int num = 0;
-
+    private long homeExitTime=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -158,7 +158,13 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                     Log.i(TAG, "onTabSelected:进入");
                     mHomeFragment = HomeFragment.newInstance();
                 }
+
                 transaction.replace(R.id.tb,mHomeFragment);
+                if ((System .currentTimeMillis() - homeExitTime) < 2000) {
+                    //弹出提示，可以有多种方式
+                    mHomeFragment.exit();
+                }
+                homeExitTime=System.currentTimeMillis();
                 break;
             case 1:
                 if (mScanFragment == null) {

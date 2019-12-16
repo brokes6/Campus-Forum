@@ -28,6 +28,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bottomnavigationabar2.MoBan.RequestStatus;
 import com.example.bottomnavigationabar2.adapter.CommentExpandAdapter;
 import com.example.bottomnavigationabar2.adapter.ReplyAdapter;
 import com.example.bottomnavigationabar2.bean.CommentDetailBean;
@@ -71,6 +72,8 @@ public class MoerReply extends AppCompatActivity implements View.OnClickListener
     public static final int HANDLER_DATA_COMMENT=3;
     public static final String REPLY_REQUEST_URL="http://106.54.134.17/app/getNewReplys";
     private ProgressBar progressBar;
+    private Button loadButton;
+    private TextView loadTextView;
     private BottomSheetDialog dialog;
     private com.example.bottomnavigationabar2.MyImageView userimg;
     private TextView username;
@@ -118,6 +121,10 @@ public class MoerReply extends AppCompatActivity implements View.OnClickListener
                     replyAdapter.setReplyDetailBeans(bean.getReplyVoList());
                     replyAdapter.notifyDataSetChanged();
                     break;
+                case RequestStatus.NO_NETWORK:
+                    loadTextView.setText("加载回复失败，请检查网络后重新尝试...");
+                    loadButton.setVisibility(View.VISIBLE);
+                    break;
             }
         }
     };
@@ -147,9 +154,11 @@ public class MoerReply extends AppCompatActivity implements View.OnClickListener
         Time = findViewById(R.id.more_time);
         back = findViewById(R.id.back);
         recyclerView=findViewById(R.id.recyclerView);
-        progressBar=findViewById(R.id.progress);
+        progressBar=findViewById(R.id.loading);
         loadLayout=findViewById(R.id.loadLayout);
         contentLayout=findViewById(R.id.contentLayout);
+        loadButton=findViewById(R.id.loadButton);
+        loadTextView=findViewById(R.id.loadTextView);
         initRefreshLayout();
     }
     private void click(){
@@ -164,6 +173,14 @@ public class MoerReply extends AppCompatActivity implements View.OnClickListener
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        loadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initIntentData();
+                loadButton.setVisibility(View.GONE);
+                loadTextView.setText("正在加载回复中...");
             }
         });
     }
@@ -246,7 +263,10 @@ public class MoerReply extends AppCompatActivity implements View.OnClickListener
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
+                Message message=new Message();
+                message.what= RequestStatus.NO_NETWORK;
+                handler.sendMessage(message);
+                return;
             }
 
             @Override
@@ -282,7 +302,10 @@ public class MoerReply extends AppCompatActivity implements View.OnClickListener
                 okHttpClient.newCall(request).enqueue(new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
-                        e.printStackTrace();
+                        Message message=new Message();
+                        message.what= RequestStatus.NO_NETWORK;
+                        handler.sendMessage(message);
+                        return;
                     }
 
                     @Override
