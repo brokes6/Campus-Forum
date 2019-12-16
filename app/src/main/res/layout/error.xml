@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Error">
+    android:background="#FFF"
+    android:gravity="center_vertical|center_horizontal"
+        android:orientation="vertical">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="#fff"
         android:gravity="center_vertical|center_horizontal"
         android:text="赶工中"
@@ -16,13 +18,12 @@
         android:textSize="50sp"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="116dp" />
-
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/gv_error"
         android:layout_width="225dp"
         android:layout_height="146dp"
         android:layout_centerInParent="true"
         android:src="@drawable/loadgif"
-        tools:layout_editor_absoluteX="132dp"
-        tools:layout_editor_absoluteY="479dp" />
-</android.support.constraint.ConstraintLayout>
+        tools:layout_editor_absoluteX="93dp"
+        tools:layout_editor_absoluteY="419dp" />
+</LinearLayout>
