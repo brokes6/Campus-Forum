@@ -45,6 +45,7 @@ import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.example.bottomnavigationabar2.Animation.DepthPageTransformer;
 import com.example.bottomnavigationabar2.Animation.ZoomOutPageTransformer;
 import com.example.bottomnavigationabar2.HomeFragment;
+import com.example.bottomnavigationabar2.MoBan.PostTemplateInterface;
 import com.example.bottomnavigationabar2.MyImageView;
 import com.example.bottomnavigationabar2.Pictureutils.LocalCacheUtils;
 import com.example.bottomnavigationabar2.Pictureutils.MemoryCacheUtils;
@@ -82,8 +83,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-import static com.example.bottomnavigationabar2.PostDetails.REQUEST_ADD_COLLECTION;
-import static com.example.bottomnavigationabar2.PostDetails.REQUEST_DELETE_COLLECTION;
 
 public class ShowImageActivity extends AppCompatActivity {
     public static final int GET_DATA_SUCCESS = 1;
@@ -339,7 +338,6 @@ public class ShowImageActivity extends AppCompatActivity {
 
             @Override
             public void onLoadFailed(@Nullable Drawable errorDrawable) {
-                Log.i(TAG, "onLoadFailed: 图片加载失败"+errorDrawable.toString());
                 loadButton.setVisibility(View.VISIBLE);
                 loadTextView.setText("加载图片失败请重试");
             }
@@ -471,7 +469,7 @@ public class ShowImageActivity extends AppCompatActivity {
         });
     }
     private String getRequestUrl(){
-        return (collectionStatus==1?REQUEST_DELETE_COLLECTION:REQUEST_ADD_COLLECTION);
+        return (collectionStatus==1?PostTemplateInterface.REQUEST_DELETE_COLLECTION:PostTemplateInterface.REQUEST_ADD_COLLECTION);
     }
     public void onBackPressed() {
         Log.i(TAG, "onBackPressed: 放回了啊");

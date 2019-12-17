@@ -46,7 +46,7 @@ import okhttp3.Response;
 
 public class CommentExpandAdapter extends BaseExpandableListAdapter {
     private static final String TAG = "CommentExpandAdapter";
-    private List<CommentDetailBean> commentBeanList;
+    private List<CommentDetailBean> commentBeanList=new ArrayList<>();
     private static final int REPLYNUM=3;
     private Context context;
     private int pageIndex = 1;
@@ -59,25 +59,33 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
 
     public void setCommentBeanList(List<CommentDetailBean> commentBeanList) {
         if(commentBeanList==null){
-            commentBeanList=new ArrayList<>();
+            this.commentBeanList=commentBeanList;
+        }else {
+            this.commentBeanList.addAll(commentBeanList);
         }
-        this.commentBeanList.addAll(commentBeanList);
+        notifyDataSetChanged();
     }
     public List<CommentDetailBean> getCommentBeanList() {
         return commentBeanList;
     }
     @Override
     public int getGroupCount() {
+        Log.i(TAG, "getGroupCount: "+commentBeanList.size());
         return commentBeanList.size();
     }
     @Override
     public int getChildrenCount(int i) {
-        if(commentBeanList.get(i).getReplyVoList() == null){
+        if(i>=commentBeanList.size()){
+            Log.e(TAG, "getChildrenCount: ????");
+            return 0;
+        }
+        List<ReplyDetailBean> detailBeans=commentBeanList.get(i).getReplyVoList();
+        if(detailBeans==null||detailBeans.size()==0){
             return 0;
         }else {
-            return commentBeanList.get(i).getReplyVoList().size()>2 ?REPLYNUM :commentBeanList.get(i).getReplyVoList().size();
+            Log.e(TAG, "getChildrenCount: 长度"+detailBeans.size());
+            return detailBeans.size()>2 ?REPLYNUM :detailBeans.size();
         }
-
     }
     @Override
     public Object getGroup(int i) {
@@ -85,6 +93,7 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
     }
     @Override
     public Object getChild(int i, int i1) {
+        Log.e(TAG, "getChild: 天天被调用");
         return commentBeanList.get(i).getReplyVoList().get(i1);
     }
     @Override
@@ -153,13 +162,15 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(final int groupPosition, int childPosition, boolean b, View convertView, ViewGroup viewGroup) {
         final ChildHolder childHolder;
-        List<ReplyDetailBean> replyDetailBeans =  commentBeanList.get(groupPosition).getReplyVoList();
+        CommentDetailBean commentDetailBean=commentBeanList.get(groupPosition);
+        List<ReplyDetailBean> replyDetailBeans =commentDetailBean.getReplyVoList();
         Log.i(TAG, "getChildView:groupPosition="+groupPosition+"childposition="+childPosition);
         if(replyDetailBeans.size()>=3&&childPosition==2){
             Log.i(TAG, "getChildView: 最后一个啦你不操作一下?\nchildPosition="+childPosition);
             convertView= LayoutInflater.from(context).inflate(R.layout.look_more_layout,viewGroup, false);
             return convertView;
         }
+
             convertView = LayoutInflater.from(context).inflate(R.layout.comment_reply_item_layout,viewGroup, false);
             childHolder = new ChildHolder(convertView);
             convertView.setTag(childHolder);
@@ -170,7 +181,7 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
         }else {
             childHolder.tv_name.setText("无名"+":");
         }
-        childHolder.tv_content.setText(commentBeanList.get(groupPosition).getReplyVoList().get(childPosition).getContent());
+        childHolder.tv_content.setText(replyDetailBeans.get(childPosition).getContent());
         return convertView;
     }
 

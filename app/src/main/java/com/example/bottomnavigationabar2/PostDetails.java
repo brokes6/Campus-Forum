@@ -35,6 +35,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bottomnavigationabar2.MoBan.PostTemplateInterface;
 import com.example.bottomnavigationabar2.MoBan.RequestStatus;
 import com.example.bottomnavigationabar2.R;
 import com.example.bottomnavigationabar2.activity.BaseActivity;
@@ -87,22 +88,8 @@ import okhttp3.Response;
 import static com.scwang.smartrefresh.layout.internal.InternalClassics.ID_IMAGE_PROGRESS;
 import static com.scwang.smartrefresh.layout.internal.InternalClassics.ID_TEXT_TITLE;
 
-
 public class PostDetails extends BaseActivity implements View.OnClickListener{
     private static final String TAG = "PostDetails";
-    public static final int HANDLER_DATA=1;
-    public static final int CANCEL_PROGRESS=2;
-    public static final int NOTIFY=3;
-    public static final int NOTIFY_NOCOMMENT=4;
-    public static final int NOTIFY_COMMENT=5;
-    public static final int NO_NETWORK=6;
-    public static final int NOTIFY_REPLY=7;
-    public static final String REQUEST_POST_DETAILS_STR="http://106.54.134.17/app/getPostDetailsById";//mode=1
-    public static final String REQUEST_COMMENT_POPULAR_STR="http://106.54.134.17/app/getPopularComments";//mode=2
-    public static final String REQUEST_COMMENT_NEW_STR="http://106.54.134.17/app/getNewComments";//mode=2
-    public static final String REQUEST_ADD_COMMENT_STR="http://106.54.134.17/app/addComment";//mode=3
-    public static final String REQUEST_ADD_COLLECTION="http://106.54.134.17/app/addCollection";
-    public static final String REQUEST_DELETE_COLLECTION="http://106.54.134.17/app/deleteCollection";
     private TextView bt_comment;
     private CommentExpandableListView expandableListView;
     private CommentExpandAdapter adapter;
@@ -135,7 +122,7 @@ public class PostDetails extends BaseActivity implements View.OnClickListener{
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what){
-                case HANDLER_DATA:
+                case PostTemplateInterface.HANDLER_DATA:
                     final Post post = (Post) msg.obj;
                     String str=Html.fromHtml(post.getContent()).toString();
                     postUserId=post.getUid();
@@ -208,12 +195,13 @@ public class PostDetails extends BaseActivity implements View.OnClickListener{
                         }
                     });
                     PostHitoryUtil.saveSearchHistory(String.valueOf(postId),PostDetails.this);break;
-                case CANCEL_PROGRESS:
+                case PostTemplateInterface.CANCEL_PROGRESS:
                     progressBar.setVisibility(View.GONE);
                     break;
-                case NOTIFY:
+                case PostTemplateInterface.NOTIFY:
                     int index=adapter.getCommentBeanList().size();
                     adapter.setCommentBeanList(commentsList);
+                    Log.e(TAG, "handleMessage: 长度"+index);
                     for(int i =index; i<commentsList.size()+index; i++){
                         expandableListView.expandGroup(i);
                     }
@@ -225,13 +213,13 @@ public class PostDetails extends BaseActivity implements View.OnClickListener{
                     message.setText("暂无更多");
                     message.setTextSize(14);
                     break;
-                case NOTIFY_NOCOMMENT:
+                case PostTemplateInterface.NOTIFY_NOCOMMENT:
                     Log.i(TAG, "handleMessage: 喔有运行？");
                     commentLayout.setMinimumHeight(500);
                     refreshLayout.setEnableLoadMore(false);
                     messageLayout.setVisibility(View.VISIBLE);
                     break;
-                case NOTIFY_COMMENT:
+                case PostTemplateInterface.NOTIFY_COMMENT:
                     Toast.makeText(PostDetails.this,"评论成功",Toast.LENGTH_SHORT).show();
                     adapter.addTheCommentData((CommentDetailBean) msg.obj);
                     Log.i(TAG, "handleMessage: 评论处理");
@@ -242,12 +230,12 @@ public class PostDetails extends BaseActivity implements View.OnClickListener{
 //                        messageLayout.setVisibility(View.GONE);
                     adapter.notifyDataSetChanged();
                     break;
-                case NO_NETWORK:
+                case PostTemplateInterface.NO_NETWORK:
                         loadTextView.setText("网络不稳定，请重新刷新试试");
                         loadButton.setVisibility(View.VISIBLE);
                         loadButton.setClickable(true);
                         break;
-                case NOTIFY_REPLY:
+                case PostTemplateInterface.NOTIFY_REPLY:
                     Toast.makeText(PostDetails.this,"回复成功",Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
                     ReplyDetailBean detailBean= (ReplyDetailBean) msg.obj;
@@ -541,7 +529,7 @@ public class PostDetails extends BaseActivity implements View.OnClickListener{
                 e.printStackTrace();
                 Log.d(TAG, "onFailure:失败呃");
                 Message message=new Message();
-                message.what=NO_NETWORK;
+                message.what=PostTemplateInterface.NO_NETWORK;
                 handler.sendMessage(message);
             }
             @Override
@@ -588,12 +576,16 @@ public class PostDetails extends BaseActivity implements View.OnClickListener{
     }
     private void handlerData(Post post){
         Message message=new Message();
-        message.what=HANDLER_DATA;
+        message.what=PostTemplateInterface.HANDLER_DATA;
         message.obj=post;
         handler.sendMessage(message);
     }
     private void addComment(final String content, String username, String postContent, int puid){
-        postContent=postContent.substring(0,30);
+        Log.i(TAG, "addComment: 文章长度"+postContent);
+        if(postContent.length()>30) {
+            postContent = postContent.substring(0, 30);
+        }
+        Log.i(TAG, "addComment: 长度="+postContent);
         RequestBody requestBody = new FormBody.Builder()
                 .add("cpid", String.valueOf(postId))
                 .add("content",content)
@@ -603,7 +595,7 @@ public class PostDetails extends BaseActivity implements View.OnClickListener{
                 .add("puid",String.valueOf(puid))
                 .build();
         final Request request = new Request.Builder()
-                .url(REQUEST_ADD_COMMENT_STR)
+                .url(PostTemplateInterface.REQUEST_ADD_COMMENT_STR)
                 .post(requestBody)
                 .build();
         OkHttpClient okHttpClient = new OkHttpClient();
@@ -629,7 +621,7 @@ public class PostDetails extends BaseActivity implements View.OnClickListener{
                     CommentDetailBean detailBean = new CommentDetailBean(userData.getUsername(), content,"刚刚",userData.getUimg());
                     detailBean.setFloor(floor);
                     Message message=new Message();
-                    message.what=NOTIFY_COMMENT;
+                    message.what=PostTemplateInterface.NOTIFY_COMMENT;
                     message.obj=detailBean;
                     handler.sendMessage(message);
                 } catch (JSONException e) {
@@ -678,7 +670,7 @@ public class PostDetails extends BaseActivity implements View.OnClickListener{
                     Log.i(TAG, "onResponse:信息"+jsonObject.getString("msg"));
                     ReplyDetailBean detailBean = new ReplyDetailBean(userData.getUsername(),content,"刚刚");
                     Message message=new Message();
-                    message.what=NOTIFY_REPLY;
+                    message.what=PostTemplateInterface.NOTIFY_REPLY;
                     message.obj=detailBean;
                     message.arg1=position;
                     handler.sendMessage(message);
@@ -696,8 +688,8 @@ public class PostDetails extends BaseActivity implements View.OnClickListener{
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-                Log.d(TAG, "onFailure:失败呃");
+                    e.printStackTrace();
+                    return;
             }
             @Override
             public void onResponse(Call call, Response response) throws IOException {
@@ -711,14 +703,14 @@ public class PostDetails extends BaseActivity implements View.OnClickListener{
                         Log.i(TAG, "onResponse: 返回评论失败:"+msg);
                         Message message = new Message();
                         commentsList=new ArrayList<>();
-                        message.what=NOTIFY_NOCOMMENT;
+                        message.what=PostTemplateInterface.NOTIFY_NOCOMMENT;
                         handler.sendMessage(message);
                         return;
                     }
                     Gson gson = new Gson();
                     commentsList=gson.fromJson(jsonObject.getString("data"),new TypeToken<List<CommentDetailBean>>(){}.getType());
                     Message message = new Message();
-                    message.what=NOTIFY;
+                    message.what=PostTemplateInterface.NOTIFY;
                     handler.sendMessage(message);
                     commentPage++;
                 } catch (JSONException e) {
@@ -765,12 +757,12 @@ public class PostDetails extends BaseActivity implements View.OnClickListener{
         String urlStr=null;
         String token=null;
         switch (mode){
-            case 1:urlStr=REQUEST_POST_DETAILS_STR+"?postId="+postId;
+            case 1:urlStr=PostTemplateInterface.REQUEST_POST_DETAILS_STR+"?postId="+postId;
                             break;
-            case 2:urlStr=(commentFlag?REQUEST_COMMENT_POPULAR_STR:REQUEST_COMMENT_NEW_STR)+"?startPage="+commentPage+"&postId="+postId;
+            case 2:urlStr=(commentFlag?PostTemplateInterface.REQUEST_COMMENT_POPULAR_STR:PostTemplateInterface.REQUEST_COMMENT_NEW_STR)+"?startPage="+commentPage+"&postId="+postId;
                             Log.i(TAG, "getRequestStr: postId="+postId);
                             break;
-            case 3:urlStr=(collectionStatus==1?REQUEST_DELETE_COLLECTION:REQUEST_ADD_COLLECTION);
+            case 3:urlStr=(collectionStatus==1?PostTemplateInterface.REQUEST_DELETE_COLLECTION:PostTemplateInterface.REQUEST_ADD_COLLECTION);
                             return urlStr;
             default:break;
         }

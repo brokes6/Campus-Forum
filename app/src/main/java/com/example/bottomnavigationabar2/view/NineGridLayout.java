@@ -184,6 +184,7 @@ public abstract class NineGridLayout extends ViewGroup implements View.OnClickLi
 
     private ImageView createImageView(final int i, final String url) {
         switch (ImageUtils.handlerImagePath(url)){
+            case ImageUtils.PNG:
             case ImageUtils.JPEG:
                 RatioImageView imageView = new RatioImageView(mContext);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);

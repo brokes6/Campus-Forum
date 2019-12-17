@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bottomnavigationabar2.HomeFragment;
+import com.example.bottomnavigationabar2.MoBan.PostTemplateInterface;
 import com.example.bottomnavigationabar2.MyImageView;
 import com.example.bottomnavigationabar2.Post;
 import com.example.bottomnavigationabar2.PostDetails;
@@ -42,9 +43,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
-import static com.example.bottomnavigationabar2.PostDetails.REQUEST_ADD_COLLECTION;
-import static com.example.bottomnavigationabar2.PostDetails.REQUEST_DELETE_COLLECTION;
 
 /**
  * Created by HMY on 2016/8/6
@@ -297,6 +295,6 @@ public class NineGridTest2Adapter extends RecyclerView.Adapter<NineGridTest2Adap
         });
     }
     private String getRequestUrl(int status){
-        return (status==1?REQUEST_DELETE_COLLECTION:REQUEST_ADD_COLLECTION);
+        return (status==1? PostTemplateInterface.REQUEST_DELETE_COLLECTION:PostTemplateInterface.REQUEST_ADD_COLLECTION);
     }
 }

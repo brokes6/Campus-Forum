@@ -28,6 +28,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bottomnavigationabar2.MoBan.PostTemplateInterface;
 import com.example.bottomnavigationabar2.MoBan.RequestStatus;
 import com.example.bottomnavigationabar2.adapter.CommentExpandAdapter;
 import com.example.bottomnavigationabar2.adapter.ReplyAdapter;
@@ -107,7 +108,7 @@ public class MoerReply extends AppCompatActivity implements View.OnClickListener
                     replyAdapter.setReplyDetailBeans((List<ReplyDetailBean>) msg.obj);
                     replyAdapter.notifyDataSetChanged();
                     break;
-                case PostDetails.CANCEL_PROGRESS:
+                case PostTemplateInterface.CANCEL_PROGRESS:
                     progressBar.setVisibility(View.GONE);
                     break;
                 case HANDLER_DATA_COMMENT:
@@ -384,7 +385,7 @@ public class MoerReply extends AppCompatActivity implements View.OnClickListener
                     }
                     Log.i(TAG, "onResponse:信息"+jsonObject.getString("msg"));
                     Message message=new Message();
-                    message.what=PostDetails.CANCEL_PROGRESS;
+                    message.what=PostTemplateInterface.CANCEL_PROGRESS;
                     handler.sendMessage(message);
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -79,7 +79,7 @@
                     android:text="这个社团很懒，暂时还没有介绍喔"
                     android:layout_marginBottom="10dp"
                     android:textColor="#323232"
-                    android:textSize="16dp" />
+                    android:textSize="14dp" />
 
         </LinearLayout>
         <TextView

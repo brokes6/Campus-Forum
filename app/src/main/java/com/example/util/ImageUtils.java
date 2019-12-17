@@ -9,6 +9,7 @@ public class ImageUtils {
     public static final int NO=-1;
     public static final int JPEG=1;
     public static final int GIF=2;
+    public static final int PNG=3;
     public static Bitmap drawableToBitmap(Drawable drawable) {
         // 取 drawable 的长宽
         int w = drawable.getIntrinsicWidth();
@@ -32,7 +33,10 @@ public class ImageUtils {
             return JPEG;
         }else if(suffix.equalsIgnoreCase("gif")){
             return GIF;
-        }else {
+        }else if(suffix.equalsIgnoreCase("png")){
+            return PNG;
+        }
+            else {
             return NO;
         }
     }

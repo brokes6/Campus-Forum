@@ -113,6 +113,8 @@ public class LoginActivity extends AppCompatActivity {
                     break;
                 case LOGIN_FAILED:
                     Toast.makeText(LoginActivity.this, "用户名或密码输入错误，请重试", Toast.LENGTH_SHORT).show();
+                    loadLayout.setVisibility(View.GONE);
+                    passwordEdit.setText("");
                     break;
                 case NO_NETWORK:
                     Toast.makeText(LoginActivity.this, "网络连接失败，请检查网络连接", Toast.LENGTH_SHORT).show();
@@ -259,15 +261,15 @@ public class LoginActivity extends AppCompatActivity {
                     JSONObject jsonObject =new JSONObject(responseStr);
                     int code = jsonObject.getInt("code");
                     String msg = jsonObject.getString("msg");
-                    SharedPreferences.Editor editor =sp.edit();
-                    Gson gson =new Gson();
-                    User user=gson.fromJson(jsonObject.getString("data"),User.class);
                     if(code==0){
                         Message message=new Message();
                         message.what=LOGIN_FAILED;
                         handler.sendMessage(message);
                         return;
                     }
+                    SharedPreferences.Editor editor =sp.edit();
+                    Gson gson =new Gson();
+                    User user=gson.fromJson(jsonObject.getString("data"),User.class);
                     if( checkbox == true){
                         setCache(token,LoginActivity.this,"User_Key",MODE_PRIVATE);
                         String ge_key = getCache(LoginActivity.this,"User_Key");
