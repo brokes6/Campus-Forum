@@ -45,8 +45,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.example.bottomnavigationabar2.MoBan.RequestStatus;
 import com.example.bottomnavigationabar2.R;
 import com.example.bottomnavigationabar2.utils.FileCacheUtil;
 import com.example.bottomnavigationabar2.view.ColorPickerView;
@@ -165,28 +163,17 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
 
     private File file;
 
-    private int imageNum;
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
+                case SET_OK:
+                    TextView view = (TextView) msg.obj;
+                    String num = msg.arg1 + "/9";
+                    view.setText(num);
+                    loadLayout.setVisibility(View.GONE);
+                    break;
                 case SHOW_TOAST:
                     Toast.makeText(addPost.this, msg.obj.toString(), Toast.LENGTH_SHORT).show();
-                    break;
-                case RequestStatus.HANDLER_DATA:
-                    imageNum++;
-                    String urls= (String) msg.obj;
-                    LoadPicAdapter.MyViewHolder viewHolder=adapter.getHolder();
-                    Glide.with(addPost.this).load(urls).into(viewHolder.ivPic);
-                    viewHolder.ivPic.setClickable(false);
-                    String num = imageNum + "/9";
-                    tvNum.setText(num);
-                    loadLayout.setVisibility(View.GONE);
-                    if(adapter.fileList.size()<9){
-                        fileList.add(new LoadFileVo());
-                    }
-                    break;
-                case RequestStatus.NO_NETWORK:
-                    Toast.makeText(addPost.this, "图片上传失败，请重试尝试", Toast.LENGTH_SHORT).show();
                     break;
             }
         }
@@ -236,7 +223,7 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
     //自定义方法selectPic
     private void selectPic() {
         //动态请求权限，除此之外还需进行Androidmanifest.xml中进行请求
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) { 
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
         final CharSequence[] items = {"相册", "拍照"};
@@ -408,10 +395,8 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
             okHttpClient.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Message message=new Message();
-                    message.what=RequestStatus.NO_NETWORK;
-                    handler.sendMessage(message);
-                    return;
+                    e.printStackTrace();
+                    Log.d(TAG, "onFailure:失败呃");
                 }
 
                 @Override
@@ -423,10 +408,11 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
                     urls = (String) urls.subSequence(index1, index2);
                     Log.i(TAG, "onResponse: " + urls);
                     builder.append(urls + ",");
-                    Message message=new Message();
-                    message.what= RequestStatus.HANDLER_DATA;
-                    message.obj=urls;
-                    handler.sendMessage(message);
+                    adapter.getHolder().ivPic.setImageURL(urls);
+                    setNum();
+                    if(adapter.fileList.size()<9){
+                        fileList.add(new LoadFileVo());
+                    }
                 }
             });
         } catch (Exception e) {
@@ -473,6 +459,13 @@ public class addPost extends AppCompatActivity implements View.OnClickListener {
         return result;
     }
 
+    public void setNum() {
+        Message message = Message.obtain();
+        message.arg1 = fileList.size();
+        message.obj = tvNum;
+        message.what = 1;
+        handler.sendMessage(message);
+    }
     //暂时有问题 服务器图片长度设置过小 弄大点
     public void netUploadPost(String token) throws FileNotFoundException {//用jsonOject方式转string传递其他参数
         try {
