@@ -39,6 +39,8 @@ import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import floatingactionbutton.FloatingActionsMenu;
+
 import static com.scwang.smartrefresh.layout.internal.InternalClassics.ID_IMAGE_PROGRESS;
 import static com.scwang.smartrefresh.layout.internal.InternalClassics.ID_TEXT_TITLE;
 
@@ -46,12 +48,14 @@ public class OrganizationActivity extends AppCompatActivity {
     private static final String TAG = "OrganizationActivity";
     private FloatingActionButton addPostButton;
     private ViewPager viewPager;
+    private FloatingActionsMenu menu;
     private MainTabFragmentAdapter mainTabFragmentAdapter;
     private TabLayout tabLayout;
     private PostTemplateInterface postTemplateInterface;
     private User userData;
     private AppBarLayout appBarLayout;
     private LinearLayout topLayout;
+    private LinearLayout Mask_layer;
     private int topLayoutHeight=-1;
     private boolean flag=false;
     private SmartRefreshLayout refreshLayout;
@@ -60,6 +64,7 @@ public class OrganizationActivity extends AppCompatActivity {
     private MyImageView organizationImg;
     private int oid;
     private int type;
+    private boolean key;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,21 +84,21 @@ public class OrganizationActivity extends AppCompatActivity {
         initAppBarLayout();
     }
     private void initView(){
+        Mask_layer = findViewById(R.id.Mask_layer);
         /*
         *悬浮按钮 更多按钮
          */
-
+        menu=findViewById(R.id.multiple_actions);
+        menu.setLayout(Mask_layer);
         final floatingactionbutton.FloatingActionButton actionA =  findViewById(R.id.action_a);
         actionA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent_addPost = new Intent(OrganizationActivity.this,addPost.class);
                 intent_addPost.putExtra("oid",oid);
-                overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
                 startActivity(intent_addPost);
             }
         });
-
         final floatingactionbutton.FloatingActionButton actionB =  findViewById(R.id.action_b);
         actionB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,7 +106,6 @@ public class OrganizationActivity extends AppCompatActivity {
                 Toast.makeText(OrganizationActivity.this,"你点击了B",Toast.LENGTH_SHORT).show();
             }
         });
-
         final floatingactionbutton.FloatingActionButton actionC =  findViewById(R.id.action_c);
         actionC.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,7 +113,6 @@ public class OrganizationActivity extends AppCompatActivity {
                 Toast.makeText(OrganizationActivity.this,"你点击了C",Toast.LENGTH_SHORT).show();
             }
         });
-
         //悬浮按钮 点击事件
 //        addPostButton=findViewById(R.id.fab);
 //        addPostButton.bringToFront();
@@ -144,6 +147,7 @@ public class OrganizationActivity extends AppCompatActivity {
         organizationTextView=findViewById(R.id.organizationName);
     }
     private void initData(){
+        Mask_layer.getBackground().mutate().setAlpha(220);
         Intent data= getIntent();
         organizationTextView.setText(data.getStringExtra("oname"));
         organizationImg.setCacheImageURL(data.getStringExtra("oimg"));

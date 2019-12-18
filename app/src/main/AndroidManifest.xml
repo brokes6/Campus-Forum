@@ -45,6 +45,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.about_us"/>
+        <activity android:name=".Mykey"/>
         <activity android:name=".activity.OrganizationDetailsActivity" />
         <activity android:name=".activity.SearchDetailsActivity" />
         <activity android:name=".activity.SearchActivity" />

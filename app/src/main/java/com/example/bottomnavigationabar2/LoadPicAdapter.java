@@ -60,38 +60,35 @@ public class LoadPicAdapter extends RecyclerView.Adapter<LoadPicAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
-        Log.d(TAG, "onBindViewHolder:下标"+position);
-        //通过默认设置第一个为空文件为添加退保，且在文件个数小于最大限制值的情况。当图片个数等于最大限制值，第一个则不是添加按钮
-        if (position == 0&&fileList.get(position).getPath()==null) {
-            holder.ivPic.setImageResource(R.drawable.jiahao);//加号图片
-            holder.ivPic.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    listener.click(view, position);
-                }
-            });
-            holder.ivDel.setVisibility(View.INVISIBLE);
-            holder.bg_progressbar.setVisibility(View.GONE);
-
-        } else {
-            holder.ivPic.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    listener.click(view, position);
-                }
-            });
-            holder.ivDel.setVisibility(View.INVISIBLE);
-            holder.bg_progressbar.setVisibility(View.GONE);
-//            Uri uri = Uri.parse(fileList.get(position).getFile().getPath());
-//            holder.ivPic.setImageURI(uri);
-/*            holder.ivPic.setImageBitmap(fileList.get(position).getBitmap());
-            //使用压缩后的图片进行填充到界面上
-            holder.ivDel.setVisibility(View.VISIBLE);
-            holder.bg_progressbar.setVisibility(View.VISIBLE);
-            holder.bg_progressbar.setProgress(fileList.get(position).getPg());*/
-        }
-
-
+//        Log.d(TAG, "onBindViewHolder:下标"+position);
+//        //通过默认设置第一个为空文件为添加退保，且在文件个数小于最大限制值的情况。当图片个数等于最大限制值，第一个则不是添加按钮
+//        if (position == 0&&fileList.get(position).getPath()==null) {
+//            holder.ivPic.setImageResource(R.drawable.jiahao);//加号图片
+//            holder.ivPic.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    listener.click(view, position);
+//                }
+//            });
+//            holder.ivDel.setVisibility(View.INVISIBLE);
+//            holder.bg_progressbar.setVisibility(View.GONE);
+//        } else {
+//            holder.ivPic.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    listener.click(view, position);
+//                }
+//            });
+//            holder.ivDel.setVisibility(View.VISIBLE);
+//            holder.bg_progressbar.setVisibility(View.VISIBLE);
+//            holder.bg_progressbar.setProgress(fileList.get(position).getPg());
+//        }
+        holder.ivPic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.click(view, position);
+            }
+        });
         holder.ivDel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

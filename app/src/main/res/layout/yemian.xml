@@ -73,7 +73,7 @@
                 </LinearLayout>
             </LinearLayout>
             <Button
-                android:layout_marginLeft="25dp"
+                android:layout_marginLeft="0dp"
                 android:layout_marginTop="10dp"
                 android:layout_width="60dp"
                 android:layout_height="30dp"
@@ -180,6 +180,13 @@
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        <LinearLayout
+            android:id="@+id/Mask_layer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#fff"
+            android:orientation="vertical"
+            android:visibility="gone"/>
         <floatingactionbutton.FloatingActionsMenu
             android:id="@+id/multiple_actions"
             android:layout_width="wrap_content"

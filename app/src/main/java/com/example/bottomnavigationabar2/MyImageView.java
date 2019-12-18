@@ -11,6 +11,7 @@ import android.graphics.Shader;
 import android.graphics.drawable.AdaptiveIconDrawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.VectorDrawable;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
@@ -159,7 +160,11 @@ public class MyImageView extends ImageView {
                 canvas = new Canvas(bitmap);
                 drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
                 drawable.draw(canvas);
-            }else{
+            }else if(drawable instanceof VectorDrawable){
+                VectorDrawable vectorDrawable=(VectorDrawable)drawable;
+                vectorDrawable.draw(canvas);
+            }
+            else{
                 bitmap = ((BitmapDrawable) drawable).getBitmap();
                 System.out.println("11111111111");
                 BitmapShader bitmapShader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
@@ -171,7 +176,6 @@ public class MyImageView extends ImageView {
                 mPaint.setShader(bitmapShader);
                 //画圆形，指定好坐标，半径，画笔
                 canvas.drawCircle(mRadius, mRadius, mRadius, mPaint);
-                System.out.println(canvas);
             }
             //初始化BitmapShader，传入bitmap对象
         } else {

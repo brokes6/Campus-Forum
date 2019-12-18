@@ -22,11 +22,13 @@ import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.view.animation.OvershootInterpolator;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.bottomnavigationabar2.R;
 
 public class FloatingActionsMenu extends ViewGroup {
+  private static final String TAG = "FloatingActionsMenu";
   public static final int EXPAND_UP = 0;
   public static final int EXPAND_DOWN = 1;
   public static final int EXPAND_LEFT = 2;
@@ -61,7 +63,7 @@ public class FloatingActionsMenu extends ViewGroup {
   private int mLabelsStyle;
   private int mLabelsPosition;
   private int mButtonsCount;
-
+  private LinearLayout layout;
   private TouchDelegateGroup mTouchDelegateGroup;
 
   private OnFloatingActionsMenuUpdateListener mListener;
@@ -103,7 +105,6 @@ public class FloatingActionsMenu extends ViewGroup {
     mLabelsStyle = attr.getResourceId(R.styleable.FloatingActionsMenu_fab_labelStyle, 0);
     mLabelsPosition = attr.getInt(R.styleable.FloatingActionsMenu_fab_labelsPosition, LABELS_ON_LEFT_SIDE);
     attr.recycle();
-
     if (mLabelsStyle != 0 && expandsHorizontally()) {
       throw new IllegalStateException("Action labels in horizontal expand orientation is not supported.");
     }
@@ -444,13 +445,10 @@ public class FloatingActionsMenu extends ViewGroup {
       mExpandAlpha.setInterpolator(sAlphaExpandInterpolator);
       mCollapseDir.setInterpolator(sCollapseInterpolator);
       mCollapseAlpha.setInterpolator(sCollapseInterpolator);
-
       mCollapseAlpha.setProperty(View.ALPHA);
       mCollapseAlpha.setFloatValues(1f, 0f);
-
       mExpandAlpha.setProperty(View.ALPHA);
       mExpandAlpha.setFloatValues(0f, 1f);
-
       switch (mExpandDirection) {
       case EXPAND_UP:
       case EXPAND_DOWN:
@@ -475,7 +473,6 @@ public class FloatingActionsMenu extends ViewGroup {
       if (!animationsSetToPlay) {
         addLayerTypeListener(mExpandDir, view);
         addLayerTypeListener(mCollapseDir, view);
-
         mCollapseAnimation.play(mCollapseAlpha);
         mCollapseAnimation.play(mCollapseDir);
         mExpandAnimation.play(mExpandAlpha);
@@ -531,14 +528,16 @@ public class FloatingActionsMenu extends ViewGroup {
   }
 
   public void collapse() {
+    layout.setVisibility(GONE);
     collapse(false);
   }
 
   public void collapseImmediately() {
     collapse(true);
   }
-
+  //按钮点击收缩
   private void collapse(boolean immediately) {
+
     if (mExpanded) {
       mExpanded = false;
       mTouchDelegateGroup.setEnabled(false);
@@ -559,14 +558,14 @@ public class FloatingActionsMenu extends ViewGroup {
       expand();
     }
   }
-
+  //按钮点击展开
   public void expand() {
     if (!mExpanded) {
       mExpanded = true;
       mTouchDelegateGroup.setEnabled(true);
       mCollapseAnimation.cancel();
       mExpandAnimation.start();
-
+      layout.setVisibility(VISIBLE);
       if (mListener != null) {
         mListener.onMenuExpanded();
       }
@@ -593,6 +592,10 @@ public class FloatingActionsMenu extends ViewGroup {
     return savedState;
   }
 
+  public void setLayout(LinearLayout layout) {
+    this.layout = layout;
+  }
+
   @Override
   public void onRestoreInstanceState(Parcelable state) {
     if (state instanceof SavedState) {
@@ -609,7 +612,6 @@ public class FloatingActionsMenu extends ViewGroup {
       super.onRestoreInstanceState(state);
     }
   }
-
   public static class SavedState extends BaseSavedState {
     public boolean mExpanded;
 

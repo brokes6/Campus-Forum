@@ -41,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/user"
-                android:hint="账号:"
+                android:hint="名称:"
                 android:maxLength="25"
                 android:maxLines="1"
                 android:textSize="20sp" />
@@ -65,7 +65,6 @@
                 android:hint="请输入邮箱:"
                 android:maxLength="25"
                 android:maxLines="1"
-                android:password="true"
                 android:textSize="20sp" />
         </android.support.design.widget.TextInputLayout>
         <LinearLayout
@@ -109,6 +108,7 @@
                     android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:password="true"
                     android:hint="请输入（密码）:"
                     android:maxLength="15"
                     android:maxLines="1"/>
@@ -127,15 +127,6 @@
             android:background="@drawable/bt_shape_text" />
 
     </LinearLayout>
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/logo"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:src="@drawable/logo"
-        app:civ_border_color="#4CAF50"
-        app:civ_border_width="2dp" />
 
 
     <LinearLayout
