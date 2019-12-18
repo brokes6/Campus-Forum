@@ -44,7 +44,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.about_us"/>
+        <activity android:name=".activity.AboutUs"/>
         <activity android:name=".Mykey"/>
         <activity android:name=".activity.OrganizationDetailsActivity" />
         <activity android:name=".activity.SearchDetailsActivity" />

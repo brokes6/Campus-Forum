@@ -28,6 +28,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bottomnavigationabar2.activity.AboutUs;
 import com.example.bottomnavigationabar2.bean.User;
 import com.example.bottomnavigationabar2.utils.FileCacheUtil;
 import com.example.bottomnavigationabar2.view.about_us;
@@ -86,7 +87,6 @@ public class MyFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(getContext(),MyHistory.class);
-                getActivity().overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
                 startActivity(intent);
             }
         });
@@ -94,7 +94,6 @@ public class MyFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(getContext(),MyCollection.class);
-                getActivity().overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
                 startActivity(intent);
             }
         });
@@ -199,7 +198,7 @@ public class MyFragment extends Fragment {
         about.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getContext(), about_us.class);
+                Intent intent=new Intent(getContext(), AboutUs.class);
                 startActivity(intent);
             }
         });
