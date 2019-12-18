@@ -19,15 +19,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="关注的吧"
             android:textSize="20sp"
+            android:layout_marginLeft="10dp"
             android:layout_gravity="center_vertical"/>
 
         <Spinner
-            android:layout_marginLeft="220dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_weight="1"
             android:tooltipText="lihai">
 
 
