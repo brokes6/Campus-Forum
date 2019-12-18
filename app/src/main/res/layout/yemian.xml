@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
     <android.support.design.widget.AppBarLayout
-        android:background="#FAFAFA"
+        android:background="#eee"
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -27,26 +27,31 @@
         android:background="#d27925"
         android:orientation="vertical">
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
             android:orientation="horizontal"
             android:layout_marginTop="50dp">
-            <com.example.bottomnavigationabar2.MyImageView
-                android:id="@+id/organizationImg"
-                android:layout_marginRight="5dp"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@mipmap/ic_launcher"
-                app:civ_border_color="#4CAF50"
-                app:civ_border_width="2dp"
-                android:layout_gravity="center_vertical" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+                <com.example.bottomnavigationabar2.MyImageView
+                    android:id="@+id/organizationImg"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@mipmap/ic_launcher"
+                    app:civ_border_color="#4CAF50"
+                    app:civ_border_width="2dp"
+                    android:layout_gravity="center_vertical|right" />
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:orientation="vertical"
-                android:layout_marginRight="118dp">
+                android:layout_weight="5"
+                android:layout_marginLeft="8dp"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/organizationName"
@@ -72,14 +77,20 @@
                         android:text="某某人"/>
                 </LinearLayout>
             </LinearLayout>
-            <Button
-                android:layout_marginLeft="0dp"
-                android:layout_marginTop="10dp"
-                android:layout_width="60dp"
-                android:layout_height="30dp"
-                android:text="签到"
-                android:background="@drawable/border"
-                />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <Button
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:text="签到"
+                    android:background="@drawable/border"
+                    />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
@@ -180,13 +191,6 @@
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-        <LinearLayout
-            android:id="@+id/Mask_layer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#fff"
-            android:orientation="vertical"
-            android:visibility="gone"/>
         <floatingactionbutton.FloatingActionsMenu
             android:id="@+id/multiple_actions"
             android:layout_width="wrap_content"
