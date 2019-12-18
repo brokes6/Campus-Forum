@@ -17,6 +17,7 @@
         <TextView
             android:layout_gravity="center"
             android:id="@+id/organizationName"
+            android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="water"
@@ -72,14 +73,14 @@
                 <TextView
                     android:id="@+id/introduce"
                     android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical|center_horizontal"
+                    android:layout_height="40dp"
+                    android:gravity="center_horizontal|center_vertical"
                     android:maxLength="20"
                     android:maxLines="2"
                     android:text="这个社团很懒，暂时还没有介绍喔"
                     android:layout_marginBottom="10dp"
                     android:textColor="#323232"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
         </LinearLayout>
         <TextView
