@@ -34,7 +34,7 @@ import java.util.ArrayList;
 
 public class ScanFragment extends Fragment{
     private static final String TAG = "ScanFragment";
-    private ViewPager viewPager;
+    /*private ViewPager viewPager;*/
     private ArrayList<View> pageview;
     private TextView followText;
     private TextView recommendText;
@@ -63,7 +63,7 @@ public class ScanFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         System.out.println("我要重新创建？");
         if(view==null) {
-            view = inflater.inflate(R.layout.mscan_fragment, container, false);
+            view = inflater.inflate(R.layout.mscan_fragment_test, container, false);
             initView();
         }
         return view;
@@ -71,23 +71,23 @@ public class ScanFragment extends Fragment{
     private void initView(){
         followText=view.findViewById(R.id.followText);
         recommendText=view.findViewById(R.id.recommendText);
-        viewPager=view.findViewById(R.id.viewPager);
+        /*viewPager=view.findViewById(R.id.viewPager);*/
         OrganizationTabFragmentAdapter adapter=new OrganizationTabFragmentAdapter(((MainActivity)getContext()).getSupportFragmentManager());
-        viewPager.setAdapter(adapter);
-        System.out.println("viewpager"+viewPager);
+        /*viewPager.setAdapter(adapter);*/
+        /*System.out.println("viewpager"+viewPager);*/
         followText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewPager.setCurrentItem(1);
+                /*viewPager.setCurrentItem(1);*/
             }
         });
         recommendText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewPager.setCurrentItem(0);
+                /*viewPager.setCurrentItem(0);*/
             }
         });
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        /*viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
                 if(i==1){
@@ -109,7 +109,7 @@ public class ScanFragment extends Fragment{
             }
         });
         viewPager.setCurrentItem(0);
-        viewPager.setOffscreenPageLimit(2);
+        viewPager.setOffscreenPageLimit(2);*/
         initRefreshLayout();
     }
 
